@@ -8,6 +8,7 @@ public class PatchAppApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(PatchAppApplication.class, args);
+		//test 21 april hej
 	}
 
 }
