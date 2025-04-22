@@ -7,6 +7,7 @@ public abstract class Person {
     private String kmStatus;
     private String teamSthlmPage;
 
+
     public Person (String firstName, String surName, int phoneNumber, String emailAddress, String kmStatus, String teamSthlmPage){
         this.firstName = firstName;
         this.surName = surName;
