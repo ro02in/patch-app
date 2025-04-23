@@ -40,9 +40,21 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<dependency> <!-- för war -->
+    		<groupId>org.springframework.boot</groupId>
+    		<artifactId>spring-boot-starter-tomcat</artifactId>
+    		<scope>provided</scope>
+		</dependency>
+
+		<dependency> <!-- för war -->
+    		<groupId>org.springframework.boot</groupId>
+    		<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
 	</dependencies>
 
-	<packaging>war</packaging>
+	<packaging>war</packaging> <!-- för war -->
 
 <build>
     <plugins>
