@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
         body: Container(
           alignment: Alignment.bottomCenter,
           padding: EdgeInsets.symmetric(vertical: 50),
-          color: const Color.fromARGB(255, 250, 250, 250),
+          color: const Color.fromARGB(255, 255, 255, 255),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget> [
@@ -32,63 +32,109 @@ class MyApp extends StatelessWidget {
                 child: Image.asset('assets/syttbytt2.png', width: 150, height: 210),
               ),
 
-            SizedBox(height: 20), //simulated padding
+            SizedBox(height: 10), //simulated padding
 
-            Text("Log in", textAlign: TextAlign.center, style: TextStyle(fontFamily: 'DMSans', color: const Color.fromARGB(255, 198, 115, 0), fontSize: 35, fontWeight: FontWeight.w200)),
+            Text("Log in", textAlign: TextAlign.center, style: TextStyle(fontFamily: 'DMSans', color: const Color.fromARGB(255, 22, 22, 22), fontSize: 35, fontWeight: FontWeight.w200)),
             //Text("Har inget konto? Skapa ett konto.", style: TextStyle(color: Colors.black, fontSize: 15), textAlign: TextAlign.end),
             SizedBox(height: 20), //simulated padding 
 
-            SizedBox( //KNAPP 1 Google behållare, SizedBox styr höjd och bredd på knapparna
-            width: 250,
+
+            Container( 
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(30)),
+                boxShadow: [
+                  BoxShadow(
+                    color: const Color.fromARGB(255, 190, 190, 190), //ljusblå 255, 131, 209, 255
+                    spreadRadius: 2,
+                    blurRadius: 5,
+                    offset: Offset.fromDirection(1, 4)
+                  )
+                ]
+              ),
+            child: SizedBox( //KNAPP 1, SizedBox styr höjd och bredd på knapparna
+            width: 340,
             height: 50,
             child: OutlinedButton(
               style: OutlinedButton.styleFrom(
-              side: BorderSide(width: 1, color: const Color.fromARGB(255, 198, 115, 0)),
-              backgroundColor: Color.fromARGB(255, 255, 221, 110),
-              shadowColor: const Color.fromARGB(255, 255, 198, 43),
-               overlayColor: const Color.fromARGB(255, 145, 85, 0),
+              side: BorderSide(width: 1, color: const Color.fromARGB(255, 116, 119, 117)),
+              backgroundColor: Color.fromARGB(255, 255, 255, 255),
+              //shadowColor: const Color.fromARGB(255, 255, 198, 43),
+              overlayColor: const Color.fromARGB(255, 208, 208, 208),
               ),
-              //Knapp Google
+              
               onPressed: () {}, 
-              child: Text("Log in with Google", style: TextStyle(fontFamily: 'DMSans', fontSize: 18, fontWeight: FontWeight.w700, color: Colors.black87)
+              child: Text("Log in through  ", style: TextStyle(fontFamily: 'Roboto Medium', fontSize: 18, fontWeight: FontWeight.w500, color: Colors.black87)
               )
               )
             ),
+            ),
 
-            SizedBox(height: 35), //simulated padding
+            SizedBox(height: 25), //simulated padding
 
-              SizedBox( //KNAPP 2 Facebook behållare
-              width: 250,
-              height: 50,
-              child: OutlinedButton( //var ElevatedButton
-                style: OutlinedButton.styleFrom(
-                side: BorderSide(width: 1, color: const Color.fromARGB(255, 198, 115, 0)),
-                backgroundColor: Color.fromARGB(255, 255, 221, 110), //gul 255, 255, 198, 43 //ljusblå 255, 184, 223, 255
-                shadowColor: const Color.fromARGB(255, 255, 198, 43),
-                overlayColor: const Color.fromARGB(255, 145, 85, 0),
+            Container( 
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(30)),
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color.fromARGB(255, 190, 190, 190), 
+                        spreadRadius: 2,
+                        blurRadius: 5,
+                        offset: Offset.fromDirection(1, 4)
+                      )
+                    ]
+                  ),
+                child: SizedBox( //KNAPP 2 
+                width: 340,
+                height: 50,
+                child: OutlinedButton( //var ElevatedButton
+                  style: OutlinedButton.styleFrom(
+                  side: BorderSide(width: 1, color: const Color.fromARGB(255, 116, 119, 117)),
+                  backgroundColor: Color.fromARGB(255, 255, 255, 255), //gul 255, 255, 198, 43 //ljusblå 255, 184, 223, 255
+                  //shadowColor: const Color.fromARGB(255, 255, 198, 43),
+                  overlayColor: const Color.fromARGB(255, 208, 208, 208),
+                  ),
+                  //Knapp Google
+                  onPressed: () {}, 
+                  child: Text("Log in through ", style: TextStyle(fontFamily: 'Roboto Medium', fontSize: 18, fontWeight: FontWeight.w500, color: Colors.black87),
+                  )
+                  )
                 ),
-                //Knapp Google
-                onPressed: () {}, 
-                child: Text("Log in with Facebook", style: TextStyle(fontFamily: 'DMSans', fontSize: 18, fontWeight: FontWeight.w700, color: Colors.black87),
-                )
-                )
-              ),
+            ),
 
               SizedBox(height: 70), //simulated padding
+
+              SizedBox(
+                child: Text("Don't have an account?", style: TextStyle(fontFamily: "DMSans", fontSize: 16, color: Colors.black)),
+              ),
+             
+              SizedBox(height: 9), //padding
 
               Align( //Längst ner
                 alignment: Alignment.bottomCenter,
                 child: Center(
                   child: SizedBox( //KNAPP Reg. nytt konto 3 behållare
-                  width: 260,
-                  height: 39, 
-                  child: OutlinedButton(
+                  width: 320,
+                  height: 45, 
+
+                  child: Container( 
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(30)),
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color.fromARGB(255, 190, 190, 190),
+                        spreadRadius: 2,
+                        blurRadius: 6,
+                        offset: Offset.fromDirection(1, 4)
+                      )
+                    ]
+                  ),
+                  child: OutlinedButton( //aqua blå const Color.fromARGB(255, 59, 213, 255
                     style: OutlinedButton.styleFrom( 
                       shape: BeveledRectangleBorder(borderRadius: BorderRadius.all(Radius.zero)),
-                      side: BorderSide(width: 0.7, color: const Color.fromARGB(255, 198, 115, 0)), //change button border
-                      backgroundColor: Color.fromARGB(255, 255, 221, 110),
-                      shadowColor: const Color.fromARGB(255, 255, 198, 43),
-                      overlayColor: const Color.fromARGB(255, 145, 85, 0),
+                      side: BorderSide(width: 0.3, color: const Color.fromARGB(255, 0, 0, 0)), //change button border
+                      backgroundColor: Color.fromARGB(255, 255, 255, 255),
+                      //shadowColor: const Color.fromARGB(255, 255, 198, 43),
+                      overlayColor: const Color.fromARGB(255, 208, 208, 208),
                     ),
                     onPressed: () {
                       Navigator.push( //HÄNVISA TILL NY REGISTRERA KONTO-SIDA
@@ -96,9 +142,8 @@ class MyApp extends StatelessWidget {
 										  MaterialPageRoute(builder: (context) => RegisterPage()),
 									);
                     },
-                    child: Text("Don't have an account? Register", style: TextStyle(color: Colors.black, fontSize: 13, fontFamily: 'DMSans', fontWeight: FontWeight.w600))),
-                  //child: Text("Har inget konto? Skapa ett konto.", style: TextStyle(color: Colors.black, fontSize: 15), textAlign: TextAlign.end),
-                  //child: const NeumorphismButtonDemo(),
+                    child: Text("Create a MärkesBytesAppName account.", style: TextStyle(color: Colors.black, fontSize: 14, fontFamily: 'DMSans', fontWeight: FontWeight.w700))),
+                  ),
                   ),
                 )
               )
