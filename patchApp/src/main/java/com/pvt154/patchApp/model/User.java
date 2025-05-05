@@ -1,8 +1,8 @@
-package com.pvt154.patchApp;
+package com.pvt154.patchApp.model;
 
 //Vi borde gå igenom varesig vi ska använda abstrakt person klass eller om vi skippar det och bara gör en "user" istället.
 // Abstrakt kanske funkar om vi ska ha separat klass för administrator konton, men det kanske vi kan fixa med en "behörighet" variabel???
-public abstract class Person {
+public abstract class User {
     private String firstName;
     private String surName;
     private String kmName;
@@ -12,7 +12,7 @@ public abstract class Person {
     private String teamSthlmPage;
 
 
-    public Person (String firstName, String surName, int phoneNumber, String emailAddress, String kmStatus, String teamSthlmPage){
+    public User (String firstName, String surName, int phoneNumber, String emailAddress, String kmStatus, String teamSthlmPage){
         this.firstName = firstName;
         this.surName = surName;
         this.phoneNumber = phoneNumber;

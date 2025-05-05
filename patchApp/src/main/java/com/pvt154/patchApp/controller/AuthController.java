@@ -1,4 +1,4 @@
-package com.pvt154.patchApp;
+package com.pvt154.patchApp.controller;
 
 import org.springframework.web.bind.annotation.*;
 
