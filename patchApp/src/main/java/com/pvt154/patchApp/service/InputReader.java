@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 //Jag importerade hela min inputReader från Hundregistret, detta behöver vi dock modifiera vidare för att se till att det är anpassat för vårt nya projekt
+//Update 2025/05/07 Nick: jag uppdaterade klasserna så at de inte tar några parametrar och bara returnar det vi vill att dom ska returna
+//Felmeddelandet i Konstruktorn är ngt som kanske behöver diskuteras men hopefully funkar detta. Vi måste bara komma ihåg att skicka in en InputStream
+//När vi initierar inputreader, annars bör det funka.
 public class InputReader {
     private static ArrayList<InputStream> streams = new ArrayList<>();
     private final Scanner inputScanner;
@@ -23,20 +26,17 @@ public class InputReader {
     }
 
 
-    public String readString(String prompt) {
-        System.out.println(prompt + "?>");
+    public String readString() {
         return inputScanner.nextLine().trim();
     }
 
-    public int readInt(String prompt) {
-        System.out.println(prompt + "?>");
+    public int readInt() {
         int numberInput = inputScanner.nextInt();
         inputScanner.nextLine();
         return numberInput;
     }
 
-    public double readDouble(String prompt) {
-        System.out.println(prompt + "?>");
+    public double readDouble() {
         double doubleInput = inputScanner.nextDouble();
         inputScanner.nextLine();
         return doubleInput;
