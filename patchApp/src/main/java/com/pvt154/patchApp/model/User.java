@@ -1,5 +1,8 @@
 package com.pvt154.patchApp.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class User {
     private String firstName;
     private String surName;
@@ -10,14 +13,19 @@ public class User {
     private String teamSthlmPage;
     private String googleId;
 
-    public User(String firstName, String surName, int phoneNumber, String emailAddress, String kmStatus, String teamSthlmPage, String googleId) {
+    private List<Patch> PatchCollection;
+
+    public User(String firstName, String surName, String kmName, int phoneNumber,
+                String emailAddress, String kmStatus, String teamSthlmPage, String googleId) {
         this.firstName = firstName;
         this.surName = surName;
+        this.kmName = kmName;
         this.phoneNumber = phoneNumber;
         this.emailAddress = emailAddress;
         this.kmStatus = kmStatus;
         this.teamSthlmPage = teamSthlmPage;
         this.googleId = googleId;
+        this.PatchCollection = new ArrayList<>();
     }
 
     public String getFirstName() {
@@ -54,6 +62,18 @@ public class User {
 
     public String getGoogleId() {
         return googleId;
+    }
+
+    public List<Patch> getPatchToCollection() {
+        return PatchCollection;
+    }
+
+    public void addPatchToCollection(Patch patch) {
+        PatchCollection.add(patch);
+    }
+
+    public void removePAtchFromCollection(Patch patch) {
+        PatchCollection.remove(patch);
     }
 
     // Add setters here if needed
