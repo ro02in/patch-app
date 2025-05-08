@@ -15,8 +15,7 @@ public class User {
 
     private List<Patch> PatchCollection;
 
-    public User(String firstName, String surName, String kmName, int phoneNumber,
-                String emailAddress, String kmStatus, String teamSthlmPage, String googleId) {
+    public User(String firstName, String surName, String kmName, int phoneNumber, String emailAddress, String kmStatus, String teamSthlmPage, String googleId) {
         this.firstName = firstName;
         this.surName = surName;
         this.kmName = kmName;
