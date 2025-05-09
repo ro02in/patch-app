@@ -23,47 +23,68 @@ class MyApp extends StatelessWidget {
         body: Container(
           alignment: Alignment.bottomCenter,
           padding: EdgeInsets.symmetric(vertical: 50),
-          color: const Color.fromARGB(255, 255, 255, 255),
+          color: const Color.fromARGB(255, 244, 240, 231),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget> [
-              Container( //Logotyp
-                alignment: Alignment.topCenter,
-                child: Image.asset('assets/syttbytt2.png', width: 150, height: 210),
-              ),
 
-            SizedBox(height: 10), //simulated padding
+              Column(
+                children: [
+                Text("WELCOME TO", style: TextStyle(color: const Color.fromARGB(255, 223, 155, 38), fontFamily: ('CalSans'), fontSize: 30, fontWeight: FontWeight.w400)),
+                SizedBox(height: 15), //padding
+                Container( //Logotyp
+                  alignment: Alignment.topCenter,
+                  child: Image.asset('assets/syttbytt2.png', width: 150, height: 210),
+                ),
 
-            Text("Log in", textAlign: TextAlign.center, style: TextStyle(fontFamily: 'DMSans', color: const Color.fromARGB(255, 22, 22, 22), fontSize: 35, fontWeight: FontWeight.w200)),
+            //Text("Log in", textAlign: TextAlign.center, style: TextStyle(fontFamily: 'HappyMonkey', color: const Color.fromARGB(255, 22, 22, 22), fontSize: 35, fontWeight: FontWeight.w200)),
             //Text("Har inget konto? Skapa ett konto.", style: TextStyle(color: Colors.black, fontSize: 15), textAlign: TextAlign.end),
-            SizedBox(height: 20), //simulated padding 
+            SizedBox(height: 4), //simulated padding 
 
-
-            Container( 
+            Container(  //Card-effect 
+              width: 280,
+              height: 280,
               decoration: BoxDecoration(
+                color: const Color.fromARGB(255, 231, 225, 210),
+                borderRadius: BorderRadius.circular(30),
+                boxShadow: [
+                  BoxShadow(
+                    color: const Color.fromARGB(255, 200, 191, 172), 
+                    blurRadius: 5,
+                    spreadRadius: 2,
+                    offset: Offset(1, 4)
+                  )
+                ]
+              ),
+              child: Column(
+              children: [
+                SizedBox(height: 80), //padding centrera 2 knapparna
+                Container( 
+                decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(30)),
                 boxShadow: [
                   BoxShadow(
-                    color: const Color.fromARGB(255, 190, 190, 190), //ljusblå 255, 131, 209, 255
+                    color: const Color.fromARGB(255, 117, 161, 105), 
                     spreadRadius: 2,
-                    blurRadius: 5,
-                    offset: Offset.fromDirection(1, 4)
+                    blurRadius: 3,
+                    offset: Offset.fromDirection(1, 3)
                   )
                 ]
               ),
             child: SizedBox( //KNAPP 1, SizedBox styr höjd och bredd på knapparna
-            width: 340,
-            height: 50,
-            child: OutlinedButton(
+            width: 240,
+            height: 45,
+            child: OutlinedButton.icon(
+              //icon: Image.asset('syttbyttcirclelogo.png', height: 35, width: 35), iconAlignment: IconAlignment.start,
               style: OutlinedButton.styleFrom(
-              side: BorderSide(width: 1, color: const Color.fromARGB(255, 116, 119, 117)),
-              backgroundColor: Color.fromARGB(255, 255, 255, 255),
+              side: BorderSide(width: 1.2, color: const Color.fromARGB(255, 0, 0, 0)),
+              backgroundColor: Color.fromARGB(255, 142, 164, 136),
               //shadowColor: const Color.fromARGB(255, 255, 198, 43),
-              overlayColor: const Color.fromARGB(255, 208, 208, 208),
+              overlayColor: const Color.fromARGB(255, 125, 176, 122),
               ),
               
               onPressed: () {}, 
-              child: Text("Log in through  ", style: TextStyle(fontFamily: 'Roboto Medium', fontSize: 18, fontWeight: FontWeight.w500, color: Colors.black87)
+              label: Text("LOG IN", style: TextStyle(fontFamily: 'HappyMonkey', fontSize: 18, fontWeight: FontWeight.w500, color: Colors.black87)
               )
               )
             ),
@@ -76,80 +97,44 @@ class MyApp extends StatelessWidget {
                     borderRadius: BorderRadius.all(Radius.circular(30)),
                     boxShadow: [
                       BoxShadow(
-                        color: const Color.fromARGB(255, 190, 190, 190), 
+                        color: const Color.fromARGB(255, 117, 161, 105), 
                         spreadRadius: 2,
-                        blurRadius: 5,
-                        offset: Offset.fromDirection(1, 4)
+                        blurRadius: 3,
+                        offset: Offset.fromDirection(1, 3)
                       )
                     ]
                   ),
                 child: SizedBox( //KNAPP 2 
-                width: 340,
-                height: 50,
-                child: OutlinedButton( //var ElevatedButton
+                width: 240,
+                height: 45,
+                child: OutlinedButton.icon( //at
+                  //icon: Image.asset('syttbyttcirclelogo.png', height: 40, width: 35), iconAlignment: IconAlignment.start, //var ElevatedButton
                   style: OutlinedButton.styleFrom(
-                  side: BorderSide(width: 1, color: const Color.fromARGB(255, 116, 119, 117)),
-                  backgroundColor: Color.fromARGB(255, 255, 255, 255), //gul 255, 255, 198, 43 //ljusblå 255, 184, 223, 255
+                  side: BorderSide(width: 1.2, color: const Color.fromARGB(255, 0, 0, 0)),
+                  backgroundColor: Color.fromARGB(255, 142, 164, 136), //gul 255, 255, 198, 43 //ljusblå 255, 184, 223, 255
                   //shadowColor: const Color.fromARGB(255, 255, 198, 43),
-                  overlayColor: const Color.fromARGB(255, 208, 208, 208),
+                  overlayColor: const Color.fromARGB(255, 125, 176, 122),
                   ),
                   //Knapp Google
-                  onPressed: () {}, 
-                  child: Text("Log in through ", style: TextStyle(fontFamily: 'Roboto Medium', fontSize: 18, fontWeight: FontWeight.w500, color: Colors.black87),
-                  )
-                  )
-                ),
-            ),
-
-              SizedBox(height: 70), //simulated padding
-
-              SizedBox(
-                child: Text("Don't have an account?", style: TextStyle(fontFamily: "DMSans", fontSize: 16, color: Colors.black)),
-              ),
-             
-              SizedBox(height: 9), //padding
-
-              Align( //Längst ner
-                alignment: Alignment.bottomCenter,
-                child: Center(
-                  child: SizedBox( //KNAPP Reg. nytt konto 3 behållare
-                  width: 320,
-                  height: 45, 
-
-                  child: Container( 
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(30)),
-                    boxShadow: [
-                      BoxShadow(
-                        color: const Color.fromARGB(255, 190, 190, 190),
-                        spreadRadius: 2,
-                        blurRadius: 6,
-                        offset: Offset.fromDirection(1, 4)
-                      )
-                    ]
-                  ),
-                  child: OutlinedButton( //aqua blå const Color.fromARGB(255, 59, 213, 255
-                    style: OutlinedButton.styleFrom( 
-                      shape: BeveledRectangleBorder(borderRadius: BorderRadius.all(Radius.zero)),
-                      side: BorderSide(width: 0.3, color: const Color.fromARGB(255, 0, 0, 0)), //change button border
-                      backgroundColor: Color.fromARGB(255, 255, 255, 255),
-                      //shadowColor: const Color.fromARGB(255, 255, 198, 43),
-                      overlayColor: const Color.fromARGB(255, 208, 208, 208),
-                    ),
-                    onPressed: () {
-                      Navigator.push( //HÄNVISA TILL NY REGISTRERA KONTO-SIDA
+                  onPressed: () {
+                    Navigator.push( //HÄNVISA TILL NY REGISTRERA KONTO-SIDA
 									  	context,
 										  MaterialPageRoute(builder: (context) => RegisterPage()),
 									);
-                    },
-                    child: Text("Create a MärkesBytesAppName account.", style: TextStyle(color: Colors.black, fontSize: 14, fontFamily: 'DMSans', fontWeight: FontWeight.w700))),
-                  ),
-                  ),
-                )
-              )
+                  }, 
+                  label: Text("REGISTER", style: TextStyle(fontFamily: 'HappyMonkey', fontSize: 18, fontWeight: FontWeight.w500, color: Colors.black87),
+                  )
+                  )
+                ),
+               ),
+              ],
+              ),
+            ),
             ]
           )
+          ],
         )
+      ),
       );
   }
 } //LogInPage end
