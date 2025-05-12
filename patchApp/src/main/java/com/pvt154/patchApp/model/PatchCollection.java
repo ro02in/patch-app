@@ -1,10 +1,16 @@
 package com.pvt154.patchApp.model;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class PatchCollection {
 
+public class PatchCollection {
+@OneToMany (cascade = CascadeType.ALL, orphanRemoval = true)
+@JoinColumn(name = "user_id")
     private List<Patch> patches;
 
     public PatchCollection() {
