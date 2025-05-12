@@ -71,7 +71,7 @@ public class User {
         PatchCollection.add(patch);
     }
 
-    public void removePAtchFromCollection(Patch patch) {
+    public void removePatchFromCollection(Patch patch) {
         PatchCollection.remove(patch);
     }
 
