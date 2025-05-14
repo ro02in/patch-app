@@ -62,9 +62,9 @@ flutter:
   uses-material-design: true
 
   fonts:
-    - family: DMSans
+    - family: InknutAntiqua
       fonts:
-        - asset: fonts/DMSans-VariableFont_opsz,wght.ttf
+        - asset: fonts/InknutAntiqua-Regular.ttf
     - family: CalSans
       fonts:
         - asset: fonts/CalSans-Regular.ttf
@@ -81,6 +81,12 @@ flutter:
       - assets/syttbyttlogo.png
       - assets/syttbytt2.png
       - assets/syttbyttcirclelogo.png
+      - assets/stitchesbackground1.png
+      - assets/sbpinklogo.png
+      - assets/sboverall.png
+      - assets/pinkgreybackground2.png
+      - assets/whitepen.png
+      - assets/stitches3.png
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
