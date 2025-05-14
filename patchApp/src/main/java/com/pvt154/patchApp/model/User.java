@@ -1,9 +1,18 @@
 package com.pvt154.patchApp.model;
 
+import jakarta.persistence.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Data
+@NoArgsConstructor
 public class User {
+    @Id
+    private long id;
     private String firstName;
     private String surName;
     private String kmName;
@@ -12,10 +21,10 @@ public class User {
     private String kmStatus;
     private String teamSthlmPage;
     private String googleId;
+    //private List<Patch> PatchCollection; //tror inte den behövs
 
-    private List<Patch> PatchCollection;
-
-    public User(String firstName, String surName, String kmName, int phoneNumber, String emailAddress, String kmStatus, String teamSthlmPage, String googleId) {
+    public User(int id, String firstName, String surName, String kmName, int phoneNumber, String emailAddress, String kmStatus, String teamSthlmPage, String googleId) {
+        this.id = id;
         this.firstName = firstName;
         this.surName = surName;
         this.kmName = kmName;
@@ -24,7 +33,7 @@ public class User {
         this.kmStatus = kmStatus;
         this.teamSthlmPage = teamSthlmPage;
         this.googleId = googleId;
-        this.PatchCollection = new ArrayList<>();
+        //this.PatchCollection = new ArrayList<>();
     }
 
     public String getFirstName() {
@@ -63,17 +72,17 @@ public class User {
         return googleId;
     }
 
-    public List<Patch> getPatchToCollection() {
-        return PatchCollection;
-    }
+    //public List<Patch> getPatchToCollection() {
+    //    return PatchCollection;
+    //}
 
-    public void addPatchToCollection(Patch patch) {
-        PatchCollection.add(patch);
-    }
+    //public void addPatchToCollection(Patch patch) {
+    //    PatchCollection.add(patch);
+    //}
 
-    public void removePAtchFromCollection(Patch patch) {
-        PatchCollection.remove(patch);
-    }
+    //public void removePatchFromCollection(Patch patch) {
+    //    PatchCollection.remove(patch);
+    //}
 
     // Add setters here if needed
 }
