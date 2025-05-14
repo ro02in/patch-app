@@ -1,5 +1,6 @@
 package com.pvt154.patchApp.model;
 
+import com.pvt154.patchApp.service.PatchColors;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,6 +12,7 @@ import java.util.Arrays;
 @Entity
 @Data
 @NoArgsConstructor
+
 public class Patch {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
