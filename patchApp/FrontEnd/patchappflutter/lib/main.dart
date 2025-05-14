@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:patchappflutter/add_patch_page.dart';
+import 'package:patchappflutter/continue_register_page.dart';
 import 'package:patchappflutter/register_page.dart';
 
 void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatelessWidget { //Starting point för hela appen
 
   @override
   Widget build(BuildContext context) {
@@ -42,8 +44,8 @@ class MyApp extends StatelessWidget {
             SizedBox(height: 4), //simulated padding 
 
             Container(  //Card-effect 
-              width: 280,
-              height: 280,
+              width: 310,
+              height: 310,
               decoration: BoxDecoration(
                 color: const Color.fromARGB(255, 231, 225, 210),
                 borderRadius: BorderRadius.circular(30),
@@ -58,7 +60,7 @@ class MyApp extends StatelessWidget {
               ),
               child: Column(
               children: [
-                SizedBox(height: 80), //padding centrera 2 knapparna
+                SizedBox(height: 95), //padding centrera 2 knapparna
                 Container( 
                 decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(30)),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:patchappflutter/neumorphism_button.dart'; //not used yet
 import 'package:patchappflutter/add_patch_page.dart';
 
 class RegisterUserConfirmedPage extends StatelessWidget{

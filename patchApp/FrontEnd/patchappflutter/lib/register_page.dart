@@ -18,7 +18,7 @@ class RegisterPage extends StatelessWidget {
           
           child: Container(
             width: 400,
-            height: 580,
+            height: 520,
             decoration: BoxDecoration(
               color: const Color.fromARGB(255, 244, 240, 231),
               borderRadius: BorderRadius.circular(20),
@@ -35,7 +35,7 @@ class RegisterPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget> [
               //Text("Create new 'MärkesAppNameHere' Account", textAlign: TextAlign.left, style: TextStyle(fontFamily: 'DMSans', color: const Color.fromARGB(255, 0, 0, 0), fontSize: 27, fontWeight: FontWeight.w200)),
-              SizedBox(height: 30), //simulated padding
+              SizedBox(height: 70), //simulated padding
               
               //KNAPP 1
               Container( 
@@ -74,79 +74,11 @@ class RegisterPage extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 20), //padding
-            
-              Container( 
-              decoration: BoxDecoration(
-                color: Color.fromARGB(255, 234, 221, 189),
-                borderRadius: BorderRadius.circular(30),
-                boxShadow: [
-                  BoxShadow(
-                    color: const Color.fromARGB(255, 197, 186, 163),
-                    blurRadius: 3,
-                    spreadRadius: 2,
-                    offset: Offset(1, 2)
-                  )
-                  ]),
-              child: SizedBox(
-                height: 42,
-                width: 280,
-                child: TextField(
-                    obscureText: true,
-                    cursorColor: Colors.black,
-                    cursorHeight: 19,
-                    style: TextStyle(color: Colors.black, fontFamily: 'HappyMonkey', fontSize: 14),
-                    decoration: InputDecoration(labelText: 'Create password', labelStyle: TextStyle(fontFamily: ('HappyMonkey')), floatingLabelStyle: TextStyle(color: Colors.black, fontFamily: ('HappyMonkey'), fontSize: 17, fontWeight: FontWeight.w500),
-                    focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: const Color.fromARGB(255, 19, 19, 19), width: 1.1),
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: const Color.fromARGB(255, 19, 19, 19), width: 1.1),
-                        borderRadius: BorderRadius.circular(30),
-                    ),
-                    ),
-                  ),
-                ),
-              ),
+              //SizedBox(height: 20), //padding
             
               SizedBox(height: 20), //padding mellan password-textfield (input) och Email-input field
-            
-              Container( 
-              decoration: BoxDecoration(
-                color: Color.fromARGB(255, 234, 221, 189),
-                borderRadius: BorderRadius.circular(30),
-                boxShadow: [
-                  BoxShadow(
-                    color: const Color.fromARGB(255, 197, 186, 163),
-                    blurRadius: 3,
-                    spreadRadius: 2,
-                    offset: Offset(1, 2)
-                  )
-                  ]),
-              child: SizedBox(
-                height: 42,
-                width: 280,
-                child: TextField(
-                    obscureText: false,
-                    cursorColor: Colors.black,
-                    cursorHeight: 19,
-                    style: TextStyle(color: Colors.black, fontFamily: 'HappyMonkey', fontSize: 14),
-                    decoration: InputDecoration(labelText: 'Enter your email adress', labelStyle: TextStyle(fontFamily: ('HappyMonkey')), floatingLabelStyle: TextStyle(color: Colors.black, fontFamily: ('HappyMonkey'), fontSize: 17, fontWeight: FontWeight.w500),
-                    focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: const Color.fromARGB(255, 19, 19, 19), width: 1.1),
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: const Color.fromARGB(255, 19, 19, 19), width: 1.1),
-                        borderRadius: BorderRadius.circular(30),
-                    ),
-                    ),
-                  ),
-                ),
-              ),
                 
-              SizedBox(height: 20), //padding
+              //SizedBox(height: 20), //padding
             
               Container( 
               decoration: BoxDecoration(
@@ -249,6 +181,9 @@ class RegisterPage extends StatelessWidget {
                     enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: const Color.fromARGB(255, 49, 49, 49), width: 1.1),
                         borderRadius: BorderRadius.circular(30),
+                    ),
+                    errorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: const Color.fromARGB(255, 255, 64, 64), width: 1.1),
                     )
                     ),
                     ),
