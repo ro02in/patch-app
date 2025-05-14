@@ -54,14 +54,14 @@ public class AuthController {
 
                 if (optionalUser.isPresent()) {
                     // User already exists
-                    System.out.println("User already exists: " + emailAddress);
-                    return "User exists: " + emailAddress;
+                    //System.out.println("User already exists: " + emailAddress);
+                    return "User exists: " + firstName;
                 } else {
                     // Create a new user
-                    User newUser = new User(1,"firstName" , "Surname", "kmName", 1701231234, "emailAddress", "status", "page", "googleId");  // Example constructor values
+                    User newUser = new User("firstName" , "Surname", "googleId");  // Example constructor values
                     userRepository.save(newUser);
-                    System.out.println("New user saved: " + emailAddress);
-                    return "New user created: " + emailAddress;
+                    //System.out.println("New user saved: " + emailAddress);
+                    return "New user created: " + firstName;
                 }
             } else {
                 return "Invalid ID token";
