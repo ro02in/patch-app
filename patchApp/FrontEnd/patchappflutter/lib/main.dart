@@ -23,6 +23,8 @@ class MyApp extends StatelessWidget { //Starting point för hela appen
   class LogInPage extends StatelessWidget {
     @override
     Widget build(BuildContext context) {
+    var screenSize = MediaQuery.of(context).size; //screensize
+
       return Scaffold(
         body: Container(
           alignment: Alignment.bottomCenter,
@@ -31,8 +33,8 @@ class MyApp extends StatelessWidget { //Starting point för hela appen
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget> [
              Container(
-                height: 940,
-                width: 415,
+                width: screenSize.width,
+                height: screenSize.height,
                 decoration: BoxDecoration(
                   image: DecorationImage(image: AssetImage('assets/stitchesbackground1.png'),
                   fit: BoxFit.fill,
@@ -178,6 +180,8 @@ class MyApp extends StatelessWidget {
 class LogInPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var screenSize = MediaQuery.of(context).size; //screensize
+
     return Scaffold(
       body: Container(
         alignment: Alignment.bottomCenter,
@@ -185,11 +189,11 @@ class LogInPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Container(
-              height: 940,
-              width: 415,
+              width: screenSize.width,
+              height: screenSize.height,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage('assets/stitchesbackground1.png'),
+                  image: AssetImage('assets/stitches1.png'),
                   fit: BoxFit.fill,
                 ),
               ),
@@ -210,7 +214,11 @@ class LogInPage extends StatelessWidget {
                     child: Image.asset('assets/sbpinklogo.png',
                         width: 150, height: 150),
                   ),
-                  SizedBox(height: 4),
+                  SizedBox(
+                    child: Image.asset('assets/syttbyttljusrosatext.png', height: 20, width: 400)
+                  ),
+                  SizedBox(height: 20), //padding
+
                   Container(
                     width: 310,
                     height: 310,

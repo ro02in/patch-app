@@ -29,16 +29,18 @@ class _PatchViewPageState extends State<PatchViewPage> {
 
 @override
 Widget build(BuildContext context) {
+  var screenSize = MediaQuery.of(context).size; //screensize
+
   return Scaffold(
     backgroundColor: const Color.fromARGB(255, 244, 240, 231), //beige color
     body: SingleChildScrollView( //Wrapping widget: Gör denna sida SCROLLABLE
       padding: EdgeInsets.symmetric(vertical: 30), //scrollable padding marginal
       child: Container(
-        height: 950,
-        width: 415,
+            width: screenSize.width,
+            height: screenSize.height,
           decoration: BoxDecoration(
-                    image: DecorationImage(image: AssetImage('assets/stitches3.png'),
-                    fit: BoxFit.fill,
+                image: DecorationImage(image: AssetImage('assets/stitches3.png'),
+                fit: BoxFit.fill,
                     )
                   ),
         child: Column(
@@ -64,11 +66,13 @@ Widget build(BuildContext context) {
                         obscureText: false,
                         cursorColor: Colors.black,
                         cursorHeight: 19,
+                        maxLength: 20,
+                        maxLengthEnforcement: MaxLengthEnforcement.enforced,
                         style: TextStyle(color: Colors.black, fontFamily: 'InknutAntiqua', fontSize: 14),
                         decoration: InputDecoration(
                           //hintStyle: TextStyle(color: Colors.black),
                           hoverColor: Colors.black,
-                          labelText: 'Märkesnamn:', labelStyle: TextStyle(color: Colors.black, fontFamily: ('InknutAntiqua')), floatingLabelBehavior: FloatingLabelBehavior.never, floatingLabelStyle: TextStyle(color: const Color.fromARGB(255, 255, 91, 211), backgroundColor: Colors.white, fontFamily: ('InknutAntiqua'), fontSize: 20, fontWeight: FontWeight.w500),
+                          labelText: 'Märkesnamn:', labelStyle: TextStyle(color: Colors.black, fontFamily: ('InknutAntiqua')), floatingLabelBehavior: FloatingLabelBehavior.never,
                           focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(color: const Color.fromARGB(255, 19, 19, 19), width: 1.1),
                             borderRadius: BorderRadius.circular(30),
@@ -82,9 +86,8 @@ Widget build(BuildContext context) {
                   ),
                     ),
                     SizedBox(width: 5),
-    
                     ]
-                  ),
+                ),
                   
                   Row( //Switch button
                     mainAxisAlignment: MainAxisAlignment.center,
