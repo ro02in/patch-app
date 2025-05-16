@@ -156,6 +156,7 @@ class MyApp extends StatelessWidget { //Starting point för hela appen
 } //LogInPage end
 
 */
+//NYTT FÖRSÖK NY BRANCH
 
 import 'package:flutter/material.dart';
 import 'package:patchappflutter/add_patch_page.dart';

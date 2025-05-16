@@ -170,6 +170,7 @@ class _TradeLogPageState extends State<TradeLogPage> {
 }
 
 */
+//NYTT FÖRSÖK NY BRANCH
 
 import 'package:flutter/material.dart';
 import 'package:patchappflutter/trade_action_page.dart';
@@ -270,7 +271,7 @@ class _TradeLogPageState extends State<TradeLogPage> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 30),
+                  SizedBox(height: 30), 
                   SizedBox(width: 30),
                   Text("Active trades:",
                       style: TextStyle(
