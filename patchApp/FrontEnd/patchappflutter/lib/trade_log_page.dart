@@ -193,74 +193,105 @@ class _TradeLogPageState extends State<TradeLogPage> {
 
   @override
   Widget build(BuildContext context) {
+    var screenSize = MediaQuery.of(context).size; //screensize
+
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 53, 53, 53),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: ListView(
-            children: [
-              SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      body: SingleChildScrollView(
+        child: Container(
+          width: screenSize.width,
+          height: screenSize.height,
+            decoration: BoxDecoration(
+                  image: DecorationImage(image: AssetImage('assets/stitches3.png'),
+                  fit: BoxFit.fill,
+                  )
+          ),
+          child: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: ListView(
                 children: [
-                  Text(
-                    "Trade Log",
-                    style: TextStyle(
-                      fontSize: 30,
-                      color: Colors.white,
-                      fontFamily: 'InknutAntiqua',
+                  SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Trade Log",
+                        style: TextStyle(
+                          fontSize: 30,
+                          color: Colors.white,
+                          fontFamily: 'InknutAntiqua',
+                        ),
+                      ),
+                      SizedBox(width: 90),
+                      IconButton(
+                        icon: Icon(Icons.settings, color: Colors.white, size: 40),
+                        highlightColor: const Color.fromARGB(255, 255, 62, 220),
+                        onPressed: () {},
+                      )
+                    ],
+                  ),
+                  SizedBox(height: 5),
+                  Container(
+                    height: 60,
+                    width: 30,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30),
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color.fromARGB(255, 149, 255, 116),
+                          spreadRadius: 2,
+                          blurRadius: 6,
+                          offset: Offset(1, 2)
+                        )
+                      ]
+                    ),
+                    child: OutlinedButton(
+                      onPressed: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => TradeActionPage()));
+                      },
+                      style: OutlinedButton.styleFrom(
+                        side: BorderSide(
+                            width: 1.2, color: Color.fromARGB(255, 122, 255, 186)),
+                        backgroundColor: Color.fromARGB(255, 39, 39, 39),
+                        overlayColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        padding: EdgeInsets.symmetric(vertical: 16),
+                      ),
+                      child: Text(
+                        "New Trade",
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.white,
+                          fontFamily: 'InknutAntiqua',
+                        ),
+                      ),
                     ),
                   ),
-                  IconButton(
-                    icon: Icon(Icons.settings, color: Colors.white),
-                    onPressed: () {},
-                  )
+                  SizedBox(height: 30),
+                  SizedBox(width: 30),
+                  Text("Active trades:",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontFamily: 'InknutAntiqua',
+                        color: Colors.white,
+                      )),
+                  SizedBox(height: 5),
+                  ...activeTrades.map((trade) => _tradeCard(trade, active: true)),
+                  SizedBox(height: 30),
+                  Text("Trade history:",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontFamily: 'InknutAntiqua',
+                        color: Colors.white,
+                      )),
+                  SizedBox(height: 5),
+                  ...tradeHistory.map((trade) => _tradeCard(trade, active: false)),
                 ],
               ),
-              SizedBox(height: 20),
-              OutlinedButton(
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => TradeActionPage()));
-                },
-                style: OutlinedButton.styleFrom(
-                  side: BorderSide(
-                      width: 1.2, color: Color.fromARGB(255, 122, 255, 186)),
-                  backgroundColor: Color.fromARGB(255, 39, 39, 39),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  padding: EdgeInsets.symmetric(vertical: 16),
-                ),
-                child: Text(
-                  "New Trade",
-                  style: TextStyle(
-                    fontSize: 22,
-                    color: Colors.white,
-                    fontFamily: 'InknutAntiqua',
-                  ),
-                ),
-              ),
-              SizedBox(height: 30),
-              Text("Active trades:",
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontFamily: 'InknutAntiqua',
-                    color: Colors.white,
-                  )),
-              SizedBox(height: 10),
-              ...activeTrades.map((trade) => _tradeCard(trade, active: true)),
-              SizedBox(height: 30),
-              Text("Trade history:",
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontFamily: 'InknutAntiqua',
-                    color: Colors.white,
-                  )),
-              SizedBox(height: 10),
-              ...tradeHistory.map((trade) => _tradeCard(trade, active: false)),
-            ],
+            ),
           ),
         ),
       ),
@@ -282,9 +313,10 @@ class _TradeLogPageState extends State<TradeLogPage> {
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black26,
-              blurRadius: 4,
-              offset: Offset(2, 4),
+              color: Color.fromARGB(255, 34, 34, 34),
+              spreadRadius: 2,
+              blurRadius: 5,
+              offset: Offset(1, 2),
             ),
           ],
         ),
