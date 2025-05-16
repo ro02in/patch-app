@@ -2,38 +2,39 @@ package com.pvt154.patchApp.model;
 
 import com.pvt154.patchApp.service.TradeStatus;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "trade_request")
 @Data
+@NoArgsConstructor
 public class TradeRequest {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)  // Add this
-    private Long tradeId;  // Changed from int to Long
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "trade_id")
+    private Long tradeId;
     
-    @ManyToOne
-    @JoinColumn(name = "sender_id", referencedColumnName = "google_id")  // Fixed column name
-    private User sender;
-    
-    @ManyToOne
-    @JoinColumn(name = "receiver_id", referencedColumnName = "google_id")  // Fixed column name
-    private User receiver;
-    
-    @OneToOne
-    @JoinColumn(name = "offered_patch_id")  // Consistent naming
-    private Patch badgeOffered;  // Match with service layer naming
-    
-    @OneToOne
-    @JoinColumn(name = "requested_patch_id")  // Consistent naming
-    private Patch badgeRequested;  // Match with service layer naming
-    
-    @Enumerated(EnumType.STRING)  // Add this
+    @Enumerated(EnumType.STRING)
     private TradeStatus status;
     
-    private LocalDateTime createdAt;  // Changed from LocalDate for more precision
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+    
+    @OneToOne
+    @JoinColumn(name = "badge_offered_id")
+    private Patch badgeOffered;
+    
+    @OneToOne
+    @JoinColumn(name = "badge_requested_id")
+    private Patch badgeRequested;
+
+    @Column(name = "sender_id", columnDefinition = "VARCHAR(255)", unique = true)
+    private String senderId;
+
+    @Column(name = "receiver_id", columnDefinition = "VARCHAR(255)", unique = true)
+    private String receiverId;
+    
+
 }

@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class User {
     @Id
-    @Column(name = "google_id")
+    @Column(name = "google_id", columnDefinition = "VARCHAR(255)", unique = true)
     private String googleId;
 
     @Column(name = "first_name")

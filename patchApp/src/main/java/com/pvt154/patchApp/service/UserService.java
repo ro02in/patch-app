@@ -28,11 +28,6 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User createUserWithKmStatus(String firstName, String surName, String googleId, 
-                                     String emailAddress, String kmStatus) {
-        User user = new User(firstName, surName, googleId, emailAddress, kmStatus);
-        return userRepository.save(user);
-    }
 
     public User updateUser(User user) {
         // Verify user exists
@@ -54,12 +49,7 @@ public class UserService {
         user.setKmStatus(newKmStatus);
         return userRepository.save(user);
     }
-
-    public User updateTeamSthlmPage(String googleId, String teamSthlmPage) {
-        User user = getUserById(googleId);
-        user.setTeamSthlmPage(teamSthlmPage);
-        return userRepository.save(user);
-    }
+    
 
     public boolean existsByGoogleId(String googleId) {
         return userRepository.findByGoogleId(googleId).isPresent();
