@@ -58,7 +58,8 @@ public class AuthController {
                     return "User exists: " + firstName;
                 } else {
                     // Create a new user
-                    userRepository.save(newUser("firstname", "surname", "1234", "email@test.se"));
+                    User newUser = new User("firstName", "surname", "1234456", "email@address.test");
+                    userRepository.save(newUser);
                     //System.out.println("New user saved: " + emailAddress);
                     return "New user created: " + firstName;
                 }

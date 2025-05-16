@@ -4,56 +4,37 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Entity
+@Table(name = "users")
 @Data
 @NoArgsConstructor
 public class User {
     @Id
+    @Column(name = "google_id")
     private String googleId;
+
+    @Column(name = "first_name")
     private String firstName;
+
+    @Column(name = "sur_name")
     private String surName;
-    private String kmName; // ej obligatorisk
-    private int phoneNumber;
+
+    @Column(name = "km_name")
+    private String kmName;
+
+    @Column(name = "phone_number")
+    private Integer phoneNumber;
+
+    @Column(name = "email_address", unique = true)
     private String emailAddress;
+
+    @Column(name = "km_status")
     private String kmStatus;
-    private String teamSthlmPage;
 
-@Override
-    public User( String firstName, String surName, String googleId, String emailAdress) {
-        this.firstName = firstName;
-        this.surName = surName;
-        this.googleId = googleId;
-        this.emailAddress = emailAdress;
-    }
-
-    public User(String firstName, String surName, String googleId, String emailAddress, String kmStatus) {
+    public User(String firstName, String surName, String googleId, String emailAddress) {
         this.firstName = firstName;
         this.surName = surName;
         this.googleId = googleId;
         this.emailAddress = emailAddress;
-        this.kmStatus = kmStatus;
     }
-    public User(String firstName, String surName, String googleId, String emailAddress, String kmStatus, String kmName) {
-        this.firstName = firstName;
-        this.surName = surName;
-        this.googleId = googleId;
-        this.emailAddress = emailAddress;
-        this.kmStatus = kmStatus;
-        this.kmName = kmName;
-    }
-    public User(String firstName, String surName, String googleId, String emailAddress, String kmStatus, String kmName, String teamSthlmPage) {
-        this.firstName = firstName;
-        this.surName = surName;
-        this.googleId = googleId;
-        this.emailAddress = emailAddress;
-        this.kmStatus = kmStatus;
-        this.kmName = kmName;
-        this.teamSthlmPage = teamSthlmPage;
-    }
-
-
-
 }
