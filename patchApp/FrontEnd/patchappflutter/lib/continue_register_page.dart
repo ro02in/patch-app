@@ -1,3 +1,5 @@
+//NYTT FÖRSÖK NY BRANCH
+
 import 'package:flutter/material.dart';
 
 class ContinueRegisterPage extends StatefulWidget {
