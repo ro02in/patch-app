@@ -85,7 +85,7 @@ public class AuthController {
             String kmStatus = (String) payload.get("KM status");
             String teamSthlmPage = (String) payload.get("Team STHLM page");
 
-            User newUser = new User(firstName, surName, kmName, phoneNumber, email, kmStatus, teamSthlmPage, googleId);
+            User newUser = new User("firstName", "surName", googleId, "E");
             userRepository.save(newUser);
 
             return new AuthResponse("success", "User registered", email);
