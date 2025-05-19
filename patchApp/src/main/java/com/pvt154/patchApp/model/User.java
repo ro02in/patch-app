@@ -28,12 +28,12 @@ public class User {
     @Column(name = "email_address", unique = true)
     private String emailAddress;
 
-    @Column(name = "km_status")
-    private String kmStatus;
 
-    public User(String firstName, String surName, String googleId, String emailAddress) {
+    public User(String firstName, String surName, String kmName, Integer phoneNumber, String googleId, String emailAddress) {
         this.firstName = firstName;
         this.surName = surName;
+        this.kmName = kmName;
+        this.phoneNumber = phoneNumber;
         this.googleId = googleId;
         this.emailAddress = emailAddress;
     }

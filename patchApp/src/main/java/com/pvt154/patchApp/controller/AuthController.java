@@ -70,7 +70,7 @@ public class AuthController {
 
             GoogleIdToken.Payload payload = idToken.getPayload();
             String googleId = payload.getSubject();
-            String email = payload.getEmail();
+            String emailAddress = payload.getEmail();
 
             Optional<User> optionalUser = userRepository.findByGoogleId(googleId);
             if (optionalUser.isPresent()) {
@@ -82,13 +82,12 @@ public class AuthController {
             String kmName = (String) payload.get("KM name");
             String phoneStr = (String) payload.get("Phone-number");
             int phoneNumber = (phoneStr != null && phoneStr.matches("\\d+")) ? Integer.parseInt(phoneStr) : 0;
-            String kmStatus = (String) payload.get("KM status");
-            String teamSthlmPage = (String) payload.get("Team STHLM page");
 
-            User newUser = new User("firstName", "surName", googleId, "E");
+
+            User newUser = new User(firstName, surName, kmName, phoneNumbergoogleId, emailAddress);
             userRepository.save(newUser);
 
-            return new AuthResponse("success", "User registered", email);
+            return new AuthResponse("success", "User registered", emailAddress);
         } catch (Exception e) {
             return new AuthResponse("error", "Registration error: " + e.getMessage(), null);
         }

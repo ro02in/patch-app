@@ -40,8 +40,8 @@ public class PatchAppApplicationTest {
 	@BeforeEach
 	public void setup() {
 		// Create test users using the appropriate constructor
-		sender = new User("John", "Doe", "google-id-1", "john@example.com");
-		receiver = new User("Jane", "Smith", "google-id-2", "jane@example.com");
+		sender = new User("John", "Doe","jodoe", 07012323, "google-id-1", "john@example.com");
+		receiver = new User("Jane", "Smith", "jasmith", 07012223, "google-id-2", "jane@example.com");
 
 		userRepository.save(sender);
 		userRepository.save(receiver);

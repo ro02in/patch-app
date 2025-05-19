@@ -24,7 +24,7 @@ public class UserService {
     }
 
     public User createUser(String firstName, String surName, String googleId, String emailAddress) {
-        User user = new User(firstName, surName, googleId, emailAddress);
+        User user = new User("firstName", "surName", "kmName", 07012323, "googleId", "emailAddress");
         return userRepository.save(user);
     }
 
@@ -43,13 +43,6 @@ public class UserService {
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
-
-    public User updateKmStatus(String googleId, String newKmStatus) {
-        User user = getUserById(googleId);
-        user.setKmStatus(newKmStatus);
-        return userRepository.save(user);
-    }
-    
 
     public boolean existsByGoogleId(String googleId) {
         return userRepository.findByGoogleId(googleId).isPresent();
