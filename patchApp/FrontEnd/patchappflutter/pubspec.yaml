@@ -99,6 +99,12 @@ flutter:
       - assets/stitches1.png
       - assets/stitches1.png
       - assets/syttbyttljusrosatext.png
+      - assets/googlelogo.png
+      - assets/googlelogo2.png
+      - assets/googlelogorund.png
+      - assets/rosaovve.png
+
+
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
