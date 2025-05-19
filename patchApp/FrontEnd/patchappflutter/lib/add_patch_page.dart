@@ -12,14 +12,14 @@ import 'package:image_picker/image_picker.dart';
 
 //Variabler till DropDownButtons
 const List<String> colours = <String>['Färg', 'Blå', 'Brun', 'Grå', 'Grön', 'Gul', 'Lila', 'Orange', 'Rosa', 'Röd', 'Svart', 'Vit'];
-const List<String> categories = <String>['Kategori', 'Sport', 'Test1', 'Test2', 'Test3', 'Test4'];
-const List<String> studentClubs = <String>['Klubbmästeri', 'DISK', 'Klubb3', 'Klubb5', 'Klubb6', 'Klubb6', 'Klubb7', 'Klubb8', 'Klubb9', 'Klubb10'];
-const List<String> placement = <String>['Vänster arm', 'Höger arm', 'Vänster ben', 'Höger ben', 'Överkropp', 'Krage'];
+const List<String> categories = <String>['Kategori', 'Påsytt', 'Ej påsytt'];
+//const List<String> studentClubs = <String>['Klubbmästeri', 'DISK', 'Klubb3', 'Klubb5', 'Klubb6', 'Klubb6', 'Klubb7', 'Klubb8', 'Klubb9', 'Klubb10'];
+const List<String> placement = <String>['Ej påsytt', 'Vänster arm', 'Höger arm', 'Vänster ben', 'Höger ben', 'Överkropp', 'Krage', 'Skrev'];
 
 //Listor till DropDownButtons
 String dropdownColour = colours.first;
 String dropdownCategory = categories.first;
-String dropdownStudentClub = studentClubs.first;
+//String dropdownStudentClub = studentClubs.first;
 String dropdownPlacement = placement.first;
 
 class PatchViewPage extends StatefulWidget {
@@ -32,6 +32,7 @@ class _PatchViewPageState extends State<PatchViewPage> {
   int amount = 0; //amount-delen
   bool publicPrivate = true; //switch button variable
   bool trade = true;
+  String patchName = '';
 
   File ? _selectedImage; //lägga till från kamera eller bibliotek variabel
 
@@ -60,18 +61,20 @@ Widget build(BuildContext context) {
               //mainAxisAlignment: MainAxisAlignment.center,
               //crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(height: 80), //padding
+                SizedBox(height: 20), //padding
                     CircleAvatar(
                       radius: 80,
                       backgroundColor: Colors.white,
-                      child: Icon(Icons.add, color: Colors.black, size: 30),
+                      child: Icon(Icons.add, color: const Color.fromARGB(255, 104, 94, 94), size: 30),
                       foregroundImage: _selectedImage != null ? FileImage(_selectedImage!) : null //Kodrad Källhänvisning: youtu.be/qYCsxvbPDC8?si=QmZC_OoY8unh9ZRS, 'Flutter Image Picker & Cropper From Camera & Gallery | Learn Flutter Fast', av kanalen Marcus Ng, publicerad 11 november 2022, hämtad 19 maj 2025.
                     ),
+
+                    SizedBox(height: 10), //padding
       
                     //LÄGGA TILL BILD FRÅN KAMERA
                     Row(
                       children: [
-                      SizedBox(width: 130), //spacing
+                      SizedBox(width: 122), //spacing
                       Container(
                           padding: EdgeInsets.all(8),
                           height: 70,
@@ -107,12 +110,11 @@ Widget build(BuildContext context) {
                                     _pickImageFromCamera();
                               }),
                         ),
-      
                     ]
                   ),
       
                     //Image.asset('assets/sbpinklogo.png', width: 150, height: 150, alignment: Alignment.center),
-                    SizedBox(height: 6), //simulated padding
+                    SizedBox(height: 20), //simulated padding
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -127,23 +129,19 @@ Widget build(BuildContext context) {
                         ),
                         child: TextField(
                           obscureText: false,
-                          cursorColor: Colors.black,
-                          cursorHeight: 19,
+                          cursorColor: const Color.fromARGB(255, 239, 137, 254),
+                          cursorHeight: 22,
                           maxLength: 20,
                           maxLengthEnforcement: MaxLengthEnforcement.enforced,
                           style: TextStyle(color: Colors.black, fontFamily: 'InknutAntiqua', fontSize: 14),
                           decoration: InputDecoration(
+                            counterStyle: TextStyle(fontFamily: 'InknutAntiqua', color: Colors.black, fontSize: 13, height: -80),
+                            contentPadding: EdgeInsets.only(left: 15, bottom: 16, right: 20),
                             //hintStyle: TextStyle(color: Colors.black),
                             hoverColor: Colors.black,
                             labelText: 'Märkesnamn:', labelStyle: TextStyle(color: Colors.black, fontFamily: ('InknutAntiqua')), floatingLabelBehavior: FloatingLabelBehavior.never,
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: const Color.fromARGB(255, 19, 19, 19), width: 1.1),
-                              borderRadius: BorderRadius.circular(30),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: const Color.fromARGB(255, 19, 19, 19), width: 1.1),
-                                borderRadius: BorderRadius.circular(30),
-                            ),
+                            focusedBorder: InputBorder.none,
+                            enabledBorder: InputBorder.none,
                         ),
                       ),
                     ),
@@ -207,21 +205,22 @@ Widget build(BuildContext context) {
                       ]
                     ), 
                     
-                    SizedBox(height: 5),
+                    SizedBox(height: 18),
+
                     Row( //History-rubrik
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                      SizedBox(width: 50), //spacing padding
-                      Text("Historia", style: TextStyle(color: Colors.white, fontSize: 20, fontFamily: ('InknutAntiqua'), fontWeight: FontWeight.w400)),
+                      SizedBox(width: 40), //spacing padding
+                      Text("Historia", style: TextStyle(color: Colors.white, fontSize: 18, fontFamily: ('InknutAntiqua'), fontWeight: FontWeight.w400)),
                       SizedBox(width: 4), //spacing between text and icon
                       //Icon(Icons.border_color_sharp, size: 20),
                     ]),
-                      SizedBox(height: 5), //padding
+                      SizedBox(height: 10), //padding
                       SizedBox(width: 340), //padding marginal till vänster
                       Container( //Märkeshistoria box
                         height: 90,
-                        width: 320,
+                        width: 150,
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(20),
@@ -237,6 +236,7 @@ Widget build(BuildContext context) {
                         //padding: EdgeInsets.symmetric(horizontal: 80),
                           //child: Text("History about your patch... lorem ipsum \nhejhejhej" , textAlign: TextAlign.left, style: TextStyle(color: Colors.black, fontFamily: ('HappyMonkey'), fontSize: 14)),
                           child: TextFormField(
+                            style: TextStyle(color: Colors.black, fontFamily: 'InknutAntiqua', fontSize: 14),
                             obscureText: false,
                             cursorColor: const Color.fromARGB(255, 239, 137, 254),
                             cursorHeight: 22,
@@ -247,16 +247,11 @@ Widget build(BuildContext context) {
                             maxLengthEnforcement: MaxLengthEnforcement.enforced,
                             scrollPadding: EdgeInsets.fromLTRB(5, 5, 5, 5),
                             decoration: InputDecoration(
+                            counterStyle: TextStyle(fontFamily: 'InknutAntiqua', color: Colors.black, fontSize: 13, height: -50),
                               //labelText: 'History about your patch:',
-                            contentPadding: EdgeInsets.fromLTRB(0, 20, 0, 20),
-                              focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: const Color.fromARGB(255, 49, 49, 49), width: 1.1),
-                                  borderRadius: BorderRadius.circular(15),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: const Color.fromARGB(255, 49, 49, 49), width: 1.1),
-                                  borderRadius: BorderRadius.circular(15),
-                               )
+                            contentPadding: EdgeInsets.fromLTRB(0, 15, 10, 20),
+                              focusedBorder: InputBorder.none,
+                              enabledBorder: InputBorder.none
                             ),
                           )
                       ),
@@ -265,12 +260,12 @@ Widget build(BuildContext context) {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        SizedBox(width: 45), //padding
-                        Text("Storlek", style: TextStyle(color: Colors.white, fontSize: 20, fontFamily: ('InknutAntiqua'), fontWeight: FontWeight.w400)),
+                        SizedBox(width: 40), //padding
+
+                        //FIXA SCROLL DOWN MENY CUPERTINO DM CM MM OCH SEN SKRIVA IN TAL STL.
+                        Text("Storlek", style: TextStyle(color: Colors.white, fontSize: 18, fontFamily: ('InknutAntiqua'), fontWeight: FontWeight.w400)),
                         SizedBox(width: 4), //spacing between text and icon
-                        //Icon(Icons.border_color_sharp, size: 20),
-                        //AmountButton(title: 'AmountButton'), //BUTTON
-                        SizedBox(height: 35), //padding
+                        SizedBox(height: 45), //padding
                       ],
                     ),
                     Column( //Större Column för alla 3 knapparna Category + Color + Student Club och Amount-delen
@@ -278,6 +273,105 @@ Widget build(BuildContext context) {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         SizedBox(width: 450), //spacing marginal till vänster
+
+                      //Fylla i boxar STORLEK
+                      Row(
+                        children: [
+                          SizedBox(width: 25),
+
+                        Container( //STORLEK BOX 1 FYLLA I ETT HELTAL
+                        padding: EdgeInsets.fromLTRB(10, 0, 0, 10),
+                        child: Container(
+                          height: 40,
+                          width: 70,
+                          decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(60),
+                          boxShadow: [
+                            BoxShadow(
+                              color: const Color.fromARGB(255, 255, 207, 63),
+                              spreadRadius: 0.8,
+                              blurRadius: 3,
+                              offset: Offset(1, 2)
+                            )
+                          ]
+                        ),
+                          child: TextField(
+                            obscureText: false,
+                            cursorColor: const Color.fromARGB(255, 239, 137, 254),
+                            cursorHeight: 19,
+                            maxLength: 3,
+                            maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                            style: TextStyle(color: Colors.black, fontFamily: 'InknutAntiqua', fontSize: 14),
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.only(left: 12, bottom: 8),
+                              counterText: "",
+                              //hintStyle: TextStyle(color: Colors.black),
+                              hoverColor: Colors.black,
+                              //labelText: 'Märkesnamn:', labelStyle: TextStyle(color: Colors.black, fontFamily: ('InknutAntiqua')), floatingLabelBehavior: FloatingLabelBehavior.never,
+                              focusedBorder: InputBorder.none,
+                              enabledBorder: InputBorder.none,
+                                  ),
+                                ),
+                              ),
+                            ),
+
+                            SizedBox(width: 5),
+
+                            Container( //STORLEK BOX 2 FYLLA I ETT HELTAL
+                              height: 40,
+                              width: 40,
+                              decoration: BoxDecoration(
+                                color: const Color.fromARGB(40, 44, 44, 44),
+                                borderRadius: BorderRadius.circular(100)
+                              ),
+                              child: Icon(Icons.close, color: Colors.white, size: 22)
+                            ),
+
+                            Container( //STORLEK BOX 2 FYLLA I ETT HELTAL
+                            padding: EdgeInsets.fromLTRB(5, 0, 0, 5),
+                            child: Container(
+                              height: 40,
+                              width: 70,
+                              decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(60),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: const Color.fromARGB(255, 255, 207, 63),
+                                  spreadRadius: 0.8,
+                                  blurRadius: 3,
+                                  offset: Offset(1, 2)
+                                )
+                              ]
+                            ),
+                              child: TextField(
+                                obscureText: false,
+                                cursorColor: const Color.fromARGB(255, 239, 137, 254),
+                                cursorHeight: 19,
+                                maxLength: 3,
+                                maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                                style: TextStyle(color: Colors.black, fontFamily: 'InknutAntiqua', fontSize: 14),
+                                decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.only(left: 12, bottom: 8),
+                                  counterText: "",
+                                  //hintStyle: TextStyle(color: Colors.black),
+                                  hoverColor: Colors.black,
+                                  //labelText: 'Märkesnamn:', labelStyle: TextStyle(color: Colors.black, fontFamily: ('InknutAntiqua')), floatingLabelBehavior: FloatingLabelBehavior.never,
+                                  focusedBorder: InputBorder.none,
+                                  enabledBorder: InputBorder.none,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+
+                                SizedBox(width: 14),
+
+                                Text("mm", style: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 18), textAlign: TextAlign.center,)
+                             ],
+                          ),
+
+                          SizedBox(height: 25),
                         
                         //Knapp 1 Category
                         Container( //CATEGORY BUTTON DROPDOWNBUTTON
@@ -289,8 +383,8 @@ Widget build(BuildContext context) {
                             boxShadow: [
                               BoxShadow(
                                 color: Color.fromARGB(255, 122, 255, 186),
-                                blurRadius: 4,
-                                spreadRadius: 2,
+                                blurRadius: 7,
+                                spreadRadius: 1,
                                 offset: Offset(1, 2),
                               )
                             ]
@@ -300,7 +394,7 @@ Widget build(BuildContext context) {
                                 dropdownColor: Colors.white,
                                   menuMaxHeight: 180, //scrollable menu, styra hur många entries som syns samtidigt i dropdown-menyn
                                   menuWidth: 280,
-                                  borderRadius: BorderRadius.circular(30),
+                                  borderRadius: BorderRadius.circular(40),
                                   focusColor: Color.fromARGB(255, 122, 255, 186),
                                   style: TextStyle(color: Colors.black, fontFamily: 'InknutAntiqua', fontSize: 15),
                                   padding: EdgeInsets.only(left: 10),
@@ -319,7 +413,7 @@ Widget build(BuildContext context) {
                           ), //CATEGORY BUTTON DROPDOWNBUTTON
           
                               //Knapp 2 Colour
-                              SizedBox(height: 14), //padding
+                              SizedBox(height: 22), //padding
                             
                                //KNAPP 2 Colour                          
                                Container( //COLOR BUTTON DROPDOWNBUTTON
@@ -331,8 +425,8 @@ Widget build(BuildContext context) {
                                     boxShadow: [
                                       BoxShadow(
                                         color: Color.fromARGB(255, 122, 255, 186),
-                                        blurRadius: 4,
-                                        spreadRadius: 2,
+                                        blurRadius: 7,
+                                        spreadRadius: 1,
                                         offset: Offset(1, 2),
                                       )
                                     ]
@@ -361,57 +455,64 @@ Widget build(BuildContext context) {
                               
                             
                               //Knapp 3 Klubbmästeri
-                              SizedBox(height: 14), //padding
-                              Container( //STUDENT CLUBS BUTTON DROPDOWNBUTTON
-                                  width: 330,
-                                  height: 40,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(30),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Color.fromARGB(255, 122, 255, 186),
-                                        blurRadius: 6,
-                                        spreadRadius: 2,
-                                        offset: Offset(1, 2),
-                                      )
-                                    ]
-                                  ),
-                                  child: DropdownButtonHideUnderline(
-                                    child: DropdownButton(
-                                      dropdownColor: Colors.white,
-                                        menuMaxHeight: 180, //scrollable menu, styra hur många entries som syns samtidigt i dropdown-menyn
-                                        menuWidth: 280,
+                              SizedBox(height: 22), //padding
+                            
+                                Row(
+                                  children: [
+                                    SizedBox(width: 10),
+                                    Container(
+                                    padding: EdgeInsets.fromLTRB(20, 0, 0, 20),
+                                    child: Container(
+                                      height: 40,
+                                      width: 330,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
                                         borderRadius: BorderRadius.circular(30),
-                                        style: TextStyle(color: Colors.black, fontFamily: 'InknutAntiqua', fontSize: 15),
-                                        padding: EdgeInsets.only(left: 10),
-                                      value: dropdownStudentClub,
-                                      onChanged: (String? value) {
-                                        setState(() {
-                                          dropdownStudentClub = value!;
-                                        });
-                                      },
-                                      items: studentClubs.map<DropdownMenuItem<String>>((String value) {
-                                        return DropdownMenuItem<String>(value: value, child: 
-                                        Text(value));
-                                      }).toList(),
-                                    ) 
-                                  )
-                                ), //STUDENT CLUBS BUTTON DROPDOWNBUTTON
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Color.fromARGB(255, 122, 255, 186),
+                                            blurRadius: 7,
+                                            spreadRadius: 1,
+                                            offset: Offset(1, 2),
+                                          )
+                                        ]
+                                      ),
+                                      child: TextField(
+                                        obscureText: false,
+                                        cursorColor: const Color.fromARGB(255, 239, 137, 254),
+                                        cursorHeight: 21,
+                                        maxLength: 20,
+                                        maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                                        style: TextStyle(color: Colors.black, fontFamily: 'InknutAntiqua', fontSize: 14),
+                                        decoration: InputDecoration(
+                                          counterStyle: TextStyle(fontFamily: 'InknutAntiqua', color: Colors.black, fontSize: 13, height: -60),
+                                          contentPadding: EdgeInsets.only(left: 12, bottom: 15, right: 10),
+                                          hoverColor: const Color.fromARGB(255, 239, 137, 254),
+                                          labelText: 'Klubbmästeri:', labelStyle: TextStyle(color: Colors.black, fontFamily: ('InknutAntiqua')), floatingLabelBehavior: FloatingLabelBehavior.never,
+                                          border: InputBorder.none,
+                                          focusedBorder: InputBorder.none,
+                                          enabledBorder: InputBorder.none
+                                          ),
+                                      ),
+                                    ),
+                                  ),
+                                
+                                ],
+                              ),//STUDENT CLUBS BUTTON DROPDOWNBUTTON
           
-                              SizedBox(height: 20), //padding
+                              SizedBox(height: 25), //padding
                               
                               Row( //Nästa Row (rad): 'Amount'-text och 'Available for trade?'-text
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                 SizedBox(width: 41), //padding skapa marginal åt vänster
           
-                                Text("Antal", style: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 20, fontWeight: FontWeight.w400)),
-                                SizedBox(width: 68), //spacing
-                                Text("Tillgänglig att byta?", style: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 18, fontWeight: FontWeight.w300))
+                                Text("Antal", style: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 16, fontWeight: FontWeight.w400)),
+                                SizedBox(width: 105), //spacing
+                                Text("Tillgänglig att byta?", style: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 16, fontWeight: FontWeight.w300))
                                 ]
                               ),
-                              SizedBox(height: 8),
+                              SizedBox(height: 6),
                               
                               Row( //Nästa Row (rad): -minus knapp och +knapp Addera, subtrahera 'Amount'-värde
                                 mainAxisAlignment: MainAxisAlignment.start,
@@ -472,15 +573,15 @@ Widget build(BuildContext context) {
                                         }
                                   ),
           
-                                  SizedBox(width: 35), //padding spacing
+                                  SizedBox(width: 45), //padding spacing
                                   
                                   Container(
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(30),
                                       boxShadow: [
                                         BoxShadow(
-                                          color: const Color.fromARGB(255, 255, 141, 208),
-                                          spreadRadius: 1,
+                                          color: const Color.fromARGB(255, 255, 141, 221),
+                                          spreadRadius: 0.5,
                                           blurRadius: 2,
                                           offset: Offset(0.5, 1)
                                         )
@@ -490,7 +591,7 @@ Widget build(BuildContext context) {
                                     value: trade,
                                     duration: Duration(milliseconds: 205), //smoother switch animation
                                     width: 75,
-                                    height: 35,
+                                    height: 38,
                                     borderRadius: 50,
                                     valueFontSize: 15,
                                       activeColor: const Color.fromARGB(255, 241, 150, 255),
@@ -519,14 +620,14 @@ Widget build(BuildContext context) {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        SizedBox(height: 30), //padding
+                        SizedBox(height: 20), //padding
                         //SizedBox(width: 450), //spacing marginal till vänster
           
                         Row( //Placement-knapp
                           children: [
-                            SizedBox(width: 40), //spacing marginal till vänster
+                            SizedBox(width: 120), //spacing marginal till vänster
                             Container( //PLACEMENT BUTTON DROPDOWNBUTTON
-                                  width: 330,
+                                  width: 150,
                                   height: 40,
                                   decoration: BoxDecoration(
                                     color: Colors.white,
@@ -540,27 +641,33 @@ Widget build(BuildContext context) {
                                       )
                                     ]
                                   ),
-                                  child: DropdownButtonHideUnderline(
-                                    child: DropdownButton(
-                                      dropdownColor: const Color.fromARGB(255, 248, 252, 255),
-                                        menuMaxHeight: 180, //scrollable menu, styra hur många entries som syns samtidigt i dropdown-menyn
-                                        menuWidth: 280,
-                                        borderRadius: BorderRadius.circular(30),
-                                        style: TextStyle(color: const Color.fromARGB(255, 0, 0, 0), fontFamily: 'InknutAntiqua', fontSize: 15),
-                                        padding: EdgeInsets.only(left: 10),
-                                      value: dropdownPlacement,
-                                      onChanged: (String? value) {
-                                        setState(() {
-                                          dropdownPlacement = value!;
-                                        });
-                                      },
-                                      items: placement.map<DropdownMenuItem<String>>((String value) {
-                                        return DropdownMenuItem<String>(value: value, child: 
-                                        Text(value));
-                                      }).toList(),
-                                    ) 
+                                  child: PopupMenuButton<String>(
+                                    elevation: 8,
+                                    shadowColor: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(Radius.circular(30))
+                                    ),
+                                    color: Colors.white,
+                                    popUpAnimationStyle: AnimationStyle(curve: Curves.easeInQuart, duration: const Duration(milliseconds: 1000), reverseCurve: Curves.fastOutSlowIn, reverseDuration: const Duration(milliseconds: 1200)),
+                                    offset: Offset(95, -200),
+                                    initialValue: "Placering",
+                                    itemBuilder: (context) => [
+                                      PopupMenuItem(child: Text('Ej påsytt', style: TextStyle(color: Colors.black, fontFamily: 'InknutAntiqua', fontSize: 14))),
+                                      PopupMenuItem(child: Text('Vänster arm', style: TextStyle(color: Colors.black, fontFamily: 'InknutAntiqua', fontSize: 14))),
+                                      PopupMenuItem(child: Text('Höger arm', style: TextStyle(color: Colors.black, fontFamily: 'InknutAntiqua', fontSize: 14))),
+                                      PopupMenuItem(child: Text('Vänster ben', style: TextStyle(color: Colors.black, fontFamily: 'InknutAntiqua', fontSize: 14))),
+                                      PopupMenuItem(child: Text('Höger ben', style: TextStyle(color: Colors.black, fontFamily: 'InknutAntiqua', fontSize: 14))),
+                                      PopupMenuItem(child: Text('Krage', style: TextStyle(color: Colors.black, fontFamily: 'InknutAntiqua', fontSize: 14))),
+                                      PopupMenuItem(child: Text('Skrev', style: TextStyle(color: Colors.black, fontFamily: 'InknutAntiqua', fontSize: 14))),
+                                    ],
+
+                                    child: TextButton(
+                                      child: Text("Placering", style: TextStyle(color: Colors.black, fontFamily: 'InknutAntiqua', fontSize: 15)),
+                                      onPressed: null, 
+                                      ),
                                   )
-                                ), //PLACEMENT BUTTON DROPDOWNBUTTON
+                                  )
+                                //), //PLACEMENT BUTTON DROPDOWNBUTTON
                             ],
                         ),
           
