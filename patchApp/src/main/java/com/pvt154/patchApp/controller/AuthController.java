@@ -74,7 +74,7 @@ public class AuthController {
 
             Optional<User> optionalUser = userRepository.findByGoogleId(googleId);
             if (optionalUser.isPresent()) {
-                return new AuthResponse("exists", "User already has an account", email);
+                return new AuthResponse("exists", "User already has an account", emailAddress);
             }
 
             String firstName = (String) payload.get("Name");
@@ -84,7 +84,7 @@ public class AuthController {
             int phoneNumber = (phoneStr != null && phoneStr.matches("\\d+")) ? Integer.parseInt(phoneStr) : 0;
 
 
-            User newUser = new User(firstName, surName, kmName, phoneNumbergoogleId, emailAddress);
+            User newUser = new User(firstName, surName, kmName, phoneNumber, googleId, emailAddress);
             userRepository.save(newUser);
 
             return new AuthResponse("success", "User registered", emailAddress);

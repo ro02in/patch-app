@@ -8,6 +8,5 @@ public class TradeRequestDTO {
     private String receiverId;
     private Long badgeOfferedId;
     private Long badgeRequestedId;
-    // Getters och setters
 }
 

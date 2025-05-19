@@ -12,12 +12,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
+@Rollback(false)
 public class PatchAppApplicationTest {
 
 	@Autowired
@@ -49,12 +51,14 @@ public class PatchAppApplicationTest {
 		// Create test patches
 		senderPatch = new Patch();
 		senderPatch.setOwnerGoogleId(sender.getGoogleId());
-		senderPatch.setStatus("AVAILABLE");
+		senderPatch.setIsPublic(true);
+		//senderPatch.setCategory("PASYTT");
+		//senderPatch.setStatus("AVAILABLE");
 		senderPatch.setHistory("Sender's patch history");
 
 		receiverPatch = new Patch();
 		receiverPatch.setOwnerGoogleId(receiver.getGoogleId());
-		receiverPatch.setStatus("AVAILABLE");
+		//receiverPatch.setStatus("AVAILABLE");
 		receiverPatch.setHistory("Receiver's patch history");
 
 		patchRepository.save(senderPatch);

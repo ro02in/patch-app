@@ -1,5 +1,6 @@
 package com.pvt154.patchApp.model;
 
+import com.pvt154.patchApp.service.PatchCategory;
 import com.pvt154.patchApp.service.PatchColors;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -26,8 +27,10 @@ public class Patch {
     private String ownerGoogleId;
     
     private String picturePath;
-    
-    private String status;
+
+    private Boolean isPublic;
+
+    private PatchCategory category;
     
     @ElementCollection
     @CollectionTable(name = "patch_colors", 
@@ -36,16 +39,16 @@ public class Patch {
     @Column(name = "color")
     private List<PatchColors> colors = new ArrayList<>();
 
-    public Patch(String owner, String status, PatchColors[] colors) {
+    public Patch(String owner, PatchCategory category, PatchColors[] colors) {
         this.ownerGoogleId = owner;
-        this.status = status;
+        this.category = category;
         this.colors = new ArrayList<>(Arrays.asList(colors));
     }
 
-    public Patch(String history, String owner, String status, PatchColors[] colors, String picturePath) {
+    public Patch(String history, String owner, PatchCategory category, PatchColors[] colors, String picturePath) {
         this.history = history;
         this.ownerGoogleId = owner;
-        this.status = status;
+        this.category = category;
         this.colors = new ArrayList<>(Arrays.asList(colors));
         this.picturePath = picturePath;
     }
