@@ -19,8 +19,10 @@ public class User {
     @Column(name = "sur_name")
     private String surName;
 
-    @Column(name = "km_name")
+    @Column(name = "km_name") // username
     private String kmName;
+
+
 
     @Column(name = "phone_number")
     private Integer phoneNumber;

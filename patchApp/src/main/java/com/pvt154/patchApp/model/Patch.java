@@ -8,6 +8,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.awt.*;
+import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -20,16 +22,21 @@ public class Patch {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
-    private String history;
+
+    @Column(name = "description")
+    private String description;
     
     @Column(name = "owner_google_id")
     private String ownerGoogleId;
-    
-    private String picturePath;
 
+    @Lob
+    @Column(name = "picture_data", columnDefinition = "LONGBLOB")
+    private byte[] pictureData;
+
+    @Column(name = "is_public")
     private Boolean isPublic;
 
+    @Column(name = "category")
     private PatchCategory category;
     
     @ElementCollection
@@ -45,12 +52,12 @@ public class Patch {
         this.colors = new ArrayList<>(Arrays.asList(colors));
     }
 
-    public Patch(String history, String owner, PatchCategory category, PatchColors[] colors, String picturePath) {
-        this.history = history;
+    public Patch(String description, String owner, PatchCategory category, PatchColors[] colors, byte[] pictureData) {
+        this.description = description;
         this.ownerGoogleId = owner;
         this.category = category;
         this.colors = new ArrayList<>(Arrays.asList(colors));
-        this.picturePath = picturePath;
+        this.pictureData = pictureData;
     }
 
 

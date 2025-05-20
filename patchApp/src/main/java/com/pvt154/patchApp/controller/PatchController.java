@@ -24,5 +24,7 @@ public class PatchController {
         User user = new User(); user.setGoogleId(userId); // eller hämta från UserService
         return patchService.getPatchesForUser(user);
     }
+
+
 }
 
