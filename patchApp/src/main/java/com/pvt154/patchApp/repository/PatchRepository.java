@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface PatchRepository extends JpaRepository<Patch, Long> {
-    List<Patch> findByOwnerGoogleId(String ownerGoogleId);  // Update method name to match the field
+    List<Patch> findByOwnerGoogleId(String ownerGoogleId);
 }

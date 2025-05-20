@@ -6,10 +6,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-import java.awt.*;
-import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -23,25 +20,20 @@ public class Patch {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "description")
     private String description;
-    
-    @Column(name = "owner_google_id")
+
     private String ownerGoogleId;
 
     @Lob
-    @Column(name = "picture_data", columnDefinition = "LONGBLOB")
+    @Column(columnDefinition = "LONGBLOB")
     private byte[] pictureData;
 
-    @Column(name = "is_public")
     private Boolean isPublic;
 
-    @Column(name = "category")
     private PatchCategory category;
-    
+
     @ElementCollection
-    @CollectionTable(name = "patch_colors", 
-            joinColumns = @JoinColumn(name = "patch_id"))
+    @CollectionTable(name = "patch_colors", joinColumns = @JoinColumn(name = "patch_id"))
     @Enumerated(EnumType.STRING)
     @Column(name = "color")
     private List<PatchColors> colors = new ArrayList<>();
@@ -59,6 +51,4 @@ public class Patch {
         this.colors = new ArrayList<>(Arrays.asList(colors));
         this.pictureData = pictureData;
     }
-
-
 }

@@ -1,30 +1,49 @@
 package com.pvt154.patchApp.controller;
-//test
-import com.pvt154.patchApp.model.Patch;
-import com.pvt154.patchApp.model.User;
-import com.pvt154.patchApp.service.PatchService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import com.pvt154.patchApp.model.Patch;
+import com.pvt154.patchApp.repository.PatchRepository;
+import com.pvt154.patchApp.service.PatchCategory;
+import com.pvt154.patchApp.service.PatchColors;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.*;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @RestController
-@RequestMapping("/patches")
+@RequestMapping("/api")
 public class PatchController {
-    private final PatchService patchService;
 
-    public PatchController(PatchService patchService) {
-        this.patchService = patchService;
+    @Autowired
+    private PatchRepository patchRepository;
+
+    @PostMapping("/patch")
+    public ResponseEntity<Patch> createPatch(
+            @RequestParam("description") String description,
+            @RequestParam("ownerGoogleId") String ownerGoogleId,
+            @RequestParam("category") PatchCategory category,
+            @RequestParam("isPublic") boolean isPublic,
+            @RequestParam("colors") PatchColors[] colors,
+            @RequestParam("image") MultipartFile imageFile
+    ) throws IOException {
+        byte[] imageBytes = imageFile.getBytes();
+
+        Patch patch = new Patch(description, ownerGoogleId, category, colors, imageBytes);
+        patch.setIsPublic(isPublic);
+        Patch savedPatch = patchRepository.save(patch);
+        return ResponseEntity.ok(savedPatch);
     }
 
-    @GetMapping("/user/{userId}")
-    public List<Patch> getPatchesByUser(@PathVariable String userId) {
-        User user = new User(); user.setGoogleId(userId); // eller hämta från UserService
-        return patchService.getPatchesForUser(user);
+    @GetMapping("/patch/{id}/image")
+    public ResponseEntity<byte[]> getImage(@PathVariable Long id) {
+        return patchRepository.findById(id)
+                .map(patch -> {
+                    byte[] image = patch.getPictureData();
+                    HttpHeaders headers = new HttpHeaders();
+                    headers.setContentType(MediaType.IMAGE_JPEG); // or PNG if that's what you use
+                    return new ResponseEntity<>(image, headers, HttpStatus.OK);
+                })
+                .orElse(ResponseEntity.notFound().build());
     }
-
-
 }
-
