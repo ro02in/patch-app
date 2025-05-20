@@ -6,21 +6,42 @@ class ProfilePage extends StatelessWidget { //ej klar
 
 @override
 Widget build(BuildContext context) {
-  return Scaffold(
-    body: Container(
-      padding: EdgeInsets.fromLTRB(20, 40, 0, 0),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget> [
-            Container(
-              child: Text("Username", textAlign: TextAlign.left, style: TextStyle(color: Colors.black, fontSize: 18, fontFamily: 'DMSans')),
-              ),
+  var screenSize = MediaQuery.of(context).size; //screensize
+  String userName = '';
 
-            ],
-          )
-        ]
+  return Scaffold(
+    body: Scrollbar(
+      //padding: EdgeInsets.fromLTRB(20, 40, 0, 0),
+      child: ListView(
+        padding: EdgeInsets.all(0),
+        children: [
+          Column(
+            children: [
+              SizedBox(height: 40),
+              Text("$userName"),
+              Container(
+                width: screenSize.width,
+                height: screenSize.height,
+                decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/stitches9.png'),
+                  fit: BoxFit.fill,
+                  ),
+                ),
+              ),
+              SizedBox(height: 30),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircleAvatar(
+                    radius: 60,
+                    backgroundColor: Colors.white,
+                  ),
+                ],
+              )
+            ]
+          ),
+        ],
       )
     )
   );
