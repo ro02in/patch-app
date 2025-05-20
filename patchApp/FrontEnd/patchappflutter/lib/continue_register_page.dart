@@ -136,28 +136,29 @@ class _ContinueRegisterPageState extends State<ContinueRegisterPage> {
             SizedBox(height: 90),
             Image.asset('assets/rosaovve.png', width: 150, height: 150),
             SizedBox(height: 2),
+            Image.asset('assets/syttbyttljusrosatext.png', width: 300, height: 100),
             Text(
               "Create Sytt & Bytt account",
               style: TextStyle(
                 color: Colors.white,
-                fontFamily: 'HappyMonkey',
+                fontFamily: 'InknutAntiqua',
                 fontSize: 18,
                 fontWeight: FontWeight.w200,
               ),
             ),
-            SizedBox(height: 15),
+            SizedBox(height: 50),
             Container(
-              width: 380,
+              width: 280,
               height: 150,
               decoration: BoxDecoration(
-                color: Color.fromARGB(255, 231, 225, 210),
+                color: Color.fromARGB(255, 220, 151, 220),
                 borderRadius: BorderRadius.circular(30),
                 boxShadow: [
                   BoxShadow(
-                    color: Color.fromARGB(255, 200, 191, 172),
-                    blurRadius: 5,
-                    spreadRadius: 2,
-                    offset: Offset(1, 4),
+                    color: Color.fromARGB(255, 80, 255, 247),
+                    blurRadius: 10,
+                    spreadRadius: 4,
+                    offset: Offset(0.5, 1),
                   )
                 ],
               ),
