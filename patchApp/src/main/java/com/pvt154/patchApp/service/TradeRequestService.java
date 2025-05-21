@@ -53,8 +53,8 @@ public class TradeRequestService {
         TradeRequest request = new TradeRequest();
         request.setSenderId(sender.getGoogleId());
         request.setReceiverId(receiver.getGoogleId());
-        request.setBadgeOffered(badgeOffered);
-        request.setBadgeRequested(badgeRequested);
+        request.setPatchOffered(badgeOffered);
+        request.setPatchRequested(badgeRequested);
         request.setStatus(TradeStatus.PENDING);
         request.setCreatedAt(LocalDateTime.now());
         
@@ -72,8 +72,8 @@ public class TradeRequestService {
 
         if (newStatus == TradeStatus.APPROVED) {
             // Execute the trade
-            Patch offeredPatch = trade.getBadgeOffered();
-            Patch requestedPatch = trade.getBadgeRequested();
+            Patch offeredPatch = trade.getPatchOffered();
+            Patch requestedPatch = trade.getPatchRequested();
 
             // Transfer ownership - need to fetch User objects from IDs
             User receiver = userRepository.findByGoogleId(trade.getReceiverId())

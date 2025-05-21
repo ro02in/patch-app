@@ -23,17 +23,17 @@ public class TradeRequest {
     private LocalDateTime createdAt;
     
     @OneToOne
-    @JoinColumn(name = "badge_offered_id")
-    private Patch badgeOffered;
+    @JoinColumn(name = "patch_offered_id")
+    private Patch patchOffered;
     
     @OneToOne
-    @JoinColumn(name = "badge_requested_id")
-    private Patch badgeRequested;
+    @JoinColumn(name = "patch_requested_id")
+    private Patch patchRequested;
 
-    @Column(name = "sender_id", columnDefinition = "VARCHAR(255)", unique = true)
+    @Column(name = "sender_id", unique = true)
     private String senderId;
 
-    @Column(name = "receiver_id", columnDefinition = "VARCHAR(255)", unique = true)
+    @Column(name = "receiver_id", unique = true)
     private String receiverId;
     
 
