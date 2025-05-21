@@ -30,10 +30,10 @@ public class TradeRequest {
     @JoinColumn(name = "patch_requested_id")
     private Patch patchRequested;
 
-    @Column(name = "sender_id", unique = true)
+    @Column(name = "sender_id")
     private String senderId;
 
-    @Column(name = "receiver_id", unique = true)
+    @Column(name = "receiver_id")
     private String receiverId;
     
 

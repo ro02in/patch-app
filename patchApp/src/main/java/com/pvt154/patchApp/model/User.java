@@ -22,8 +22,6 @@ public class User {
     @Column(name = "km_name") // username
     private String kmName;
 
-
-
     @Column(name = "phone_number")
     private Integer phoneNumber;
 
