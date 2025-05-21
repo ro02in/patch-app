@@ -50,4 +50,10 @@ public class PatchController {
                 })
                 .orElse(ResponseEntity.notFound().build());
     }
+
+    //testfunktion för API
+    @GetMapping("/test")
+    public String test() {
+        return "(0_0)";
+    }
 }

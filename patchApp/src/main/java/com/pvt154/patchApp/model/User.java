@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "users")
 @Data
@@ -28,6 +31,11 @@ public class User {
     @Column(name = "email_address", unique = true)
     private String emailAddress;
 
+    @OneToMany(mappedBy = "sender")
+    private List<TradeRequest> sentTrades = new ArrayList<>();
+
+    @OneToMany(mappedBy = "receiver")
+    private List<TradeRequest> receivedTrades = new ArrayList<>();
 
     public User(String firstName, String surName, String kmName, Integer phoneNumber, String googleId, String emailAddress) {
         this.firstName = firstName;
