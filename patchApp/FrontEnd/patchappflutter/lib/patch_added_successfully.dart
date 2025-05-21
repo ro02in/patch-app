@@ -1,4 +1,4 @@
-// Sidan man kommer till efter att ha lagt till ett märke
+// Sana skapade sidan man kommer till efter att ha lagt till ett märke
 
 import 'package:flutter/material.dart';
 import 'add_patch_page.dart';

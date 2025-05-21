@@ -1,3 +1,4 @@
+// Elias skapade sidan man kommer till efter att trade gjorts
 
 import 'package:flutter/material.dart';
 import 'package:patchappflutter/trade_log_page.dart';
