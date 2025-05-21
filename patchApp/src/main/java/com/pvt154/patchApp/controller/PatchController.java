@@ -16,7 +16,11 @@ import java.io.IOException;
 public class PatchController {
 
     @Autowired
-    private PatchRepository patchRepository;
+    private final PatchRepository patchRepository;
+
+    public PatchController(PatchRepository patchRepository) {
+        this.patchRepository = patchRepository;
+    }
 
     @PostMapping("/patch")
     public ResponseEntity<Patch> createPatch(
