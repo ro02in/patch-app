@@ -87,7 +87,7 @@ class _SearchPageState extends State<SearchPage> {
         height: screenSize.height,
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/stitches3.png'),
+            image: AssetImage('assets/stitches7.png'),
             fit: BoxFit.fill,
           ),
         ),
@@ -112,7 +112,7 @@ class _SearchPageState extends State<SearchPage> {
                     borderRadius: BorderRadius.circular(30),
                     borderSide: BorderSide.none,
                   ),
-                  prefixIcon: const Icon(Icons.search, color: Colors.red),
+                  prefixIcon: const Icon(Icons.search, color: Colors.black),
                 ),
                 onChanged: _onSearchChanged,
               ),
@@ -132,9 +132,10 @@ class _SearchPageState extends State<SearchPage> {
                     title: Text(
                       '${user.firstName} ${user.surName}',
                       style: const TextStyle(
-                        fontSize: 18,
-                        color: Colors.red,
+                        fontSize: 25,
+                        color: Colors.white,
                         fontWeight: FontWeight.bold,
+                        fontFamily: 'DMSans'
                       ),
                     ),
                    // subtitle: Text(user.emailAddress),
