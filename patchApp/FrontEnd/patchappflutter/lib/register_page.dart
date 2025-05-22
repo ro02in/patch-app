@@ -1,19 +1,27 @@
 //NYTT FÖRSÖK NY BRANCH
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:patchappflutter/register_user_confirmed.dart'; //sidan RegisterUserConfirmedPage
+import 'package:image_picker/image_picker.dart';
 
-class RegisterPage extends StatelessWidget {
+class RegisterPage extends StatefulWidget {
 
+  @override
+  State<RegisterPage> createState() => _RegisterPageState();
+}
+
+class _RegisterPageState extends State<RegisterPage> {
+    File ? _selectedImage; 
+ //lägga till från kamera eller bibliotek variabel
     @override
     Widget build(BuildContext context) {
       var screenSize = MediaQuery.of(context).size; //screensize
 
       return Scaffold(
-        //backgroundColor: Color.fromARGB(255, 244, 240, 231), //beige
         body: Column(
           children: [
-          //SizedBox(height: 50),
           //Text("Create new Sytt & Bytt Account", textAlign: TextAlign.left, style: TextStyle(fontFamily: 'HappyMonkey', color: const Color.fromARGB(255, 32, 32, 32), fontSize: 16, fontWeight: FontWeight.w200)),
           Container(
           alignment: Alignment.center,
@@ -31,7 +39,7 @@ class RegisterPage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget> [
-                SizedBox(height: 50),
+                SizedBox(height: 85),
                 
                 Container(
                   decoration: BoxDecoration(
@@ -45,42 +53,63 @@ class RegisterPage extends StatelessWidget {
                       )
                     ]
                   ),
-                  child: CircleAvatar(
-                    radius: 80,
-                    child: Image.asset('assets/sbpinklogo.png')
-                  ),
+                  child: CircleAvatar( //LÄGGA TILL PROFILBILD REGISTRERA ANVÄNDARE
+                      radius: 80,
+                      backgroundColor: Colors.white,
+                      child: Icon(Icons.add, color: Colors.black, size: 30),
+                      foregroundImage: _selectedImage != null ? FileImage(_selectedImage!) : null //Kodrad Källhänvisning: youtu.be/qYCsxvbPDC8?si=QmZC_OoY8unh9ZRS, 'Flutter Image Picker & Cropper From Camera & Gallery | Learn Flutter Fast', av kanalen Marcus Ng, publicerad 11 november 2022, hämtad 19 maj 2025.
+                    ),
                 ),
-                SizedBox(height: 30), //padding
+                
+                SizedBox(height: 15), //padding
                
                 //Add profile picture knapp
+                Row(
+                  children: [
+                    SizedBox(width: 120),
+                    Container(
+                          padding: EdgeInsets.all(8),
+                          height: 80,
+                          width: 80,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(100),
+                          ),
+                          child: FloatingActionButton(
+                              backgroundColor: Colors.white,
+                              shape: const CircleBorder(),
+                              hoverColor: Color.fromARGB(255, 255, 255, 255),
+                              focusColor: Colors.white,
+                              child: Icon(Icons.add_photo_alternate_sharp, size: 31, color: Colors.black),
+                              onPressed: () {
+                                _pickImageFromGallery();
+                              }),
+                        ),
+                
+                SizedBox(height: 21), //simulated padding
+
                 Container(
-                  width: 200,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100),
-                    boxShadow: [
-                      BoxShadow(
-                        color: const Color.fromARGB(255, 255, 129, 211),
-                        spreadRadius: 2,
-                        blurRadius: 8,
-                        offset: Offset(0.5, 1)
-                      )
-                    ]
-                  ),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color.fromARGB(255, 255, 112, 243),
-                      disabledForegroundColor: Colors.transparent,
-                      disabledBackgroundColor: Colors.transparent,
-                      shadowColor: const Color.fromARGB(255, 255, 112, 243),
-                      overlayColor: Colors.white
+                        padding: EdgeInsets.all(8),
+                        height: 90,
+                        width: 80,   
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100),
+                        ),
+                        child: FloatingActionButton(
+                            backgroundColor: Colors.white,
+                            shape: const CircleBorder(),
+                            hoverColor: Color.fromARGB(255, 255, 255, 255),
+                            focusColor: Colors.white,
+                            child: Icon(Icons.add_a_photo_sharp, size: 31, color: Colors.black),
+                            onPressed: () {
+                              _pickImageFromCamera();
+                      }
                     ),
-                    onPressed: () {}, //API kamera (backend)
-                    child: Text("Add profile picture", textAlign: TextAlign.left, style: TextStyle(fontFamily: 'InknutAntiqua', color: Colors.black, fontSize: 14, fontWeight: FontWeight.w200)
-                  )),
-                ),
-                SizedBox(height: 30), //simulated padding
-              
+                  ),
+                  ],
+            ),
+
+                SizedBox(height: 20), //padding
+
               //KNAPP 1
               Container( 
               decoration: BoxDecoration(
@@ -270,12 +299,34 @@ class RegisterPage extends StatelessWidget {
               
               SizedBox(height: 20), //padding mellan input-fält och register
 
-              ]
-            ),
-          )
-        )
+                  ]
+                 ),
+              )
+            )
           ],
         ),
       );
-    }
+    }  
+
+    //Lägga till bild från kameragalleri
+    Future _pickImageFromGallery() async {
+    final returnedImage = await ImagePicker().pickImage(source: ImageSource.gallery);
+
+    if(returnedImage == null) return;
+    setState(() {
+      _selectedImage = File(returnedImage!.path);
+    });
+  }
+
+    //Lägga till bild från kamera
+    Future _pickImageFromCamera() async {
+      final returnedImage = await ImagePicker().pickImage(source: ImageSource.camera);
+
+      if(returnedImage == null) return;
+      setState(() {
+        _selectedImage = File(returnedImage!.path);
+      });
+    } 
 }
+
+

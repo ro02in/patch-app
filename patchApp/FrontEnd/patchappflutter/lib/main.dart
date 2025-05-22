@@ -163,9 +163,6 @@ import 'package:patchappflutter/add_patch_page.dart';
 import 'package:patchappflutter/continue_register_page.dart';
 import 'package:patchappflutter/register_page.dart';
 import 'package:patchappflutter/temp_buttons_page.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 void main() {
   runApp(MyApp());
@@ -183,29 +180,6 @@ class MyApp extends StatelessWidget {
 
 class LogInPage extends StatelessWidget {
   @override
-  Future<void> registerUser(String idToken) async {
-      final url = Uri.parse('http://YOUR_BACKEND_URL/auth/register'); // Replace with your backend URL
-      final response = await http.post(
-        url,
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({'idToken': idToken}),
-      );
-
-      if (response.statusCode == 200) {
-        final Map<String, dynamic> responseData = jsonDecode(response.body);
-        print('Register response: $responseData');
-        if (responseData['status'] == 'success') {
-          // Navigate to next screen, e.g., home
-          print('Registration successful!');
-          // You can navigate with Navigator.push or pushReplacement here
-        } else {
-          print('Registration failed: ${responseData['message']}');
-        }
-      } else {
-        print('Failed to register user. Status code: ${response.statusCode}');
-      }
-    }
-
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size; //screensize
 
@@ -329,52 +303,13 @@ class LogInPage extends StatelessWidget {
                                 overlayColor:
                                 Color.fromARGB(255, 255, 255, 255),
                               ),
-                              onPressed: () async {
-                                final GoogleSignIn _googleSignIn = GoogleSignIn();
-
-                                try {
-                                  final GoogleSignInAccount? account = await _googleSignIn.signIn();
-                                  if (account != null) {
-                                    print('Logged in as: ${account.displayName} (${account.email})');
-
-                                    final GoogleSignInAuthentication auth = await account.authentication;
-                                    final idToken = auth.idToken;
-
-                                    if (idToken != null) {
-                                      // SEND ID TOKEN TO BACKEND HERE
-                                      final response = await http.post(
-                                        Uri.parse('http://yourbackend.com/auth/register'),
-                                        headers: {'Content-Type': 'application/json'},
-                                        body: jsonEncode({'idToken': idToken}),
-                                      );
-
-                                      final responseData = jsonDecode(response.body);
-
-                                      // <<< HANDLE BACKEND RESPONSE HERE >>>
-                                      if (responseData['status'] == 'success') {
-                                        // Navigate to home page or next screen
-                                        Navigator.pushReplacement(
-                                          context,
-                                          MaterialPageRoute(builder: (context) => HomePage()),
-                                        );
-                                      } else {
-                                        // Show error message
-                                        ScaffoldMessenger.of(context).showSnackBar(
-                                          SnackBar(content: Text(responseData['message'] ?? 'Registration failed')),
-                                        );
-                                      }
-                                    }
-                                  } else {
-                                    print('Login aborted by user');
-                                  }
-                                } catch (error) {
-                                  print('Google Sign-In error: $error');
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(content: Text('Sign-in failed: $error')),
-                                  );
-                                }
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => RegisterPage()),
+                                );
                               },
-
                               label: Text(
                                 "REGISTER",
                                 style: TextStyle(

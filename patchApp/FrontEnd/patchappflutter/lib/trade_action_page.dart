@@ -122,32 +122,6 @@ Widget build (BuildContext context) {
             child: Icon(Icons.add)),
             
           SizedBox(height: 30),
-
-         /* ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Color.fromARGB(255, 239, 137, 254),
-              overlayColor: Colors.white,
-              shadowColor: Colors.white
-            ),
-          child: Text("Select image from gallery", style: TextStyle(color: Colors.black, fontFamily: 'InknutAntiqua', fontSize: 15)),
-          onPressed: (){
-            _pickImageFromGallery();
-            },
-          ), */
-          
-          /*ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Color.fromARGB(255, 239, 137, 254),
-              overlayColor: Colors.white,
-              shadowColor: Colors.white
-            ),
-          child: Text("Select image from camera", style: TextStyle(color: Colors.black, fontFamily: 'InknutAntiqua', fontSize: 15)),
-          onPressed: (){
-            _pickImageFromCamera();
-            },
-          ),
-          const SizedBox(height: 20),
-          _selectedImage != null ? Image.file(_selectedImage!) : const Text("Please select an image", style: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 18)), */
         
         ],
       ),
