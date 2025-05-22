@@ -325,7 +325,7 @@ Widget build(BuildContext context) {
                     ),
                     //width: 200,
 
-                    //Källhänvisning: 'Flutter Release 3.24 | New CarouselView Tutorial' av kanalen CodeX, youtu.be/Nnxg-Jhhk6M?si=NQKtamBo3KXuZk3C publicerad 8 augusti 2024, hämtad 21 maj 2025
+                    //Källhänvisning:  'Flutter Release 3.24 | New CarouselView Tutorial' av kanalen CodeX, youtu.be/Nnxg-Jhhk6M?si=NQKtamBo3KXuZk3C publicerad 8 augusti 2024, hämtad 21 maj 2025
                     //Källhänvisning _updateCurrentIndex(): Handledning med Donald 22 maj kl 15:00.
                       child: CarouselView( //PLAN B make it CarouselView.weighted instead
                           padding: EdgeInsets.only(top: 13),
