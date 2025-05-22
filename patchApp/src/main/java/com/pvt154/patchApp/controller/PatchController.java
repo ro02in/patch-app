@@ -5,14 +5,17 @@ import com.pvt154.patchApp.repository.PatchRepository;
 import com.pvt154.patchApp.service.PatchCategory;
 import com.pvt154.patchApp.service.PatchColors;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.*;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/patch")
 public class PatchController {
 
     @Autowired

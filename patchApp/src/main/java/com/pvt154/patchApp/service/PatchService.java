@@ -3,6 +3,7 @@ package com.pvt154.patchApp.service;
 import com.pvt154.patchApp.model.Patch;
 import com.pvt154.patchApp.model.User;
 import com.pvt154.patchApp.repository.PatchRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.List;
 public class PatchService {
     private final PatchRepository patchRepository;
 
+    @Autowired
     public PatchService(PatchRepository patchRepository) {
         this.patchRepository = patchRepository;
     }
@@ -22,6 +24,10 @@ public class PatchService {
 
     public List<Patch> getPatchesForUser(User user) {
         return patchRepository.findByOwnerGoogleId(user.getGoogleId());  // Update this method too
+    }
+
+    public List<Patch> getAllPatches() {
+        return patchRepository.findAll();
     }
 
     public Patch getBadgeById(Long id) {

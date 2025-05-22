@@ -41,6 +41,7 @@
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
 			<version>1.18.36</version>
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
