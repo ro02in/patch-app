@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/patch")
@@ -25,7 +26,7 @@ public class PatchController {
         this.patchRepository = patchRepository;
     }
 
-    @PostMapping("/patch")
+    @PostMapping("/addpatch")
     public ResponseEntity<Patch> createPatch(
             @RequestParam("description") String description,
             @RequestParam("ownerGoogleId") String ownerGoogleId,
@@ -42,7 +43,7 @@ public class PatchController {
         return ResponseEntity.ok(savedPatch);
     }
 
-    @GetMapping("/patch/{id}/image")
+    @GetMapping("/{id}/image")
     public ResponseEntity<byte[]> getImage(@PathVariable Long id) {
         return patchRepository.findById(id)
                 .map(patch -> {
@@ -54,9 +55,9 @@ public class PatchController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    //testfunktion för API
-    @GetMapping("/test")
-    public String test() {
-        return "(0_0)";
+    @GetMapping("/user/{googleId}")
+    public ResponseEntity<List<Patch>> getPatchesByUser(@PathVariable String googleId) {
+        List<Patch> patches = patchRepository.findByOwnerGoogleId(googleId);
+        return ResponseEntity.ok(patches);
     }
 }

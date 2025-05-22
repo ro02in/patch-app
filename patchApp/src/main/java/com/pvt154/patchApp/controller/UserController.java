@@ -3,6 +3,7 @@ package com.pvt154.patchApp.controller;
 import com.pvt154.patchApp.model.User;
 import com.pvt154.patchApp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,6 +17,12 @@ public class UserController {
     @Autowired // valfri i nyare Spring, men bra att ha
     public UserController(UserRepository userRepository) {
         this.userRepository = userRepository;
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<User> registerUser(@RequestBody User user) {
+        User savedUser = userRepository.save(user);
+        return ResponseEntity.ok(savedUser);
     }
 
     // Sökning efter personer
