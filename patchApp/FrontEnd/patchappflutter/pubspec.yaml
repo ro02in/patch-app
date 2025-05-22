@@ -42,7 +42,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   flutter_inset_box_shadow: ^1.0.8
   flutter_switch: ^0.3.2 
-  google_sign_in: ^6.3.0
+
 
 dev_dependencies:
   flutter_test:
