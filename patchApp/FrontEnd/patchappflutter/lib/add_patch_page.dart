@@ -211,7 +211,7 @@ Widget build(BuildContext context) {
           Row(
             children: [
               SizedBox(width: 32),
-              Container( //Märkeshistoria box
+              Container( //Beskrivning box
                   height: 90,
                   width: 330,
                   decoration: BoxDecoration(
