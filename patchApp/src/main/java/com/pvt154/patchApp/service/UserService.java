@@ -24,7 +24,7 @@ public class UserService {
     }
 
     public User createUser(String firstName, String surName, String googleId, String emailAddress) {
-        User user = new User("firstName", "surName", "kmName", 07012323, "googleId", "emailAddress");
+        User user = new User("firstName", "surName", "kmName", 07012323, "googleId", "emailAddress", "biography");
         return userRepository.save(user);
     }
 
