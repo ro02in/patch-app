@@ -1,7 +1,9 @@
 // Sana skapade sidan man kommer till efter att ha lagt till ett märke
 
 import 'package:flutter/material.dart';
-import 'add_patch_page.dart';
+import 'package:patchappflutter/add_patch_page.dart';
+import 'package:patchappflutter/profile_page.dart';
+
 
 class PatchAddSuccessPage extends StatelessWidget {
   const PatchAddSuccessPage({super.key});
@@ -103,7 +105,9 @@ context,
                   const SizedBox(height: 16),
                   GestureDetector(
                     onTap: () {
-                      print('Gå till min profil klickad');
+                      Navigator.pushReplacement(
+    context,
+    MaterialPageRoute(builder: (context) => ProfilePage()),);
                     },
                     child: Container(
                       width: 307,
@@ -188,55 +192,138 @@ context,
   }
     //POP-UP rutan när man trycker på "radera märke" knappen
   void _showDeleteDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          backgroundColor: Colors.white,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-          title: const Text(
-            'Är du säker att du vill radera detta märke?',
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 18),
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return Dialog(
+        backgroundColor: Colors.transparent, // Gör bakgrunden transparent för att skuggan ska synas
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                color: const Color(0xFFF382F3).withOpacity(0.6),
+                blurRadius: 20,
+                offset: Offset(0, 0),
+                spreadRadius: 5,
+              ),
+            ],
           ),
-          content: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              // Nej-knappen
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop(); // Stäng dialogrutan
-                },
-                child: const Text(
-                  'Nej',
-                  style: TextStyle(
-                    fontSize: 17,
-                    color: Colors.black,
+              const Text(
+                'Är du säker att du vill radera detta märke?',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 18),
+              ),
+              const SizedBox(height: 24),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop(); // Stäng dialogen
+                    },
+                    child: const Text(
+                      'Nej',
+                      style: TextStyle(fontSize: 17, color: Colors.black),
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop(); // Stäng denna dialog
+                      _showDeletedConfirmationDialog(context); // Visa bekräftelse-dialog
+                    },
+                    child: const Text(
+                      'Ja, radera märket',
+                      style: TextStyle(
+                        fontSize: 17,
+                        color: Color.fromARGB(255, 226, 50, 50),
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      );
+    },
+  );
+}
+// Popup ruta efter man tryckt på ja, radera märke
+void _showDeletedConfirmationDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    barrierDismissible: false, // Man måste trycka på X för att stänga
+    builder: (BuildContext context) {
+      return Dialog(
+        backgroundColor: Colors.transparent,
+        child: Container(
+          width: 300, // BREDD JUSTERING
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                color: const Color(0xFFF382F3).withOpacity(0.6),
+                blurRadius: 20,
+                offset: Offset(0, 0),
+                spreadRadius: 5,
+              ),
+            ],
+          ),
+          child: Stack(
+            clipBehavior: Clip.none,
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(24, 24, 24, 24),
+                child: SizedBox(
+                  height: 60,
+                  child: Center(
+                    child: Text(
+                      'Märket har raderats',
+                      style: const TextStyle(fontSize: 18),
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                 ),
               ),
-
-              // Ja-knappen
-              TextButton(
-                onPressed: () {
-                  // radera-funktionalitet
-                  print('Märket raderat');
-                  Navigator.of(context).pop(); // Stäng dialogrutan
-                },
-                child: const Text(
-                  'Ja, radera märket',
-                  style: TextStyle(
-                    fontSize: 17,
-                    color: Color.fromARGB(255, 226, 50, 50),
-                    fontWeight: FontWeight.bold,
+              Positioned(
+                top: 10,
+                right: 10,
+                child: InkWell(
+                  onTap: () {
+                    Navigator.of(context).pop(); // Stäng dialogen
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: const Color(0xFFF382F3),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.2),
+                          blurRadius: 4,
+                          offset: Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    child: const Padding(
+                      padding: EdgeInsets.all(4),
+                      child: Icon(Icons.close, size: 20, color: Colors.white),
+                    ),
                   ),
                 ),
               ),
             ],
           ),
-        );
-      },
-    );
-  }
+        ),
+      );
+    },
+  );
+}
 }
