@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:patchappflutter/bottomNavigationBar.dart';
 
 // ===== USER MODELL =====
 class User {
@@ -82,6 +83,7 @@ class _SearchPageState extends State<SearchPage> {
     var screenSize = MediaQuery.of(context).size;
 
     return Scaffold(
+      bottomNavigationBar: CustomBottomNavigationBar(),
       body: Container(
         width: screenSize.width,
         height: screenSize.height,

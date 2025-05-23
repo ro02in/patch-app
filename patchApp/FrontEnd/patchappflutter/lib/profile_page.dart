@@ -5,8 +5,12 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:patchappflutter/bottomNavigationBar.dart';
 
-class ProfilePage extends StatefulWidget {  @override
+class ProfilePage extends StatefulWidget {
+  const ProfilePage({super.key});
+
+  @override
   State<ProfilePage> createState() => _ProfilePageState();
 }
 
@@ -56,6 +60,7 @@ Widget build(BuildContext context) {
 
   return Scaffold(
     backgroundColor: const Color.fromARGB(255, 31, 31, 31),
+    //bottomNavigationBar: CustomBottomNavigationBar(),
     body: Scrollbar(
       //padding: EdgeInsets.fromLTRB(20, 40, 0, 0),
       child: ListView(
@@ -96,14 +101,34 @@ Widget build(BuildContext context) {
                                 titlePadding: EdgeInsets.fromLTRB(0, 10, 0, 10),
                                   content:
                                       Container(
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                         // borderRadius: BorderRadius.circular(20)
-                                        ),
-                                        width: 90,
-                                        height: 200,
-                                        child: Text("Ändra färg på overallen:", style: TextStyle(),)
-                                      )
+                                        height: 350,
+                                        width: 250,
+                                        child: Column(
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              children :[
+                                              Text("Ändra färg på overallen:", style: TextStyle(fontWeight: FontWeight.w600))
+                                                ],
+                                               ),
+                                            Row(
+                                              children: [
+                                                Text("Du kan ändra färg på din overall genom att scrolla i menyn"),
+                                              ],
+                                            ),
+                                            Row(
+                                              children: [
+                                                Text("Lägg till profilbild:", style: TextStyle(fontWeight: FontWeight.w600)),
+                                              ]
+                                            ),
+                                            Row(
+                                              children: [
+                                                Text("hejhejh")
+                                              ],
+                                            )
+                                          ],
+                                                                            ),
+                                      ),
                               );
                             }
                         );
@@ -361,7 +386,7 @@ Widget build(BuildContext context) {
               Row(
                 children: [
                   SizedBox(width: 30),
-                  Text("Din märkessamling", style: TextStyle(color: Colors.white, fontSize: 30, fontFamily: 'InknutAntiqua')),
+                  Text("Din märkessamling", style: TextStyle(color: Colors.white, fontSize: 25, fontFamily: 'InknutAntiqua')),
 
                   SizedBox(width: 65), //padding between 'Collection' and 'Filter' button
                   
@@ -371,8 +396,9 @@ Widget build(BuildContext context) {
               SizedBox(height: 50),
               SizedBox(height: 320),
 
-              Text("hejhejhejhej", style: TextStyle(color: Colors.white, fontSize: 30, fontFamily: 'InknutAntiqua'))
-              
+              Text("hejhejhejhej", style: TextStyle(color: Colors.white, fontSize: 30, fontFamily: 'InknutAntiqua')),
+
+
           /*   Expanded(
                  child:
                  GridView.builder(

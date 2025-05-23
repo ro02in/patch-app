@@ -176,6 +176,7 @@ import 'package:flutter/material.dart';
 import 'package:patchappflutter/trade_action_page.dart';
 
 class TradeLogPage extends StatefulWidget {
+  const TradeLogPage({super.key});
   @override
   State<TradeLogPage> createState() => _TradeLogPageState();
 }
@@ -218,7 +219,7 @@ class _TradeLogPageState extends State<TradeLogPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          "Trade Log",
+                          "Mina märkesbyten",
                           style: TextStyle(
                             fontSize: 30,
                             color: Colors.white,
@@ -264,7 +265,7 @@ class _TradeLogPageState extends State<TradeLogPage> {
                           padding: EdgeInsets.symmetric(vertical: 16),
                         ),
                         child: Text(
-                          "New Trade",
+                          "Nytt märkesbyte",
                           style: TextStyle(
                             fontSize: 20,
                             color: Colors.white,
@@ -275,7 +276,7 @@ class _TradeLogPageState extends State<TradeLogPage> {
                     ),
                     SizedBox(height: 30), 
                     SizedBox(width: 30),
-                    Text("Active trades:",
+                    Text("Aktiva byten av märken",
                         style: TextStyle(
                           fontSize: 20,
                           fontFamily: 'InknutAntiqua',
@@ -284,7 +285,7 @@ class _TradeLogPageState extends State<TradeLogPage> {
                     SizedBox(height: 5),
                     ...activeTrades.map((trade) => _tradeCard(trade, active: true)),
                     SizedBox(height: 30),
-                    Text("Trade history:",
+                    Text("Byteshistorik:",
                         style: TextStyle(
                           fontSize: 20,
                           fontFamily: 'InknutAntiqua',

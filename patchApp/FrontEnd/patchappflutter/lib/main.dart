@@ -6,6 +6,7 @@ import 'package:patchappflutter/temp_buttons_page.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:patchappflutter/bottomNavigationBar.dart'; //nytt
 
 import 'home_page.dart';
 
@@ -16,7 +17,7 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(debugShowCheckedModeBanner: false, home: LogInPage());
+    return MaterialApp(debugShowCheckedModeBanner: false, home: LogInPage()); //var log in page förut
   }
 }
 
@@ -237,7 +238,8 @@ class LogInPage extends StatelessWidget {
                                         Navigator.pushReplacement(
                                           context,
                                           MaterialPageRoute(
-                                            builder: (context) => HomePage(),
+                                            //builder: (context) => HomePage(),
+                                            builder: (context) => CustomBottomNavigationBar(), //NYTT 23 maj
                                           ),
                                         );
                                       } else {

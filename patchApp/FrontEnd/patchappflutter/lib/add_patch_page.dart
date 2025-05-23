@@ -1,4 +1,3 @@
-//NYTT FÖRSÖK NY BRANCH
 
 import 'dart:io';
 
@@ -12,15 +11,13 @@ import 'package:image_picker/image_picker.dart';
 
 //Variabler till DropDownButtons
 const List<String> colours = <String>['Färg', 'Blå', 'Brun', 'Grå', 'Grön', 'Gul', 'Lila', 'Orange', 'Rosa', 'Röd', 'Svart', 'Vit'];
-const List<String> categories = <String>['Kategori', 'Påsytt', 'Ej påsytt'];
+const List<String> placement = <String>['Placering','Ej påsytt', 'Vänster arm', 'Höger arm', 'Vänster ben', 'Höger ben', 'Överkropp', 'Krage', 'Skrev'];
 //const List<String> studentClubs = <String>['Klubbmästeri', 'DISK', 'Klubb3', 'Klubb5', 'Klubb6', 'Klubb6', 'Klubb7', 'Klubb8', 'Klubb9', 'Klubb10'];
-const List<String> placement = <String>['Ej påsytt', 'Vänster arm', 'Höger arm', 'Vänster ben', 'Höger ben', 'Överkropp', 'Krage', 'Skrev'];
 
 //Listor till DropDownButtons
 String dropdownColour = colours.first;
-String dropdownCategory = categories.first;
-//String dropdownStudentClub = studentClubs.first;
 String dropdownPlacement = placement.first;
+//String dropdownStudentClub = studentClubs.first;
 
 class PatchViewPage extends StatefulWidget {
 
@@ -36,573 +33,530 @@ class _PatchViewPageState extends State<PatchViewPage> {
 
   File ? _selectedImage; //lägga till från kamera eller bibliotek variabel
 
-  
 
-@override
-Widget build(BuildContext context) {
-  var screenSize = MediaQuery.of(context).size; //screensize
-  
 
-  return Scaffold(
-    backgroundColor: const Color.fromARGB(255, 31, 31, 31), //beige color
-    body: Scrollbar(
-      child: ListView( //Wrapping widget: Gör denna sida SCROLLABLE
-        //padding: EdgeInsets.symmetric(vertical: 0), //scrollable padding marginal
-        padding: EdgeInsets.all(0),
-        physics: const AlwaysScrollableScrollPhysics().applyTo(const ClampingScrollPhysics()),
-        children: [
-              SizedBox(height: 40), //padding
+  @override
+  Widget build(BuildContext context) {
+    var screenSize = MediaQuery.of(context).size; //screensize
 
-              CircleAvatar(
-                radius: 80,
+
+    return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 31, 31, 31), //beige color
+      body: Scrollbar(
+        child: ListView( //Wrapping widget: Gör denna sida SCROLLABLE
+          //padding: EdgeInsets.symmetric(vertical: 0), //scrollable padding marginal
+          padding: EdgeInsets.all(0),
+          physics: const AlwaysScrollableScrollPhysics().applyTo(const ClampingScrollPhysics()),
+          children: [
+            SizedBox(height: 40), //padding
+
+            CircleAvatar(
+                radius: 60,
                 backgroundColor: Colors.white,
                 child: Icon(Icons.add, color: const Color.fromARGB(255, 104, 94, 94), size: 30),
                 foregroundImage: _selectedImage != null ? FileImage(_selectedImage!) : null), //Kodrad Källhänvisning: youtu.be/qYCsxvbPDC8?si=QmZC_OoY8unh9ZRS, 'Flutter Image Picker & Cropper From Camera & Gallery | Learn Flutter Fast', av kanalen Marcus Ng, publicerad 11 november 2022, hämtad 19 maj 2025.
 
-                  //LÄGGA TILL BILD FRÅN KAMERA
-                  Row(
-                  children: [
-                    SizedBox(width: 122), //spacing
-                    Container(
-                      padding: EdgeInsets.all(8),
-                      height: 70,
-                      width: 70,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(100),
-                      ),
-                      child: FloatingActionButton(
-                          backgroundColor: Colors.white,
-                          shape: const CircleBorder(),
-                          hoverColor: Color.fromARGB(255, 255, 255, 255),
-                          focusColor: Colors.white,
-                          child: Icon(Icons.add_photo_alternate_sharp, size: 29, color: Colors.black),
-                          onPressed: () {
-                            _pickImageFromGallery();
-                          }),
-                    ),
-                    SizedBox(width: 10),
-                    Container(
-                      padding: EdgeInsets.all(8),
-                      height: 70,
-                      width: 70,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(100),
-                      ),
-                      child: FloatingActionButton(
-                          backgroundColor: Colors.white,
-                          shape: const CircleBorder(),
-                          hoverColor: Color.fromARGB(255, 255, 255, 255),
-                          focusColor: Colors.white,
-                          child: Icon(Icons.add_a_photo_sharp, size: 29, color: Colors.black),
-                          onPressed: () {
-                            _pickImageFromCamera();
-                          }
-                          ),
-                    ),
-                  ],
-                ), //ROW LÄGGA TILL FRÅN KAMERA
+            SizedBox(height: 7),
 
-          SizedBox(height: 20), //simulated padding
-          Row(
+            //LÄGGA TILL BILD FRÅN KAMERA
+            Row(
+              children: [
+                SizedBox(width: 122), //spacing
+                Container(
+                  padding: EdgeInsets.all(4), //styr tjocklek på rosa ram
+                  height: 68,
+                  width: 68,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(100),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Color.fromARGB(255, 243, 68, 255),
+                        blurRadius: 0,
+                        spreadRadius: 0.2
+                      )
+                    ]
+                  ),
+                  child: FloatingActionButton(
+                      backgroundColor: Colors.white,
+                      shape: const CircleBorder(),
+                      hoverColor: Color.fromARGB(255, 255, 255, 255),
+                      focusColor: Colors.white,
+                      child: Icon(Icons.add_photo_alternate_sharp, size: 29, color: Colors.black),
+                      onPressed: () {
+                        _pickImageFromGallery();
+                      }),
+                ),
+                SizedBox(width: 10),
+                Container(
+                  padding: EdgeInsets.all(4), //styr tjocklek på rosa ram
+                  height: 68,
+                  width: 68,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(100),
+                      boxShadow: [
+                        BoxShadow(
+                            color: Color.fromARGB(255, 243, 68, 255),
+                            blurRadius: 0,
+                            spreadRadius: 0.2
+                        )
+                      ]
+                  ),
+                  child: FloatingActionButton(
+                      backgroundColor: Colors.white,
+                      shape: const CircleBorder(),
+                      hoverColor: Color.fromARGB(255, 255, 255, 255),
+                      focusColor: Colors.white,
+                      child: Icon(Icons.add_a_photo_sharp, size: 29, color: Colors.black),
+                      onPressed: () {
+                        _pickImageFromCamera();
+                      }
+                  ),
+                ),
+              ],
+            ), //ROW LÄGGA TILL FRÅN KAMERA
+
+            SizedBox(height: 20), //simulated padding
+            Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    padding: EdgeInsets.fromLTRB(4, 0, 0, 4),
+                    child: Container(
+                      height: 45,
+                      width: 320,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(30),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Color.fromARGB(255, 239, 137, 254),
+                              spreadRadius: 2,
+                              blurRadius: 7
+                            )
+                          ]
+                      ),
+                      child: TextField(
+                        obscureText: false,
+                        cursorColor: Color.fromARGB(255, 239, 137, 254),
+                        cursorHeight: 22,
+                        maxLength: 20,
+                        maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                        style: TextStyle(color: Colors.black, fontFamily: 'InknutAntiqua', fontSize: 14),
+                        decoration: InputDecoration(
+                          counterStyle: TextStyle(fontFamily: 'InknutAntiqua', color: Colors.black, fontSize: 13, height: -80),
+                          contentPadding: EdgeInsets.only(left: 15, bottom: 16, right: 20),
+                          //hintStyle: TextStyle(color: Colors.black),
+                          hoverColor: Colors.black,
+                          labelText: 'Märkesnamn:', labelStyle: TextStyle(color: Colors.black, fontFamily: ('InknutAntiqua')), floatingLabelBehavior: FloatingLabelBehavior.never,
+                          focusedBorder: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                        ),
+                      ),
+                    ),
+                  ),
+                ]
+            ),
+
+
+            SizedBox(height: 22), //spacing mellan Märkesnamn-input och Beskrivning
+
+            Row( //History-rubrik
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(width: 42), //spacing padding
+                  Text("Beskrivning", style: TextStyle(color: Colors.white, fontSize: 18, fontFamily: ('InknutAntiqua'), fontWeight: FontWeight.w400)),
+                  SizedBox(width: 4), //spacing between text and icon
+                  //Icon(Icons.border_color_sharp, size: 20),
+                ]),
+            SizedBox(height: 10), //padding
+            SizedBox(width: 340), //padding marginal till vänster
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container( //Beskrivning box
+                    height: 90,
+                    width: 330,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: [
+                          BoxShadow(
+                              color: const Color.fromARGB(255, 239, 137, 254),
+                              spreadRadius: 2,
+                              blurRadius: 5,
+                              offset: Offset(1, 2)
+                          )
+                        ]
+                    ),
+                    //padding: EdgeInsets.symmetric(horizontal: 80),
+                    //child: Text("History about your patch... lorem ipsum \nhejhejhej" , textAlign: TextAlign.left, style: TextStyle(color: Colors.black, fontFamily: ('HappyMonkey'), fontSize: 14)),
+                    child: TextFormField(
+                      style: TextStyle(color: Colors.black, fontFamily: 'InknutAntiqua', fontSize: 14),
+                      obscureText: false,
+                      cursorColor: const Color.fromARGB(255, 239, 137, 254),
+                      cursorHeight: 22,
+                      textAlign: TextAlign.center,
+                      keyboardType: TextInputType.multiline, //tillåt enter flera rader
+                      maxLines: 4,
+                      maxLength: 250,
+                      maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                      scrollPadding: EdgeInsets.fromLTRB(5, 5, 5, 5),
+                      decoration: InputDecoration(
+                          counterStyle: TextStyle(fontFamily: 'InknutAntiqua', color: Colors.black, fontSize: 13, height: -50),
+                          //labelText: 'History about your patch:',
+                          contentPadding: EdgeInsets.fromLTRB(0, 15, 10, 20),
+                          focusedBorder: InputBorder.none,
+                          enabledBorder: InputBorder.none
+                      ),
+                    )
+                ),
+              ],
+            ),
+
+
+            SizedBox(height: 20), //padding
+
+            //Klubbmästeri TEXTINPUTFÄLT
+            Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  padding: EdgeInsets.fromLTRB(20, 0, 0, 20),
+                  padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                   child: Container(
-                    height: 45,
-                    width: 310,
+                    height: 40,
+                    width: 330,
                     decoration: BoxDecoration(
                         color: Colors.white,
-                        borderRadius: BorderRadius.circular(30)
+                        borderRadius: BorderRadius.circular(30),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Color.fromARGB(255, 122, 255, 186),
+                            blurRadius: 7,
+                            spreadRadius: 1,
+                            offset: Offset(1, 2),
+                          )
+                        ]
                     ),
                     child: TextField(
                       obscureText: false,
                       cursorColor: const Color.fromARGB(255, 239, 137, 254),
-                      cursorHeight: 22,
+                      cursorHeight: 21,
                       maxLength: 20,
                       maxLengthEnforcement: MaxLengthEnforcement.enforced,
                       style: TextStyle(color: Colors.black, fontFamily: 'InknutAntiqua', fontSize: 14),
                       decoration: InputDecoration(
-                        counterStyle: TextStyle(fontFamily: 'InknutAntiqua', color: Colors.black, fontSize: 13, height: -80),
-                        contentPadding: EdgeInsets.only(left: 15, bottom: 16, right: 20),
-                        //hintStyle: TextStyle(color: Colors.black),
-                        hoverColor: Colors.black,
-                        labelText: 'Märkesnamn:', labelStyle: TextStyle(color: Colors.black, fontFamily: ('InknutAntiqua')), floatingLabelBehavior: FloatingLabelBehavior.never,
-                        focusedBorder: InputBorder.none,
-                        enabledBorder: InputBorder.none,
+                          counterStyle: TextStyle(fontFamily: 'InknutAntiqua', color: Colors.black, fontSize: 13, height: -60),
+                          contentPadding: EdgeInsets.only(left: 12, bottom: 15, right: 10),
+                          hoverColor: const Color.fromARGB(255, 239, 137, 254),
+                          labelText: 'Klubbmästeri:', labelStyle: TextStyle(color: Colors.black, fontFamily: ('InknutAntiqua')), floatingLabelBehavior: FloatingLabelBehavior.never,
+                          border: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          enabledBorder: InputBorder.none
                       ),
                     ),
                   ),
                 ),
-                SizedBox(width: 5),
-              ]
-          ),
+              ],
+            ),//KLUBBMÄSTERI TEXTINPUTFÄLT
 
+            //Knapp 2 Colour
+            SizedBox(height: 20),
 
-          Row( //Switch button
+            //KNAPP 2 Colour
+            Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(height: 50),
-                SizedBox(width: 2), //padding spacing för switch knapp
-                Container(
-                    alignment: Alignment.center,
-                    child: SizedBox(
-                        width: 85,
-                        height: 35,
-                        //Källhänvisning 'Flutter increase height and width of Switch?' av diegoveloper //stackoverflow.com/questions/52568958/flutter-increase-height-and-width-of-switch hämtad 10 mars 2022, hämtad 8 maj 2025
-                        child: Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(30),
-                              boxShadow: [
-                                BoxShadow(
-                                    color: const Color.fromARGB(255, 239, 137, 254),
-                                    spreadRadius: 1.2,
-                                    blurRadius: 3,
-                                    offset: Offset(0.5, 0.5)
-                                )
-                              ]
-                          ),
-                          /*Källhänvisning: 'flutter switch package': Copyright (c) 2020, Nichole John Romero All rights reserved, hämtad via //pub.dev/packages/flutter_switch,
-                            publicerad 22 juni 2021, hämtad 9 maj 2025.*/
-                          child: FlutterSwitch(
-                            value: publicPrivate,
-                            duration: Duration(milliseconds: 205), //smoother switch animation
-                            width: 90,
-                            height: 70,
-                            borderRadius: 50,
-                            valueFontSize: 14,
-                            activeColor: const Color.fromARGB(255, 122, 255, 159),
-                            activeText: "public", //text på Switch-knapp
-                            activeTextFontWeight: FontWeight.w400,
-                            activeTextColor: const Color.fromARGB(255, 30, 30, 30),
-
-                            inactiveColor: const Color.fromARGB(255, 44, 44, 44),
-                            inactiveText: "private",
-                            inactiveTextColor: Colors.white,
-                            inactiveTextFontWeight: FontWeight.w400,
-
-                            showOnOff: true, //visa texterna på switch-knappen
-                            onToggle: (bool value) {
-                              setState(() {
-                                publicPrivate = value;
-                              });
-                            },
-                          ),
+                Container( //COLOR BUTTON DROPDOWNBUTTON
+                    padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                    width: 330,
+                    height: 40,
+                    decoration: BoxDecoration(
+                        color: const Color.fromARGB(255, 255, 255, 255),
+                        borderRadius: BorderRadius.circular(30),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Color.fromARGB(255, 122, 255, 186),
+                            blurRadius: 7,
+                            spreadRadius: 1,
+                            offset: Offset(1, 2),
+                          )
+                        ]
+                    ),
+                    child: DropdownButtonHideUnderline(
+                        child: DropdownButton(
+                          dropdownColor: Colors.white,
+                          menuMaxHeight: 180, //scrollable menu, styra hur många entries som syns samtidigt i dropdown-menyn
+                          menuWidth: 280,
+                          borderRadius: BorderRadius.circular(30),
+                          style: TextStyle(color: Colors.black, fontFamily: 'InknutAntiqua', fontSize: 15),
+                          padding: EdgeInsets.only(left: 10),
+                          value: dropdownColour,
+                          onChanged: (String? value) {
+                            setState(() {
+                              dropdownColour = value!;
+                            });
+                          },
+                          items: colours.map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(value: value, child:
+                            Text(value));
+                          }).toList(),
                         )
                     )
-                )
-              ]
-          ),
+                ),
+              ],
+            ), //FÄRG BUTTON DROPDOWNBUTTON
+            SizedBox(height: 20),
+
+            //Knapp 1 PLACERING DROPDOWNMENU
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container( //PLACERING DROPDOWNBUTTON
+                    width: 330,
+                    height: 40,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(30),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Color.fromARGB(255, 122, 255, 186),
+                            blurRadius: 7,
+                            spreadRadius: 1,
+                            offset: Offset(1, 2),
+                          )
+                        ]
+                    ),
+                    child: DropdownButtonHideUnderline(
+                        child: DropdownButton(
+                          dropdownColor: Colors.white,
+                          menuMaxHeight: 180, //scrollable menu, styra hur många entries som syns samtidigt i dropdown-menyn
+                          menuWidth: 280,
+                          borderRadius: BorderRadius.circular(40),
+                          focusColor: Color.fromARGB(255, 122, 255, 186),
+                          style: TextStyle(color: Colors.black, fontFamily: 'InknutAntiqua', fontSize: 15),
+                          padding: EdgeInsets.only(left: 10),
+                          value: dropdownPlacement,
+                          onChanged: (String? value) {
+                            setState(() {
+                              dropdownPlacement = value!;
+                            });
+                          },
+                          items: placement.map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(value: value, child:
+                            Text(value));
+                          }).toList(),
+                        )
+                    )
+                ),
+              ],
+            ), //CATEGORY BUTTON DROPDOWNBUTTON
 
 
-          SizedBox(height: 13),
+            SizedBox(height: 25), //padding
 
-          Row( //History-rubrik
-              mainAxisAlignment: MainAxisAlignment.start,
+            Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(width: 40), //spacing padding
-                Text("Beskrivning", style: TextStyle(color: Colors.white, fontSize: 18, fontFamily: ('InknutAntiqua'), fontWeight: FontWeight.w400)),
-                SizedBox(width: 4), //spacing between text and icon
-                //Icon(Icons.border_color_sharp, size: 20),
-              ]),
-          SizedBox(height: 10), //padding
-          SizedBox(width: 340), //padding marginal till vänster
-          Row(
-            children: [
-              SizedBox(width: 32),
-              Container( //Beskrivning box
-                  height: 90,
-                  width: 330,
+                // Antal-kontroller
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("Antal", style: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 20, fontWeight: FontWeight.w400)),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    IconButton(
+                      style: IconButton.styleFrom(
+                        backgroundColor: const Color.fromARGB(195, 239, 137, 254),
+                        shadowColor: Colors.white,
+                      ),
+                      icon: Icon(Icons.remove, color: Colors.white),
+                      onPressed: () {
+                        setState(() {
+                          amount = (amount > 0) ? amount - 1 : 0;
+                        });
+                      },
+                    ),
+                    const SizedBox(width: 8),
+                    Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Color.fromARGB(255, 226, 93, 246),
+                                spreadRadius: 1.5,
+                                blurRadius: 5,
+                                offset: Offset(0.5, 1)
+                            )
+                          ]
+                      ),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(width: 1, color: Color.fromARGB(255, 255, 162, 221)),
+                          borderRadius: BorderRadius.circular(100),
+                          boxShadow: [BoxShadow(color: Colors.black)],
+                        ),
+                        child: CircleAvatar(
+                          backgroundColor: Colors.white,
+                          radius: 30,
+                          child: Text("$amount", style: TextStyle(color: Colors.black, fontSize: 20, fontFamily: 'InknutAntiqua')),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    IconButton(
+                      style: IconButton.styleFrom(
+                        backgroundColor: const Color.fromARGB(195, 239, 137, 254),
+                        shadowColor: Colors.white,
+                      ),
+                      icon: Icon(Icons.add, color: Colors.white),
+                      onPressed: () {
+                        setState(() {
+                          amount += 1;
+                        });
+                      },
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 30),
+                // Switch-knappar (public och trade)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    //SWITCH 1 PUBLIK/PRIVAT
+                    Container( //Källhänvisning 'Flutter increase height and width of Switch?' av diegoveloper //stackoverflow.com/questions/52568958/flutter-increase-height-and-width-of-switch hämtad 10 mars 2022, hämtad 8 maj 2025
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Color.fromARGB(255, 108, 246, 93),
+                            spreadRadius: 1.5,
+                            blurRadius: 5,
+                            offset: Offset(0.5, 1)
+                          )
+                        ]
+                      ),
+
+                      /*Källhänvisning: 'flutter switch package': Copyright (c) 2020, Nichole John Romero All rights reserved, hämtad via //pub.dev/packages/flutter_switch,
+                      publicerad 22 juni 2021, hämtad 9 maj 2025.*/
+                      child: FlutterSwitch(
+                        value: publicPrivate,
+                        duration: Duration(milliseconds: 205),
+                        width: 108,
+                        height: 48,
+                        borderRadius: 50,
+                        valueFontSize: 17,
+                        activeColor: const Color.fromARGB(255, 122, 255, 159),
+                        activeText: "Publik",
+                        activeTextFontWeight: FontWeight.w400,
+                        activeTextColor: const Color.fromARGB(255, 30, 30, 30),
+                        inactiveColor: const Color.fromARGB(255, 241, 77, 80),
+                        inactiveText: "Privat",
+                        inactiveTextColor: Colors.black,
+                        inactiveTextFontWeight: FontWeight.w400,
+                        showOnOff: true,
+                        onToggle: (bool value) {
+                          setState(() {
+                            publicPrivate = value;
+                          });
+                        },
+                      ),
+                    ),
+                    const SizedBox(width: 25),
+
+                    //SWITCH 2 BYTBAR/EJ BYTBAR
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Color.fromARGB(255, 108, 246, 93),
+                                spreadRadius: 1.5,
+                                blurRadius: 5,
+                                offset: Offset(0.5, 1)
+                            )
+                          ]
+                      ),
+                      child: FlutterSwitch(
+                        value: trade,
+                        duration: Duration(milliseconds: 205),
+                        width: 108,
+                        height: 48,
+                        borderRadius: 50,
+                        valueFontSize: 17,
+                        activeColor: const Color.fromARGB(255, 122, 255, 159),
+                        activeText: "Bytbar",
+                        activeTextFontWeight: FontWeight.w400,
+                        activeTextColor: const Color.fromARGB(255, 27, 27, 27),
+                        inactiveColor: const Color.fromARGB(255, 241, 77, 80),
+                        inactiveText: "Ej bytbar",
+                        inactiveTextColor: Colors.black,
+                        inactiveTextFontWeight: FontWeight.w400,
+                        showOnOff: true,
+                        onToggle: (bool value) {
+                          setState(() {
+                            trade = value;
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+
+            SizedBox(height: 20), //padding
+            //SizedBox(width: 450), //spacing marginal till vänster
+
+            SizedBox(height: 13), //padding
+
+            Row(children: [
+              SizedBox(width: 30), //spacing marginal till vänster
+              Container(
                   decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: BorderRadius.circular(30),
                       boxShadow: [
                         BoxShadow(
-                            color: const Color.fromARGB(255, 239, 137, 254),
+                            color: Color.fromARGB(255, 122, 255, 186),
                             spreadRadius: 2,
-                            blurRadius: 5,
+                            blurRadius: 2,
                             offset: Offset(1, 2)
                         )
                       ]
                   ),
-                  //padding: EdgeInsets.symmetric(horizontal: 80),
-                  //child: Text("History about your patch... lorem ipsum \nhejhejhej" , textAlign: TextAlign.left, style: TextStyle(color: Colors.black, fontFamily: ('HappyMonkey'), fontSize: 14)),
-                  child: TextFormField(
-                    style: TextStyle(color: Colors.black, fontFamily: 'InknutAntiqua', fontSize: 14),
-                    obscureText: false,
-                    cursorColor: const Color.fromARGB(255, 239, 137, 254),
-                    cursorHeight: 22,
-                    textAlign: TextAlign.center,
-                    keyboardType: TextInputType.multiline, //tillåt enter flera rader
-                    maxLines: 4,
-                    maxLength: 250,
-                    maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                    scrollPadding: EdgeInsets.fromLTRB(5, 5, 5, 5),
-                    decoration: InputDecoration(
-                        counterStyle: TextStyle(fontFamily: 'InknutAntiqua', color: Colors.black, fontSize: 13, height: -50),
-                        //labelText: 'History about your patch:',
-                        contentPadding: EdgeInsets.fromLTRB(0, 15, 10, 20),
-                        focusedBorder: InputBorder.none,
-                        enabledBorder: InputBorder.none
-                    ),
-                  )
-              ),
-            ],
-          ),
 
-          SizedBox(height: 10), //padding
-
-          SizedBox(height: 25),
-
-          //Knapp 1 Category
-          Row(
-            children: [
-              SizedBox(width: 35),
-              Container( //CATEGORY BUTTON DROPDOWNBUTTON
-                  width: 330,
-                  height: 40,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(30),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Color.fromARGB(255, 122, 255, 186),
-                          blurRadius: 7,
-                          spreadRadius: 1,
-                          offset: Offset(1, 2),
-                        )
-                      ]
-                  ),
-                  child: DropdownButtonHideUnderline(
-                      child: DropdownButton(
-                        dropdownColor: Colors.white,
-                        menuMaxHeight: 180, //scrollable menu, styra hur många entries som syns samtidigt i dropdown-menyn
-                        menuWidth: 280,
-                        borderRadius: BorderRadius.circular(40),
-                        focusColor: Color.fromARGB(255, 122, 255, 186),
-                        style: TextStyle(color: Colors.black, fontFamily: 'InknutAntiqua', fontSize: 15),
-                        padding: EdgeInsets.only(left: 10),
-                        value: dropdownCategory,
-                        onChanged: (String? value) {
-                          setState(() {
-                            dropdownCategory = value!;
-                          });
-                        },
-                        items: categories.map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(value: value, child:
-                          Text(value));
-                        }).toList(),
+                  child: SizedBox(
+                      height: 40,
+                      width: 160,
+                      child: OutlinedButton(
+                        onPressed: () {},
+                        style: OutlinedButton.styleFrom(
+                            backgroundColor: Color.fromARGB(255, 42, 42, 42),
+                            side: BorderSide(width: 1, color: Color.fromARGB(255, 122, 255, 186), strokeAlign: 1)
+                        ),
+                        child: Text("Spara", style: TextStyle(color: const Color.fromARGB(255, 255, 255, 255), fontFamily: 'InknutAntiqua', fontSize: 20, fontWeight: FontWeight.w400)),
                       )
                   )
               ),
-            ],
-          ), //CATEGORY BUTTON DROPDOWNBUTTON
-
-          //Knapp 2 Colour
-          SizedBox(height: 22), //padding
-
-          //KNAPP 2 Colour
-          Row(
-            children: [
-              SizedBox(width: 35),
-              Container( //COLOR BUTTON DROPDOWNBUTTON
-                  width: 330,
-                  height: 40,
-                  decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 255, 255, 255),
-                      borderRadius: BorderRadius.circular(30),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Color.fromARGB(255, 122, 255, 186),
-                          blurRadius: 7,
-                          spreadRadius: 1,
-                          offset: Offset(1, 2),
-                        )
-                      ]
-                  ),
-                  child: DropdownButtonHideUnderline(
-                      child: DropdownButton(
-                        dropdownColor: Colors.white,
-                        menuMaxHeight: 180, //scrollable menu, styra hur många entries som syns samtidigt i dropdown-menyn
-                        menuWidth: 280,
-                        borderRadius: BorderRadius.circular(30),
-                        style: TextStyle(color: Colors.black, fontFamily: 'InknutAntiqua', fontSize: 15),
-                        padding: EdgeInsets.only(left: 10),
-                        value: dropdownColour,
-                        onChanged: (String? value) {
-                          setState(() {
-                            dropdownColour = value!;
-                          });
-                        },
-                        items: colours.map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(value: value, child:
-                          Text(value));
-                        }).toList(),
-                      )
-                  )
-              ),
-            ],
-          ), //COLOR BUTTON DROPDOWNBUTTON
-
-
-          //Knapp 3 Klubbmästeri
-          SizedBox(height: 22), //padding
-
-          Row(
-            children: [
-              SizedBox(width: 16),
-              Container(
-                padding: EdgeInsets.fromLTRB(20, 0, 0, 20),
-                child: Container(
-                  height: 40,
-                  width: 330,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(30),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Color.fromARGB(255, 122, 255, 186),
-                          blurRadius: 7,
-                          spreadRadius: 1,
-                          offset: Offset(1, 2),
-                        )
-                      ]
-                  ),
-                  child: TextField(
-                    obscureText: false,
-                    cursorColor: const Color.fromARGB(255, 239, 137, 254),
-                    cursorHeight: 21,
-                    maxLength: 20,
-                    maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                    style: TextStyle(color: Colors.black, fontFamily: 'InknutAntiqua', fontSize: 14),
-                    decoration: InputDecoration(
-                        counterStyle: TextStyle(fontFamily: 'InknutAntiqua', color: Colors.black, fontSize: 13, height: -60),
-                        contentPadding: EdgeInsets.only(left: 12, bottom: 15, right: 10),
-                        hoverColor: const Color.fromARGB(255, 239, 137, 254),
-                        labelText: 'Klubbmästeri:', labelStyle: TextStyle(color: Colors.black, fontFamily: ('InknutAntiqua')), floatingLabelBehavior: FloatingLabelBehavior.never,
-                        border: InputBorder.none,
-                        focusedBorder: InputBorder.none,
-                        enabledBorder: InputBorder.none
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),//STUDENT CLUBS BUTTON DROPDOWNBUTTON
-
-      SizedBox(height: 25), //padding
-
-      Row( //Nästa Row (rad): 'Amount'-text och 'Available for trade?'-text
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            SizedBox(width: 41), //padding skapa marginal åt vänster
-
-            Text("Antal", style: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 17, fontWeight: FontWeight.w400)),
-            SizedBox(width: 65), //spacing
-            Text("Tillgänglig att byta?", style: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 17, fontWeight: FontWeight.w300))
-          ]
-      ),
-      SizedBox(height: 6),
-
-      Row( //Nästa Row (rad): -minus knapp och +knapp Addera, subtrahera 'Amount'-värde
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          SizedBox(width: 35), //padding spacing +- cirkel
-
-          IconButton( // - Knapp minska Amount
-              style: IconButton.styleFrom(
-                backgroundColor: const Color.fromARGB(195, 239, 137, 254),
-                shadowColor: Colors.white,
-              ),
-              //color: const Color.fromARGB(255, 239, 137, 254),
-              hoverColor: Color.fromARGB(230, 152, 254, 150),
-              splashColor: const Color.fromARGB(255, 239, 137, 254),
-              tooltip: 'Minska antalet av detta märke', //textrad för accessability
-              icon: Icon(Icons.remove, color: Colors.white), //'-'-ikon på knapp
-              onPressed: () {
-                setState(() {
-                  amount -= 1;
-                  amount <0 ? amount = 0 : amount; //Ej går att ha färre än 0, condition ? true-case:false-case
-                });
-              }
-          ),
-
-          SizedBox(width:8), //cirkel padding spacing
-          Container(
-            decoration: BoxDecoration(
-                border: Border.all(width: 1, color: Color.fromARGB(255, 255, 162, 221)),
-                borderRadius: BorderRadius.circular(100),
-                boxShadow: [
-                  BoxShadow(
-                      color: Colors.black
-                  )
-                ]
-            ),
-            child: CircleAvatar(
-                backgroundColor: Colors.white,
-                radius: 30,
-                child: Text("$amount", style: TextStyle(color: Colors.black, fontSize: 20, fontFamily: 'CalSans'))
-            ),
-          ),
-          SizedBox(width:8), //cirkel padding spacing,
-
-          IconButton( // + Knapp öka Amount
-              style: IconButton.styleFrom(
-                backgroundColor: const Color.fromARGB(195, 239, 137, 254),
-                shadowColor: Colors.white,
-              ),
-              //color: const Color.fromARGB(255, 239, 137, 254),
-              hoverColor: Color.fromARGB(230, 152, 254, 150),
-              splashColor: const Color.fromARGB(255, 239, 137, 254),
-              tooltip: 'Öka antalet av detta märke', //textrad för accessability
-              icon: Icon(Icons.add, color: Colors.white), //'+'-ikon på knapp
-              onPressed: () {
-                setState(() {
-                  amount += 1;
-                });
-              }
-          ),
-
-          SizedBox(width: 45), //padding spacing
-
-          Container(
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(30),
-                boxShadow: [
-                  BoxShadow(
-                      color: const Color.fromARGB(255, 255, 141, 221),
-                      spreadRadius: 0.5,
-                      blurRadius: 2,
-                      offset: Offset(0.5, 1)
-                  )
-                ]
-            ),
-            child: FlutterSwitch(
-              value: trade,
-              duration: Duration(milliseconds: 205), //smoother switch animation
-              width: 75,
-              height: 38,
-              borderRadius: 50,
-              valueFontSize: 15,
-              activeColor: const Color.fromARGB(255, 241, 150, 255),
-              activeText: "Ja", //text på Switch-knapp
-              activeTextFontWeight: FontWeight.w400,
-              activeTextColor: const Color.fromARGB(255, 27, 27, 27),
-
-              inactiveColor: const Color.fromARGB(255, 44, 44, 44),
-              inactiveText: "Nej",
-              inactiveTextColor: Colors.white,
-              inactiveTextFontWeight: FontWeight.w400,
-
-              showOnOff: true, //visa texterna på switch-knappen
-              onToggle: (bool value) {
-                setState(() {
-                  trade = value;
-                });
-              },
-            ),
-          ) //Container med skugga för knapp
-        ],
-      ), //Row (rad): -minus knapp och +knapp Addera, subtrahera 'Amount'-värde
-       //Column för alla 3 knappar + Amount-delarna
-
-      SizedBox(height: 20), //padding
-      //SizedBox(width: 450), //spacing marginal till vänster
-
-      Row( //Placement-knapp
-        children: [
-          SizedBox(width: 120), //spacing marginal till vänster
-          Container( //PLACEMENT BUTTON DROPDOWNBUTTON
-              width: 150,
-              height: 40,
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(30),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Color.fromARGB(255, 122, 255, 186),
-                      blurRadius: 4,
-                      spreadRadius: 2,
-                      offset: Offset(1, 2),
-                    )
-                  ]
-              ),
-              child: PopupMenuButton<String>(
-                elevation: 8,
-                shadowColor: Colors.white,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(30))
-                ),
-                color: Colors.white,
-                popUpAnimationStyle: AnimationStyle(curve: Curves.easeInQuart, duration: const Duration(milliseconds: 1000), reverseCurve: Curves.fastOutSlowIn, reverseDuration: const Duration(milliseconds: 1200)),
-                offset: Offset(95, -200),
-                initialValue: "Placering",
-                itemBuilder: (context) => [
-                  PopupMenuItem(child: Text('Ej påsytt', style: TextStyle(color: Colors.black, fontFamily: 'InknutAntiqua', fontSize: 14))),
-                  PopupMenuItem(child: Text('Vänster arm', style: TextStyle(color: Colors.black, fontFamily: 'InknutAntiqua', fontSize: 14))),
-                  PopupMenuItem(child: Text('Höger arm', style: TextStyle(color: Colors.black, fontFamily: 'InknutAntiqua', fontSize: 14))),
-                  PopupMenuItem(child: Text('Vänster ben', style: TextStyle(color: Colors.black, fontFamily: 'InknutAntiqua', fontSize: 14))),
-                  PopupMenuItem(child: Text('Höger ben', style: TextStyle(color: Colors.black, fontFamily: 'InknutAntiqua', fontSize: 14))),
-                  PopupMenuItem(child: Text('Krage', style: TextStyle(color: Colors.black, fontFamily: 'InknutAntiqua', fontSize: 14))),
-                  PopupMenuItem(child: Text('Skrev', style: TextStyle(color: Colors.black, fontFamily: 'InknutAntiqua', fontSize: 14))),
-                ],
-
-                child: TextButton(
-                  child: Text("Placering", style: TextStyle(color: Colors.black, fontFamily: 'InknutAntiqua', fontSize: 15)),
-                  onPressed: null,
-                ),
-              )
-          )
-          //), //PLACEMENT BUTTON DROPDOWNBUTTON
-        ],
-      ),
-
-      SizedBox(height: 25), //padding
-
-      Row(children: [
-        SizedBox(width: 30), //spacing marginal till vänster
-        Container(
-            decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(30),
-                boxShadow: [
-                  BoxShadow(
-                      color: Color.fromARGB(255, 122, 255, 186),
-                      spreadRadius: 2,
-                      blurRadius: 2,
-                      offset: Offset(1, 2)
-                  )
-                ]
-            ),
-
-            child: SizedBox(
-                height: 40,
-                width: 160,
-                child: OutlinedButton(
-                  onPressed: () {},
-                  style: OutlinedButton.styleFrom(
-                      backgroundColor: Color.fromARGB(255, 42, 42, 42),
-                      side: BorderSide(width: 1, color: Color.fromARGB(255, 122, 255, 186), strokeAlign: 1)
-                  ),
-                  child: Text("Lägg till märke", style: TextStyle(color: const Color.fromARGB(255, 255, 255, 255), fontFamily: 'InknutAntiqua', fontSize: 13, fontWeight: FontWeight.w400)),
-                )
-            )
-        ),
-        SizedBox(width: 130), //spacing
-        FloatingActionButton(
-            backgroundColor: const Color.fromARGB(255, 243, 68, 255),
-            shape: const CircleBorder(),
-            hoverColor: Color.fromARGB(255, 139, 166, 255),
-            child: Icon(Icons.delete_outline_rounded, size: 30, color: Colors.white),
-            onPressed: () {}
-        ) //Soptunna-knapp action
-      ],),
-      SizedBox(height: 20),
+              SizedBox(width: 120), //spacing
+              FloatingActionButton(
+                  backgroundColor: Color.fromARGB(255, 243, 68, 255),
+                  shape: const CircleBorder(),
+                  hoverColor: Color.fromARGB(255, 139, 166, 255),
+                  child: Icon(Icons.delete_outline_rounded, size: 30, color: Colors.white),
+                  onPressed: () {}
+              ) //Soptunna-knapp action
+            ],),
+            SizedBox(height: 20),
 //Column för Placement, 'Add patch' + papperskorg-icon
-    ],
-    ),
-    ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -627,12 +581,3 @@ Widget build(BuildContext context) {
   }
 
 } //CLASS LAST PARENTES
-
-
-
-
-
-
-
-
-

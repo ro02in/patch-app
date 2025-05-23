@@ -59,6 +59,7 @@ class TempButtonsPage extends StatelessWidget {
 import 'package:flutter/material.dart';
 import 'package:patchappflutter/add_patch_page.dart';
 import 'package:patchappflutter/continue_register_page.dart';
+import 'package:patchappflutter/patch_inventory_page.dart';
 import 'package:patchappflutter/profile_page.dart';
 import 'package:patchappflutter/register_page.dart';
 import 'package:patchappflutter/trade_action_page.dart';
@@ -74,7 +75,7 @@ class TempButtonsPage extends StatelessWidget {
    return Scaffold(
      appBar: AppBar(title: Text('TEMP MENY')),
      body: Padding(
-       padding: const EdgeInsets.all(20.0),
+       padding: const EdgeInsets.all(2.0),
        child: ListView(
          children: [
            _navButton(context, 'Add Patch Page', PatchViewPage()),
@@ -86,6 +87,7 @@ class TempButtonsPage extends StatelessWidget {
            _navButton(context, 'FAQ Page', FAQPage()),
            _navButton(context, 'Patch Added Successfully Page', PatchAddSuccessPage()),
            _navButton(context, 'Search main page', SearchPage()),
+           _navButton(context, 'Patch Inventory Page', PatchInventoryPage()),
            
            _navButton(context,'Trade Request Success Page',
              TradeRequestSuccessPage(username: 'Oscar'),
