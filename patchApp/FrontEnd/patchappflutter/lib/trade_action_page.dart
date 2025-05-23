@@ -46,9 +46,9 @@ Widget build (BuildContext context) {
       child: Column(
         children: [
           SizedBox(height: 60), //vertical padding
-          Text("Trade action page", style: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 20)),
+          Text("Byt märke", style: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 20)),
           SizedBox(height: 70), //vertical padding
-          Text("Give patch to:", style: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 20)),
+          Text("Ge märke till", style: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 20)),
           Container(
             height: 30,
             width: 50,
@@ -114,7 +114,7 @@ Widget build (BuildContext context) {
 
           SizedBox(height: 15),
 
-          Text("You will recieve:", style: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 20)),
+          Text("Du vill motta följande märke:", style: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 20)),
           SizedBox(height: 5),
           CircleAvatar( //klicka på och kunna välja bild
             backgroundColor: Colors.white,

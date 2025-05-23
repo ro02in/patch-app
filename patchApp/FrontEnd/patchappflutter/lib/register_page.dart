@@ -134,7 +134,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     decoration: InputDecoration(
                       //hintStyle: TextStyle(color: Colors.black),
                       hoverColor: Colors.black,
-                      labelText: 'Name:', labelStyle: TextStyle(fontFamily: ('InknutAntiqua')), floatingLabelBehavior: FloatingLabelBehavior.never,
+                      labelText: 'Namn:', labelStyle: TextStyle(fontFamily: ('InknutAntiqua')), floatingLabelBehavior: FloatingLabelBehavior.never,
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.transparent, width: 1.1),
                         borderRadius: BorderRadius.circular(30),
@@ -173,7 +173,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     cursorColor: const Color.fromARGB(255, 214, 18, 185),
                     cursorHeight: 24,
                     style: TextStyle(color: Colors.black, fontFamily: 'InknutAntiqua', fontSize: 14),
-                    decoration: InputDecoration(labelText: 'KM name:', labelStyle: TextStyle(fontFamily: ('InknutAntiqua')), floatingLabelBehavior: FloatingLabelBehavior.never, //OPTIONAL
+                    decoration: InputDecoration(labelText: 'KM namn:', labelStyle: TextStyle(fontFamily: ('InknutAntiqua')), floatingLabelBehavior: FloatingLabelBehavior.never, //OPTIONAL
                     focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.transparent, width: 1.1),
                         borderRadius: BorderRadius.circular(30),
@@ -209,7 +209,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     cursorColor: const Color.fromARGB(255, 214, 18, 185),
                     cursorHeight: 24,
                     style: TextStyle(color: Colors.black, fontFamily: 'InknutAntiqua', fontSize: 14),
-                    decoration: InputDecoration(labelText: 'Section:', labelStyle: TextStyle(fontFamily: ('InknutAntiqua')), floatingLabelBehavior: FloatingLabelBehavior.never, //OPTIONAL
+                    decoration: InputDecoration(labelText: 'Sektion:', labelStyle: TextStyle(fontFamily: ('InknutAntiqua')), floatingLabelBehavior: FloatingLabelBehavior.never, //OPTIONAL
                     focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.transparent, width: 1.1),
                         borderRadius: BorderRadius.circular(30),
@@ -246,7 +246,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     cursorColor: const Color.fromARGB(255, 214, 18, 185),
                     cursorHeight: 24,
                     style: TextStyle(color: Colors.black, fontFamily: 'InknutAntiqua', fontSize: 14),
-                    decoration: InputDecoration(labelText: 'Your university:', labelStyle: TextStyle(fontFamily: ('InknutAntiqua')), floatingLabelBehavior: FloatingLabelBehavior.never,
+                    decoration: InputDecoration(labelText: 'Ditt universitet:', labelStyle: TextStyle(fontFamily: ('InknutAntiqua')), floatingLabelBehavior: FloatingLabelBehavior.never,
                     focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.transparent, width: 1.1),
                         borderRadius: BorderRadius.circular(30),
@@ -293,7 +293,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                   MaterialPageRoute(builder: (context) => RegisterUserConfirmedPage()), //hänvisa till confirmation page
                               );
                   },
-                  child: Text("Register", style: TextStyle(fontFamily: 'InknutAntiqua', color: Colors.black, fontSize: 16)))
+                  child: Text("Registrera konto", style: TextStyle(fontFamily: 'InknutAntiqua', color: Colors.black, fontSize: 16)))
               ),
             ),
               

@@ -65,8 +65,7 @@ Widget build(BuildContext context) {
         children: [
           Column(
             children: [
-
-              SizedBox(height: 70),
+              SizedBox(height: 60),
 
               Row(
                 children: [
@@ -89,6 +88,8 @@ Widget build(BuildContext context) {
                         showDialog(context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
+                                backgroundColor: Colors.white,
+                                surfaceTintColor: Colors.white, //bli av med default färgen
                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
                                 contentTextStyle: TextStyle(color: Colors.black, fontSize: 15, fontFamily: 'InknutAntiqua'),
                                // title: Text("hello"),
@@ -101,7 +102,7 @@ Widget build(BuildContext context) {
                                         ),
                                         width: 90,
                                         height: 200,
-                                        child: Text("Ändra din färg på overallen")
+                                        child: Text("Ändra färg på overallen:", style: TextStyle(),)
                                       )
                               );
                             }
@@ -180,27 +181,29 @@ Widget build(BuildContext context) {
 
                   SizedBox(width: 20),
 
-                  Container( //LÄGGA TILL PROFILBILD VIA GALLERI KNAPP
-                    width: 35,
-                    height: 35,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(100),
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.yellow,
-                          offset: Offset(0, 0.5),
-                          spreadRadius: 3,
-                          blurRadius: 0
-                        )
-                      ]
+                  Padding(padding: EdgeInsets.all(0),
+                    child: Container( //LÄGGA TILL PROFILBILD VIA GALLERI KNAPP
+                      width: 35,
+                      height: 35,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(100),
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.yellow,
+                            offset: Offset(0, 0.5),
+                            spreadRadius: 3,
+                            blurRadius: 0
+                          )
+                        ]
+                      ),
+                      child: FloatingActionButton(
+                        shape: const CircleBorder(),
+                      onPressed: () {
+                          _pickImageFromGallery();
+                      },
+                      child: Icon(Icons.add_photo_alternate_sharp, color: Colors.black, size: 20)),
                     ),
-                    child: FloatingActionButton(
-                      shape: const CircleBorder(),
-                    onPressed: () {
-                        _pickImageFromGallery();
-                    },
-                    child: Icon(Icons.add_photo_alternate_sharp, color: Colors.black, size: 20)),
                   )
                 ],
               ),
@@ -211,16 +214,20 @@ Widget build(BuildContext context) {
                   Container(
                       padding: EdgeInsets.zero,
                       //child: (clicked == true) ? Image.asset(overaller.elementAt(i)) : Image.asset('assets/white.PNG', width: 280, height: 280),
-                      child: Image.asset(overaller.elementAt(currentIndex), width: 280, height: 280))
+                      child: Image.asset(overaller.elementAt(currentIndex), width: 280, height: 280)
+                      ),
                   //),
                 ],
               ),
 
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("$userName", style: TextStyle(color: Colors.white, fontSize: 25, fontFamily: 'InknutAntiqua')),
-                ],
+              SizedBox(
+                height: 35,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("$userName", style: TextStyle(color: Colors.white, fontSize: 25, fontFamily: 'InknutAntiqua')),
+                  ],
+                ),
               ),
 
               SizedBox(height: 20),
@@ -354,7 +361,7 @@ Widget build(BuildContext context) {
               Row(
                 children: [
                   SizedBox(width: 30),
-                  Text("Collection", style: TextStyle(color: Colors.white, fontSize: 30, fontFamily: 'InknutAntiqua')),
+                  Text("Din märkessamling", style: TextStyle(color: Colors.white, fontSize: 30, fontFamily: 'InknutAntiqua')),
 
                   SizedBox(width: 65), //padding between 'Collection' and 'Filter' button
                   
