@@ -83,7 +83,6 @@ class _SearchPageState extends State<SearchPage> {
     var screenSize = MediaQuery.of(context).size;
 
     return Scaffold(
-      bottomNavigationBar: CustomBottomNavigationBar(),
       body: Container(
         width: screenSize.width,
         height: screenSize.height,
