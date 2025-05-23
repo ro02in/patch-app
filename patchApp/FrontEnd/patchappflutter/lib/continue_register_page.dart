@@ -136,9 +136,13 @@ class _ContinueRegisterPageState extends State<ContinueRegisterPage> {
             SizedBox(height: 90),
             Image.asset('assets/rosaovve.png', width: 150, height: 150),
             SizedBox(height: 2),
-            Image.asset('assets/syttbyttljusrosatext.png', width: 300, height: 100),
+            Image.asset(
+              'assets/syttbyttljusrosatext.png',
+              width: 300,
+              height: 100,
+            ),
             Text(
-              "Create Sytt & Bytt account",
+              "Skapa Sytt & Bytt konto",
               style: TextStyle(
                 color: Colors.white,
                 fontFamily: 'InknutAntiqua',
@@ -159,7 +163,7 @@ class _ContinueRegisterPageState extends State<ContinueRegisterPage> {
                     blurRadius: 10,
                     spreadRadius: 4,
                     offset: Offset(0.5, 1),
-                  )
+                  ),
                 ],
               ),
               child: Column(
@@ -181,7 +185,7 @@ class _ContinueRegisterPageState extends State<ContinueRegisterPage> {
                             color: Colors.black.withOpacity(0.1),
                             blurRadius: 8,
                             offset: Offset(0, 4),
-                          )
+                          ),
                         ],
                         border: Border.all(color: Colors.grey.shade300),
                       ),
@@ -195,7 +199,7 @@ class _ContinueRegisterPageState extends State<ContinueRegisterPage> {
                           ),
                           SizedBox(width: 12),
                           Text(
-                            'Continue with Google',
+                            'Fortsätt med Google',
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w500,
