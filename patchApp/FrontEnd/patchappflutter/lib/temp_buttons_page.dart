@@ -62,6 +62,7 @@ import 'package:patchappflutter/continue_register_page.dart';
 import 'package:patchappflutter/patch_inventory_page.dart';
 import 'package:patchappflutter/profile_page.dart';
 import 'package:patchappflutter/register_page.dart';
+import 'package:patchappflutter/register_user_confirmed.dart';
 import 'package:patchappflutter/trade_action_page.dart';
 import 'package:patchappflutter/trade_log_page.dart'; // Import för TradeLogPage
 import 'package:patchappflutter/faq_page.dart';
@@ -88,9 +89,8 @@ class TempButtonsPage extends StatelessWidget {
            _navButton(context, 'Patch Added Successfully Page', PatchAddSuccessPage()),
            _navButton(context, 'Search main page', SearchPage()),
            _navButton(context, 'Patch Inventory Page', PatchInventoryPage()),
-           
-           _navButton(context,'Trade Request Success Page',
-             TradeRequestSuccessPage(username: 'Oscar'),
+           _navButton(context, 'Register user confirmed Page', RegisterUserConfirmedPage()),
+           _navButton(context,'Trade Request Success Page', TradeRequestSuccessPage(username: 'Oscar'),
            ),
          ],
        ),

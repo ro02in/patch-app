@@ -18,7 +18,7 @@ class RegisterUserConfirmedPage extends StatelessWidget{
                     width: screenSize.width,
                     height: screenSize.height,
                     decoration: BoxDecoration(
-                      image: DecorationImage(image: AssetImage('assets/stitches6.png'),
+                      image: DecorationImage(image: AssetImage('assets/stitches6background_darker.png'),
                       fit: BoxFit.fill,
                       )
                     ),
@@ -32,9 +32,9 @@ class RegisterUserConfirmedPage extends StatelessWidget{
                         boxShadow: [
                           BoxShadow(
                             color: const Color.fromARGB(255, 63, 213, 40),
-                            spreadRadius: 2,
-                            blurRadius: 7,
-                            offset: Offset(0.5, 1)
+                            spreadRadius: 0.3,
+                            blurRadius: 0,
+                            offset: Offset(9, 10)
                           ),
                         ]
                       ),
@@ -51,29 +51,24 @@ class RegisterUserConfirmedPage extends StatelessWidget{
                               children: [
                                 Row(
                                   children: [
-                                    SizedBox(width: 30),
-                                    Text("Congratulations, you", textAlign: TextAlign.center, style: TextStyle(color: Colors.black, fontSize: 16, fontFamily: 'InknutAntiqua')), 
+                                    SizedBox(width: 50),
+                                    Text("Grattis, du har skapat", textAlign: TextAlign.center, style: TextStyle(color: Colors.black, fontSize: 16, fontFamily: 'InknutAntiqua')),
                                 ]),
                                 Row(
                                   spacing: 0.1,
                                   children: [
-                                    SizedBox(width: 30),
-                                    Text("have created a", textAlign: TextAlign.center, style: TextStyle(color: const Color.fromARGB(255, 27, 27, 27), fontSize: 16, fontFamily: 'InknutAntiqua')),
+                                    SizedBox(width: 50),
+                                    Text("ett", textAlign: TextAlign.center, style: TextStyle(color: const Color.fromARGB(255, 27, 27, 27), fontSize: 16, fontFamily: 'InknutAntiqua')),
+                                    SizedBox(width: 7),
+                                    Image.asset('assets/blacksyttbytttext.png', width: 113, height: 15, alignment: AlignmentDirectional(1, 0)),
                                     SizedBox(width: 6),
-                                    Image.asset('assets/blacksyttbytttext.png', width: 109, height: 15, alignment: AlignmentDirectional(1, 0)),
+                                    Text("konto!", style: TextStyle(fontFamily: 'InknutAntiqua', color: Colors.black, fontSize: 15)),
                                   ],
                                 ),
-                                Row(
-                                  spacing: 0.1,
-                                  children: [
-                                  SizedBox(width: 30),
-                                  Text("account!", style: TextStyle(fontFamily: 'InknutAntiqua', color: Colors.black, fontSize: 15)),
-                                ],
-                                )
                               ],
                             ),
                           ),
-                          SizedBox(height: 16), //simulated padding
+                          SizedBox(height: 20), //simulated padding
                           
                           //Källhänvisning: Kod från StackOverflow foruminlägg "How to add gradient on icons": stackoverflow.com/questions/73870549/how-to-add-gradient-on-icons hämtad 1/5-2025 kl 16:00
                             Container(
@@ -84,10 +79,11 @@ class RegisterUserConfirmedPage extends StatelessWidget{
                                 borderRadius: BorderRadius.circular(100),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: const Color.fromARGB(255, 95, 234, 95),
-                                    spreadRadius: 3,
-                                    blurRadius: 15,
-                                    offset: Offset(0.5, 1)
+                                    color: const Color.fromARGB(
+                                        255, 232, 232, 232),
+                                    spreadRadius: 0.2,
+                                    blurRadius: 0,
+                                    offset: Offset(4, 6)
                                   )
                                 ]
                               ),
@@ -96,7 +92,8 @@ class RegisterUserConfirmedPage extends StatelessWidget{
                                 begin: Alignment.bottomLeft, //diagonal gradient
                                 end: Alignment.topRight, //diagonal gradient
                                 stops: [.3, 1],
-                                colors: [const Color.fromARGB(255, 53, 157, 77), const Color.fromARGB(255, 184, 231, 173)]).createShader(bounds),
+                                colors: [const Color.fromARGB(255, 36, 213, 77), const Color.fromARGB(
+                                    255, 142, 255, 115)]).createShader(bounds),
                                     child: Icon(
                                     Icons.check_circle_outline_sharp,
                                     size: 70,

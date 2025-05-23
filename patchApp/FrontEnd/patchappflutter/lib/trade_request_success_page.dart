@@ -17,36 +17,46 @@ class TradeRequestSuccessPage extends StatefulWidget {
 
 
 class _TradeRequestSuccessPageState extends State<TradeRequestSuccessPage> {
+
  @override
  Widget build(BuildContext context) {
+   var screenSize = MediaQuery.of(context).size; //screensize
+
    return Scaffold(
      appBar: AppBar(
-       title: const Text('Trade Request Sent'),
-       backgroundColor: const Color(0xFFF382F3),
+       elevation: 19,
+       shadowColor: Colors.black,
+       title: Text('Märkesbytesförfrågan skickad', style: TextStyle(fontFamily: 'InknutAntiqua', fontSize: 17, color: Colors.black)),
+       backgroundColor: Color.fromARGB(255, 255, 103, 247),
      ),
      body: Container(
-       decoration: const BoxDecoration(
+       width: screenSize.width,
+       height: screenSize.height,
+       decoration: BoxDecoration(
          image: DecorationImage(
            image: AssetImage('assets/stitches9.png'),
            fit: BoxFit.cover,
          ),
        ),
-       child: Padding(
-         padding: const EdgeInsets.all(24.0),
+
+         //padding: const EdgeInsets.all(24.0),
          child: Column(
            mainAxisAlignment: MainAxisAlignment.center,
            children: [
              // Box 1 – success text + icon
              Container(
+               height: 170,
+               width: 330,
                padding: const EdgeInsets.all(24),
                decoration: BoxDecoration(
-                 color: Colors.white.withOpacity(0.95),
-                 borderRadius: BorderRadius.circular(16),
+                 color: Colors.white,
+                 borderRadius: BorderRadius.circular(30),
                  boxShadow: [
                    BoxShadow(
-                     color: Colors.black.withOpacity(0.2),
-                     blurRadius: 6,
-                     offset: const Offset(0, 3),
+                       color: const Color.fromARGB(255, 63, 213, 40),
+                       spreadRadius: 0.3,
+                       blurRadius: 0,
+                       offset: Offset(5, 7)
                    ),
                  ],
                ),
@@ -54,58 +64,98 @@ class _TradeRequestSuccessPageState extends State<TradeRequestSuccessPage> {
                  children: [
                    // Här kan du lägga till checkmark-bild
                    // Image.asset('assets/check.png', height: 60),
-                   const Icon(Icons.check_circle, color: Colors.green, size: 60),
+                   //Källhänvisning: Kod från StackOverflow foruminlägg "How to add gradient on icons": stackoverflow.com/questions/73870549/how-to-add-gradient-on-icons hämtad 1/5-2025 kl 16:00
+                   Container(
+                     child: Container(
+                       height: 60,
+                       width: 60,
+                       decoration: BoxDecoration(
+                           color: Colors.white,
+                           borderRadius: BorderRadius.circular(100),
+                       ),
+                       child: ShaderMask(blendMode: BlendMode.srcIn,
+                           shaderCallback: (Rect bounds) => LinearGradient(
+                               begin: Alignment.bottomLeft, //diagonal gradient
+                               end: Alignment.topRight, //diagonal gradient
+                               stops: [.3, 1],
+                               colors: [const Color.fromARGB(255, 36, 213, 77), const Color.fromARGB(
+                                   255, 142, 255, 115)]).createShader(bounds),
+                           child: Icon(
+                             Icons.check_circle_outline_sharp,
+                             size: 60,
+                           )
+                       ),
+                     ),
+                   ),
                    const SizedBox(height: 12),
                    const Text(
-                     'Trade request was successfully sent!',
-                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                     'Märkesbyteförfrågan har skickats!',
+                     style: TextStyle(fontSize: 16, fontFamily: 'InknutAntiqua'),
                      textAlign: TextAlign.center,
                    ),
                  ],
                ),
              ),
 
-
-             const SizedBox(height: 24),
-
+             const SizedBox(height: 37),
 
              // Box 2 – wait message
              Container(
+               width: 320,
+               height: 85,
                padding: const EdgeInsets.all(20),
                decoration: BoxDecoration(
-                 color: Colors.white.withOpacity(0.9),
-                 borderRadius: BorderRadius.circular(16),
+                 color: Colors.white,
+                 borderRadius: BorderRadius.circular(26),
+                 boxShadow: [
+                   BoxShadow(
+                       color: Color.fromARGB(255, 234, 111, 255),
+                       spreadRadius: 0.3,
+                       blurRadius: 0,
+                       offset: Offset(5, 7)
+                   ),
+                 ],
                ),
                child: Text(
-                 'Wait for "${widget.username}" to respond to the request.',
-                 style: const TextStyle(fontSize: 16),
+                 'Vänta på att "${widget.username}" \nbesvarar din förfrågan.',
+                 style: const TextStyle(fontSize: 16, fontFamily: 'InknutAntiqua'),
                  textAlign: TextAlign.center,
                ),
              ),
 
 
-             const SizedBox(height: 40),
+             const SizedBox(height: 90),
 
 
              // Button – back to trade log
-             ElevatedButton(
-               onPressed: () {
-                 Navigator.pushReplacement(
-                   context,
-                   MaterialPageRoute(builder: (context) => TradeLogPage()),
-                 );
-               },
-               style: ElevatedButton.styleFrom(
-                 backgroundColor: const Color(0xFFDDD7E1),
-                 padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
-                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                 textStyle: const TextStyle(fontSize: 16),
+             Container(
+               width: 220,
+               height: 48,
+               decoration: BoxDecoration(
+                 borderRadius: BorderRadius.circular(30),
+                 boxShadow: [
+                   BoxShadow(
+                     color: Color.fromARGB(255, 0, 224, 255),
+                     spreadRadius: 0.5,
+                     blurRadius: 0,
+                     offset: Offset(5, 4)
+                   )
+                 ]
                ),
-               child: const Text('Back to Trade Log'),
-             ),
+               child: ElevatedButton(
+                 onPressed: () {
+                   Navigator.pushReplacement(
+                     context,
+                     MaterialPageRoute(builder: (context) => TradeLogPage()),
+                   );
+                 },
+                 style: ElevatedButton.styleFrom(
+                   backgroundColor: Colors.white,
+                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                   ), child: Text('Back to Trade Log', style: TextStyle(fontSize: 16, fontFamily: 'InknutAntiqua', color: Colors.black))),
+             )
            ],
          ),
-       ),
      ),
    );
  }
