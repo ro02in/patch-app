@@ -31,18 +31,22 @@ public class User {
     @Column(name = "email_address", unique = true)
     private String emailAddress;
 
+    @Column(name = "biography")
+    private String biography;
+
     @OneToMany(mappedBy = "sender")
     private List<TradeRequest> sentTrades = new ArrayList<>();
 
     @OneToMany(mappedBy = "receiver")
     private List<TradeRequest> receivedTrades = new ArrayList<>();
 
-    public User(String firstName, String surName, String kmName, Integer phoneNumber, String googleId, String emailAddress) {
+    public User(String firstName, String surName, String kmName, Integer phoneNumber, String googleId, String emailAddress, String biography) {
         this.firstName = firstName;
         this.surName = surName;
         this.kmName = kmName;
         this.phoneNumber = phoneNumber;
         this.googleId = googleId;
         this.emailAddress = emailAddress;
+        this.biography = biography;
     }
 }

@@ -58,8 +58,8 @@ public class PatchAppApplicationTest {
 		userRepository.deleteAll();
 
 		// Skapa användare och patcher som innan
-		sender = new User("John", "Doe","jodoe", 7012323, uniqueGoogleId(), "john@example.com");
-		receiver = new User("Jane", "Smith", "jasmith", 7012223, uniqueGoogleId(), "jane@example.com");
+		sender = new User("John", "Doe","jodoe", 7012323, uniqueGoogleId(), "john@example.com", "Biography");
+		receiver = new User("Jane", "Smith", "jasmith", 7012223, uniqueGoogleId(), "jane@example.com", "Extended Biography");
 
 		userRepository.save(sender);
 		userRepository.save(receiver);
