@@ -30,4 +30,9 @@ public class UserController {
     public List<User> searchUsers(@RequestParam("query") String query) {
         return userRepository.searchUsers(query);
     }
+
+    @GetMapping("/hello")
+    public String hello() {
+        return "Hello World";
+    }
 }
