@@ -122,7 +122,6 @@ class _ContinueRegisterPageState extends State<ContinueRegisterPage> {
 
     return Scaffold(
       body: Container(
-        alignment: Alignment.center,
         width: screenSize.width,
         height: screenSize.height,
         decoration: BoxDecoration(
@@ -131,88 +130,117 @@ class _ContinueRegisterPageState extends State<ContinueRegisterPage> {
             fit: BoxFit.fill,
           ),
         ),
-        child: Column(
+        child: ListView(
           children: [
-            SizedBox(height: 90),
-            Image.asset('assets/rosaovve.png', width: 150, height: 150),
-            SizedBox(height: 2),
-            Image.asset(
-              'assets/syttbyttljusrosatext.png',
-              width: 300,
-              height: 100,
-            ),
-            Text(
-              "Skapa Sytt & Bytt konto",
-              style: TextStyle(
-                color: Colors.white,
-                fontFamily: 'InknutAntiqua',
-                fontSize: 18,
-                fontWeight: FontWeight.w200,
+              SizedBox(
+                  height: 300,
+                  child: Image.asset('assets/rosaovve.png', width: 250, height: 250)
               ),
-            ),
-            SizedBox(height: 50),
-            Container(
-              width: 280,
-              height: 150,
-              decoration: BoxDecoration(
-                color: Color.fromARGB(255, 220, 151, 220),
-                borderRadius: BorderRadius.circular(30),
-                boxShadow: [
-                  BoxShadow(
-                    color: Color.fromARGB(255, 80, 255, 247),
-                    blurRadius: 10,
-                    spreadRadius: 4,
-                    offset: Offset(0.5, 1),
-                  ),
-                ],
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      // TODO: Lägg till din Google Sign-In-funktion här
-                      print('Google Sign-In tapped');
-                    },
-                    child: Container(
-                      width: 250,
-                      height: 50,
-                      decoration: BoxDecoration(
+            //rad
+
+            SizedBox(
+              height: 30,
+              child: Padding(
+                padding: EdgeInsets.only(left: 20, right: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(textAlign: TextAlign.end,
+                      "Skapa",
+                      style: TextStyle(
                         color: Colors.white,
-                        borderRadius: BorderRadius.circular(30),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.1),
-                            blurRadius: 8,
-                            offset: Offset(0, 4),
-                          ),
-                        ],
-                        border: Border.all(color: Colors.grey.shade300),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image.asset(
-                            'assets/googlelogorund.png',
-                            height: 24,
-                            width: 24,
-                          ),
-                          SizedBox(width: 12),
-                          Text(
-                            'Fortsätt med Google',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.black87,
-                              fontFamily: 'Roboto',
-                            ),
-                          ),
-                        ],
+                        fontFamily: 'InknutAntiqua',
+                        fontSize: 19,
+                        fontWeight: FontWeight.w200,
                       ),
                     ),
-                  ),
-                ],
+                      Image.asset(
+                        'assets/syttbyttljusrosatext.png', width: 200, height: 200,
+                      ),
+                    Text(
+                      textAlign: TextAlign.start,
+                      "konto",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: 'InknutAntiqua',
+                        fontSize: 19,
+                        fontWeight: FontWeight.w200,
+                      ),
+                    ),
+                  ],
+                ),
               ),
+            ),
+
+            SizedBox(height: 18),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  width: 280,
+                  height: 110,
+                  decoration: BoxDecoration(
+                    color: Color.fromARGB(255, 232, 127, 232),
+                    borderRadius: BorderRadius.circular(30),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Color.fromARGB(255, 232, 127, 232),
+                        blurRadius: 10,
+                        spreadRadius: 4,
+                        offset: Offset(0.5, 1),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          // TODO: Lägg till din Google Sign-In-funktion här
+                          print('Google Sign-In tapped');
+                        },
+                        child: Container(
+                          width: 250,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(30),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.1),
+                                blurRadius: 8,
+                                offset: Offset(0, 4),
+                              ),
+                            ],
+                            border: Border.all(color: Colors.grey.shade300),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                'assets/googlelogorund.png',
+                                height: 30,
+                                width: 30,
+                              ),
+                              SizedBox(width: 12),
+                              Text(
+                                'Fortsätt med Google',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black87,
+                                  fontFamily: 'Roboto',
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
           ],
         ),

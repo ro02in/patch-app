@@ -44,7 +44,7 @@ class _ProfilePageState extends State<ProfilePage> {
   List<String> patchImages = ['', '']; //BACKEND lista med användarens alla patches
   List<String> overaller = ['assets/beige.PNG', 'assets/blue2.PNG', 'assets/brightpink.PNG', 'assets/brightred.PNG', 'assets/bubblegumpink.PNG', 'assets/darkblue.PNG', 'assets/darkgreen.PNG', 'assets/darkorange.PNG', 'assets/darkpurple.PNG', 'assets/darkred.PNG', 'assets/forestgreen.PNG', 'assets/grey.PNG',
     'assets/greyblue.PNG', 'assets/lavendel.PNG', 'assets/lightblue.PNG', 'assets/lighterpurple.PNG',
-    'assets/lightgreen.PNG', 'assets/lightgrey.PNG', 'assets/lightpink.PNG', 'assets/limegreen.PNG', 'assets/orange.PNG', 'assets/purple.PNG', 'assets/rose.PNG', 'assets/royalblue.PNG', 'assets/sunorange.PNG', 'assets/washedpurple.PNG', 'assets/white.PNG', 'assets/yellow.PNG'];
+    'assets/lightgreen.PNG', 'assets/lightgrey.PNG', 'assets/lightpink.PNG', 'assets/limegreen.PNG', 'assets/orange.PNG', 'assets/purple.PNG', 'assets/rose.PNG', 'assets/royalblue.PNG', 'assets/sunorange.PNG', 'assets/washedpurple.PNG', 'assets/white.PNG', 'assets/yellow.PNG', 'assets/greybox_error_fix.PNG']; //24 Maj error fixade att man kan välja gul overall
 
 
   void initState() { //Kodrad lösning för att hämta första entry i list: källhänvisning: 'The instance member 'widget' can't be accessed in an initializer. Try replacing the reference to the instance member with a different expression', stackoverflow.com/questions/67501594/the-instance-member-widget-cant-be-accessed-in-an-initializer-try-replacing, av user 'MobIT', publicerad 12 maj 2021, hämtad 21 maj 2025
@@ -98,36 +98,58 @@ Widget build(BuildContext context) {
                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
                                 contentTextStyle: TextStyle(color: Colors.black, fontSize: 15, fontFamily: 'InknutAntiqua'),
                                // title: Text("hello"),
-                                titlePadding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                                //titlePadding: EdgeInsets.fromLTRB(0, 5, 0, 5),
                                   content:
-                                      Container(
+                                      SizedBox(
                                         height: 350,
-                                        width: 250,
-                                        child: Column(
-                                          mainAxisAlignment: MainAxisAlignment.start,
+                                        width: 360,
+                                        child: ListView(
                                           children: [
-                                            Row(
-                                              children :[
-                                              Text("Ändra färg på overallen:", style: TextStyle(fontWeight: FontWeight.w600))
-                                                ],
-                                               ),
-                                            Row(
-                                              children: [
-                                                Text("Du kan ändra färg på din overall genom att scrolla i menyn"),
-                                              ],
-                                            ),
-                                            Row(
-                                              children: [
-                                                Text("Lägg till profilbild:", style: TextStyle(fontWeight: FontWeight.w600)),
-                                              ]
-                                            ),
-                                            Row(
-                                              children: [
-                                                Text("hejhejh")
-                                              ],
-                                            )
+                                              Container(
+                                                color: Colors.white,
+                                                child: Column(
+                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                  children: [
+                                                    Row(
+                                                      children :[
+                                                      Text("Ändra färg på overallen:", style: TextStyle(fontWeight: FontWeight.w600))
+                                                        ],
+                                                       ),
+                                                    Row(
+                                                      children: [
+                                                        Text("Du kan ändra färg på din overall genom att\nscrolla fram i den horisontella menyn\ntill den overallfärg du önskar byta till.",
+                                                            style: TextStyle(fontSize: 11, height: 2)),
+                                                      ],
+                                                    ),
+                                                    SizedBox(height: 8), //padding
+                                                    Row(
+                                                      children: [
+                                                        Text("Lägg till profilbild:", style: TextStyle(fontWeight: FontWeight.w600)),
+                                                      ]
+                                                    ),
+                                                    Row(
+                                                      children: [
+                                                        Text("Lägg till en profilbild genom att klicka på\nnågon av de gula knapparna, på antingen\nkamera-knappen och ta en bild, eller\ngalleri-knappen och ladda upp en bild.",
+                                                        style: TextStyle(fontSize: 11, height: 2))
+                                                      ],
+                                                    ),
+                                                    SizedBox(height: 8), //padding
+                                                    Row(
+                                                        children: [
+                                                          Text("Din märkessamling:", style: TextStyle(fontWeight: FontWeight.w600)),
+                                                        ]
+                                                    ),
+                                                    Row(
+                                                      children: [
+                                                        Text("I Din Märkessamling kan du se dina\nnuvarande klubbmästerimärken. Klicka på\nnågot av dem för att komma till dess sida.",
+                                                            style: TextStyle(fontSize: 11, height: 2))
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
                                           ],
-                                                                            ),
+                                        ),
                                       ),
                               );
                             }

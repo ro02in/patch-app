@@ -50,18 +50,37 @@ class _PatchViewPageState extends State<PatchViewPage> {
           children: [
             SizedBox(height: 40), //padding
 
-            CircleAvatar(
-                radius: 60,
-                backgroundColor: Colors.white,
-                child: Icon(Icons.add, color: const Color.fromARGB(255, 104, 94, 94), size: 30),
-                foregroundImage: _selectedImage != null ? FileImage(_selectedImage!) : null), //Kodrad Källhänvisning: youtu.be/qYCsxvbPDC8?si=QmZC_OoY8unh9ZRS, 'Flutter Image Picker & Cropper From Camera & Gallery | Learn Flutter Fast', av kanalen Marcus Ng, publicerad 11 november 2022, hämtad 19 maj 2025.
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(100),
+                      boxShadow: [
+                        BoxShadow(
+                            color: Colors.amberAccent,
+                            spreadRadius: 1,
+                            blurRadius: 0,
+                            offset: Offset(0, 4)
+                        )
+                      ]
+                  ),
+                  child: CircleAvatar(
+                      radius: 70,
+                      backgroundColor: Colors.white,
+                      child: Icon(Icons.add, color: const Color.fromARGB(255, 104, 94, 94), size: 30),
+                      foregroundImage: _selectedImage != null ? FileImage(_selectedImage!) : null),
+                ),
+              ],
+            ), //Kodrad Källhänvisning: youtu.be/qYCsxvbPDC8?si=QmZC_OoY8unh9ZRS, 'Flutter Image Picker & Cropper From Camera & Gallery | Learn Flutter Fast', av kanalen Marcus Ng, publicerad 11 november 2022, hämtad 19 maj 2025.
 
-            SizedBox(height: 7),
+
+            SizedBox(height: 15),
 
             //LÄGGA TILL BILD FRÅN KAMERA
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(width: 122), //spacing
                 Container(
                   padding: EdgeInsets.all(4), //styr tjocklek på rosa ram
                   height: 68,
@@ -86,7 +105,7 @@ class _PatchViewPageState extends State<PatchViewPage> {
                         _pickImageFromGallery();
                       }),
                 ),
-                SizedBox(width: 10),
+                SizedBox(width: 15),
                 Container(
                   padding: EdgeInsets.all(4), //styr tjocklek på rosa ram
                   height: 68,
@@ -130,8 +149,8 @@ class _PatchViewPageState extends State<PatchViewPage> {
                           boxShadow: [
                             BoxShadow(
                               color: Color.fromARGB(255, 239, 137, 254),
-                              spreadRadius: 2,
-                              blurRadius: 7
+                              spreadRadius: 3.5,
+                              blurRadius: 0
                             )
                           ]
                       ),
@@ -182,10 +201,10 @@ class _PatchViewPageState extends State<PatchViewPage> {
                         borderRadius: BorderRadius.circular(20),
                         boxShadow: [
                           BoxShadow(
-                              color: const Color.fromARGB(255, 239, 137, 254),
-                              spreadRadius: 2,
-                              blurRadius: 5,
-                              offset: Offset(1, 2)
+                              color: Color.fromARGB(255, 92, 230, 255),
+                              spreadRadius: 1,
+                              blurRadius: 0,
+                              offset: Offset(5, 4)
                           )
                         ]
                     ),
@@ -228,13 +247,13 @@ class _PatchViewPageState extends State<PatchViewPage> {
                     width: 330,
                     decoration: BoxDecoration(
                         color: Colors.white,
-                        borderRadius: BorderRadius.circular(30),
+                        borderRadius: BorderRadius.circular(20),
                         boxShadow: [
                           BoxShadow(
-                            color: Color.fromARGB(255, 122, 255, 186),
-                            blurRadius: 7,
-                            spreadRadius: 1,
-                            offset: Offset(1, 2),
+                              color: Color.fromARGB(255, 92, 230, 255),
+                              spreadRadius: 1,
+                              blurRadius: 0,
+                              offset: Offset(5, 4)
                           )
                         ]
                     ),
@@ -272,14 +291,14 @@ class _PatchViewPageState extends State<PatchViewPage> {
                     width: 330,
                     height: 40,
                     decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 255, 255, 255),
-                        borderRadius: BorderRadius.circular(30),
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20),
                         boxShadow: [
                           BoxShadow(
-                            color: Color.fromARGB(255, 122, 255, 186),
-                            blurRadius: 7,
-                            spreadRadius: 1,
-                            offset: Offset(1, 2),
+                              color: Color.fromARGB(255, 92, 230, 255),
+                              spreadRadius: 1,
+                              blurRadius: 0,
+                              offset: Offset(5, 4)
                           )
                         ]
                     ),
@@ -317,13 +336,13 @@ class _PatchViewPageState extends State<PatchViewPage> {
                     height: 40,
                     decoration: BoxDecoration(
                         color: Colors.white,
-                        borderRadius: BorderRadius.circular(30),
+                        borderRadius: BorderRadius.circular(20),
                         boxShadow: [
                           BoxShadow(
-                            color: Color.fromARGB(255, 122, 255, 186),
-                            blurRadius: 7,
-                            spreadRadius: 1,
-                            offset: Offset(1, 2),
+                              color: Color.fromARGB(255, 92, 230, 255),
+                              spreadRadius: 1,
+                              blurRadius: 0,
+                              offset: Offset(5, 4)
                           )
                         ]
                     ),
@@ -369,56 +388,85 @@ class _PatchViewPageState extends State<PatchViewPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    IconButton(
-                      style: IconButton.styleFrom(
-                        backgroundColor: const Color.fromARGB(195, 239, 137, 254),
-                        shadowColor: Colors.white,
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(100),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Color.fromARGB(255, 70, 70, 70),
+                            offset: Offset(0, 0),
+                            spreadRadius: 0.005,
+                            blurRadius: 6
+                          )
+                        ]
                       ),
-                      icon: Icon(Icons.remove, color: Colors.white),
-                      onPressed: () {
-                        setState(() {
-                          amount = (amount > 0) ? amount - 1 : 0;
-                        });
-                      },
+                      child: IconButton( //subtract-knapp
+                        style: IconButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          shadowColor: Colors.white,
+                        ),
+                        icon: Icon(Icons.remove, color: Colors.black),
+                        onPressed: () {
+                          setState(() {
+                            amount = (amount > 0) ? amount - 1 : 0; //antal kan ej vara negativt tal
+                          });
+                        },
+                      ),
                     ),
                     const SizedBox(width: 8),
                     Container(
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30),
+                          borderRadius: BorderRadius.circular(70),
                           boxShadow: [
                             BoxShadow(
-                                color: Color.fromARGB(255, 226, 93, 246),
-                                spreadRadius: 1.5,
-                                blurRadius: 5,
-                                offset: Offset(0.5, 1)
+                                color: Color.fromARGB(255, 90, 90, 90),
+                                spreadRadius: 3,
+                                blurRadius: 0,
+                                offset: Offset(0, 0)
                             )
                           ]
                       ),
                       child: Container(
+                        width: 70,
+                        height: 70,
                         decoration: BoxDecoration(
-                          border: Border.all(width: 1, color: Color.fromARGB(255, 255, 162, 221)),
+                          border: Border.all(width: 1, color: Color.fromARGB(255, 90, 90, 90)),
                           borderRadius: BorderRadius.circular(100),
                           boxShadow: [BoxShadow(color: Colors.black)],
                         ),
                         child: CircleAvatar(
                           backgroundColor: Colors.white,
                           radius: 30,
-                          child: Text("$amount", style: TextStyle(color: Colors.black, fontSize: 20, fontFamily: 'InknutAntiqua')),
+                          child: Text("$amount", style: TextStyle(color: Color.fromARGB(255, 70, 70, 70), fontSize: 25, fontFamily: 'CalSans')),
                         ),
                       ),
                     ),
                     const SizedBox(width: 8),
-                    IconButton(
-                      style: IconButton.styleFrom(
-                        backgroundColor: const Color.fromARGB(195, 239, 137, 254),
-                        shadowColor: Colors.white,
+
+                    Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Color.fromARGB(255, 70, 70, 70),
+                                offset: Offset(0, 0),
+                                spreadRadius: 0.005,
+                                blurRadius: 6
+                            )
+                          ]
                       ),
-                      icon: Icon(Icons.add, color: Colors.white),
-                      onPressed: () {
-                        setState(() {
-                          amount += 1;
-                        });
-                      },
+                      child: IconButton( //add-knapp
+                        style: IconButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          shadowColor: Colors.white,
+                        ),
+                        icon: Icon(Icons.add, color: Colors.black),
+                        onPressed: () {
+                          setState(() {
+                            amount += 1;
+                          });
+                        },
+                      ),
                     ),
                   ],
                 ),
@@ -447,7 +495,7 @@ class _PatchViewPageState extends State<PatchViewPage> {
                         value: publicPrivate,
                         duration: Duration(milliseconds: 205),
                         width: 108,
-                        height: 48,
+                        height: 46,
                         borderRadius: 50,
                         valueFontSize: 17,
                         activeColor: const Color.fromARGB(255, 122, 255, 159),
@@ -485,7 +533,7 @@ class _PatchViewPageState extends State<PatchViewPage> {
                         value: trade,
                         duration: Duration(milliseconds: 205),
                         width: 108,
-                        height: 48,
+                        height: 46,
                         borderRadius: 50,
                         valueFontSize: 17,
                         activeColor: const Color.fromARGB(255, 122, 255, 159),
@@ -515,7 +563,7 @@ class _PatchViewPageState extends State<PatchViewPage> {
             SizedBox(height: 13), //padding
 
             Row(children: [
-              SizedBox(width: 30), //spacing marginal till vänster
+              SizedBox(width: 40), //spacing marginal till vänster
               Container(
                   decoration: BoxDecoration(
                       color: Colors.white,
@@ -532,18 +580,18 @@ class _PatchViewPageState extends State<PatchViewPage> {
 
                   child: SizedBox(
                       height: 40,
-                      width: 160,
+                      width: 120,
                       child: OutlinedButton(
                         onPressed: () {},
                         style: OutlinedButton.styleFrom(
                             backgroundColor: Color.fromARGB(255, 42, 42, 42),
                             side: BorderSide(width: 1, color: Color.fromARGB(255, 122, 255, 186), strokeAlign: 1)
                         ),
-                        child: Text("Spara", style: TextStyle(color: const Color.fromARGB(255, 255, 255, 255), fontFamily: 'InknutAntiqua', fontSize: 20, fontWeight: FontWeight.w400)),
+                        child: Text("Spara", style: TextStyle(color: const Color.fromARGB(255, 255, 255, 255), fontFamily: 'InknutAntiqua', fontSize: 16, fontWeight: FontWeight.w400)),
                       )
                   )
               ),
-              SizedBox(width: 120), //spacing
+              SizedBox(width: 140), //spacing
               FloatingActionButton(
                   backgroundColor: Color.fromARGB(255, 243, 68, 255),
                   shape: const CircleBorder(),
@@ -552,7 +600,7 @@ class _PatchViewPageState extends State<PatchViewPage> {
                   onPressed: () {}
               ) //Soptunna-knapp action
             ],),
-            SizedBox(height: 20),
+            SizedBox(height: 40),
 //Column för Placement, 'Add patch' + papperskorg-icon
           ],
         ),

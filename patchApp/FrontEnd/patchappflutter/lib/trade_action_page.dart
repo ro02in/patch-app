@@ -29,7 +29,7 @@ class _TradeActionPageState extends State<TradeActionPage> {
 Widget build (BuildContext context) {
 
     var screenSize = MediaQuery.of(context).size; //screensize
-    String username = ''; //skapa variabel username
+    String userName = ''; //BACKEND username-värde
 
   return Scaffold(
     body: Container(
@@ -76,54 +76,62 @@ Widget build (BuildContext context) {
               children: [
                 SizedBox(height: 45), //vertical padding
                 Text("Ge märke till:", style: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 28)),
-                SizedBox(height: 20),
-                Container(
-                  height: 30,
-                  width: 50,
+                SizedBox(height: 10),
+                Container( //Textbox userName //BACKEND
+                  height: 45,
+                  width: 220,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: Color.fromARGB(255, 60,60, 60), width: 2.5),
+                    color: Color.fromARGB(255, 40, 40, 40),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Color.fromARGB(255, 30, 30, 30),
+                        spreadRadius: 2,
+                        blurRadius: 6,
+                        offset: Offset(0.5, 1)
+                      )
+                    ]
                   ),
                   alignment: Alignment.center,
-                  child: Text(username), //BACKEND userName
+                  child: Text('$userName', style: TextStyle(color: Colors.white, fontSize: 18, fontFamily: 'CalSans')), //BACKEND userName-värde
                 ),
-                SizedBox(height: 4),
+                SizedBox(height: 18),
 
-                Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(100),
-                      boxShadow: [
-                        BoxShadow(
-                            color: Colors.purpleAccent,
-                            spreadRadius: 2,
-                            blurRadius: 11,
-                            offset: Offset(0.5, 1)
-                        )
-                      ]
-                  ),
-                  child: CircleAvatar( //klicka på och kunna välja bild
-                      backgroundColor: Colors.white,
-                      radius: 80,
-                      child: Icon(Icons.add, color: Colors.black, size: 20)),
-                ),
-
-                SizedBox(height: 15),
-
-                //KNAPP LÄGGA TILL FOTO
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    //Kamera-knapp
+                    SizedBox(width: 69),
                     Container(
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(100),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.purpleAccent,
-                            blurRadius: 0,
-                            spreadRadius: 0.5,
-                            offset: Offset(0.5, 1)
-                          )
-                        ]
+                          borderRadius: BorderRadius.circular(100),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.purpleAccent,
+                                spreadRadius: 1,
+                                blurRadius: 0,
+                                offset: Offset(0, 4)
+                            )
+                          ]
+                      ),
+                      child: CircleAvatar( //klicka på och kunna välja bild
+                          backgroundColor: Colors.white,
+                          radius: 80,
+                          child: Icon(Icons.add, color: Colors.black, size: 20)),
+                    ),
+                    SizedBox(width: 18),
+                    //Första + knappen
+                    Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.purpleAccent,
+                                blurRadius: 0,
+                                spreadRadius: 0.5,
+                                offset: Offset(0.5, 1)
+                            )
+                          ]
                       ),
                       child: Container(
                         padding: EdgeInsets.all(10),
@@ -144,62 +152,75 @@ Widget build (BuildContext context) {
                       ),
                     ),
                   ],
-
                 ),
+
+                SizedBox(height: 15),
+
+                //KNAPP LÄGGA TILL FOTO
 
                 SizedBox(height: 25),
 
                 Text("Du vill motta\nföljande märke:", textAlign: TextAlign.center,style: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 28)),
                 SizedBox(height: 15),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.purpleAccent,
-                        spreadRadius: 2,
-                        blurRadius: 11,
-                        offset: Offset(0.5, 1)
-                      )
-                    ]
-                  ),
-                  child: CircleAvatar( //klicka på och kunna välja bild
-                      backgroundColor: Colors.white,
-                      radius: 80,
-                      child: Icon(Icons.add)),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(width: 69),
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(100),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.purpleAccent,
+                            spreadRadius: 1,
+                            blurRadius: 0,
+                            offset: Offset(0, 4)
+                          )
+                        ]
+                      ),
+                      child: CircleAvatar( //klicka på och kunna välja bild
+                          backgroundColor: Colors.white,
+                          radius: 80,
+                          child: Icon(Icons.add)),
+                    ),
+                    SizedBox(width: 18),
+                    //Lägg till märke man vill göra request
+
+                    //Andra + knappen
+                    Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.deepPurpleAccent,
+                                blurRadius: 0,
+                                spreadRadius: 0.5,
+                                offset: Offset(0.5, 1)
+                            )
+                          ]
+                      ),
+                      child: Container(
+                        padding: EdgeInsets.all(10),
+                        height: 50,
+                        width: 50,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100),
+                        ),
+                        child: FloatingActionButton(
+                            backgroundColor: Colors.white,
+                            shape: const CircleBorder(),
+                            hoverColor: Color.fromARGB(255, 255, 255, 255),
+                            focusColor: Colors.white,
+                            child: Icon(Icons.add_circle_outline_sharp, size: 30, color: Colors.deepPurpleAccent),
+                            onPressed: () {
+                              _pickImageFromCamera();
+                            }),
+                      ),
+                    ),
+                  ],
                 ),
                 SizedBox(height: 15),
-
-                Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(100),
-                      boxShadow: [
-                        BoxShadow(
-                            color: Colors.deepPurpleAccent,
-                            blurRadius: 0,
-                            spreadRadius: 0.5,
-                            offset: Offset(0.5, 1)
-                        )
-                      ]
-                  ),
-                  child: Container(
-                    padding: EdgeInsets.all(10),
-                    height: 50,
-                    width: 50,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(100),
-                    ),
-                    child: FloatingActionButton(
-                        backgroundColor: Colors.white,
-                        shape: const CircleBorder(),
-                        hoverColor: Color.fromARGB(255, 255, 255, 255),
-                        focusColor: Colors.white,
-                        child: Icon(Icons.add_circle_outline_sharp, size: 30, color: Colors.deepPurpleAccent),
-                        onPressed: () {
-                          _pickImageFromCamera();
-                        }),
-                  ),
-                ),
               ],
             ),
           ),
