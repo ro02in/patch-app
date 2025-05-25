@@ -11,7 +11,7 @@ import java.util.List;
 public class PatchCollection {
 @OneToMany (cascade = CascadeType.ALL, orphanRemoval = true)
 @JoinColumn(name = "user_id")
-    private List<Patch> patches;
+    private final List<Patch> patches;
 
     public PatchCollection() {
         this.patches = new ArrayList<>();

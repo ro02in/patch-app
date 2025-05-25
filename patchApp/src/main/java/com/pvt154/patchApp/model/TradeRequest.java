@@ -15,26 +15,26 @@ public class TradeRequest {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "trade_id")
     private Long tradeId;
-    
+
     @Enumerated(EnumType.STRING)
     private TradeStatus status;
-    
+
     @Column(name = "created_at")
     private LocalDateTime createdAt;
-    
+
     @OneToOne
-    @JoinColumn(name = "badge_offered_id")
-    private Patch badgeOffered;
-    
+    @JoinColumn(name = "patch_offered_id")
+    private Patch patchOffered;
+
     @OneToOne
-    @JoinColumn(name = "badge_requested_id")
-    private Patch badgeRequested;
+    @JoinColumn(name = "patch_requested_id")
+    private Patch patchRequested;
 
-    @Column(name = "sender_id", columnDefinition = "VARCHAR(255)", unique = true)
-    private String senderId;
+    @ManyToOne
+    @JoinColumn(name = "sender_id")
+    private User sender;
 
-    @Column(name = "receiver_id", columnDefinition = "VARCHAR(255)", unique = true)
-    private String receiverId;
-    
-
+    @ManyToOne
+    @JoinColumn(name = "receiver_id")
+    private User receiver;
 }

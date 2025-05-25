@@ -33,6 +33,7 @@ server:
 dependencies:
   flutter:
     sdk: flutter
+  google_fonts: ^6.2.1
   
   image_picker: ^0.8.6 
 
@@ -43,7 +44,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
   flutter_inset_box_shadow: ^1.0.8
-  flutter_switch: ^0.3.2 
+  flutter_switch: ^0.3.2
 
 dev_dependencies:
   flutter_test:
@@ -103,6 +104,51 @@ flutter:
       - assets/stitches1.png
       - assets/stitches1.png
       - assets/syttbyttljusrosatext.png
+      - assets/googlelogo.png
+      - assets/googlelogo2.png
+      - assets/googlelogorund.png
+      - assets/rosaovve.png
+      - assets/stitches7.png
+      - assets/stitches9.png
+      - assets/beige.PNG
+      - assets/blue2.PNG
+      - assets/brightpink.PNG
+      - assets/brightred.PNG
+      - assets/bubblegumpink.PNG
+      - assets/darkblue.PNG
+      - assets/darkgreen.PNG
+      - assets/darkorange.PNG
+      - assets/darkpurple.PNG
+      - assets/darkred.PNG
+      - assets/forestgreen.PNG
+      - assets/grey.PNG
+      - assets/greyblue.PNG
+      - assets/lavendel.PNG
+      - assets/lightblue.PNG
+      - assets/lighterpurple.PNG
+      - assets/darkpurple.PNG
+      - assets/darkred.PNG
+      - assets/forestgreen.PNG
+      - assets/grey.PNG
+      - assets/greyblue.PNG
+      - assets/lightblue.PNG
+      - assets/lighterpurple.PNG
+      - assets/lightgreen.PNG
+      - assets/lightgrey.PNG
+      - assets/lightpink.PNG
+      - assets/limegreen.PNG
+      - assets/orange.PNG
+      - assets/skyblue.PNG
+      - assets/yellow.PNG
+      - assets/washedpurple.PNG
+      - assets/sunorange.PNG
+      - assets/royalblue.PNG
+      - assets/purple.PNG
+      - assets/rose.PNG
+      - assets/white.PNG
+      - assets/greybox_error_fix.PNG
+      - assets/stitches6background_darker.png
+
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

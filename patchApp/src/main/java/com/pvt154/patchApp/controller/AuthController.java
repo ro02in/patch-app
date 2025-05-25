@@ -13,7 +13,7 @@ import java.util.Collections;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/api/auth")
 public class AuthController {
 
     @Value("${google.clientId}")
@@ -81,10 +81,11 @@ public class AuthController {
             String surName = (String) payload.get("Last name");
             String kmName = (String) payload.get("KM name");
             String phoneStr = (String) payload.get("Phone-number");
+            String biography = (String) payload.get("Biography");
             int phoneNumber = (phoneStr != null && phoneStr.matches("\\d+")) ? Integer.parseInt(phoneStr) : 0;
 
 
-            User newUser = new User(firstName, surName, kmName, phoneNumber, googleId, emailAddress);
+            User newUser = new User(firstName, surName, kmName, phoneNumber, googleId, emailAddress, biography);
             userRepository.save(newUser);
 
             return new AuthResponse("success", "User registered", emailAddress);

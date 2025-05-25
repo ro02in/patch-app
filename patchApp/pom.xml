@@ -36,11 +36,19 @@
 			<artifactId>spring-boot-starter</artifactId>
 		</dependency>
 
+		<dependency>  <!-- för jenkins -->
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+		</dependency>
+
+
+
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
 			<version>1.18.36</version>
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>

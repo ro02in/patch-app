@@ -15,11 +15,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.UUID;
+
 import static org.junit.jupiter.api.Assertions.*;
 
+@Rollback(true)
 @SpringBootTest
 @Transactional
-@Rollback(false)
 public class PatchAppApplicationTest {
 
 	@Autowired
@@ -39,35 +41,44 @@ public class PatchAppApplicationTest {
 	private Patch senderPatch;
 	private Patch receiverPatch;
 
+	private String uniqueGoogleId() {
+		return "google-id-" + UUID.randomUUID();
+	}
+
 	@BeforeEach
 	public void setup() {
-		// Create test users using the appropriate constructor
-		sender = new User("John", "Doe","jodoe", 07012323, "google-id-1", "john@example.com");
-		receiver = new User("Jane", "Smith", "jasmith", 07012223, "google-id-2", "jane@example.com");
+		// Rensa trade requests först
+		tradeRequestService.getAllTradeRequests().forEach(tr -> {
+			tradeRequestService.respondToTrade(tr.getTradeId(), TradeStatus.REJECTED); // om du vill avvisa dem först
+			tradeRequestService.deleteTradeRequest(tr.getTradeId());
+		});
+
+		// Sedan patcher och users
+		patchRepository.deleteAll();
+		userRepository.deleteAll();
+
+		// Skapa användare och patcher som innan
+		sender = new User("John", "Doe","jodoe", 7012323, uniqueGoogleId(), "john@example.com", "Biography");
+		receiver = new User("Jane", "Smith", "jasmith", 7012223, uniqueGoogleId(), "jane@example.com", "Extended Biography");
 
 		userRepository.save(sender);
 		userRepository.save(receiver);
 
-		// Create test patches
 		senderPatch = new Patch();
 		senderPatch.setOwnerGoogleId(sender.getGoogleId());
 		senderPatch.setIsPublic(true);
-		//senderPatch.setCategory("PASYTT");
-		//senderPatch.setStatus("AVAILABLE");
-		senderPatch.setHistory("Sender's patch history");
+		senderPatch.setDescription("Sender's patch history");
+		patchRepository.save(senderPatch);
 
 		receiverPatch = new Patch();
 		receiverPatch.setOwnerGoogleId(receiver.getGoogleId());
-		//receiverPatch.setStatus("AVAILABLE");
-		receiverPatch.setHistory("Receiver's patch history");
-
-		patchRepository.save(senderPatch);
+		receiverPatch.setDescription("Receiver's patch history");
 		patchRepository.save(receiverPatch);
 	}
 
+
 	@Test
 	public void testCreateTradeRequest() {
-		// Create a trade request
 		TradeRequest tradeRequest = tradeRequestService.createTradeRequest(
 				sender.getGoogleId(),
 				receiver.getGoogleId(),
@@ -75,18 +86,18 @@ public class PatchAppApplicationTest {
 				receiverPatch.getId()
 		);
 
-		// Assert the trade was created with correct values
 		assertNotNull(tradeRequest.getTradeId());
 		assertEquals(TradeStatus.PENDING, tradeRequest.getStatus());
-		assertEquals(sender.getGoogleId(), tradeRequest.getSenderId());
-		assertEquals(receiver.getGoogleId(), tradeRequest.getReceiverId());
-		assertEquals(senderPatch.getId(), tradeRequest.getBadgeOffered().getId());
-		assertEquals(receiverPatch.getId(), tradeRequest.getBadgeRequested().getId());
+
+		// Här jämför vi med User-objekt, så jämför googleId på User-objekten
+		assertEquals(sender.getGoogleId(), tradeRequest.getSender().getGoogleId());
+		assertEquals(receiver.getGoogleId(), tradeRequest.getReceiver().getGoogleId());
+		assertEquals(senderPatch.getId(), tradeRequest.getPatchOffered().getId());
+		assertEquals(receiverPatch.getId(), tradeRequest.getPatchRequested().getId());
 	}
 
 	@Test
 	public void testApproveTradeRequest() {
-		// Create a trade request
 		TradeRequest tradeRequest = tradeRequestService.createTradeRequest(
 				sender.getGoogleId(),
 				receiver.getGoogleId(),
@@ -94,26 +105,23 @@ public class PatchAppApplicationTest {
 				receiverPatch.getId()
 		);
 
-		// Approve the trade
 		TradeRequest approvedRequest = tradeRequestService.respondToTrade(
 				tradeRequest.getTradeId(),
 				TradeStatus.APPROVED
 		);
 
-		// Assert the trade status was updated
 		assertEquals(TradeStatus.APPROVED, approvedRequest.getStatus());
 
-		// Assert ownership was transferred
 		Patch updatedSenderPatch = patchRepository.findById(senderPatch.getId()).get();
 		Patch updatedReceiverPatch = patchRepository.findById(receiverPatch.getId()).get();
 
+		// Ägarskap ska bytas
 		assertEquals(receiver.getGoogleId(), updatedSenderPatch.getOwnerGoogleId());
 		assertEquals(sender.getGoogleId(), updatedReceiverPatch.getOwnerGoogleId());
 	}
 
 	@Test
 	public void testRejectTradeRequest() {
-		// Create a trade request
 		TradeRequest tradeRequest = tradeRequestService.createTradeRequest(
 				sender.getGoogleId(),
 				receiver.getGoogleId(),
@@ -121,26 +129,23 @@ public class PatchAppApplicationTest {
 				receiverPatch.getId()
 		);
 
-		// Reject the trade
 		TradeRequest rejectedRequest = tradeRequestService.respondToTrade(
 				tradeRequest.getTradeId(),
 				TradeStatus.REJECTED
 		);
 
-		// Assert the trade status was updated
 		assertEquals(TradeStatus.REJECTED, rejectedRequest.getStatus());
 
-		// Assert ownership was NOT transferred
 		Patch updatedSenderPatch = patchRepository.findById(senderPatch.getId()).get();
 		Patch updatedReceiverPatch = patchRepository.findById(receiverPatch.getId()).get();
 
+		// Ägarskap ska vara oförändrat vid avslag
 		assertEquals(sender.getGoogleId(), updatedSenderPatch.getOwnerGoogleId());
 		assertEquals(receiver.getGoogleId(), updatedReceiverPatch.getOwnerGoogleId());
 	}
 
 	@Test
 	public void testGetTradeRequestsByReceiver() {
-		// Create a trade request
 		TradeRequest tradeRequest = tradeRequestService.createTradeRequest(
 				sender.getGoogleId(),
 				receiver.getGoogleId(),
@@ -148,17 +153,15 @@ public class PatchAppApplicationTest {
 				receiverPatch.getId()
 		);
 
-		// Get requests by receiver
 		var requests = tradeRequestService.getTradeRequestsByReceiver(receiver.getGoogleId());
 
-		// Should have at least one request
 		assertFalse(requests.isEmpty());
-		assertEquals(receiver.getGoogleId(), requests.get(0).getReceiverId());
+		// Jämför googleId på User-objektet i TradeRequest
+		assertEquals(receiver.getGoogleId(), requests.get(0).getReceiver().getGoogleId());
 	}
 
 	@Test
 	public void testGetTradeRequestsBySender() {
-		// Create a trade request
 		TradeRequest tradeRequest = tradeRequestService.createTradeRequest(
 				sender.getGoogleId(),
 				receiver.getGoogleId(),
@@ -166,17 +169,14 @@ public class PatchAppApplicationTest {
 				receiverPatch.getId()
 		);
 
-		// Get requests by sender
 		var requests = tradeRequestService.getTradeRequestsBySender(sender.getGoogleId());
 
-		// Should have at least one request
 		assertFalse(requests.isEmpty());
-		assertEquals(sender.getGoogleId(), requests.get(0).getSenderId());
+		assertEquals(sender.getGoogleId(), requests.get(0).getSender().getGoogleId());
 	}
 
 	@Test
 	public void testGetTradeRequestById() {
-		// Create a trade request
 		TradeRequest createdRequest = tradeRequestService.createTradeRequest(
 				sender.getGoogleId(),
 				receiver.getGoogleId(),
@@ -184,18 +184,15 @@ public class PatchAppApplicationTest {
 				receiverPatch.getId()
 		);
 
-		// Get request by id
 		TradeRequest retrievedRequest = tradeRequestService.getTradeRequestById(createdRequest.getTradeId());
 
-		// Verify it's the same request
 		assertEquals(createdRequest.getTradeId(), retrievedRequest.getTradeId());
-		assertEquals(sender.getGoogleId(), retrievedRequest.getSenderId());
-		assertEquals(receiver.getGoogleId(), retrievedRequest.getReceiverId());
+		assertEquals(sender.getGoogleId(), retrievedRequest.getSender().getGoogleId());
+		assertEquals(receiver.getGoogleId(), retrievedRequest.getReceiver().getGoogleId());
 	}
 
 	@Test
 	public void testCreateGift() {
-		// Create a gift (trade request with null requested badge)
 		TradeRequest giftRequest = tradeRequestService.createTradeRequest(
 				sender.getGoogleId(),
 				receiver.getGoogleId(),
@@ -203,12 +200,11 @@ public class PatchAppApplicationTest {
 				null
 		);
 
-		// Verify the gift was created correctly
 		assertNotNull(giftRequest.getTradeId());
 		assertEquals(TradeStatus.PENDING, giftRequest.getStatus());
-		assertEquals(sender.getGoogleId(), giftRequest.getSenderId());
-		assertEquals(receiver.getGoogleId(), giftRequest.getReceiverId());
-		assertEquals(senderPatch.getId(), giftRequest.getBadgeOffered().getId());
-		assertNull(giftRequest.getBadgeRequested());
+		assertEquals(sender.getGoogleId(), giftRequest.getSender().getGoogleId());
+		assertEquals(receiver.getGoogleId(), giftRequest.getReceiver().getGoogleId());
+		assertEquals(senderPatch.getId(), giftRequest.getPatchOffered().getId());
+		assertNull(giftRequest.getPatchRequested());
 	}
 }

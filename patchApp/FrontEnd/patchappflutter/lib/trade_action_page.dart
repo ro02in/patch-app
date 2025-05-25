@@ -29,126 +29,201 @@ class _TradeActionPageState extends State<TradeActionPage> {
 Widget build (BuildContext context) {
 
     var screenSize = MediaQuery.of(context).size; //screensize
-    String username = ''; //skapa variabel username
+    String userName = ''; //BACKEND username-värde
 
   return Scaffold(
-    backgroundColor: Colors.white,
     body: Container(
       width: screenSize.width,
-        height: screenSize.height,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/stitches1.png'),
-            fit: BoxFit.fill,
-          ),
+      height: screenSize.height,
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage('assets/stitches1.png'),
+          fit: BoxFit.fill,
         ),
+      ),
       alignment: Alignment.center,
-      child: Column(
+      child: ListView(
+        physics: AlwaysScrollableScrollPhysics(),
+        padding: EdgeInsets.only(top: 0), //ta bort glapp mellan appbar och bakgrundsbild
         children: [
-          SizedBox(height: 60), //vertical padding
-          Text("Trade action page", style: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 20)),
-          SizedBox(height: 70), //vertical padding
-          Text("Give patch to:", style: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 20)),
-          Container(
-            height: 30,
-            width: 50,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(30),
-            ),
-            alignment: Alignment.center,
-            child: Text(username),
-            ),
-          SizedBox(height: 1),
-          CircleAvatar( //klicka på och kunna välja bild
+          //AppBar flyttad hit
+          AppBar(
             backgroundColor: Colors.white,
-            radius: 60,
-            child: Icon(Icons.add, color: Colors.black, size: 20)),
-
-          //KNAPP LÄGGA TILL FOTO
-          Row(
-            children: [
-              SizedBox(width: 127),
-
-              //Kamera-knapp
-              Container(
-              padding: EdgeInsets.all(10),
-              height: 70,
-              width: 70,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(100),
-              ),
-              child: FloatingActionButton(
-                  backgroundColor: Colors.white,
-                  shape: const CircleBorder(),
-                  hoverColor: Color.fromARGB(255, 255, 255, 255),
-                  focusColor: Colors.white,
-                  child: Icon(Icons.add_a_photo_sharp, size: 29, color: Colors.black),
-                  onPressed: () {
-                    _pickImageFromCamera();
-                  }),
+            elevation: 40,
+            shadowColor: Colors.black,
+            toolbarHeight: 60,
+            leadingWidth: 130,
+            centerTitle: true,
+            primary: true,
+            //Källhänvisning: 'Rounded bottom on appbar', stackoverflow.com/questions/50242087/rounded-bottom-on-appbar publicerad 13 september 2020, hämtad 23 maj 2025
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.vertical(
+                  bottom: Radius.circular(100),
+                )
             ),
-            
-            SizedBox(width: 2), //spacing
-            
-            //Galleri-knapp
-            Container(
-              padding: EdgeInsets.all(10),
-              height: 70,
-              width: 70,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(100),
-              ),
-              child: FloatingActionButton(
-                  backgroundColor: Colors.white,
-                  shape: const CircleBorder(),
-                  hoverColor: Color.fromARGB(255, 255, 255, 255),
-                  focusColor: Colors.white,
-                  child: Icon(Icons.add_photo_alternate_sharp, size: 29, color: Colors.black),
-                  onPressed: () {
-                    _pickImageFromGallery();
-                  }),
-            ),
-            ],
-
+            title: Text("Byt märke", style: TextStyle(fontFamily: 'InknutAntiqua', fontSize: 19, color: Colors.black, fontWeight: FontWeight.w600)),
           ),
-
-          SizedBox(height: 15),
-
-          Text("You will recieve:", style: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 20)),
-          SizedBox(height: 5),
-          CircleAvatar( //klicka på och kunna välja bild
-            backgroundColor: Colors.white,
-            radius: 60,
-            child: Icon(Icons.add)),
-            
           SizedBox(height: 30),
-
-         /* ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Color.fromARGB(255, 239, 137, 254),
-              overlayColor: Colors.white,
-              shadowColor: Colors.white
-            ),
-          child: Text("Select image from gallery", style: TextStyle(color: Colors.black, fontFamily: 'InknutAntiqua', fontSize: 15)),
-          onPressed: (){
-            _pickImageFromGallery();
-            },
-          ), */
           
-          /*ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Color.fromARGB(255, 239, 137, 254),
-              overlayColor: Colors.white,
-              shadowColor: Colors.white
+          Container(
+            height: 790,
+            width: 360,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(80),
+              color: Color.fromARGB(8, 255, 255, 255)
             ),
-          child: Text("Select image from camera", style: TextStyle(color: Colors.black, fontFamily: 'InknutAntiqua', fontSize: 15)),
-          onPressed: (){
-            _pickImageFromCamera();
-            },
+            child: Column(
+              children: [
+                SizedBox(height: 45), //vertical padding
+                Text("Ge märke till:", style: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 28)),
+                SizedBox(height: 10),
+                Container( //Textbox userName //BACKEND
+                  height: 45,
+                  width: 220,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: Color.fromARGB(255, 60,60, 60), width: 2.5),
+                    color: Color.fromARGB(255, 40, 40, 40),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Color.fromARGB(255, 30, 30, 30),
+                        spreadRadius: 2,
+                        blurRadius: 6,
+                        offset: Offset(0.5, 1)
+                      )
+                    ]
+                  ),
+                  alignment: Alignment.center,
+                  child: Text('$userName', style: TextStyle(color: Colors.white, fontSize: 18, fontFamily: 'CalSans')), //BACKEND userName-värde
+                ),
+                SizedBox(height: 18),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(width: 69),
+                    Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.purpleAccent,
+                                spreadRadius: 1,
+                                blurRadius: 0,
+                                offset: Offset(0, 4)
+                            )
+                          ]
+                      ),
+                      child: CircleAvatar( //klicka på och kunna välja bild
+                          backgroundColor: Colors.white,
+                          radius: 80,
+                          child: Icon(Icons.add, color: Colors.black, size: 20)),
+                    ),
+                    SizedBox(width: 18),
+                    //Första + knappen
+                    Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.purpleAccent,
+                                blurRadius: 0,
+                                spreadRadius: 0.5,
+                                offset: Offset(0.5, 1)
+                            )
+                          ]
+                      ),
+                      child: Container(
+                        padding: EdgeInsets.all(10),
+                        height: 50,
+                        width: 50,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100),
+                        ),
+                        child: FloatingActionButton(
+                            backgroundColor: Colors.white,
+                            shape: const CircleBorder(),
+                            hoverColor: Color.fromARGB(255, 255, 255, 255),
+                            focusColor: Colors.white,
+                            child: Icon(Icons.add_circle_outline_sharp, size: 30, color: Colors.purpleAccent),
+                            onPressed: () {
+                              _pickImageFromCamera();
+                            }),
+                      ),
+                    ),
+                  ],
+                ),
+
+                SizedBox(height: 15),
+
+                //KNAPP LÄGGA TILL FOTO
+
+                SizedBox(height: 25),
+
+                Text("Du vill motta\nföljande märke:", textAlign: TextAlign.center,style: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 28)),
+                SizedBox(height: 15),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(width: 69),
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(100),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.purpleAccent,
+                            spreadRadius: 1,
+                            blurRadius: 0,
+                            offset: Offset(0, 4)
+                          )
+                        ]
+                      ),
+                      child: CircleAvatar( //klicka på och kunna välja bild
+                          backgroundColor: Colors.white,
+                          radius: 80,
+                          child: Icon(Icons.add)),
+                    ),
+                    SizedBox(width: 18),
+                    //Lägg till märke man vill göra request
+
+                    //Andra + knappen
+                    Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.deepPurpleAccent,
+                                blurRadius: 0,
+                                spreadRadius: 0.5,
+                                offset: Offset(0.5, 1)
+                            )
+                          ]
+                      ),
+                      child: Container(
+                        padding: EdgeInsets.all(10),
+                        height: 50,
+                        width: 50,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100),
+                        ),
+                        child: FloatingActionButton(
+                            backgroundColor: Colors.white,
+                            shape: const CircleBorder(),
+                            hoverColor: Color.fromARGB(255, 255, 255, 255),
+                            focusColor: Colors.white,
+                            child: Icon(Icons.add_circle_outline_sharp, size: 30, color: Colors.deepPurpleAccent),
+                            onPressed: () {
+                              _pickImageFromCamera();
+                            }),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 15),
+              ],
+            ),
           ),
-          const SizedBox(height: 20),
-          _selectedImage != null ? Image.file(_selectedImage!) : const Text("Please select an image", style: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 18)), */
-        
         ],
       ),
     ),
@@ -174,57 +249,3 @@ Widget build (BuildContext context) {
     });
   }
 }
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          /*Center(
-            child: FittedBox(
-              fit: BoxFit.contain,
-              child: CircleAvatar(
-                backgroundColor: Colors.white,
-                radius: 64,
-                foregroundImage: _image != null ? FileImage(_image!) : null,
-                child: Text(
-                  widget.intials,
-                  style: const TextStyle(fontSize: 48)
-                )
-              ),
-            ),
-          ),
-          const SizedBox(height: 16),
-          TextButton(
-            onPressed: () async {
-              final files = await imageHelper.pickImage();
-              if(files.isNotEmpty) {
-                final croppedFile = await imageHelper.crop(
-                  file: files.first,
-                  cropStyle: CropStyle.circle,
-                );
-                if(croppedFile != null) {
-                  setState(() => _image = File(croppedFile.path));
-                }
-              }
-            },
-            child: const Text('Select photo'),
-          )
-      ])
-    )
-  );
-}
-//test
-}*/
-

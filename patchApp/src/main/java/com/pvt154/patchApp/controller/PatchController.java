@@ -5,20 +5,28 @@ import com.pvt154.patchApp.repository.PatchRepository;
 import com.pvt154.patchApp.service.PatchCategory;
 import com.pvt154.patchApp.service.PatchColors;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.*;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/patch")
 public class PatchController {
 
     @Autowired
-    private PatchRepository patchRepository;
+    private final PatchRepository patchRepository;
 
-    @PostMapping("/patch")
+    public PatchController(PatchRepository patchRepository) {
+        this.patchRepository = patchRepository;
+    }
+
+    @PostMapping("/addpatch")
     public ResponseEntity<Patch> createPatch(
             @RequestParam("description") String description,
             @RequestParam("ownerGoogleId") String ownerGoogleId,
@@ -35,7 +43,7 @@ public class PatchController {
         return ResponseEntity.ok(savedPatch);
     }
 
-    @GetMapping("/patch/{id}/image")
+    @GetMapping("/{id}/image")
     public ResponseEntity<byte[]> getImage(@PathVariable Long id) {
         return patchRepository.findById(id)
                 .map(patch -> {
@@ -45,5 +53,11 @@ public class PatchController {
                     return new ResponseEntity<>(image, headers, HttpStatus.OK);
                 })
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/user/{googleId}")
+    public ResponseEntity<List<Patch>> getPatchesByUser(@PathVariable String googleId) {
+        List<Patch> patches = patchRepository.findByOwnerGoogleId(googleId);
+        return ResponseEntity.ok(patches);
     }
 }

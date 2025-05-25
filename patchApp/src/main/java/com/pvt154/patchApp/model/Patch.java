@@ -22,6 +22,7 @@ public class Patch {
 
     private String description;
 
+    @Column(name = "owner_google_id")
     private String ownerGoogleId;
 
     @Lob
@@ -38,8 +39,8 @@ public class Patch {
     @Column(name = "color")
     private List<PatchColors> colors = new ArrayList<>();
 
-    public Patch(String owner, PatchCategory category, PatchColors[] colors) {
-        this.ownerGoogleId = owner;
+    public Patch(String ownerGoogleId, PatchCategory category, PatchColors[] colors) {
+        this.ownerGoogleId = ownerGoogleId;
         this.category = category;
         this.colors = new ArrayList<>(Arrays.asList(colors));
     }
