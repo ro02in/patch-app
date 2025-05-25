@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/patchApp.iml" filepath="$PROJECT_DIR$/patchApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/patchApp.iml" filepath="$PROJECT_DIR$/.idea/patchApp.iml" />
     </modules>
   </component>
 </project>
