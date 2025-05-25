@@ -19,6 +19,16 @@ class _ProfilePageState extends State<ProfilePage> {
   double _itemExtent = 250;
   final CarouselController _controller = CarouselController();
 
+  final TextEditingController biographyFieldController = TextEditingController();
+
+  @override
+  void dispose() { //clean up TextEditorController when leaving widget
+    biographyFieldController.dispose();
+    super.dispose();
+  }
+
+  String biography = '';
+
   //JSON call to backend,
   //get user profile with all details
 
@@ -335,6 +345,8 @@ Widget build(BuildContext context) {
                           maxLines: 4,
                           maxLength: 250,
                           maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                          onChanged: (value) => biography = biographyFieldController.text, //Källhänvisning www.geeksforgeeks.org/retrieve-data-from-textfields-in-flutter/ publicerad 7 mars 2025, hämtad 25 maj 2025
+
                           scrollPadding: EdgeInsets.fromLTRB(5, 5, 5, 5),
                           decoration: InputDecoration(
                               counterStyle: TextStyle(fontFamily: 'InknutAntiqua', color: Colors.black, fontSize: 14, height: 2),
@@ -348,6 +360,50 @@ Widget build(BuildContext context) {
                   ),
                     ],
                   ),
+
+              SizedBox(height: 32),
+
+              Container( //KM NAME INFO BOX //BACKEND
+                height: 50,
+                width: 265,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(color: Color.fromARGB(255, 60, 60, 60), width: 2.5),
+                    color: Color.fromARGB(255, 40, 40, 40),
+                    boxShadow: [
+                      BoxShadow(
+                          color: Color.fromARGB(255, 15, 15, 15),
+                          spreadRadius: 3,
+                          blurRadius: 8,
+                          offset: Offset(0, 0)
+                      )
+                    ]
+                ),
+                alignment: Alignment.center,
+                child: Text('var kmName here', style: TextStyle(color: Color.fromARGB(255, 210, 210, 210), fontSize: 16, fontFamily: 'InknutAntiqua')), //BACKEND userName-värde
+              ),
+
+              SizedBox(height: 15),
+
+              Container( //UNIVERSITY NAME INFO BOX //BACKEND
+                height: 50,
+                width: 265,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(color: Color.fromARGB(255, 60,60, 60), width: 2.5),
+                    color: Color.fromARGB(255, 40, 40, 40),
+                    boxShadow: [
+                      BoxShadow(
+                          color: Color.fromARGB(255, 15, 15, 15),
+                          spreadRadius: 3,
+                          blurRadius: 8,
+                          offset: Offset(0, 0)
+                      )
+                    ]
+                ),
+                alignment: Alignment.center,
+                child: Text('var university here', style: TextStyle(color: Color.fromARGB(255, 210, 210, 210), fontSize: 16, fontFamily: 'InknutAntiqua')), //BACKEND userName-värde
+              ),
 
               SizedBox(height: 30),
 
