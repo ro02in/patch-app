@@ -86,7 +86,7 @@ class TempButtonsPage extends StatelessWidget {
            _navButton(context, 'Trade Action Page', TradeActionPage()),
            _navButton(context, 'Trade Log Page', TradeLogPage()),
            _navButton(context, 'FAQ Page', FAQPage()),
-           _navButton(context, 'Patch Added Successfully Page', PatchAddSuccessPage()),
+           _navButton(context, 'Patch Added Successfully Page', PatchAddedSuccessfully()),
            _navButton(context, 'Search main page', SearchPage()),
            _navButton(context, 'Patch Inventory Page', PatchInventoryPage()),
            _navButton(context, 'Register user confirmed Page', RegisterUserConfirmedPage()),
