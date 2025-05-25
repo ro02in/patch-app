@@ -4,10 +4,10 @@
 import 'package:flutter/material.dart';
 import 'package:patchappflutter/trade_log_page.dart';
 
+//25 maj
 
 class TradeRequestSuccessPage extends StatefulWidget {
  final String username;
-
 
  const TradeRequestSuccessPage({super.key, required this.username});
 

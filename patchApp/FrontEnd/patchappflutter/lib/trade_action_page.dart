@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:patchappflutter/trade_request_success_page.dart';
 
+//25  maj
 class TradeActionPage extends StatefulWidget {
   const TradeActionPage({Key? key}) : super(key : key);
   /*const TradeActionPage({
