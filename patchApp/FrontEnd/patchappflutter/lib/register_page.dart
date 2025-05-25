@@ -63,13 +63,13 @@ class _RegisterPageState extends State<RegisterPage> {
               children: <Widget> [
 
                 AppBar(
-                  backgroundColor: Color.fromARGB(255, 243, 92, 255),
+                  backgroundColor: Color.fromARGB(170, 31, 40, 28), //Color.fromARGB(255, 243, 92, 255) rosa
                   elevation: 15,
                   shadowColor: Colors.black,
-                  toolbarHeight: 55,
-                  leading: Icon(Icons.arrow_back, color: Colors.black),
+                  toolbarHeight: 57,
+                  leading: Icon(Icons.arrow_back, color: Colors.white),
                   leadingWidth: 120,
-                  titleSpacing: -15,
+                  titleSpacing: -18,
                   centerTitle: true,
                   primary: true,
                   //Källhänvisning: 'Rounded bottom on appbar', stackoverflow.com/questions/50242087/rounded-bottom-on-appbar publicerad 13 september 2020, hämtad 23 maj 2025
@@ -78,7 +78,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         bottom: Radius.circular(100),
                       )
                   ),
-                  title: Text("Registera nytt konto", style: TextStyle(fontFamily: 'InknutAntiqua', fontSize: 19, color: Colors.black, fontWeight: FontWeight.w600)),
+                  title: Text("Registera nytt konto", style: TextStyle(fontFamily: 'InknutAntiqua', fontSize: 20, color: Colors.white, fontWeight: FontWeight.w600)),
                 ),
 
                 SizedBox(height: 30),
@@ -525,46 +525,69 @@ class _RegisterPageState extends State<RegisterPage> {
                 ],
               ),
             
-              SizedBox(height: 45), //padding mellan input-fields och de 2 knapparna
+              SizedBox(height: 80), //padding mellan input-fields och de 2 knapparna
             
               //KNAPP 2
               Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(40)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.purpleAccent, //
-                      spreadRadius: 2,
-                      blurRadius: 10,
-                      offset: Offset.fromDirection(0, 2)
-                    )
-                  ]
-                ),
-
-              child: SizedBox(
-               // alignment: Alignment.center,
-                height: 58,
-                width: 295,
-                child: TextButton(
-                  style: TextButton.styleFrom(
-                  //side: BorderSide(width: 0.8, color: const Color.fromARGB(255, 0, 0, 0)),
-                  backgroundColor: Color.fromARGB(255, 244, 115, 255), //lila Color.fromARGB(255, 195, 76, 255)
-                  //shadowColor: const Color.fromARGB(255, 255, 198, 43),
-                  overlayColor: Colors.white
+                    alignment: Alignment.bottomCenter,
+                    padding: EdgeInsets.only(top: 10),
+                    width: 392,
+                    height: 95,
+                    decoration: BoxDecoration(
+                        color: Color.fromARGB(255, 43, 43, 43),
+                        borderRadius: new BorderRadius.vertical( //rundad kant container källhänvisning: 'Rounded Bottom on appbar', stackoverflow.com/questions/50242087/rounded-bottom-on-appbar av user "Rémi Rousselet" publicerad 8 maj 2018, hämtad 25 maj 2025
+                          top: new Radius.elliptical(MediaQuery.of(context).size.width, 100),
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                              color: Color.fromARGB(255, 20, 20, 20),
+                              spreadRadius: 3,
+                              blurRadius: 35,
+                              offset: Offset(0.5, 1)
+                          )
+                        ]
+                    ),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(40)),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.purpleAccent, //
+                        spreadRadius: 1.5,
+                        blurRadius: 7,
+                        offset: Offset.fromDirection(0, 0)
+                      )
+                    ]
                   ),
-                  onPressed: () { //vad som sker när man trycker på knappen
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterUserConfirmedPage()), //hänvisa till confirmation page
-                    );
-                  },
-                  child: Text("Registrera konto", textAlign: TextAlign.center, style: TextStyle(fontFamily: 'InknutAntiqua', color: Colors.black, fontSize: 20)))
+
+                child: SizedBox(
+                 // alignment: Alignment.center,
+                  height: 58,
+                  width: 295,
+                  child: TextButton(
+                    style: TextButton.styleFrom(
+                    //side: BorderSide(width: 0.8, color: const Color.fromARGB(255, 0, 0, 0)),
+                    backgroundColor: Color.fromARGB(255, 244, 115, 255), //lila Color.fromARGB(255, 195, 76, 255)
+                    //shadowColor: const Color.fromARGB(255, 255, 198, 43),
+                    overlayColor: Colors.white
+                    ),
+                    onPressed: () { //vad som sker när man trycker på knappen
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterUserConfirmedPage()), //hänvisa till confirmation page
+                      );
+                    },
+                    child: Text("Registrera konto", textAlign: TextAlign.center, style: TextStyle(fontFamily: 'InknutAntiqua', color: Colors.black, fontSize: 20)))
+                ),
+                            ),
+                    ),
+                  ],
+                 ),
               ),
             ),
-              
-              SizedBox(height: 30), //padding mellan input-fält och register
 
-                  ]
-                 ),
-              )
+            Container(
+                width: 392,
+                height: 45,
+                color: Color.fromARGB(255, 43, 43, 43)
             )
           ],
         ),
