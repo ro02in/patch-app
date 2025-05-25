@@ -330,7 +330,9 @@ class LogInPage extends StatelessWidget {
                                 Color.fromARGB(255, 255, 255, 255),
                               ),
                               onPressed: () async {
-                                final GoogleSignIn _googleSignIn = GoogleSignIn();
+                                final GoogleSignIn _googleSignIn = GoogleSignIn(
+                                  clientId: '627806627643-q8p6dujvu63ertrl3mi143f5j17a7cep.apps.googleusercontent.com', // <- from Google Cloud Console
+                                );
 
                                 try {
                                   final GoogleSignInAccount? account = await _googleSignIn.signIn();
@@ -343,7 +345,7 @@ class LogInPage extends StatelessWidget {
                                     if (idToken != null) {
                                       // SEND ID TOKEN TO BACKEND HERE
                                       final response = await http.post(
-                                        Uri.parse('http://yourbackend.com/auth/register'),
+                                        Uri.parse('http://localhost:8080/auth/google/register'),
                                         headers: {'Content-Type': 'application/json'},
                                         body: jsonEncode({'idToken': idToken}),
                                       );
@@ -353,10 +355,7 @@ class LogInPage extends StatelessWidget {
                                       // <<< HANDLE BACKEND RESPONSE HERE >>>
                                       if (responseData['status'] == 'success') {
                                         // Navigate to home page or next screen
-                                        Navigator.pushReplacement(
-                                          context,
-                                          MaterialPageRoute(builder: (context) => HomePage()),
-                                        );
+
                                       } else {
                                         // Show error message
                                         ScaffoldMessenger.of(context).showSnackBar(
