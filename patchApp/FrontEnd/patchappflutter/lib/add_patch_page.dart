@@ -10,6 +10,7 @@ import 'package:http/http.dart' as http;
 
 import 'package:image_picker/image_picker.dart';
 
+
 //Variabler till DropDownButtons
 const List<String> colours = <String>['Färg', 'Blå', 'Brun', 'Grå', 'Grön', 'Gul', 'Lila', 'Orange', 'Rosa', 'Röd', 'Svart', 'Vit'];
 const List<String> placement = <String>['Placering','Ej påsytt', 'Vänster arm', 'Höger arm', 'Vänster ben', 'Höger ben', 'Överkropp', 'Krage', 'Skrev'];
@@ -48,8 +49,8 @@ class _PatchViewPageState extends State<PatchViewPage> {
 
   File ? _selectedImage; //lägga till från kamera eller bibliotek variabel
 
+  Future<String> addPatch(String description, String ownerGoogleId, String category, bool isPublic, String colors, File imageFile, String patchName) async {
 
-  Future<String> addPatch(String description, String ownerGoogleId, String category, bool isPublic, String colors, http.MultipartFile imageFile, String patchName) async {
     final response = await http.get(
       Uri.parse('$baseUrl?description=$description?ownerGoogleId=$ownerGoogleId?category=$isPublic?colors=$colors?image=$imageFile?patchName=$patchName'),
       headers: {'Content-Type': 'application/json'},
@@ -619,7 +620,7 @@ class _PatchViewPageState extends State<PatchViewPage> {
                       width: 120,
                       child: OutlinedButton(
                         onPressed: () {
-                          addPatch(beskrivning, "909034", "PASYTT", publicPrivate, "BLUE", _selectedImage as http.MultipartFile, patchName); //TODO FIX THIS PLS
+                          addPatch(beskrivning, "909034", "PASYTT", publicPrivate, "BLUE", _selectedImage!, patchName); //TODO FIX THIS PLS
                         },
                         style: OutlinedButton.styleFrom(
                             backgroundColor: Color.fromARGB(255, 42, 42, 42),
@@ -653,6 +654,7 @@ class _PatchViewPageState extends State<PatchViewPage> {
     if(returnedImage == null) return;
     setState(() {
       _selectedImage = File(returnedImage!.path);
+
     }
     );
   }

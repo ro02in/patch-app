@@ -12,7 +12,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 
 @RestController
@@ -33,12 +36,13 @@ public class PatchController {
             @RequestParam("category") PatchCategory category,
             @RequestParam("isPublic") boolean isPublic,
             @RequestParam("colors") PatchColors[] colors,
-            @RequestParam("image") MultipartFile imageFile,
+            @RequestParam("image") File imageFile,
             @RequestParam("patchName") String patchName
             ) throws IOException {
-        byte[] imageBytes = imageFile.getBytes();
 
-        Patch patch = new Patch(description, ownerGoogleId, category, colors, imageBytes);
+       // byte[] imageBytes = new byte[(int) imageFile.length()];
+        byte[] imageByteTryTwo = Files.readAllBytes(Paths.get(imageFile.getAbsolutePath()));
+        Patch patch = new Patch(description, ownerGoogleId, category, colors, imageByteTryTwo);
         patch.setIsPublic(isPublic);
         Patch savedPatch = patchRepository.save(patch);
         return ResponseEntity.ok(savedPatch);
