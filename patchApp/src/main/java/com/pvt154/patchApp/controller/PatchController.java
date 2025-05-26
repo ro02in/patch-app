@@ -33,8 +33,9 @@ public class PatchController {
             @RequestParam("category") PatchCategory category,
             @RequestParam("isPublic") boolean isPublic,
             @RequestParam("colors") PatchColors[] colors,
-            @RequestParam("image") MultipartFile imageFile
-    ) throws IOException {
+            @RequestParam("image") MultipartFile imageFile,
+            @RequestParam("patchName") String patchName
+            ) throws IOException {
         byte[] imageBytes = imageFile.getBytes();
 
         Patch patch = new Patch(description, ownerGoogleId, category, colors, imageBytes);

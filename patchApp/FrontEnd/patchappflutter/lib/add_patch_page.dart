@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_switch/flutter_switch.dart'; /*Källhänvisning: 'flutter switch package': Copyright (c) 2020, Nichole John Romero All rights reserved, hämtad via //pub.dev/packages/flutter_switch,
 publicerad 22 juni 2021, hämtad 9 maj 2025.
 Denna kod använder detta flutter switch-package för att enklare kunna lägga till Text på en Switch-knapp, vilket verkar vara omstädigt/inte gå genom vanlig Switch och Switch button-lösning i flutter.*/
+import 'package:http/http.dart' as http;
 
 import 'package:image_picker/image_picker.dart';
 
@@ -30,11 +31,37 @@ class _PatchViewPageState extends State<PatchViewPage> {
   bool publicPrivate = true; //switch button variable
   bool trade = true;
   String patchName = '';
+  String klubbMasteri = '';
+  final String baseUrl = 'https://group-4-15.pvt.dsv.su.se/api/patch/add';
+  String beskrivning = '';
+
+  final patchNameController = TextEditingController();
+  final beskrivningFieldController = TextEditingController();
+  final klubbmasteriFieldController = TextEditingController();
+
+  @override
+  void dispose() {
+    patchNameController.dispose();
+    beskrivningFieldController.dispose();
+    klubbmasteriFieldController.dispose();
+  }
 
   File ? _selectedImage; //lägga till från kamera eller bibliotek variabel
 
 
+  Future<String> addPatch(String description, String ownerGoogleId, String category, bool isPublic, String colors, http.MultipartFile imageFile, String patchName) async {
+    final response = await http.get(
+      Uri.parse('$baseUrl?description=$description?ownerGoogleId=$ownerGoogleId?category=$isPublic?colors=$colors?image=$imageFile?patchName=$patchName'),
+      headers: {'Content-Type': 'application/json'},
+    );
 
+    if (response.statusCode == 201) {
+
+        return 'Märket har lagts till!';
+    } else {
+      throw Exception('Märket kunde inte läggas till.');
+    }
+  }
   @override
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size; //screensize
@@ -155,11 +182,14 @@ class _PatchViewPageState extends State<PatchViewPage> {
                           ]
                       ),
                       child: TextField(
+                        controller: patchNameController,
                         obscureText: false,
                         cursorColor: Color.fromARGB(255, 239, 137, 254),
                         cursorHeight: 22,
                         maxLength: 20,
                         maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                        onChanged: (value) => patchName = patchNameController.text, //spara variabel märkesnamn
+
                         style: TextStyle(color: Colors.black, fontFamily: 'InknutAntiqua', fontSize: 14),
                         decoration: InputDecoration(
                           counterStyle: TextStyle(fontFamily: 'InknutAntiqua', color: Colors.black, fontSize: 13, height: -80),
@@ -211,20 +241,23 @@ class _PatchViewPageState extends State<PatchViewPage> {
                     //padding: EdgeInsets.symmetric(horizontal: 80),
                     //child: Text("History about your patch... lorem ipsum \nhejhejhej" , textAlign: TextAlign.left, style: TextStyle(color: Colors.black, fontFamily: ('HappyMonkey'), fontSize: 14)),
                     child: TextFormField(
+                      controller: beskrivningFieldController,
                       style: TextStyle(color: Colors.black, fontFamily: 'InknutAntiqua', fontSize: 14),
                       obscureText: false,
                       cursorColor: const Color.fromARGB(255, 239, 137, 254),
                       cursorHeight: 22,
-                      textAlign: TextAlign.center,
+                      textAlign: TextAlign.left,
                       keyboardType: TextInputType.multiline, //tillåt enter flera rader
                       maxLines: 4,
                       maxLength: 250,
                       maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                      onChanged: (value) => beskrivning = beskrivningFieldController.text, //spara input beskrivning i variabel
+
                       scrollPadding: EdgeInsets.fromLTRB(5, 5, 5, 5),
                       decoration: InputDecoration(
                           counterStyle: TextStyle(fontFamily: 'InknutAntiqua', color: Colors.black, fontSize: 13, height: -50),
                           //labelText: 'History about your patch:',
-                          contentPadding: EdgeInsets.fromLTRB(0, 15, 10, 20),
+                          contentPadding: EdgeInsets.fromLTRB(15, 15, 10, 20),
                           focusedBorder: InputBorder.none,
                           enabledBorder: InputBorder.none
                       ),
@@ -258,11 +291,14 @@ class _PatchViewPageState extends State<PatchViewPage> {
                         ]
                     ),
                     child: TextField(
+                      controller: klubbmasteriFieldController,
                       obscureText: false,
                       cursorColor: const Color.fromARGB(255, 239, 137, 254),
                       cursorHeight: 21,
                       maxLength: 20,
                       maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                      onChanged: (value) => klubbMasteri = klubbmasteriFieldController.text,
+
                       style: TextStyle(color: Colors.black, fontFamily: 'InknutAntiqua', fontSize: 14),
                       decoration: InputDecoration(
                           counterStyle: TextStyle(fontFamily: 'InknutAntiqua', color: Colors.black, fontSize: 13, height: -60),
@@ -582,7 +618,9 @@ class _PatchViewPageState extends State<PatchViewPage> {
                       height: 40,
                       width: 120,
                       child: OutlinedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          addPatch(beskrivning, "909034", "PASYTT", publicPrivate, "BLUE", _selectedImage as http.MultipartFile, patchName); //TODO FIX THIS PLS
+                        },
                         style: OutlinedButton.styleFrom(
                             backgroundColor: Color.fromARGB(255, 42, 42, 42),
                             side: BorderSide(width: 1, color: Color.fromARGB(255, 122, 255, 186), strokeAlign: 1)
