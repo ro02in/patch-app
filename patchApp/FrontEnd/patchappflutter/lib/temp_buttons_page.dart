@@ -70,6 +70,8 @@ import 'package:patchappflutter/trade_request_success_page.dart'; // Import för
 import 'package:patchappflutter/patch_added_successfully.dart';
 import 'package:patchappflutter/search_page.dart';
 
+//25 maj
+
 class TempButtonsPage extends StatelessWidget {
  @override
  Widget build(BuildContext context) {
@@ -86,7 +88,7 @@ class TempButtonsPage extends StatelessWidget {
            _navButton(context, 'Trade Action Page', TradeActionPage()),
            _navButton(context, 'Trade Log Page', TradeLogPage()),
            _navButton(context, 'FAQ Page', FAQPage()),
-           _navButton(context, 'Patch Added Successfully Page', PatchAddSuccessPage()),
+           _navButton(context, 'Patch Added Successfully Page', PatchAddedSuccessfully()),
            _navButton(context, 'Search main page', SearchPage()),
            _navButton(context, 'Patch Inventory Page', PatchInventoryPage()),
            _navButton(context, 'Register user confirmed Page', RegisterUserConfirmedPage()),

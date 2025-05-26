@@ -12,7 +12,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:patchappflutter/trade_request_success_page.dart';
 
+//25  maj
 class TradeActionPage extends StatefulWidget {
   const TradeActionPage({Key? key}) : super(key : key);
   /*const TradeActionPage({
@@ -52,8 +54,9 @@ Widget build (BuildContext context) {
             elevation: 40,
             shadowColor: Colors.black,
             toolbarHeight: 60,
-            leadingWidth: 130,
+            leadingWidth: 150,
             centerTitle: true,
+            titleSpacing: -1,
             primary: true,
             //Källhänvisning: 'Rounded bottom on appbar', stackoverflow.com/questions/50242087/rounded-bottom-on-appbar publicerad 13 september 2020, hämtad 23 maj 2025
             shape: RoundedRectangleBorder(
@@ -147,7 +150,7 @@ Widget build (BuildContext context) {
                             focusColor: Colors.white,
                             child: Icon(Icons.add_circle_outline_sharp, size: 30, color: Colors.purpleAccent),
                             onPressed: () {
-                              _pickImageFromCamera();
+                              //TODO: BACKEND KOPPLING TILL MÄRKESMENY
                             }),
                       ),
                     ),
@@ -214,13 +217,80 @@ Widget build (BuildContext context) {
                             focusColor: Colors.white,
                             child: Icon(Icons.add_circle_outline_sharp, size: 30, color: Colors.deepPurpleAccent),
                             onPressed: () {
-                              _pickImageFromCamera();
+                              //TODO: BACKEND KOPPLING TILL MÄRKESMENY
                             }),
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 15),
+
+                SizedBox(height: 50),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      alignment: Alignment.bottomCenter,
+                      padding: EdgeInsets.only(top: 10),
+                      width: 390,
+                      height: 90,
+                      decoration: BoxDecoration(
+                          color: Color.fromARGB(255, 50, 50, 50),
+                        borderRadius: new BorderRadius.vertical( //rundad kant container källhänvisning: 'Rounded Bottom on appbar', stackoverflow.com/questions/50242087/rounded-bottom-on-appbar av user "Rémi Rousselet" publicerad 8 maj 2018, hämtad 25 maj 2025
+                          top: new Radius.elliptical(MediaQuery.of(context).size.width, 100),
+                        ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Color.fromARGB(255, 20, 20, 20),
+                              spreadRadius: 2,
+                              blurRadius: 25,
+                              offset: Offset(0.5, 1)
+                            )
+                          ]
+                      ),
+                      //KNAPP 2
+                      child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(40)),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Colors.purpleAccent, //
+                                  spreadRadius: 2,
+                                  blurRadius: 10,
+                                  offset: Offset.fromDirection(0, 2)
+                              )
+                            ]
+                        ),
+
+                        child: SizedBox(
+                          // alignment: Alignment.center,
+                            height: 53,
+                            width: 268,
+                            child: TextButton(
+                                style: TextButton.styleFrom(
+                                  //side: BorderSide(width: 0.8, color: const Color.fromARGB(255, 0, 0, 0)),
+                                    backgroundColor: Color.fromARGB(255, 244, 115, 255), //lila Color.fromARGB(255, 195, 76, 255)
+                                    //shadowColor: const Color.fromARGB(255, 255, 198, 43),
+                                    overlayColor: Colors.white
+                                ),
+                                onPressed: () { //vad som sker när man trycker på knappen
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => TradeRequestSuccessPage(username: 'Oscar',)), //hänvisa till confirmation page
+                                  );
+                                },
+                                child: Text("Gör märkesbytesförfrågan", textAlign: TextAlign.center, style: TextStyle(fontFamily: 'InknutAntiqua', color: Colors.black, fontSize: 15)))
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+
+                Container(
+                  width: 390,
+                  height: 35,
+                    color: Color.fromARGB(255, 50, 50, 50)
+                )
               ],
             ),
           ),
