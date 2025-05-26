@@ -143,7 +143,7 @@ class _TradeRequestSuccessPageState extends State<TradeRequestSuccessPage> {
                ),
 
 
-               const SizedBox(height: 190),
+               const SizedBox(height: 195),
 
 
                // Button – back to trade log
@@ -153,15 +153,15 @@ class _TradeRequestSuccessPageState extends State<TradeRequestSuccessPage> {
                    boxShadow: [
                      BoxShadow(
                        color: Color.fromARGB(255, 234, 111, 255),
-                       spreadRadius: 3,
-                       blurRadius: 8,
+                       spreadRadius: 2,
+                       blurRadius: 6,
                        offset: Offset(0.5, 1)
                      )
                    ]
                  ),
                  child: Container(
-                   width: 240,
-                   height: 55,
+                   width: 295,
+                   height: 58,
                    decoration: BoxDecoration(
                        borderRadius: BorderRadius.circular(30),
                        boxShadow: [
@@ -169,7 +169,7 @@ class _TradeRequestSuccessPageState extends State<TradeRequestSuccessPage> {
                              color: Color.fromARGB(255, 234, 111, 255),
                              spreadRadius: 0.5,
                              blurRadius: 0,
-                             offset: Offset(0, 5)
+                             offset: Offset(0, 0)
                          )
                        ]
                    ),
@@ -181,9 +181,9 @@ class _TradeRequestSuccessPageState extends State<TradeRequestSuccessPage> {
                          );
                        },
                        style: ElevatedButton.styleFrom(
-                         backgroundColor: Color.fromARGB(255, 239, 140, 255),
+                         backgroundColor: Color.fromARGB(255, 238, 125, 255),
                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-                       ), child: Text('Back to Trade Log', style: TextStyle(fontSize: 18, fontFamily: 'InknutAntiqua', color: Colors.black))),
+                       ), child: Text('Gå tillbaka till Byteslogg', textAlign: TextAlign.center, style: TextStyle(fontSize: 18, fontFamily: 'InknutAntiqua', color: Colors.black))),
                  ),
                )
              ],

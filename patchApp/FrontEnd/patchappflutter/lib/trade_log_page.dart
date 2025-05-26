@@ -1,175 +1,3 @@
-/*
-import 'package:flutter/material.dart';
-
-class TradeLogPage extends StatefulWidget {
-
-  @override
-  State<TradeLogPage> createState() => _TradeLogPageState();
-}
-
-class _TradeLogPageState extends State<TradeLogPage> {
-
-@override
-Widget build (BuildContext context) {
-
-  return Scaffold(
-    backgroundColor: Colors.white,
-    body: Container(
-      child: Column(
-        children: [
-          Text("Trade Log", style: TextStyle(fontSize: 30, color: Colors.black, fontFamily: 'CalSans')),
-          SizedBox(height: 30),
-
-          Container(
-            height: 40,
-            width: 70,
-            color: Colors.blue,
-            child: OutlinedButton(
-              child: Text("hi"),
-              onPressed: () {
-              }
-            )
-          )
-        ]
-    )
-  )
-  );
-}
-//test
-}
-
-
- */
-
-//Fungerande version och fin
-
-/*
-import 'package:flutter/material.dart';
-import 'package:patchappflutter/trade_action_page.dart';
-
-class TradeLogPage extends StatefulWidget {
-  @override
-  State<TradeLogPage> createState() => _TradeLogPageState();
-}
-
-class _TradeLogPageState extends State<TradeLogPage> {
-  final List<Map<String, String>> activeTrades = [
-    {'name': 'Eliasmoney', 'avatar': 'assets/avatar1.png'},
-    {'name': 'Hellowilma', 'avatar': 'assets/avatar2.png'},
-    {'name': 'Notnoah', 'avatar': 'assets/avatar3.png'},
-  ];
-
-  final List<Map<String, String>> tradeHistory = [
-    {'name': 'Goblinmaster', 'avatar': 'assets/avatar4.png'},
-    {'name': 'Noah', 'avatar': 'assets/avatar5.png'},
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color(0xFFF2EDDC),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: ListView(
-            children: [
-              SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Trade Log",
-                    style: TextStyle(
-                      fontSize: 30,
-                      color: Colors.black,
-                      fontFamily: 'CalSans',
-                    ),
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.settings, color: Colors.black),
-                    onPressed: () {
-                      // settings
-                    },
-                  )
-                ],
-              ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => TradeActionPage()));
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF98B59F),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  padding: EdgeInsets.symmetric(vertical: 16),
-                ),
-                child: Text(
-                  "New Trade",
-                  style: TextStyle(
-                    fontSize: 22,
-                    color: Colors.black,
-                    fontFamily: 'CalSans',
-                  ),
-                ),
-              ),
-              SizedBox(height: 30),
-              Text("Active trades:",
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontFamily: 'CalSans',
-                    color: Colors.black,
-                  )),
-              SizedBox(height: 10),
-              ...activeTrades.map((trade) => _tradeCard(trade, active: true)),
-              SizedBox(height: 30),
-              Text("Trade history:",
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontFamily: 'CalSans',
-                    color: Colors.black,
-                  )),
-              SizedBox(height: 10),
-              ...tradeHistory.map((trade) => _tradeCard(trade, active: false)),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _tradeCard(Map<String, String> trade, {required bool active}) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6),
-      child: Container(
-        decoration: BoxDecoration(
-          color: active ? Color(0xFFF2C94C) : Color(0xFFE0DCC5),
-          borderRadius: BorderRadius.circular(30),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black26,
-              blurRadius: 4,
-              offset: Offset(2, 4),
-            ),
-          ],
-        ),
-        child: ListTile(
-          leading: CircleAvatar(
-            backgroundImage: AssetImage(trade['avatar']!),
-          ),
-          title: Text(
-            trade['name']!,
-            style: TextStyle(fontSize: 18, fontFamily: 'CalSans'),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-*/
 //NYTT FÖRSÖK NY BRANCH
 
 import 'package:flutter/material.dart';
@@ -209,24 +37,43 @@ class _TradeLogPageState extends State<TradeLogPage> {
                     fit: BoxFit.fill,
                     )
             ),
-            child: SafeArea(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
                 child: ListView(
+                  padding: EdgeInsets.only(top: 0, left: 30, right: 30),
                   children: [
-                    SizedBox(height: 20),
+
+                    AppBar(
+                      backgroundColor: Color.fromARGB(200, 35, 39, 25),
+                      elevation: 40,
+                      shadowColor: Colors.black,
+                      toolbarHeight: 50,
+                      leadingWidth: 150,
+                      leading: Icon(Icons.arrow_back, color: Colors.white, size: 20),
+                      centerTitle: true,
+                      titleSpacing: -10,
+                      primary: true,
+                      //Källhänvisning: 'Rounded bottom on appbar', stackoverflow.com/questions/50242087/rounded-bottom-on-appbar publicerad 13 september 2020, hämtad 23 maj 2025
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.vertical(
+                            bottom: Radius.circular(100),
+                          )
+                      ),
+                      title: Text("Byteslogg", style: TextStyle(fontFamily: 'InknutAntiqua', fontSize: 19, color: Colors.white, fontWeight: FontWeight.w600)),
+                    ),
+
+                    SizedBox(height: 30),
+
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
                           "Mina märkesbyten",
                           style: TextStyle(
-                            fontSize: 30,
+                            fontSize: 23,
                             color: Colors.white,
                             fontFamily: 'InknutAntiqua',
                           ),
                         ),
-                        SizedBox(width: 90),
+                        SizedBox(width: 30),
                         IconButton(
                           icon: Icon(Icons.settings, color: Colors.white, size: 40),
                           highlightColor: const Color.fromARGB(255, 255, 62, 220),
@@ -255,8 +102,7 @@ class _TradeLogPageState extends State<TradeLogPage> {
                               MaterialPageRoute(builder: (context) => TradeActionPage()));
                         },
                         style: OutlinedButton.styleFrom(
-                          side: BorderSide(
-                              width: 1.2, color: Color.fromARGB(255, 122, 255, 186)),
+                          side: BorderSide(width: 1.2, color: Color.fromARGB(255, 122, 255, 186)),
                           backgroundColor: Color.fromARGB(255, 39, 39, 39),
                           overlayColor: Colors.white,
                           shape: RoundedRectangleBorder(
@@ -295,8 +141,6 @@ class _TradeLogPageState extends State<TradeLogPage> {
                     ...tradeHistory.map((trade) => _tradeCard(trade, active: false)),
                   ],
                 ),
-              ),
-            ),
           ),
         ],
       ),

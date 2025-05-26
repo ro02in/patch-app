@@ -12,6 +12,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:patchappflutter/add_patch_page.dart';
 import 'package:patchappflutter/profile_page.dart';
 import 'package:patchappflutter/trade_request_success_page.dart';
 //25 maj
@@ -51,7 +52,7 @@ class _PatchAddedSuccessfullyState extends State<PatchAddedSuccessfully> {
           children: [
             //AppBar flyttad hit
             AppBar(
-              backgroundColor: Color.fromARGB(140, 35, 39, 25),
+              backgroundColor: Color.fromARGB(140, 40, 44, 25),
               elevation: 40,
               shadowColor: Colors.black,
               toolbarHeight: 65,
@@ -112,7 +113,7 @@ class _PatchAddedSuccessfullyState extends State<PatchAddedSuccessfully> {
                     ],
                   ),
 
-                  SizedBox(height: 60),
+                  SizedBox(height: 41),
 
                   //Gå till Din profil knapp
                   Container(
@@ -122,7 +123,7 @@ class _PatchAddedSuccessfullyState extends State<PatchAddedSuccessfully> {
                           BoxShadow(
                               color: Color(0xFFF382F3),
                               spreadRadius: 2,
-                              blurRadius: 8,
+                              blurRadius: 6,
                               offset: Offset(0.5, 1)
                           )
                         ]
@@ -155,7 +156,50 @@ class _PatchAddedSuccessfullyState extends State<PatchAddedSuccessfully> {
                     ),
                   ),
 
-                  SizedBox(height: 150),
+                  SizedBox(height: 32),
+
+                  //Lägg till ett till märke knapp
+                  Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        boxShadow: [
+                          BoxShadow(
+                              color: Color.fromARGB(255, 115, 218, 255),
+                              spreadRadius: 2,
+                              blurRadius: 6,
+                              offset: Offset(0.5, 1)
+                          )
+                        ]
+                    ),
+                    child: Container(
+                      width: 270,
+                      height: 53,
+                      decoration: BoxDecoration(
+                          color: Color.fromARGB(255, 115, 218, 255),
+                          borderRadius: BorderRadius.circular(30),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Color.fromARGB(255, 55, 184, 230),
+                              spreadRadius: 2,
+                              blurRadius: 0,
+                              offset: Offset(0, 2),
+                            ),
+                          ]
+                      ),
+                      child: TextButton(
+                          onPressed: () {
+                            Navigator.push(context, MaterialPageRoute(
+                                builder: (context) => PatchViewPage()));
+                          },
+                          child: Text("Lägg till ett till märke", style: TextStyle(
+                              color: Colors.black,
+                              fontFamily: 'InknutAntiqua',
+                              fontSize: 18))
+                      ),
+                    ),
+                  ),
+
+                  SizedBox(height: 146),
 
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -164,7 +208,7 @@ class _PatchAddedSuccessfullyState extends State<PatchAddedSuccessfully> {
                         alignment: Alignment.bottomCenter,
                         padding: EdgeInsets.only(top: 10),
                         width: 392,
-                        height: 114,
+                        height: 90,
                         decoration: BoxDecoration(
                             color: Color.fromARGB(255, 43, 43, 43),
                             borderRadius: new BorderRadius.vertical( //rundad kant container källhänvisning: 'Rounded Bottom on appbar', stackoverflow.com/questions/50242087/rounded-bottom-on-appbar av user "Rémi Rousselet" publicerad 8 maj 2018, hämtad 25 maj 2025
@@ -186,24 +230,24 @@ class _PatchAddedSuccessfullyState extends State<PatchAddedSuccessfully> {
                               boxShadow: [
                                 BoxShadow(
                                     color: Color.fromARGB(255, 25, 25, 25), //
-                                    spreadRadius: 2,
-                                    blurRadius: 10,
+                                    spreadRadius: 3,
+                                    blurRadius: 12,
                                     offset: Offset.fromDirection(0, 2)
                                 )
                               ]
                           ),
 
                           child: Container(
-                              height: 60,
-                              width: 265,
+                              height: 55,
+                              width: 240,
                               decoration: BoxDecoration(
-                                color: Color.fromARGB(255, 60, 60, 60),
+                                color: Color.fromARGB(255, 40, 40, 40), //Color.fromARGB(255, 234, 111, 255)
                                 borderRadius: BorderRadius.circular(30),
                               ),
                               child: OutlinedButton.icon(
-                              icon: Icon(Icons.delete_rounded, color: Color.fromARGB(255, 205, 205, 205), size: 30),
+                              icon: Icon(Icons.delete_rounded, color: Colors.white, size: 30),
                               style: OutlinedButton.styleFrom(
-                                side: BorderSide(color: Color.fromARGB(255, 205, 205, 205), width: 3)
+                                side: BorderSide(color: Color.fromARGB(255, 40, 40, 40), width: 3)
                               ),
                               onPressed: () {
                                 showDialog(context: context,
@@ -333,7 +377,7 @@ class _PatchAddedSuccessfullyState extends State<PatchAddedSuccessfully> {
                                       );
                                     }
                                 );
-                              }, label: Text("Radera märke", style: TextStyle(color: Color.fromARGB(255, 205, 205, 205), fontFamily: 'InknutAntiqua', fontSize: 18),
+                              }, label: Text("Radera märke", style: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 17),
                              ),
                             ),
                           ),
@@ -344,7 +388,7 @@ class _PatchAddedSuccessfullyState extends State<PatchAddedSuccessfully> {
 
                  Container(
                       width: 392,
-                      height: 68,
+                      height: 30,
                       color: Color.fromARGB(255, 43, 43, 43)
                   )
                 ],
