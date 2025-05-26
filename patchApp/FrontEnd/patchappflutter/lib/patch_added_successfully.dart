@@ -282,17 +282,30 @@ class _PatchAddedSuccessfullyState extends State<PatchAddedSuccessfully> {
                                                                     )
                                                                   ]
                                                               ),
-                                                              child: OutlinedButton(
-                                                                  style: OutlinedButton.styleFrom(
-                                                                      backgroundColor: Colors.red,
-                                                                      side: BorderSide(color: Color.fromARGB(255, 220, 220, 220), width: 1)
-                                                                  ),
-                                                                  onPressed: () {
-                                                                    Navigator.pop(context);
-                                                                  },
-                                                                  child: Text("Nej", style: TextStyle(color: Colors.black, fontFamily: 'InknutAntiqua', fontSize: 15),
+                                                              child: Container(
+                                                                decoration: BoxDecoration(
+                                                                  borderRadius: BorderRadius.circular(30),
+                                                                  boxShadow: [
+                                                                    BoxShadow(
+                                                                        color: Color.fromARGB(255, 255, 255, 255),
+                                                                        spreadRadius: 0.2,
+                                                                        offset: Offset(0, 0),
+                                                                        blurRadius: 1
+                                                                    )
+                                                                  ]
+                                                                ),
+                                                                child: ElevatedButton(
+                                                                    style: ElevatedButton.styleFrom(
+                                                                        backgroundColor: Color.fromARGB(255, 255, 255, 255),
+                                                                        //side: BorderSide(color: Color.fromARGB(255, 232, 0, 90), width: 2.5)
+                                                                    ),
+                                                                    onPressed: () {
+                                                                      Navigator.pop(context);
+                                                                    },
+                                                                    child: Text("Nej", style: TextStyle(color: Color.fromARGB(200, 244, 51, 95), fontFamily: 'InknutAntiqua', fontSize: 15),
 
-                                                                  ),
+                                                                    ),
+                                                                ),
                                                               ),
                                                             ),
 
@@ -323,24 +336,27 @@ class _PatchAddedSuccessfullyState extends State<PatchAddedSuccessfully> {
                                                                       return AlertDialog( //Märket har raderats-fönster
                                                                         backgroundColor: Colors.white, //ta bort default bakgrundsfärg, ram
                                                                         content: Container(
-                                                                          width: 300,
-                                                                          height: 190,
+                                                                          width: 320,
+                                                                          height: 187,
                                                                           decoration: BoxDecoration(
                                                                             color: Colors.white,
+                                                                            borderRadius: BorderRadius.circular(50)
                                                                           ),
                                                                           child: Column(
                                                                           mainAxisAlignment: MainAxisAlignment.start,
+                                                                          crossAxisAlignment: CrossAxisAlignment.center,
                                                                           children: [
                                                                             Row(
                                                                               children: [
-                                                                              SizedBox(width: 222),
-                                                                              Container(
-                                                                                width: 40,
-                                                                                height: 40,
-                                                                                child: FloatingActionButton( //Rött kryss knapp
+                                                                              SizedBox(width: 227),
+                                                                              Container( //Kryss knapp
+                                                                                padding: EdgeInsets.only(bottom: 3),
+                                                                                width: 36,
+                                                                                height: 36,
+                                                                                child: FloatingActionButton( //Kryss knapp
                                                                                     backgroundColor: Colors.white,
                                                                                     shape: const CircleBorder(),
-                                                                                    child: Icon(Icons.close, color: Colors.red),
+                                                                                    child: Icon(Icons.close, color: Colors.black),
                                                                                     onPressed: (){ //Gå tillbaka till profile page
                                                                                       Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage()));
                                                                                     },
@@ -349,11 +365,13 @@ class _PatchAddedSuccessfullyState extends State<PatchAddedSuccessfully> {
                                                                               ],
                                                                             ),
                                                                             Column(
+                                                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                                                              mainAxisAlignment: MainAxisAlignment.center,
                                                                               children: [
-                                                                                SizedBox(height: 20),
-                                                                                Text("Märket har raderats.", style: TextStyle(color: Colors.black, fontFamily: 'InknutAntiqua', fontSize: 22)),
-                                                                                SizedBox(height: 20),
-                                                                                Icon(Icons.delete_rounded, color: Color.fromARGB(255, 30, 30, 30), size: 55)
+                                                                                SizedBox(height: 6),
+                                                                                Text("Märket har raderats.", style: TextStyle(color: Colors.black, fontFamily: 'InknutAntiqua', fontSize: 18)),
+                                                                                SizedBox(height: 9),
+                                                                                Image.asset("assets/trashcanimage2.PNG", height: 109, width: 109, fit: BoxFit.fitHeight)
                                                                               ],
                                                                             )
                                                                           ],
@@ -363,7 +381,7 @@ class _PatchAddedSuccessfullyState extends State<PatchAddedSuccessfully> {
                                                                     }
                                                                     );
                                                                   },
-                                                                child: Text("Ja", style: TextStyle(color: Colors.black, fontFamily: 'InknutAntiqua', fontSize: 15))
+                                                                child: Text("Ja", style: TextStyle(color: Colors.black, fontFamily: 'InknutAntiqua', fontSize: 15, height: 0))
                                                                 ),
                                                               ),
                                                             ],

@@ -5,7 +5,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:patchappflutter/add_patch_page.dart';
 import 'package:patchappflutter/bottomNavigationBar.dart';
+import 'package:patchappflutter/faq_page.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -155,6 +157,40 @@ Widget build(BuildContext context) {
                                                             style: TextStyle(fontSize: 11, height: 2))
                                                       ],
                                                     ),
+
+                                                    SizedBox(height: 20),
+
+                                                    Text("Fler frågor?", style: TextStyle(color: Colors.black, fontSize: 15, fontFamily: 'InknutAntiqua')),
+
+                                                    Container(
+                                                      width: 190,
+                                                      height: 40,
+                                                      decoration: BoxDecoration(
+                                                        borderRadius: BorderRadius.circular(30),
+                                                        boxShadow: [
+                                                          BoxShadow(
+                                                            color: Color.fromARGB(
+                                                                255, 255, 246,
+                                                                144),
+                                                            spreadRadius: 2,
+                                                            blurRadius: 0,
+                                                            offset: Offset(0, 3)
+                                                          )
+                                                        ]
+                                                      ),
+                                                      child: TextButton(
+                                                        style: TextButton.styleFrom(
+                                                          overlayColor: Colors.white,
+                                                          backgroundColor: Color.fromARGB(255, 255, 237, 70)
+                                                        ),
+                                                        onPressed: () {
+                                                          Navigator.push(context, MaterialPageRoute(builder: (context) => FAQPage()));
+                                                        },
+                                                        child: Text("Vanliga frågor", style: TextStyle(color: Colors.black, fontFamily: 'InknutAntiqua', fontSize: 12))
+                                                      ),
+                                                    ),
+
+                                                    SizedBox(height: 10)
                                                   ],
                                                 ),
                                               ),
@@ -459,15 +495,41 @@ Widget build(BuildContext context) {
                 ],
               ),
 
+              SizedBox(height: 35),
+
+              Container(
+                width: 203,
+                height: 48,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Color.fromARGB(255, 18, 18, 18),
+                      spreadRadius: 2,
+                      blurRadius: 8,
+                      offset: Offset(0, 2)
+                    )
+                  ]
+                ),
+                child: OutlinedButton(
+                  style: OutlinedButton.styleFrom(
+                    backgroundColor: Color.fromARGB(255, 40, 40, 40),
+                    side: BorderSide(color: Color.fromARGB(255, 226, 93, 246), width: 2),
+                  ),
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => PatchViewPage()));
+                    },
+                    child: Text("Lägg till ett märke", style: TextStyle(color: Colors.white, fontSize: 15, fontFamily: 'InknutAntiqua'))
+                ),
+              ),
+
               SizedBox(height: 35), //padding
 
               Row(
                 children: [
                   SizedBox(width: 30),
                   Text("Din märkessamling", style: TextStyle(color: Colors.white, fontSize: 25, fontFamily: 'InknutAntiqua')),
-
                   SizedBox(width: 65), //padding between 'Collection' and 'Filter' button
-                  
                 ],
               ),
 

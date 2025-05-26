@@ -148,6 +148,8 @@ flutter:
       - assets/white.PNG
       - assets/greybox_error_fix.PNG
       - assets/stitches6background_darker.png
+      - assets/trashcan_drawing.PNG
+      - assets/trashcanimage2.PNG
 
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg

@@ -233,9 +233,9 @@ class _PatchViewPageState extends State<PatchViewPage> {
                         boxShadow: [
                           BoxShadow(
                               color: Color.fromARGB(255, 92, 230, 255),
-                              spreadRadius: 1,
+                              spreadRadius: 0.8,
                               blurRadius: 0,
-                              offset: Offset(5, 4)
+                              offset: Offset(0, 3)
                           )
                         ]
                     ),
@@ -285,9 +285,9 @@ class _PatchViewPageState extends State<PatchViewPage> {
                         boxShadow: [
                           BoxShadow(
                               color: Color.fromARGB(255, 92, 230, 255),
-                              spreadRadius: 1,
+                              spreadRadius: 0.5,
                               blurRadius: 0,
-                              offset: Offset(5, 4)
+                              offset: Offset(0, 3)
                           )
                         ]
                     ),
@@ -333,9 +333,9 @@ class _PatchViewPageState extends State<PatchViewPage> {
                         boxShadow: [
                           BoxShadow(
                               color: Color.fromARGB(255, 92, 230, 255),
-                              spreadRadius: 1,
+                              spreadRadius: 0.5,
                               blurRadius: 0,
-                              offset: Offset(5, 4)
+                              offset: Offset(0, 3)
                           )
                         ]
                     ),
@@ -377,9 +377,9 @@ class _PatchViewPageState extends State<PatchViewPage> {
                         boxShadow: [
                           BoxShadow(
                               color: Color.fromARGB(255, 92, 230, 255),
-                              spreadRadius: 1,
+                              spreadRadius: 0.5,
                               blurRadius: 0,
-                              offset: Offset(5, 4)
+                              offset: Offset(0, 3)
                           )
                         ]
                     ),
@@ -501,6 +501,7 @@ class _PatchViewPageState extends State<PatchViewPage> {
                         onPressed: () {
                           setState(() {
                             amount += 1;
+                            amount = (amount > 20) ? amount - 20 : amount; //antal kan ej vara mer än 30
                           });
                         },
                       ),
