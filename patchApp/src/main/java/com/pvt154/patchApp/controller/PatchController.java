@@ -26,7 +26,7 @@ public class PatchController {
         this.patchRepository = patchRepository;
     }
 
-    @PostMapping("/addpatch")
+    @PostMapping("/add")
     public ResponseEntity<Patch> createPatch(
             @RequestParam("description") String description,
             @RequestParam("ownerGoogleId") String ownerGoogleId,
@@ -59,5 +59,11 @@ public class PatchController {
     public ResponseEntity<List<Patch>> getPatchesByUser(@PathVariable String googleId) {
         List<Patch> patches = patchRepository.findByOwnerGoogleId(googleId);
         return ResponseEntity.ok(patches);
+    }
+
+
+    @GetMapping("/hello")
+    public ResponseEntity<String> hello() {
+        return ResponseEntity.ok("Hello Patch!");
     }
 }
