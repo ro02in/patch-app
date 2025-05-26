@@ -77,15 +77,18 @@ public class AuthController {
                 return new AuthResponse("exists", "User already has an account", emailAddress);
             }
 
-            String firstName = (String) payload.get("Name");
-            String surName = (String) payload.get("Last name");
-            String kmName = (String) payload.get("KM name");
-            String phoneStr = (String) payload.get("Phone-number");
-            String biography = (String) payload.get("Biography");
-            int phoneNumber = (phoneStr != null && phoneStr.matches("\\d+")) ? Integer.parseInt(phoneStr) : 0;
+            // Optionally pull name from Google's payload
+            String name = (String) payload.get("name"); // full name
+            String givenName = (String) payload.get("given_name");
+            String familyName = (String) payload.get("family_name");
 
+            User newUser = new User();
+            newUser.setGoogleId(googleId);
+            newUser.setEmailAddress(emailAddress);
+            newUser.setFirstName(givenName); // optional
+            newUser.setSurName(familyName);  // optional
+            // KM name, phoneNumber, biography will stay null for now
 
-            User newUser = new User(firstName, surName, kmName, phoneNumber, googleId, emailAddress, biography);
             userRepository.save(newUser);
 
             return new AuthResponse("success", "User registered", emailAddress);
