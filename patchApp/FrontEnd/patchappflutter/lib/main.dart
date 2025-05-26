@@ -184,7 +184,7 @@ class MyApp extends StatelessWidget {
 class LogInPage extends StatelessWidget {
   @override
   Future<void> registerUser(String idToken) async {
-      final url = Uri.parse('http://YOUR_BACKEND_URL/auth/register'); // Replace with your backend URL
+      final url = Uri.parse('https://group-4-15.pvt.dsv.su.se/api/auth/register'); // Replace with your backend URL
       final response = await http.post(
         url,
         headers: {'Content-Type': 'application/json'},

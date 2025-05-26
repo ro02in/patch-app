@@ -44,7 +44,7 @@ class _SearchPageState extends State<SearchPage> {
   List<User> _searchResults = [];
   bool _isLoading = false;
 
-  final String baseUrl = 'http://10.0.2.2:8080/api/user/search';
+  final String baseUrl = 'https://group-4-15.pvt.dsv.su.se/api/user/search';
 
   Future<List<User>> fetchUsers(String query) async {
     final response = await http.get(
