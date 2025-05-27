@@ -1,5 +1,7 @@
 //Källhänvisning: 'GridView in flutter with network image', //youtu.be/dx3gj5hz6HU?si=wjKTv8aTdT_EFeDV, av Youtube-kanalen 'Lets Code That', publicerad 7 januari 2019, hämtad 27 maj 2025.
 
+//test igen 00:52
+
   class StorePatches{
     String imageName;
     String itemImage;
