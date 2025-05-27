@@ -48,7 +48,7 @@ class PatchInventoryPage extends StatelessWidget {
 
                     child: Column(
                       children: [
-                        SizedBox(height: 40),
+                        SizedBox(height: 71),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
@@ -78,7 +78,7 @@ class PatchInventoryPage extends StatelessWidget {
                               )
                             ),
 
-                            SizedBox(width: 19),
+                            SizedBox(width: 25),
 
                             Container(
                               decoration: BoxDecoration(
@@ -93,7 +93,7 @@ class PatchInventoryPage extends StatelessWidget {
                                   ]
                               ),
                               child: CircleAvatar(
-                                radius: 80,
+                                radius: 70,
                                 backgroundColor: Colors.white,
                                 foregroundImage: AssetImage(""), //TODO: BACKEND IMAGE.NETWORK (Image.network(src) HTTP-LÄNK MÄRKESBILD HÄR
                               ),
@@ -101,7 +101,7 @@ class PatchInventoryPage extends StatelessWidget {
                           ],
                         ),
 
-                        SizedBox(height: 25),
+                        SizedBox(height: 16),
 
                         Text('$patchName', style: TextStyle(color: Colors.white, fontSize: 25, fontFamily: 'InknutAntiqua')),
 
@@ -213,25 +213,26 @@ class PatchInventoryPage extends StatelessWidget {
                             )
                         ),
 
-                        SizedBox(height: 40),
+                        SizedBox(height: 20),
 
+                        //GRÅ BOX LÄNGST NER
                         Container(
                           width: 400,
-                          height: 178,
+                          height: 100,
                           color: Color.fromARGB(150, 37, 37, 37),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Container(
                                   width: 140,
-                                  height: 55,
+                                  height: 52,
                                   decoration: BoxDecoration(
                                       color:  Color.fromARGB(255, 40, 40, 40),
                                       borderRadius: BorderRadius.circular(15),
                                       border: Border.all(color: Color.fromARGB(255, 60,60, 60), width: 3),
                                       boxShadow: [
                                         BoxShadow(
-                                            color: Colors.black,
+                                            color: Color.fromARGB(255, 20, 20, 20),
                                             spreadRadius: 2,
                                             blurRadius: 8,
                                             offset: Offset(0, 0)
@@ -242,18 +243,18 @@ class PatchInventoryPage extends StatelessWidget {
                                   child: Text('$isPublic', style: TextStyle(color: Color.fromARGB(255, 200, 200, 200), fontFamily: 'InknutAntiqua', fontSize: 20))
                               ),
 
-                              SizedBox(width: 22),
+                              SizedBox(width: 25),
 
                               Container(
                                   width: 140,
-                                  height: 55,
+                                  height: 52,
                                   decoration: BoxDecoration(
                                       color:  Color.fromARGB(255, 40, 40, 40),
                                       borderRadius: BorderRadius.circular(15),
                                       border: Border.all(color: Color.fromARGB(255, 60,60, 60), width: 3),
                                       boxShadow: [
                                         BoxShadow(
-                                            color: Colors.black,
+                                            color: Color.fromARGB(255, 20, 20, 20),
                                             spreadRadius: 2,
                                             blurRadius: 8,
                                             offset: Offset(0, 0)
@@ -265,6 +266,37 @@ class PatchInventoryPage extends StatelessWidget {
                               ),
                             ],
                           ),
+                        ),
+
+                        SizedBox(height: 17),
+
+                        //DELETE KNAPP
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              width: 52,
+                              height: 52,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(100),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Color.fromARGB(255, 237, 138, 255),
+                                    spreadRadius: 1,
+                                    blurRadius: 4,
+                                    offset: Offset(0, 0)
+                                  )
+                                ]
+                              ),
+                              child: FloatingActionButton(
+                                onPressed: () {
+
+                              }, backgroundColor: Color.fromARGB(255, 234, 111, 255),
+                                shape: const CircleBorder(side: BorderSide(color: Color.fromARGB(255, 237, 138, 255), width: 2)),
+                                child: Icon(Icons.delete, color: Color.fromARGB(255, 40, 40, 40), size: 31)
+                              ),
+                            )
+                          ]
                         )
                       ] //main column children
                     ) //main column
