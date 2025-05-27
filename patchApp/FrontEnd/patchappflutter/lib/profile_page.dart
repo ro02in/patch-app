@@ -82,14 +82,42 @@ Widget build(BuildContext context) {
         children: [
           Column(
             children: [
-              SizedBox(height: 60),
+              SizedBox(height: 65),
 
               Row(
                 children: [
-                  SizedBox(width: 320),
+                  SizedBox(width: 30),
+
+                  //SPARA-knapp
                   Container(
-                    width: 35,
-                    height: 35,
+                    width: 38,
+                    height: 38,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(100),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.green,
+                          spreadRadius: 3,
+                          blurRadius: 0,
+                          offset: Offset(0, 0)
+                        )
+                      ]
+                    ),
+                    child: FloatingActionButton( //TODO: kolla om dessa inte längre behövs (pga onChanged() användning i textField).
+                      shape: const CircleBorder(),
+                      foregroundColor: Colors.white,
+                        backgroundColor: Color.fromARGB(255, 167, 232, 170),
+                        child: Icon(Icons.save_rounded, size: 26, color: Color.fromARGB(
+                            255, 75, 161, 79)),
+                        onPressed: () { //input text hantering
+                                }
+                              )
+                          ),
+
+                  SizedBox(width: 260),
+                  Container(
+                    width: 38,
+                    height: 38,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(100),
                       boxShadow: [
@@ -101,6 +129,7 @@ Widget build(BuildContext context) {
                       ]
                     ),
                     child: FloatingActionButton(
+                      shape: const CircleBorder(),
                       onPressed: () {
                         showDialog(context: context,
                             builder: (BuildContext context) {

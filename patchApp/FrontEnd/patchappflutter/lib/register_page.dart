@@ -358,94 +358,6 @@ class _RegisterPageState extends State<RegisterPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(width: 30),
-                  Container( //Sektion textfield
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(30),
-                      boxShadow: [
-                        BoxShadow(
-                            color: Color.fromARGB(255, 246, 153, 255),
-                            blurRadius: 0,
-                            spreadRadius: 1,
-                            offset: Offset(0, 3)
-                        )
-                      ]
-                  ),
-                  child: SizedBox(
-                    height: 48,
-                    width: 300,
-                    child: TextField(
-                        inputFormatters: [
-                          FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z-åäöÅÄÖ ]'))
-                        ],
-                        controller: sectionFieldController,
-                        obscureText: false,
-                        cursorColor: const Color.fromARGB(255, 214, 18, 185),
-                        cursorHeight: 24,
-                        maxLength: 35,
-                        maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                        onChanged: (value) => section = sectionFieldController.text, //Källhänvisning www.geeksforgeeks.org/retrieve-data-from-textfields-in-flutter/ publicerad 7 mars 2025, hämtad 25 maj 2025
-
-                        style: TextStyle(color: Colors.black, fontFamily: 'InknutAntiqua', fontSize: 14),
-                        decoration: InputDecoration(labelText: 'Sektion:', labelStyle: TextStyle(fontFamily: ('InknutAntiqua')), floatingLabelBehavior: FloatingLabelBehavior.never, //OPTIONAL
-                          counterStyle: TextStyle(fontFamily: 'InknutAntiqua', color: Colors.black, fontSize: 13, height: -80),
-                          contentPadding: EdgeInsets.only(left: 15, bottom: 16, right: 20),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.transparent, width: 1.1),
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.transparent, width: 1.1),
-                            borderRadius: BorderRadius.circular(30),
-                        ),
-                        ),
-                      ),
-                    ),
-                  ),
-
-                  SizedBox(width: 30),
-                  //SPARA-knapp
-                 /* Container(
-                    width: 43,
-                    height: 43,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(100),
-                        boxShadow: [
-                          BoxShadow(
-                              color: Colors.green,
-                              spreadRadius: 3,
-                              blurRadius: 0,
-                              offset: Offset(0, 0)
-                          )
-                        ]
-                    ),
-                    child: FloatingActionButton(
-                        shape: const CircleBorder(),
-                        foregroundColor: Colors.white,
-                        backgroundColor: Color.fromARGB(255, 191, 241, 192),
-                        child: Icon(Icons.save_rounded, size: 26, color: Color.fromARGB(255, 35, 133, 39)),
-                        onPressed: () { //input text hantering
-                          String section = sectionFieldController.text; //TODO: BACKEND HANTERING INPUT section
-                          showDialog(context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                    content: Text(sectionFieldController.text)
-                                );
-                              }
-                          );
-                        }
-                    ),
-                  ) */
-                ],
-              ),
-            
-              SizedBox(height: 20),
-
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(width: 30),
                   Container(  //Ditt universitet textfield
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -528,75 +440,80 @@ class _RegisterPageState extends State<RegisterPage> {
                 ],
               ),
             
-              SizedBox(height: 123), //padding mellan input-fields och de 2 knapparna
+              SizedBox(height: 143), //padding mellan input-fields och de 2 knapparna
             
               //KNAPP 2
-              Container(
-                    alignment: Alignment.center,
-                    padding: EdgeInsets.only(top: 10),
-                    width: 406,
-                    height: 110,
-                    decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 43, 43, 43),
-                        borderRadius: new BorderRadius.vertical( //rundad kant container källhänvisning: 'Rounded Bottom on appbar', stackoverflow.com/questions/50242087/rounded-bottom-on-appbar av user "Rémi Rousselet" publicerad 8 maj 2018, hämtad 25 maj 2025
-                          top: new Radius.elliptical(MediaQuery.of(context).size.width, 100),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                        Container(
+                        alignment: Alignment.center,
+                        padding: EdgeInsets.only(top: 10),
+                        width: 406,
+                        height: 100,
+                        decoration: BoxDecoration(
+                            color: Color.fromARGB(255, 43, 43, 43),
+                            borderRadius: new BorderRadius.vertical( //rundad kant container källhänvisning: 'Rounded Bottom on appbar', stackoverflow.com/questions/50242087/rounded-bottom-on-appbar av user "Rémi Rousselet" publicerad 8 maj 2018, hämtad 25 maj 2025
+                              top: new Radius.elliptical(MediaQuery.of(context).size.width, 100),
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Color.fromARGB(255, 20, 20, 20),
+                                  spreadRadius: 3,
+                                  blurRadius: 35,
+                                  offset: Offset(0.5, 1)
+                              )
+                            ]
                         ),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(40)),
                         boxShadow: [
                           BoxShadow(
-                              color: Color.fromARGB(255, 20, 20, 20),
-                              spreadRadius: 3,
-                              blurRadius: 35,
-                              offset: Offset(0.5, 1)
+                            color: Colors.purpleAccent, //
+                            spreadRadius: 1.5,
+                            blurRadius: 7,
+                            offset: Offset.fromDirection(0, 0)
                           )
                         ]
-                    ),
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(40)),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.purpleAccent, //
-                        spreadRadius: 1.5,
-                        blurRadius: 7,
-                        offset: Offset.fromDirection(0, 0)
-                      )
-                    ]
-                  ),
+                                            ),
 
-                child: SizedBox(
-                 // alignment: Alignment.center,
-                  height: 58,
-                  width: 295,
-                  child: TextButton(
-                    style: TextButton.styleFrom(
-                    //side: BorderSide(width: 0.8, color: const Color.fromARGB(255, 0, 0, 0)),
-                    backgroundColor: Color.fromARGB(255, 244, 115, 255), //lila Color.fromARGB(255, 195, 76, 255)
-                    //shadowColor: const Color.fromARGB(255, 255, 198, 43),
-                    overlayColor: Colors.white
-                    ),
-                    onPressed: () { //vad som sker när man trycker på knappen
-                      setState(() {
-                        nameFieldController.text.isEmpty ? showDialog(context: context, builder: (BuildContext context) {
-                          return AlertDialog(
-                              backgroundColor: Colors.white,
-                              content:
-                              Container(
-                                  alignment: Alignment.center,
-                                  width: 350, height: 50,
-                                  child: Text("Namn-fältet får inte vara tomt.", style: TextStyle(color: Colors.black, fontSize: 15, fontFamily: 'InknutAntiqua'),
+                                          child: SizedBox(
+                                           // alignment: Alignment.center,
+                                            height: 58,
+                                            width: 295,
+                                            child: TextButton(
+                        style: TextButton.styleFrom(
+                        //side: BorderSide(width: 0.8, color: const Color.fromARGB(255, 0, 0, 0)),
+                        backgroundColor: Color.fromARGB(255, 244, 115, 255), //lila Color.fromARGB(255, 195, 76, 255)
+                        //shadowColor: const Color.fromARGB(255, 255, 198, 43),
+                        overlayColor: Colors.white
+                        ),
+                        onPressed: () { //vad som sker när man trycker på knappen
+                          setState(() {
+                            nameFieldController.text.isEmpty ? showDialog(context: context, builder: (BuildContext context) {
+                              return AlertDialog(
+                                  backgroundColor: Colors.white,
+                                  content:
+                                  Container(
+                                      alignment: Alignment.center,
+                                      width: 350, height: 50,
+                                      child: Text("Namn-fältet får inte vara tomt.", style: TextStyle(color: Colors.black, fontSize: 15, fontFamily: 'InknutAntiqua'),
+                                      )
                                   )
-                              )
+                              );
+                            }
+                            )
+                                : Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterUserConfirmedPage())); //hänvisa till confirmation page
+                            },
                           );
-                        }
-                        )
-                            : Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterUserConfirmedPage())); //hänvisa till confirmation page
                         },
-                      );
-                    },
-                    child: Text("Registrera konto", textAlign: TextAlign.center, style: TextStyle(fontFamily: 'InknutAntiqua', color: Colors.black, fontSize: 20)))
-                ),
-                            ),
-                    ),
+                        child: Text("Registrera konto", textAlign: TextAlign.center, style: TextStyle(fontFamily: 'InknutAntiqua', color: Colors.black, fontSize: 20)))
+                                          ),
+                                ),
+                        ),
+                      ],
+              ),
                   ],
                  ),
               ),
@@ -604,7 +521,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
             Container(
                 width: 392,
-                height: 60,
+                height: 20,
                 color: Color.fromARGB(255, 43, 43, 43)
             )
           ],
