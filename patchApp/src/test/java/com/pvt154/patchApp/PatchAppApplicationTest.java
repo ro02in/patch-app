@@ -61,7 +61,7 @@ public class PatchAppApplicationTest {
 		userRepository.deleteAll();
 		String test = "hej";
 		byte[] imageBytes = test.getBytes();
-		
+
 		// Skapa användare och patcher som innan
 		sender = new User("John", "Doe","jodoe", "7012323", uniqueGoogleId(), "bio", imageBytes);
 		receiver = new User("Jane", "Smith", "jasmith", "7012223", uniqueGoogleId(), "bio2 electric boogaloo", imageBytes);

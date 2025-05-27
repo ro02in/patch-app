@@ -1,8 +1,6 @@
 package com.pvt154.patchApp.controller;
 
 import com.pvt154.patchApp.model.Patch;
-import com.pvt154.patchApp.service.PatchCategory;
-import com.pvt154.patchApp.service.PatchColors;
 import com.pvt154.patchApp.service.PatchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -30,15 +28,15 @@ public class PatchController {
     public ResponseEntity<Patch> createPatch(
             @RequestParam("description") String description,
             @RequestParam("ownerGoogleId") String ownerGoogleId,
-            @RequestParam("category") PatchCategory category,
+            @RequestParam("placement") String placement,
             @RequestParam("isPublic") boolean isPublic,
-            @RequestParam("colors") PatchColors[] colors,
+            @RequestParam("colors") String color,
             @RequestParam("image") MultipartFile imageFile,
             @RequestParam("patchName") String patchName,
             @RequestParam("klubbmästeri") String klubbmästeri
     ) throws IOException {
 
-        Patch patch = new Patch(description, ownerGoogleId, category, colors, imageFile.getBytes());
+        Patch patch = new Patch(description, ownerGoogleId, placement, color, imageFile.getBytes());
         patch.setPatchName(patchName);
         patch.setKlubbmästeri(klubbmästeri);
         patch.setIsPublic(isPublic);

@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Entity
@@ -20,6 +21,7 @@ public class Patch {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "description")
     private String description;
 
     @Column(name = "owner_google_id")
@@ -29,31 +31,32 @@ public class Patch {
     @Column(columnDefinition = "LONGBLOB")
     private byte[] pictureData;
 
+    @Column(name = "is_public")
     private Boolean isPublic;
 
-    private PatchCategory placement;
+    @Column(name = "placement")
+    private String placement;
 
+    @Column(name = "klubbmästeri")
     private String klubbmästeri;
 
+    @Column(name = "patch_name")
     private String patchName;
 
-    @ElementCollection
-    @CollectionTable(name = "patch_colors", joinColumns = @JoinColumn(name = "patch_id"))
-    @Enumerated(EnumType.STRING)
     @Column(name = "color")
-    private List<PatchColors> colors = new ArrayList<>();
+    private String color;
 
-    public Patch(String ownerGoogleId, PatchCategory placement, PatchColors[] colors) {
+    public Patch(String ownerGoogleId, String placement, String colors) {
         this.ownerGoogleId = ownerGoogleId;
         this.placement = placement;
-        this.colors = new ArrayList<>(Arrays.asList(colors));
+        this.color = colors;
     }
 
-    public Patch(String description, String owner, PatchCategory placement, PatchColors[] colors, byte[] pictureData) {
+    public Patch(String description, String owner, String placement, String colors, byte[] pictureData) {
         this.description = description;
         this.ownerGoogleId = owner;
         this.placement = placement;
-        this.colors = new ArrayList<>(Arrays.asList(colors));
+        this.color = colors;
         this.pictureData = pictureData;
     }
 }
