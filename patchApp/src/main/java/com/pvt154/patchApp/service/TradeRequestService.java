@@ -75,27 +75,27 @@ public class TradeRequestService {
     public TradeRequest respondToTrade(Long tradeId, TradeStatus newStatus) {
         TradeRequest trade = getTradeRequestById(tradeId);
 
-        if (trade.getStatus() != TradeStatus.PENDING) {
-            throw new IllegalStateException("Trade is no longer pending");
-        }
+        if (trade.getStatus().equals(TradeStatus.PENDING)) {
+            trade.setStatus(newStatus);
+            if (newStatus == TradeStatus.APPROVED) {
+                Patch offeredPatch = trade.getPatchOffered();
+                Patch requestedPatch = trade.getPatchRequested();
 
-        trade.setStatus(newStatus);
+                User sender = trade.getSender();
+                User receiver = trade.getReceiver();
 
-        if (newStatus == TradeStatus.APPROVED) {
-            Patch offeredPatch = trade.getPatchOffered();
-            Patch requestedPatch = trade.getPatchRequested();
-
-            User sender = trade.getSender();
-            User receiver = trade.getReceiver();
-
-            // Ändra ägarskap av patchar
-            patchService.changeOwner(offeredPatch, receiver);
-            if (requestedPatch != null) {
-                patchService.changeOwner(requestedPatch, sender);
+                // Ändra ägarskap av patchar
+                patchService.changeOwner(offeredPatch, receiver);
+                if (requestedPatch != null) {
+                    patchService.changeOwner(requestedPatch, sender);
+                }
             }
+
+            return tradeRequestRepository.save(trade);
+
         }
 
-        return tradeRequestRepository.save(trade);
+        return null;
     }
 
     public List<TradeRequest> getTradeRequestsByReceiver(String googleId) {
