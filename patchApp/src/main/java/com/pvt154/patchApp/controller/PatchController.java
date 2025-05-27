@@ -31,12 +31,12 @@ public class PatchController {
             @RequestParam("placement") String placement,
             @RequestParam("isPublic") boolean isPublic,
             @RequestParam("color") String color,
-            @RequestParam("image") byte[] imageFile,
+            @RequestParam("image") MultipartFile imageFile,
             @RequestParam("patchName") String patchName,
             @RequestParam("klubbmästeri") String klubbmästeri
     ) throws IOException {
-
-        Patch patch = new Patch(description, ownerGoogleId, placement, color, imageFile);
+        byte[] imageBytes = imageFile.getBytes();
+        Patch patch = new Patch(description, ownerGoogleId, placement, color, imageBytes);
         patch.setPatchName(patchName);
         patch.setKlubbmästeri(klubbmästeri);
         patch.setIsPublic(isPublic);
