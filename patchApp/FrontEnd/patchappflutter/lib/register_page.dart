@@ -63,7 +63,7 @@ class _RegisterPageState extends State<RegisterPage> {
               children: <Widget> [
 
                 AppBar(
-                  backgroundColor: Color.fromARGB(170, 31, 40, 28), //Color.fromARGB(255, 243, 92, 255) rosa
+                  backgroundColor: Color.fromARGB(170, 38, 42, 27), //Color.fromARGB(255, 243, 92, 255) rosa
                   elevation: 15,
                   shadowColor: Colors.black,
                   toolbarHeight: 57,
@@ -171,7 +171,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
               //KNAPP 1
               Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(width: 30),
                   Container(
@@ -189,7 +189,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   child: SizedBox(
                     height: 48,
-                    width: 260,
+                    width: 300,
                     child: TextField(
                       inputFormatters: [
                         FilteringTextInputFormatter.allow(RegExp(r'[a-zA-ZåäöÅÄÖ 0-9 @#!?]')) //space not allowed
@@ -223,8 +223,9 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
 
                   SizedBox(width: 30),
+
                   //SPARA-knapp
-                  Container(
+                /*  Container(
                     width: 43,
                     height: 43,
                     decoration: BoxDecoration(
@@ -254,7 +255,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           );
                         }
                     ),
-                  )
+                  ) */
                 ],
               ),
               //SizedBox(height: 20), //padding
@@ -265,7 +266,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
 
               Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(width: 30),
                   Container(  //KM namn textfield
@@ -283,7 +284,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   child: SizedBox(
                     height: 48,
-                    width: 260,
+                    width: 300,
                     child: TextField(
                         inputFormatters: [
                           FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z-åäöÅÄÖ ]'))
@@ -314,7 +315,8 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
 
                   SizedBox(width: 30),
-                  //SPARA-knapp
+
+               /*   //SPARA-knapp
                   Container(
                     width: 43,
                     height: 43,
@@ -345,7 +347,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           );
                         }
                     ),
-                  )
+                  ) */
                 ],
               ),
             
@@ -353,7 +355,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
 
               Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(width: 30),
                   Container( //Sektion textfield
@@ -371,7 +373,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   child: SizedBox(
                     height: 48,
-                    width: 260,
+                    width: 300,
                     child: TextField(
                         inputFormatters: [
                           FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z-åäöÅÄÖ ]'))
@@ -403,7 +405,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
                   SizedBox(width: 30),
                   //SPARA-knapp
-                  Container(
+                 /* Container(
                     width: 43,
                     height: 43,
                     decoration: BoxDecoration(
@@ -433,7 +435,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           );
                         }
                     ),
-                  )
+                  ) */
                 ],
               ),
             
@@ -441,7 +443,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
 
               Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(width: 30),
                   Container(  //Ditt universitet textfield
@@ -459,7 +461,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   child: SizedBox(
                     height: 48,
-                    width: 260,
+                    width: 300,
                     child: TextField(
                         inputFormatters: [
                           FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z-åäöÅÄÖ ]'))
@@ -490,7 +492,8 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
 
                   SizedBox(width: 30),
-                  //SPARA-knapp
+
+                 /* //SPARA-knapp
                   Container(
                     width: 43,
                     height: 43,
@@ -521,7 +524,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           );
                         }
                     ),
-                  )
+                  ) */
                 ],
               ),
             
@@ -586,13 +589,13 @@ class _RegisterPageState extends State<RegisterPage> {
 
             Container(
                 width: 392,
-                height: 45,
+                height: 40,
                 color: Color.fromARGB(255, 43, 43, 43)
             )
           ],
         ),
       );
-    }  
+    }
 
     //Lägga till bild från kameragalleri
     Future _pickImageFromGallery() async {
