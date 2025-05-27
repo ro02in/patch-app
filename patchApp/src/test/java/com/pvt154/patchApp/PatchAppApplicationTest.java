@@ -59,11 +59,9 @@ public class PatchAppApplicationTest {
 		// Sedan patcher och users
 		patchRepository.deleteAll();
 		userRepository.deleteAll();
-
-		File image = new File("beige.PNG");
-		byte[] imageBytes;
-		imageBytes = Files.readAllBytes(image.toPath());
-
+		String test = "hej";
+		byte[] imageBytes = test.getBytes();
+		
 		// Skapa användare och patcher som innan
 		sender = new User("John", "Doe","jodoe", "7012323", uniqueGoogleId(), "bio", imageBytes);
 		receiver = new User("Jane", "Smith", "jasmith", "7012223", uniqueGoogleId(), "bio2 electric boogaloo", imageBytes);
