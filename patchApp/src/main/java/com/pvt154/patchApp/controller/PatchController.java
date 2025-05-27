@@ -30,13 +30,13 @@ public class PatchController {
             @RequestParam("ownerGoogleId") String ownerGoogleId,
             @RequestParam("placement") String placement,
             @RequestParam("isPublic") boolean isPublic,
-            @RequestParam("colors") String color,
-            @RequestParam("image") MultipartFile imageFile,
+            @RequestParam("color") String color,
+            @RequestParam("image") byte[] imageFile,
             @RequestParam("patchName") String patchName,
             @RequestParam("klubbmästeri") String klubbmästeri
     ) throws IOException {
 
-        Patch patch = new Patch(description, ownerGoogleId, placement, color, imageFile.getBytes());
+        Patch patch = new Patch(description, ownerGoogleId, placement, color, imageFile);
         patch.setPatchName(patchName);
         patch.setKlubbmästeri(klubbmästeri);
         patch.setIsPublic(isPublic);
