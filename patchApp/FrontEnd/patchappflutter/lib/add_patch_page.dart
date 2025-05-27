@@ -49,16 +49,13 @@ class _PatchViewPageState extends State<PatchViewPage> {
 
   File ? _selectedImage; //lägga till från kamera eller bibliotek variabel
 
-  Future<String> addPatch(String description, String ownerGoogleId, String category, bool isPublic, String colors, File imageFile, String patchName) async {
+  Future<String> addPatch(String description, String ownerGoogleId, String placement, bool isPublic, String color, File imageFile, String patchName, String klubbmasteri
+  ) async {
+  final response = await http.get(Uri.parse('$baseUrl?description=$description?ownerGoogleId=$ownerGoogleId?is_public=$isPublic?colors=$color?image=$imageFile?patchName=$patchName?klubbmasteri=$klubbMasteri?placement=$placement'),
+  headers: {'Content-Type': 'application/json'},);
 
-    final response = await http.get(
-      Uri.parse('$baseUrl?description=$description?ownerGoogleId=$ownerGoogleId?category=$isPublic?colors=$colors?image=$imageFile?patchName=$patchName'),
-      headers: {'Content-Type': 'application/json'},
-    );
-
-    if (response.statusCode == 201) {
-
-        return 'Märket har lagts till!';
+   if (response.statusCode == 201) {
+      return 'Märket har lagts till!';
     } else {
       throw Exception('Märket kunde inte läggas till.');
     }
@@ -546,7 +543,7 @@ class _PatchViewPageState extends State<PatchViewPage> {
                             )
                           ]
                         ),
-                  
+
                         /*Källhänvisning: 'flutter switch package': Copyright (c) 2020, Nichole John Romero All rights reserved, hämtad via //pub.dev/packages/flutter_switch,
                         publicerad 22 juni 2021, hämtad 9 maj 2025.*/
                         child: FlutterSwitch(
@@ -573,7 +570,7 @@ class _PatchViewPageState extends State<PatchViewPage> {
                         ),
                       ),
                       const SizedBox(width: 27),
-                  
+
                       //SWITCH 2 BYTBAR/EJ BYTBAR
                       Container(
                         height: 47,
@@ -689,7 +686,7 @@ class _PatchViewPageState extends State<PatchViewPage> {
                               );
                             }
                             )
-                            : addPatch(beskrivning, "909034", "PASYTT", publicPrivate, "BLUE", _selectedImage!, patchName); //Om Märkesnamn-fält = tomt är falskt, skapa patch
+                            : addPatch(beskrivning, "909034", "SKREV", publicPrivate, "BLUE", _selectedImage!, patchName, klubbMasteri); //Om Märkesnamn-fält = tomt är falskt, skapa patch
                           }
                           ); //TODO FIX THIS PLS
                         },
