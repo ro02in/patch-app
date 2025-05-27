@@ -1,5 +1,7 @@
-class GlobalUserInfo {
-  static String googleId = '';
-  static int overallIndex = 3;
+import 'package:patchappflutter/user_model.dart';
 
-}
+class GlobalUserInfo {
+  static String googleId = '909034';
+  static int overallIndex = 3;
+  }
+
