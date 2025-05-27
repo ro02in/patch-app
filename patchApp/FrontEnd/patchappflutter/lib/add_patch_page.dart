@@ -395,6 +395,7 @@ class _PatchViewPageState extends State<PatchViewPage> {
                           value: dropdownPlacement,
                           onChanged: (String? value) {
                             setState(() {
+                              //dropdownPlacement = placement.first ? value = "Orange" : value = "Rosa";
                               dropdownPlacement = value!;
                             });
                           },
@@ -665,6 +666,7 @@ class _PatchViewPageState extends State<PatchViewPage> {
                                                 backgroundColor: Color.fromARGB(255, 35, 35, 35),
                                                 elevation: 2,
                                                 onPressed: () {
+                                                  Navigator.pop(context);
                                                 },
                                                 child: Icon(Icons.close, color: Colors.white, size: 18)),
                                                 ),
