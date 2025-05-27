@@ -43,6 +43,12 @@ public class UserController {
          return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/{googleId}")
+    public ResponseEntity<User> getUser(@PathVariable String googleId) {
+        User user = userService.getUserById(googleId);
+        return ResponseEntity.ok(user);
+    }
+
     @GetMapping("/hello")
     public String hello() {
         return "Hello User!";

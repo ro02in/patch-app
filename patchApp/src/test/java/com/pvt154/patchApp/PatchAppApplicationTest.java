@@ -56,8 +56,6 @@ public class PatchAppApplicationTest {
 				tradeRequestService.respondToTrade(tr.getTradeId(), TradeStatus.REJECTED); // om du vill avvisa dem först
 				tradeRequestService.deleteTradeRequest(tr.getTradeId());
 			}
-
-
 		});
 
 		// Sedan patcher och users
