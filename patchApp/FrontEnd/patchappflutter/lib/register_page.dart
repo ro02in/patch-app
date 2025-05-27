@@ -528,14 +528,14 @@ class _RegisterPageState extends State<RegisterPage> {
                 ],
               ),
             
-              SizedBox(height: 80), //padding mellan input-fields och de 2 knapparna
+              SizedBox(height: 123), //padding mellan input-fields och de 2 knapparna
             
               //KNAPP 2
               Container(
-                    alignment: Alignment.bottomCenter,
+                    alignment: Alignment.center,
                     padding: EdgeInsets.only(top: 10),
-                    width: 392,
-                    height: 95,
+                    width: 406,
+                    height: 110,
                     decoration: BoxDecoration(
                         color: Color.fromARGB(255, 43, 43, 43),
                         borderRadius: new BorderRadius.vertical( //rundad kant container källhänvisning: 'Rounded Bottom on appbar', stackoverflow.com/questions/50242087/rounded-bottom-on-appbar av user "Rémi Rousselet" publicerad 8 maj 2018, hämtad 25 maj 2025
@@ -575,7 +575,22 @@ class _RegisterPageState extends State<RegisterPage> {
                     overlayColor: Colors.white
                     ),
                     onPressed: () { //vad som sker när man trycker på knappen
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterUserConfirmedPage()), //hänvisa till confirmation page
+                      setState(() {
+                        nameFieldController.text.isEmpty ? showDialog(context: context, builder: (BuildContext context) {
+                          return AlertDialog(
+                              backgroundColor: Colors.white,
+                              content:
+                              Container(
+                                  alignment: Alignment.center,
+                                  width: 350, height: 50,
+                                  child: Text("Namn-fältet får inte vara tomt.", style: TextStyle(color: Colors.black, fontSize: 15, fontFamily: 'InknutAntiqua'),
+                                  )
+                              )
+                          );
+                        }
+                        )
+                            : Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterUserConfirmedPage())); //hänvisa till confirmation page
+                        },
                       );
                     },
                     child: Text("Registrera konto", textAlign: TextAlign.center, style: TextStyle(fontFamily: 'InknutAntiqua', color: Colors.black, fontSize: 20)))
@@ -589,7 +604,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
             Container(
                 width: 392,
-                height: 40,
+                height: 60,
                 color: Color.fromARGB(255, 43, 43, 43)
             )
           ],
