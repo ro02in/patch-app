@@ -60,7 +60,7 @@ public class PatchController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deletePatch(@PathVariable Long id) {
+    public ResponseEntity<Void> deletePatch(@PathVariable long id) {
         patchService.deletePatch(id);
         return ResponseEntity.noContent().build();
     }
