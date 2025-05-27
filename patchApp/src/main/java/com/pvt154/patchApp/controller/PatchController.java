@@ -1,7 +1,6 @@
 package com.pvt154.patchApp.controller;
 
 import com.pvt154.patchApp.model.Patch;
-import com.pvt154.patchApp.repository.PatchRepository;
 import com.pvt154.patchApp.service.PatchCategory;
 import com.pvt154.patchApp.service.PatchColors;
 import com.pvt154.patchApp.service.PatchService;
@@ -13,22 +12,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/patch")
 public class PatchController {
 
-    @Autowired
-    private final PatchRepository patchRepository;
-    private  PatchService patchService;
+    private final PatchService patchService;
 
-    public PatchController(PatchRepository patchRepository) {
-        this.patchRepository = patchRepository;
+    @Autowired
+    public PatchController(PatchService patchService) {
+        this.patchService = patchService;
     }
 
     @PostMapping("/add")
@@ -38,45 +33,38 @@ public class PatchController {
             @RequestParam("category") PatchCategory category,
             @RequestParam("isPublic") boolean isPublic,
             @RequestParam("colors") PatchColors[] colors,
-            @RequestParam("image") File imageFile,
+            @RequestParam("image") MultipartFile imageFile,
             @RequestParam("patchName") String patchName,
-            @RequestParam("Klubbmästeri") String klubbmästeri
-            ) throws IOException {
+            @RequestParam("klubbmästeri") String klubbmästeri
+    ) throws IOException {
 
-       // byte[] imageBytes = new byte[(int) imageFile.length()];
-        byte[] imageByteTryTwo = Files.readAllBytes(Paths.get(imageFile.getAbsolutePath()));
-        Patch patch = new Patch(description, ownerGoogleId, category, colors, imageByteTryTwo);
+        Patch patch = new Patch(description, ownerGoogleId, category, colors, imageFile.getBytes());
+        patch.setPatchName(patchName);
+        patch.setKlubbmästeri(klubbmästeri);
         patch.setIsPublic(isPublic);
-        Patch savedPatch = patchRepository.save(patch);
+
+        Patch savedPatch = patchService.createPatch(patch);
         return ResponseEntity.ok(savedPatch);
     }
 
     @GetMapping("/{id}/image")
     public ResponseEntity<byte[]> getImage(@PathVariable Long id) {
-        return patchRepository.findById(id)
-                .map(patch -> {
-                    byte[] image = patch.getPictureData();
-                    HttpHeaders headers = new HttpHeaders();
-                    headers.setContentType(MediaType.IMAGE_JPEG); // or PNG if that's what you use
-                    return new ResponseEntity<>(image, headers, HttpStatus.OK);
-                })
-                .orElse(ResponseEntity.notFound().build());
+        byte[] image = patchService.getPatchImage(id);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.IMAGE_JPEG); // Or IMAGE_PNG
+        return new ResponseEntity<>(image, headers, HttpStatus.OK);
     }
 
     @GetMapping("/user/{googleId}")
     public ResponseEntity<List<Patch>> getPatchesByUser(@PathVariable String googleId) {
-        List<Patch> patches = patchRepository.findByOwnerGoogleId(googleId);
+        List<Patch> patches = patchService.getPatchesByUser(googleId);
         return ResponseEntity.ok(patches);
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Patch> deletePatch(@PathVariable Long id) {
-        return patchRepository.findById(id)
-                .map(patch -> {
-                    patchRepository.delete(patch);
-                    return ResponseEntity.ok(patch);
-                })
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<Void> deletePatch(@PathVariable Long id) {
+        patchService.deletePatch(id);
+        return ResponseEntity.noContent().build();
     }
 
 

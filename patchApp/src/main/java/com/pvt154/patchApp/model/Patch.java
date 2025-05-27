@@ -31,26 +31,28 @@ public class Patch {
 
     private Boolean isPublic;
 
-    private PatchCategory category;
+    private PatchCategory placement;
+
+    private String klubbmästeri;
+
+    private String patchName;
 
     @ElementCollection
     @CollectionTable(name = "patch_colors", joinColumns = @JoinColumn(name = "patch_id"))
     @Enumerated(EnumType.STRING)
     @Column(name = "color")
     private List<PatchColors> colors = new ArrayList<>();
-    private String patchName;
-    private String klubbmästeri;
 
-    public Patch(String ownerGoogleId, PatchCategory category, PatchColors[] colors) {
+    public Patch(String ownerGoogleId, PatchCategory placement, PatchColors[] colors) {
         this.ownerGoogleId = ownerGoogleId;
-        this.category = category;
+        this.placement = placement;
         this.colors = new ArrayList<>(Arrays.asList(colors));
     }
 
-    public Patch(String description, String owner, PatchCategory category, PatchColors[] colors, byte[] pictureData) {
+    public Patch(String description, String owner, PatchCategory placement, PatchColors[] colors, byte[] pictureData) {
         this.description = description;
         this.ownerGoogleId = owner;
-        this.category = category;
+        this.placement = placement;
         this.colors = new ArrayList<>(Arrays.asList(colors));
         this.pictureData = pictureData;
     }

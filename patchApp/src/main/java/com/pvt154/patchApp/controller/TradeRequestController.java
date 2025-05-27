@@ -1,7 +1,7 @@
 package com.pvt154.patchApp.controller;
 //test
+
 import com.pvt154.patchApp.model.TradeRequest;
-import com.pvt154.patchApp.model.User;
 import com.pvt154.patchApp.service.TradeRequestDTO;
 import com.pvt154.patchApp.service.TradeRequestService;
 import com.pvt154.patchApp.service.TradeStatus;
@@ -36,18 +36,17 @@ public class TradeRequestController {
         return tradeRequestService.getTradeRequestsByReceiver(query);
     }
 
-    @PostMapping("/{id}/respond")
+    @PostMapping("/{id}/status")
     public ResponseEntity<TradeRequest> respondToTrade(@PathVariable Long id, @RequestParam TradeStatus status) {
         return ResponseEntity.ok(tradeRequestService.respondToTrade(id, status));
     }
 
     @DeleteMapping("/{id}/delete")
     public ResponseEntity<TradeRequest> deleteTrade(@PathVariable Long id) {
-        try{
+        try {
             tradeRequestService.deleteTradeRequest(id);
             return ResponseEntity.ok().build();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }

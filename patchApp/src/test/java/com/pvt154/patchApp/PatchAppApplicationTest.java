@@ -15,6 +15,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -46,7 +49,7 @@ public class PatchAppApplicationTest {
 	}
 
 	@BeforeEach
-	public void setup() {
+	public void setup() throws IOException {
 		// Rensa trade requests först
 		tradeRequestService.getAllTradeRequests().forEach(tr -> {
 			tradeRequestService.respondToTrade(tr.getTradeId(), TradeStatus.REJECTED); // om du vill avvisa dem först
@@ -57,9 +60,13 @@ public class PatchAppApplicationTest {
 		patchRepository.deleteAll();
 		userRepository.deleteAll();
 
+		File image = new File("beige.PNG");
+		byte[] imageBytes;
+		imageBytes = Files.readAllBytes(image.toPath());
+
 		// Skapa användare och patcher som innan
-		sender = new User("John", "Doe","jodoe", 7012323, uniqueGoogleId(), "john@example.com", "Biography");
-		receiver = new User("Jane", "Smith", "jasmith", 7012223, uniqueGoogleId(), "jane@example.com", "Extended Biography");
+		sender = new User("John", "Doe","jodoe", "7012323", uniqueGoogleId(), "bio", imageBytes);
+		receiver = new User("Jane", "Smith", "jasmith", "7012223", uniqueGoogleId(), "bio2 electric boogaloo", imageBytes);
 
 		userRepository.save(sender);
 		userRepository.save(receiver);

@@ -25,8 +25,8 @@ public class User {
     @Column(name = "km_name") // username
     private String kmName;
 
-    @Column(name = "phone_number")
-    private Integer phoneNumber;
+    @Column(name = "university")
+    private String university;
 
     @Column(name = "email_address", unique = true)
     private String emailAddress;
@@ -34,19 +34,22 @@ public class User {
     @Column(name = "biography")
     private String biography;
 
+    @Column(name = "picture")
+    private byte[] pictureData;
+
     @OneToMany(mappedBy = "sender")
     private List<TradeRequest> sentTrades = new ArrayList<>();
 
     @OneToMany(mappedBy = "receiver")
     private List<TradeRequest> receivedTrades = new ArrayList<>();
 
-    public User(String firstName, String surName, String kmName, Integer phoneNumber, String googleId, String emailAddress, String biography) {
+    public User(String firstName, String surName, String kmName, String googleId, String emailAddress, String biography, byte[] pictureData) {
         this.firstName = firstName;
         this.surName = surName;
         this.kmName = kmName;
-        this.phoneNumber = phoneNumber;
         this.googleId = googleId;
         this.emailAddress = emailAddress;
         this.biography = biography;
+        this.pictureData = pictureData;
     }
 }

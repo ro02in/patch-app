@@ -10,6 +10,7 @@ import java.util.List;
 
 @Service
 public class PatchService {
+
     private final PatchRepository patchRepository;
 
     @Autowired
@@ -17,20 +18,32 @@ public class PatchService {
         this.patchRepository = patchRepository;
     }
 
-    public Patch changeOwner(Patch patch, User newOwner) {
-        patch.setOwnerGoogleId(newOwner.getGoogleId());  // Use setOwnerGoogleId instead of setOwner
+    public Patch createPatch(Patch patch) {
         return patchRepository.save(patch);
     }
 
-    public List<Patch> getPatchesForUser(User user) {
-        return patchRepository.findByOwnerGoogleId(user.getGoogleId());  // Update this method too
+
+    public List<Patch> getPatchesByUser(String googleId) {
+        return patchRepository.findByOwnerGoogleId(googleId);
     }
 
-    public List<Patch> getAllPatches() {
-        return patchRepository.findAll();
+    public byte[] getPatchImage(Long id) {
+        Patch patch = getPatchById(id);
+        return patch.getPictureData();
     }
 
-    public Patch getBadgeById(Long id) {
+    public void deletePatch(Long id) {
+        patchRepository.deleteById(id);
+    }
+
+
+    public Patch changeOwner(Patch patch, User newOwner) {
+        patch.setOwnerGoogleId(newOwner.getGoogleId());
+        return patchRepository.save(patch);
+    }
+
+
+    public Patch getPatchById(Long id) {
         return patchRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Patch not found with id: " + id));
     }

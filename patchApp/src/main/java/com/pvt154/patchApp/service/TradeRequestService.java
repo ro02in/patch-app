@@ -4,14 +4,12 @@ import com.pvt154.patchApp.model.Patch;
 import com.pvt154.patchApp.model.TradeRequest;
 import com.pvt154.patchApp.model.User;
 import com.pvt154.patchApp.repository.TradeRequestRepository;
-import com.pvt154.patchApp.service.TradeStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @Transactional
@@ -20,6 +18,7 @@ public class TradeRequestService {
     private final TradeRequestRepository tradeRequestRepository;
     private final PatchService patchService;
     private final UserService userService;
+
 
     @Autowired
     public TradeRequestService(TradeRequestRepository tradeRequestRepository,
@@ -33,24 +32,23 @@ public class TradeRequestService {
     /**
      * Skapar en ny trade request mellan två användare.
      *
-     * @param senderId       GoogleId för avsändare
-     * @param receiverId     GoogleId för mottagare
-     * @param patchOfferedId ID för patch som avsändaren erbjuder
+     * @param senderId         GoogleId för avsändare
+     * @param receiverId       GoogleId för mottagare
+     * @param patchOfferedId   ID för patch som avsändaren erbjuder
      * @param patchRequestedId ID för patch som avsändaren vill ha (kan vara null vid gåva)
      * @return Sparad TradeRequest
      */
     public TradeRequest createTradeRequest(String senderId, String receiverId, Long patchOfferedId, Long patchRequestedId) {
         User sender = userService.getUserById(senderId);
         User receiver = userService.getUserById(receiverId);
-
-        Patch patchOffered = patchService.getBadgeById(patchOfferedId);
+        Patch patchOffered = patchService.getPatchById(patchOfferedId);
         if (!patchOffered.getOwnerGoogleId().equals(sender.getGoogleId())) {
             throw new IllegalArgumentException("Sender doesn't own the offered patch");
         }
 
         Patch patchRequested = null;
         if (patchRequestedId != null) {
-            patchRequested = patchService.getBadgeById(patchRequestedId);
+            patchRequested = patchService.getPatchById(patchRequestedId);
             if (!patchRequested.getOwnerGoogleId().equals(receiver.getGoogleId())) {
                 throw new IllegalArgumentException("Receiver doesn't own the requested patch");
             }

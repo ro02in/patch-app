@@ -9,8 +9,8 @@ import java.util.List;
 
 
 public class PatchCollection {
-@OneToMany (cascade = CascadeType.ALL, orphanRemoval = true)
-@JoinColumn(name = "user_id")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "user_id")
     private final List<Patch> patches;
 
     public PatchCollection() {
@@ -22,7 +22,7 @@ public class PatchCollection {
             patches.add(patch);
         }
     }
-    
+
     public void removePatch(Patch patch) {
         patches.remove(patch);
     }

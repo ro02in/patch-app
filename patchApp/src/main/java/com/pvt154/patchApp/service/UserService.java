@@ -19,19 +19,22 @@ public class UserService {
     }
 
     public User getUserById(String googleId) {
-        return userRepository.findByGoogleId(googleId)
+        return userRepository.findById(googleId)
                 .orElseThrow(() -> new RuntimeException("User not found with Google ID: " + googleId));
     }
 
-    public User createUser(String firstName, String surName, String googleId, String emailAddress) {
-        User user = new User("firstName", "surName", "kmName", 07012323, "googleId", "emailAddress", "biography");
+    public User createUser(User user) {
         return userRepository.save(user);
     }
 
-
-    public User updateUser(User user) {
-        // Verify user exists
-        getUserById(user.getGoogleId());
+    public User updateUser(String googleId, User updatedUser) {
+        User user = getUserById(googleId);
+        user.setFirstName(updatedUser.getFirstName());
+        user.setSurName(updatedUser.getSurName());
+        user.setKmName(updatedUser.getKmName());
+        user.setEmailAddress(updatedUser.getEmailAddress());
+        user.setBiography(updatedUser.getBiography());
+        user.setPictureData(updatedUser.getPictureData());
         return userRepository.save(user);
     }
 
@@ -40,23 +43,12 @@ public class UserService {
         userRepository.delete(user);
     }
 
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
-    }
 
     public boolean existsByGoogleId(String googleId) {
         return userRepository.findByGoogleId(googleId).isPresent();
     }
 
-    public User updateKmName(String googleId, String kmName) {
-        User user = getUserById(googleId);
-        user.setKmName(kmName);
-        return userRepository.save(user);
-    }
-
-    public User updatePhoneNumber(String googleId, int phoneNumber) {
-        User user = getUserById(googleId);
-        user.setPhoneNumber(phoneNumber);
-        return userRepository.save(user);
+    public List<User> searchUsers(String query) {
+        return userRepository.searchUsers(query);
     }
 }
