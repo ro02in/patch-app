@@ -95,12 +95,13 @@ class _RegisterPageState extends State<RegisterPage> {
                         )
                       ]
                   ),
-                  child: CircleAvatar( //LÄGGA TILL PROFILBILD REGISTRERA ANVÄNDARE
-                      radius: 80,
-                      backgroundColor: Colors.white,
-                      child: Icon(Icons.add, color: Colors.black, size: 30),
-                      foregroundImage: _selectedImage != null ? FileImage(_selectedImage!) : null //Kodrad Källhänvisning: youtu.be/qYCsxvbPDC8?si=QmZC_OoY8unh9ZRS, 'Flutter Image Picker & Cropper From Camera & Gallery | Learn Flutter Fast', av kanalen Marcus Ng, publicerad 11 november 2022, hämtad 19 maj 2025.
-                    ),
+                  child: CircleAvatar( //LÄGG TILL PROFILBILD
+                    radius: 80,
+                    backgroundColor: Colors.white,
+                    foregroundImage: _selectedImage != null ? FileImage(_selectedImage!) : AssetImage('assets/sbpinklogo.png'),
+                    child: _selectedImage == null
+                        ? Icon(Icons.add, color: Colors.black, size: 30) : null,
+                  ),
                 ),
                 
                 SizedBox(height: 16), //padding
@@ -440,17 +441,18 @@ class _RegisterPageState extends State<RegisterPage> {
                 ],
               ),
             
-              SizedBox(height: 143), //padding mellan input-fields och de 2 knapparna
+              //SizedBox(height: 201), //padding mellan input-fields och de 2 knapparna
             
               //KNAPP 2
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
+                        SizedBox(height: 150),
                         Container(
                         alignment: Alignment.center,
                         padding: EdgeInsets.only(top: 10),
                         width: 406,
-                        height: 100,
+                        height: MediaQuery.of(context).size.height * 0.110,
                         decoration: BoxDecoration(
                             color: Color.fromARGB(255, 43, 43, 43),
                             borderRadius: new BorderRadius.vertical( //rundad kant container källhänvisning: 'Rounded Bottom on appbar', stackoverflow.com/questions/50242087/rounded-bottom-on-appbar av user "Rémi Rousselet" publicerad 8 maj 2018, hämtad 25 maj 2025
@@ -465,8 +467,8 @@ class _RegisterPageState extends State<RegisterPage> {
                               )
                             ]
                         ),
-                                          child: Container(
-                                            decoration: BoxDecoration(
+                      child: Container(
+                        decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(40)),
                         boxShadow: [
                           BoxShadow(
@@ -476,13 +478,13 @@ class _RegisterPageState extends State<RegisterPage> {
                             offset: Offset.fromDirection(0, 0)
                           )
                         ]
-                                            ),
+                        ),
 
-                                          child: SizedBox(
-                                           // alignment: Alignment.center,
-                                            height: 58,
-                                            width: 295,
-                                            child: TextButton(
+                    child: SizedBox(
+                       // alignment: Alignment.center,
+                        height: 58,
+                        width: 295,
+                        child: TextButton(
                         style: TextButton.styleFrom(
                         //side: BorderSide(width: 0.8, color: const Color.fromARGB(255, 0, 0, 0)),
                         backgroundColor: Color.fromARGB(255, 244, 115, 255), //lila Color.fromARGB(255, 195, 76, 255)
@@ -509,8 +511,8 @@ class _RegisterPageState extends State<RegisterPage> {
                           );
                         },
                         child: Text("Registrera konto", textAlign: TextAlign.center, style: TextStyle(fontFamily: 'InknutAntiqua', color: Colors.black, fontSize: 20)))
-                                          ),
-                                ),
+                            ),
+                          ),
                         ),
                       ],
               ),
@@ -518,12 +520,6 @@ class _RegisterPageState extends State<RegisterPage> {
                  ),
               ),
             ),
-
-            Container(
-                width: 392,
-                height: 20,
-                color: Color.fromARGB(255, 43, 43, 43)
-            )
           ],
         ),
       );

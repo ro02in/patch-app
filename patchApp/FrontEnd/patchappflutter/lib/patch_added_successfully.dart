@@ -71,7 +71,7 @@ class _PatchAddedSuccessfullyState extends State<PatchAddedSuccessfully> {
             SizedBox(height: 100),
 
             Container(
-              height: 640,
+              height: 590,
               width: 360,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(80),
@@ -85,30 +85,30 @@ class _PatchAddedSuccessfullyState extends State<PatchAddedSuccessfully> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
-                        alignment: Alignment.center,
-                        width: 300,
-                        height: 150,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(40),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Color.fromARGB(255, 220, 96, 234),
-                              spreadRadius: 0.5,
-                              blurRadius: 0,
-                              offset: Offset(6, 6)
-                            )
-                          ]
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text("Grattis!", textAlign: TextAlign.center, style: TextStyle(color: Colors.black, fontFamily: 'InknutAntiqua', fontSize: 25, fontWeight: FontWeight.w700)),
-                            SizedBox(height: 10),
-                            Text("Märket har lagts till i din samling!", textAlign: TextAlign.center, style: TextStyle(color: Colors.black, fontFamily: 'InknutAntiqua', fontSize: 16, fontWeight: FontWeight.w700))
-                          ],
-                        )
+                          alignment: Alignment.center,
+                          width: 300,
+                          height: 150,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(40),
+                              boxShadow: [
+                                BoxShadow(
+                                    color: Color.fromARGB(255, 220, 96, 234),
+                                    spreadRadius: 0.5,
+                                    blurRadius: 0,
+                                    offset: Offset(6, 6)
+                                )
+                              ]
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text("Grattis!", textAlign: TextAlign.center, style: TextStyle(color: Colors.black, fontFamily: 'InknutAntiqua', fontSize: 25, fontWeight: FontWeight.w700)),
+                              SizedBox(height: 10),
+                              Text("Märket har lagts till i din samling!", textAlign: TextAlign.center, style: TextStyle(color: Colors.black, fontFamily: 'InknutAntiqua', fontSize: 16, fontWeight: FontWeight.w700))
+                            ],
+                          )
                       ),
                     ],
                   ),
@@ -199,91 +199,99 @@ class _PatchAddedSuccessfullyState extends State<PatchAddedSuccessfully> {
                     ),
                   ),
 
-                  SizedBox(height: 146),
+                  SizedBox(height: 165),
 
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        alignment: Alignment.bottomCenter,
-                        padding: EdgeInsets.only(top: 10),
-                        width: 392,
-                        height: 90,
+                ],
+              ),
+            ), //SVAG GRÅ CONTAINER
+
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                SizedBox(height: 8),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      alignment: Alignment.center,
+                      padding: EdgeInsets.only(top: 10),
+                      width: 392,
+                      height: MediaQuery.of(context).size.height * 0.110,
+                      decoration: BoxDecoration(
+                          color: Color.fromARGB(255, 43, 43, 43),
+                          borderRadius: new BorderRadius.vertical( //rundad kant container källhänvisning: 'Rounded Bottom on appbar', stackoverflow.com/questions/50242087/rounded-bottom-on-appbar av user "Rémi Rousselet" publicerad 8 maj 2018, hämtad 25 maj 2025
+                            top: new Radius.elliptical(MediaQuery.of(context).size.width, 100),
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Color.fromARGB(255, 20, 20, 20),
+                                spreadRadius: 2,
+                                blurRadius: 25,
+                                offset: Offset(0.5, 1)
+                            )
+                          ]
+                      ),
+                      //KNAPP 2
+                      child: Container(
                         decoration: BoxDecoration(
-                            color: Color.fromARGB(255, 43, 43, 43),
-                            borderRadius: new BorderRadius.vertical( //rundad kant container källhänvisning: 'Rounded Bottom on appbar', stackoverflow.com/questions/50242087/rounded-bottom-on-appbar av user "Rémi Rousselet" publicerad 8 maj 2018, hämtad 25 maj 2025
-                              top: new Radius.elliptical(MediaQuery.of(context).size.width, 100),
-                            ),
+                            borderRadius: BorderRadius.all(Radius.circular(40)),
                             boxShadow: [
                               BoxShadow(
-                                  color: Color.fromARGB(255, 20, 20, 20),
-                                  spreadRadius: 2,
-                                  blurRadius: 25,
-                                  offset: Offset(0.5, 1)
+                                  color: Color.fromARGB(255, 25, 25, 25), //
+                                  spreadRadius: 3,
+                                  blurRadius: 12,
+                                  offset: Offset.fromDirection(0, 2)
                               )
                             ]
                         ),
-                        //KNAPP 2
-                        child: Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.all(Radius.circular(40)),
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Color.fromARGB(255, 25, 25, 25), //
-                                    spreadRadius: 3,
-                                    blurRadius: 12,
-                                    offset: Offset.fromDirection(0, 2)
-                                )
-                              ]
-                          ),
 
-                          child: Container(
-                              height: 55,
-                              width: 240,
-                              decoration: BoxDecoration(
-                                color: Color.fromARGB(255, 40, 40, 40), //Color.fromARGB(255, 234, 111, 255)
-                                borderRadius: BorderRadius.circular(30),
-                              ),
-                              child: OutlinedButton.icon(
-                              icon: Icon(Icons.delete_rounded, color: Colors.white, size: 30),
-                              style: OutlinedButton.styleFrom(
+                        child: Container(
+                          height: 55,
+                          width: 240,
+                          decoration: BoxDecoration(
+                            color: Color.fromARGB(255, 40, 40, 40), //Color.fromARGB(255, 234, 111, 255)
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          child: OutlinedButton.icon(
+                            icon: Icon(Icons.delete_rounded, color: Colors.white, size: 30),
+                            style: OutlinedButton.styleFrom(
                                 side: BorderSide(color: Color.fromARGB(255, 40, 40, 40), width: 3)
-                              ),
-                              onPressed: () {
-                                showDialog(context: context,
-                                    builder: (BuildContext context) {
-                                      return AlertDialog.adaptive(
+                            ),
+                            onPressed: () {
+                              showDialog(context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog.adaptive(
                                         backgroundColor: Colors.white, //ta bort default bakgrundsfärg, ram
                                         content: SizedBox(
-                                          height: 160,
-                                          width: 360,
-                                          child: ListView(
+                                            height: 160,
+                                            width: 360,
+                                            child: ListView(
                                               children: [
                                                 Container(
                                                   padding: EdgeInsets.only(top: 20, left: 20, right: 20),
                                                   color: Colors.white,
                                                   child: Column(
-                                                      children: [
-                                                        Text("Vill du verkligen radera detta märke?", style: TextStyle(color: Colors.black, fontSize: 18, fontFamily: 'InknutAntiqua')),
-                                                        SizedBox(height: 20),
-                                                        Row(
-                                                          children: [
-                                                            Container(
-                                                              width: 100,
-                                                              height: 50,
+                                                    children: [
+                                                      Text("Vill du verkligen radera detta märke?", style: TextStyle(color: Colors.black, fontSize: 18, fontFamily: 'InknutAntiqua')),
+                                                      SizedBox(height: 20),
+                                                      Row(
+                                                        children: [
+                                                          Container(
+                                                            width: 100,
+                                                            height: 50,
+                                                            decoration: BoxDecoration(
+                                                                borderRadius: BorderRadius.circular(30),
+                                                                boxShadow: [
+                                                                  BoxShadow(
+                                                                      color: Color.fromARGB(255, 230, 230, 230),
+                                                                      spreadRadius: 2,
+                                                                      blurRadius: 8,
+                                                                      offset: Offset(0, 0)
+                                                                  )
+                                                                ]
+                                                            ),
+                                                            child: Container(
                                                               decoration: BoxDecoration(
-                                                                  borderRadius: BorderRadius.circular(30),
-                                                                  boxShadow: [
-                                                                    BoxShadow(
-                                                                        color: Color.fromARGB(255, 230, 230, 230),
-                                                                        spreadRadius: 2,
-                                                                        blurRadius: 8,
-                                                                        offset: Offset(0, 0)
-                                                                    )
-                                                                  ]
-                                                              ),
-                                                              child: Container(
-                                                                decoration: BoxDecoration(
                                                                   borderRadius: BorderRadius.circular(30),
                                                                   boxShadow: [
                                                                     BoxShadow(
@@ -293,125 +301,119 @@ class _PatchAddedSuccessfullyState extends State<PatchAddedSuccessfully> {
                                                                         blurRadius: 1
                                                                     )
                                                                   ]
+                                                              ),
+                                                              child: ElevatedButton(
+                                                                style: ElevatedButton.styleFrom(
+                                                                  backgroundColor: Color.fromARGB(255, 255, 255, 255),
+                                                                  //side: BorderSide(color: Color.fromARGB(255, 232, 0, 90), width: 2.5)
                                                                 ),
-                                                                child: ElevatedButton(
-                                                                    style: ElevatedButton.styleFrom(
-                                                                        backgroundColor: Color.fromARGB(255, 255, 255, 255),
-                                                                        //side: BorderSide(color: Color.fromARGB(255, 232, 0, 90), width: 2.5)
-                                                                    ),
-                                                                    onPressed: () {
-                                                                      Navigator.pop(context);
-                                                                    },
-                                                                    child: Text("Nej", style: TextStyle(color: Color.fromARGB(200, 244, 51, 95), fontFamily: 'InknutAntiqua', fontSize: 15),
+                                                                onPressed: () {
+                                                                  Navigator.pop(context);
+                                                                },
+                                                                child: Text("Nej", style: TextStyle(color: Color.fromARGB(200, 244, 51, 95), fontFamily: 'InknutAntiqua', fontSize: 15),
 
-                                                                    ),
                                                                 ),
                                                               ),
                                                             ),
+                                                          ),
 
-                                                            SizedBox(width: 23),
+                                                          SizedBox(width: 23),
 
-                                                              Container(
-                                                                width: 100,
-                                                                height: 50,
-                                                                decoration: BoxDecoration(
-                                                                  borderRadius: BorderRadius.circular(80),
-                                                                    boxShadow: [
-                                                                      BoxShadow(
-                                                                        color: Color.fromARGB(255, 230, 230, 230),
-                                                                        spreadRadius: 2,
-                                                                        blurRadius: 8,
-                                                                        offset: Offset(0, 0)
-                                                                      )
-                                                                    ]
-                                                                ),
-                                                                child: OutlinedButton(
-                                                                  style: OutlinedButton.styleFrom(
+                                                          Container(
+                                                            width: 100,
+                                                            height: 50,
+                                                            decoration: BoxDecoration(
+                                                                borderRadius: BorderRadius.circular(80),
+                                                                boxShadow: [
+                                                                  BoxShadow(
+                                                                      color: Color.fromARGB(255, 230, 230, 230),
+                                                                      spreadRadius: 2,
+                                                                      blurRadius: 8,
+                                                                      offset: Offset(0, 0)
+                                                                  )
+                                                                ]
+                                                            ),
+                                                            child: OutlinedButton(
+                                                                style: OutlinedButton.styleFrom(
                                                                     backgroundColor: Colors.white,
                                                                     side: BorderSide(color: Color.fromARGB(255, 220, 220, 220), width: 1)
-                                                                  ),
-                                                                  onPressed: () { //TODO: BACKEND, HANTERA ALTERNATIVET "JA", RADERA MÄRKE
-                                                                    showDialog(context: context, barrierDismissible: false, builder: (BuildContext context) { //barrierDismissable prevent going back to previous AlertWindow, källhänvisning: 'Flutter - Dismiss system keyboard after tapping outside of AlertDialog widget',
-                                                                      //stackoverflow.com/questions/68416276/flutter-dismiss-system-keyboard-after-tapping-outside-of-alertdialog-widget, publicerad 7 mars 2023, hämtad 25 maj 2025
-                                                                      return AlertDialog( //Märket har raderats-fönster
-                                                                        backgroundColor: Colors.white, //ta bort default bakgrundsfärg, ram
-                                                                        content: Container(
+                                                                ),
+                                                                onPressed: () { //TODO: BACKEND, HANTERA ALTERNATIVET "JA", RADERA MÄRKE
+                                                                  showDialog(context: context, barrierDismissible: false, builder: (BuildContext context) { //barrierDismissable prevent going back to previous AlertWindow, källhänvisning: 'Flutter - Dismiss system keyboard after tapping outside of AlertDialog widget',
+                                                                    //stackoverflow.com/questions/68416276/flutter-dismiss-system-keyboard-after-tapping-outside-of-alertdialog-widget, publicerad 7 mars 2023, hämtad 25 maj 2025
+                                                                    return AlertDialog( //Märket har raderats-fönster
+                                                                      backgroundColor: Colors.white, //ta bort default bakgrundsfärg, ram
+                                                                      content: Container(
                                                                           width: 320,
                                                                           height: 187,
                                                                           decoration: BoxDecoration(
-                                                                            color: Colors.white,
-                                                                            borderRadius: BorderRadius.circular(50)
+                                                                              color: Colors.white,
+                                                                              borderRadius: BorderRadius.circular(50)
                                                                           ),
                                                                           child: Column(
-                                                                          mainAxisAlignment: MainAxisAlignment.start,
-                                                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                                                          children: [
-                                                                            Row(
-                                                                              children: [
-                                                                              SizedBox(width: 227),
-                                                                              Container( //Kryss knapp
-                                                                                padding: EdgeInsets.only(bottom: 3),
-                                                                                width: 36,
-                                                                                height: 36,
-                                                                                child: FloatingActionButton( //Kryss knapp
-                                                                                    backgroundColor: Colors.white,
-                                                                                    shape: const CircleBorder(),
-                                                                                    child: Icon(Icons.close, color: Colors.black),
-                                                                                    onPressed: (){ //Gå tillbaka till profile page
-                                                                                      Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage()));
-                                                                                    },
+                                                                            mainAxisAlignment: MainAxisAlignment.start,
+                                                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                                                            children: [
+                                                                              Row(
+                                                                                children: [
+                                                                                  SizedBox(width: 227),
+                                                                                  Container( //Kryss knapp
+                                                                                    padding: EdgeInsets.only(bottom: 3),
+                                                                                    width: 36,
+                                                                                    height: 36,
+                                                                                    child: FloatingActionButton( //Kryss knapp
+                                                                                      backgroundColor: Colors.white,
+                                                                                      shape: const CircleBorder(),
+                                                                                      child: Icon(Icons.close, color: Colors.black),
+                                                                                      onPressed: (){ //Gå tillbaka till profile page
+                                                                                        Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage()));
+                                                                                      },
                                                                                     ),
+                                                                                  )
+                                                                                ],
+                                                                              ),
+                                                                              Column(
+                                                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                                                children: [
+                                                                                  SizedBox(height: 6),
+                                                                                  Text("Märket har raderats.", style: TextStyle(color: Colors.black, fontFamily: 'InknutAntiqua', fontSize: 18)),
+                                                                                  SizedBox(height: 9),
+                                                                                  Image.asset("assets/trashcanimage2.PNG", height: 109, width: 109, fit: BoxFit.fitHeight)
+                                                                                ],
                                                                               )
-                                                                              ],
-                                                                            ),
-                                                                            Column(
-                                                                              crossAxisAlignment: CrossAxisAlignment.center,
-                                                                              mainAxisAlignment: MainAxisAlignment.center,
-                                                                              children: [
-                                                                                SizedBox(height: 6),
-                                                                                Text("Märket har raderats.", style: TextStyle(color: Colors.black, fontFamily: 'InknutAntiqua', fontSize: 18)),
-                                                                                SizedBox(height: 9),
-                                                                                Image.asset("assets/trashcanimage2.PNG", height: 109, width: 109, fit: BoxFit.fitHeight)
-                                                                              ],
-                                                                            )
-                                                                          ],
+                                                                            ],
                                                                           )
-                                                                        ),
-                                                                      );
-                                                                    }
+                                                                      ),
                                                                     );
-                                                                  },
+                                                                  }
+                                                                  );
+                                                                },
                                                                 child: Text("Ja", style: TextStyle(color: Colors.black, fontFamily: 'InknutAntiqua', fontSize: 15, height: 0))
-                                                                ),
-                                                              ),
-                                                            ],
-                                                        )
-                                                      ],
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      )
+                                                    ],
                                                   ),
                                                 )
                                               ],
-                                          )
+                                            )
                                         )
-                                      );
-                                    }
-                                );
-                              }, label: Text("Radera märke", style: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 17),
-                             ),
-                            ),
+                                    );
+                                  }
+                              );
+                            }, label: Text("Radera märke", style: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 17),
+                          ),
                           ),
                         ),
                       ),
-                    ],
-                  ),
-
-                 Container(
-                      width: 392,
-                      height: 30,
-                      color: Color.fromARGB(255, 43, 43, 43)
-                  )
-                ],
-              ),
+                    ),
+                  ],
+                ),
+              ],
             ),
+
           ],
         ),
       ),
