@@ -28,7 +28,7 @@ class PatchViewPage extends StatefulWidget {
 }
 
 class _PatchViewPageState extends State<PatchViewPage> {
-  int amount = 0; //amount-delen
+  int amount = 1; //27 maj ändring amount-delen
   bool publicPrivate = true; //switch button variable
   bool trade = true;
   String patchName = '';
@@ -445,7 +445,8 @@ class _PatchViewPageState extends State<PatchViewPage> {
                         icon: Icon(Icons.remove, color: Colors.black),
                         onPressed: () {
                           setState(() {
-                            amount = (amount > 0) ? amount - 1 : 0; //antal kan ej vara negativt tal
+                            amount = (amount >= 1) ? amount - 1 : 0; //antal kan ej vara negativt tal
+                            amount = (amount < 1) ? amount = 1 : amount; //27 maj antal kan ej vara mindre än 1
                           });
                         },
                       ),
@@ -510,87 +511,108 @@ class _PatchViewPageState extends State<PatchViewPage> {
                 ),
                 const SizedBox(height: 30),
                 // Switch-knappar (public och trade)
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    //SWITCH 1 PUBLIK/PRIVAT
-                    Container( //Källhänvisning 'Flutter increase height and width of Switch?' av diegoveloper //stackoverflow.com/questions/52568958/flutter-increase-height-and-width-of-switch hämtad 10 mars 2022, hämtad 8 maj 2025
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Color.fromARGB(255, 108, 246, 93),
-                            spreadRadius: 1.5,
-                            blurRadius: 5,
-                            offset: Offset(0.5, 1)
-                          )
-                        ]
-                      ),
-
-                      /*Källhänvisning: 'flutter switch package': Copyright (c) 2020, Nichole John Romero All rights reserved, hämtad via //pub.dev/packages/flutter_switch,
-                      publicerad 22 juni 2021, hämtad 9 maj 2025.*/
-                      child: FlutterSwitch(
-                        value: publicPrivate,
-                        duration: Duration(milliseconds: 205),
+                Container(
+                  width: 300,
+                  height: 105,
+                  decoration: BoxDecoration(
+                    color: Color.fromARGB(255, 40, 40, 40),
+                    borderRadius: BorderRadius.circular(30),
+                    border: Border.all(color: Color.fromARGB(255, 44, 44, 44), width: 2),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Color.fromARGB(255, 23, 23, 23),
+                        spreadRadius: 4,
+                        blurRadius: 8,
+                        offset: Offset(0, 6)
+                      )
+                    ]
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      //SWITCH 1 PUBLIK/PRIVAT
+                      Container( //Källhänvisning 'Flutter increase height and width of Switch?' av diegoveloper //stackoverflow.com/questions/52568958/flutter-increase-height-and-width-of-switch hämtad 10 mars 2022, hämtad 8 maj 2025
+                        height: 47,
                         width: 108,
-                        height: 46,
-                        borderRadius: 50,
-                        valueFontSize: 17,
-                        activeColor: const Color.fromARGB(255, 122, 255, 159),
-                        activeText: "Publik",
-                        activeTextFontWeight: FontWeight.w400,
-                        activeTextColor: const Color.fromARGB(255, 30, 30, 30),
-                        inactiveColor: const Color.fromARGB(255, 241, 77, 80),
-                        inactiveText: "Privat",
-                        inactiveTextColor: Colors.black,
-                        inactiveTextFontWeight: FontWeight.w400,
-                        showOnOff: true,
-                        onToggle: (bool value) {
-                          setState(() {
-                            publicPrivate = value;
-                          });
-                        },
-                      ),
-                    ),
-                    const SizedBox(width: 25),
-
-                    //SWITCH 2 BYTBAR/EJ BYTBAR
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
                           boxShadow: [
                             BoxShadow(
-                                color: Color.fromARGB(255, 108, 246, 93),
-                                spreadRadius: 1.5,
-                                blurRadius: 5,
-                                offset: Offset(0.5, 1)
+                              color: Color.fromARGB(255, 122, 255, 159),
+                              spreadRadius: 1.5,
+                              blurRadius: 4,
+                              offset: Offset(0, 0)
                             )
                           ]
+                        ),
+                  
+                        /*Källhänvisning: 'flutter switch package': Copyright (c) 2020, Nichole John Romero All rights reserved, hämtad via //pub.dev/packages/flutter_switch,
+                        publicerad 22 juni 2021, hämtad 9 maj 2025.*/
+                        child: FlutterSwitch(
+                          value: publicPrivate,
+                          duration: Duration(milliseconds: 205),
+                          width: 108,
+                          height: 47,
+                          borderRadius: 50,
+                          valueFontSize: 17,
+                          activeColor: Color.fromARGB(255, 122, 255, 159),
+                          activeText: "Publik",
+                          activeTextFontWeight: FontWeight.w400,
+                          activeTextColor: Colors.black,
+                          inactiveColor: Color.fromARGB(255, 42, 42, 42),
+                          inactiveText: "Privat",
+                          inactiveTextColor: Colors.white,
+                          inactiveTextFontWeight: FontWeight.w400,
+                          showOnOff: true,
+                          onToggle: (bool value) {
+                            setState(() {
+                              publicPrivate = value;
+                            });
+                          },
+                        ),
                       ),
-                      child: FlutterSwitch(
-                        value: trade,
-                        duration: Duration(milliseconds: 205),
+                      const SizedBox(width: 27),
+                  
+                      //SWITCH 2 BYTBAR/EJ BYTBAR
+                      Container(
+                        height: 47,
                         width: 108,
-                        height: 46,
-                        borderRadius: 50,
-                        valueFontSize: 17,
-                        activeColor: const Color.fromARGB(255, 122, 255, 159),
-                        activeText: "Bytbar",
-                        activeTextFontWeight: FontWeight.w400,
-                        activeTextColor: const Color.fromARGB(255, 27, 27, 27),
-                        inactiveColor: const Color.fromARGB(255, 241, 77, 80),
-                        inactiveText: "Ej bytbar",
-                        inactiveTextColor: Colors.black,
-                        inactiveTextFontWeight: FontWeight.w400,
-                        showOnOff: true,
-                        onToggle: (bool value) {
-                          setState(() {
-                            trade = value;
-                          });
-                        },
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Color.fromARGB(255, 122, 255, 159),
+                                  spreadRadius: 1.5,
+                                  blurRadius: 4,
+                                  offset: Offset(0, 0)
+                              )
+                            ]
+                        ),
+                        child: FlutterSwitch(
+                          value: trade,
+                          duration: Duration(milliseconds: 205),
+                          width: 108,
+                          height: 47,
+                          borderRadius: 50,
+                          valueFontSize: 17,
+                          activeColor: const Color.fromARGB(255, 122, 255, 159),
+                          activeText: "Bytbar",
+                          activeTextFontWeight: FontWeight.w400,
+                          activeTextColor: const Color.fromARGB(255, 27, 27, 27),
+                          inactiveColor: const Color.fromARGB(255, 42, 42, 42),
+                          inactiveText: "Ej bytbar",
+                          inactiveTextColor: Colors.white,
+                          inactiveTextFontWeight: FontWeight.w400,
+                          showOnOff: true,
+                          onToggle: (bool value) {
+                            setState(() {
+                              trade = value;
+                            });
+                          },
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -621,7 +643,53 @@ class _PatchViewPageState extends State<PatchViewPage> {
                       width: 120,
                       child: OutlinedButton(
                         onPressed: () {
-                          addPatch(beskrivning, "909034", "PASYTT", publicPrivate, "BLUE", _selectedImage!, patchName); //TODO FIX THIS PLS
+                          setState(() {
+                            patchNameController.text.isEmpty || klubbmasteriFieldController.text.isEmpty ? showDialog(context: context, builder: (BuildContext context) {
+                              return AlertDialog(
+                                  backgroundColor: Colors.white,
+                                  content:
+                                  Container(
+                                    width: 350,
+                                    height: 200,
+                                    child:
+                                      ListView(
+                                        children: [
+                                          Row(
+                                            children: [
+                                              SizedBox(width: 226),
+                                              Container(
+                                                width: 38,
+                                                height: 38,
+                                                child: FloatingActionButton(
+                                                shape: const CircleBorder(),
+                                                backgroundColor: Color.fromARGB(255, 35, 35, 35),
+                                                elevation: 2,
+                                                onPressed: () {
+                                                },
+                                                child: Icon(Icons.close, color: Colors.white, size: 18)),
+                                                ),
+                                              ],
+                                            ),
+                                              SizedBox(height: 20),
+                                                Row(
+                                                  children: [
+                                                    Text("VARNING!", style: TextStyle(color: Colors.black, fontSize: 20, fontFamily: 'InknutAntiqua', fontWeight: FontWeight.w500)),
+                                                  ],
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    Text("\nMärkesnamn-fältet och\nKlubbmästeri-fältet\nfår inte vara tomma.", style: TextStyle(color: Colors.black, fontSize: 15, fontFamily: 'InknutAntiqua')),
+                                                  ],
+                                                )
+                                            ],
+                                      ),
+                                  )
+                              );
+                            }
+                            )
+                            : addPatch(beskrivning, "909034", "PASYTT", publicPrivate, "BLUE", _selectedImage!, patchName); //Om Märkesnamn-fält = tomt är falskt, skapa patch
+                          }
+                          ); //TODO FIX THIS PLS
                         },
                         style: OutlinedButton.styleFrom(
                             backgroundColor: Color.fromARGB(255, 42, 42, 42),
