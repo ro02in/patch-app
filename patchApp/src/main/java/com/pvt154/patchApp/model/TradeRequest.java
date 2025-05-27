@@ -24,11 +24,11 @@ public class TradeRequest {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "patch_offered_id")
     private Patch patchOffered;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "patch_requested_id")
     private Patch patchRequested;
 

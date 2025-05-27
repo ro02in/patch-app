@@ -31,9 +31,14 @@ public class TradeRequestController {
         return ResponseEntity.ok(trade);
     }
 
-    @GetMapping("/get/user/all")
-    public List<TradeRequest> searchUsers(@RequestParam("query") String query) {
+    @GetMapping("/received/trades")
+    public List<TradeRequest> receivedTrades(@RequestParam("query") String query) {
         return tradeRequestService.getTradeRequestsByReceiver(query);
+    }
+
+    @GetMapping("/sent/trades")
+    public List<TradeRequest> sentTrades(@RequestParam("query") String query) {
+        return tradeRequestService.getTradeRequestsBySender(query);
     }
 
     @PostMapping("/{id}/status")

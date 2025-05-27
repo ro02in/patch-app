@@ -52,8 +52,10 @@ public class PatchAppApplicationTest {
 	public void setup() throws IOException {
 		// Rensa trade requests först
 		tradeRequestService.getAllTradeRequests().forEach(tr -> {
-			tradeRequestService.respondToTrade(tr.getTradeId(), TradeStatus.REJECTED); // om du vill avvisa dem först
-			tradeRequestService.deleteTradeRequest(tr.getTradeId());
+			if (!tr.getStatus().equals(TradeStatus.PENDING)) {
+				tradeRequestService.respondToTrade(tr.getTradeId(), TradeStatus.REJECTED); // om du vill avvisa dem först
+				tradeRequestService.deleteTradeRequest(tr.getTradeId());
+			}
 		});
 
 		// Sedan patcher och users

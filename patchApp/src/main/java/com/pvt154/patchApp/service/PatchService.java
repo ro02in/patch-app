@@ -32,7 +32,7 @@ public class PatchService {
         return patch.getPictureData();
     }
 
-    public void deletePatch(Long id) {
+    public void deletePatch(long id) {
         patchRepository.deleteById(id);
     }
 
