@@ -4,6 +4,7 @@ import com.pvt154.patchApp.model.Patch;
 import com.pvt154.patchApp.repository.PatchRepository;
 import com.pvt154.patchApp.service.PatchCategory;
 import com.pvt154.patchApp.service.PatchColors;
+import com.pvt154.patchApp.service.PatchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,7 @@ public class PatchController {
 
     @Autowired
     private final PatchRepository patchRepository;
+    private  PatchService patchService;
 
     public PatchController(PatchRepository patchRepository) {
         this.patchRepository = patchRepository;
@@ -37,7 +39,8 @@ public class PatchController {
             @RequestParam("isPublic") boolean isPublic,
             @RequestParam("colors") PatchColors[] colors,
             @RequestParam("image") File imageFile,
-            @RequestParam("patchName") String patchName
+            @RequestParam("patchName") String patchName,
+            @RequestParam("Klubbmästeri") String klubbmästeri
             ) throws IOException {
 
        // byte[] imageBytes = new byte[(int) imageFile.length()];
@@ -64,6 +67,16 @@ public class PatchController {
     public ResponseEntity<List<Patch>> getPatchesByUser(@PathVariable String googleId) {
         List<Patch> patches = patchRepository.findByOwnerGoogleId(googleId);
         return ResponseEntity.ok(patches);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Patch> deletePatch(@PathVariable Long id) {
+        return patchRepository.findById(id)
+                .map(patch -> {
+                    patchRepository.delete(patch);
+                    return ResponseEntity.ok(patch);
+                })
+                .orElse(ResponseEntity.notFound().build());
     }
 
 

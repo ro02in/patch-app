@@ -1,6 +1,14 @@
 package com.pvt154.patchApp.service;
 
 public enum PatchCategory {
-    PASYTT,
-    EJ_PASYTT,
+    EJ_PÅSYTT,
+    VÄNSTER_ARM,
+    HÖGER_ARM,
+    VÄNSTER_BEN,
+    HÖGER_BEN,
+    ÖVERKROPP,
+    KRAGE,
+    SKREV,
+
+
 }

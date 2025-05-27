@@ -1,14 +1,14 @@
 package com.pvt154.patchApp.service;
 
 public enum PatchColors {
-    GREEN,
-    BLUE,
-    RED,
-    YELLOW,
+    GRÖN,
+    BLÅ,
+    RÖD,
+    GUL,
     ORANGE,
-    PURPLE,
-    WHITE,
-    GRAY,
-    BLACK,
+    LILA,
+    VIT,
+    GRÅ,
+    SVART,
 
 }

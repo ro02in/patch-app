@@ -38,6 +38,8 @@ public class Patch {
     @Enumerated(EnumType.STRING)
     @Column(name = "color")
     private List<PatchColors> colors = new ArrayList<>();
+    private String patchName;
+    private String klubbmästeri;
 
     public Patch(String ownerGoogleId, PatchCategory category, PatchColors[] colors) {
         this.ownerGoogleId = ownerGoogleId;
