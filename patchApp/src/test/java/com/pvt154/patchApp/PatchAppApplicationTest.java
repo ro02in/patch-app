@@ -97,10 +97,10 @@ public class PatchAppApplicationTest {
 		assertEquals(TradeStatus.PENDING, tradeRequest.getStatus());
 
 		// Här jämför vi med User-objekt, så jämför googleId på User-objekten
-		assertEquals(sender.getGoogleId(), tradeRequest.getSender().getGoogleId());
-		assertEquals(receiver.getGoogleId(), tradeRequest.getReceiver().getGoogleId());
-		assertEquals(senderPatch.getId(), tradeRequest.getPatchOffered().getId());
-		assertEquals(receiverPatch.getId(), tradeRequest.getPatchRequested().getId());
+		assertEquals(sender.getGoogleId(), tradeRequest.getSender());
+		assertEquals(receiver.getGoogleId(), tradeRequest.getReceiver());
+		assertEquals(senderPatch.getId(), tradeRequest.getPatchOffered());
+		assertEquals(receiverPatch.getId(), tradeRequest.getPatchRequested());
 	}
 
 	@Test
@@ -164,7 +164,7 @@ public class PatchAppApplicationTest {
 
 		assertFalse(requests.isEmpty());
 		// Jämför googleId på User-objektet i TradeRequest
-		assertEquals(receiver.getGoogleId(), requests.get(0).getReceiver().getGoogleId());
+		assertEquals(receiver.getGoogleId(), requests.get(0).getReceiver());
 	}
 
 	@Test
@@ -179,7 +179,7 @@ public class PatchAppApplicationTest {
 		var requests = tradeRequestService.getTradeRequestsBySender(sender.getGoogleId());
 
 		assertFalse(requests.isEmpty());
-		assertEquals(sender.getGoogleId(), requests.get(0).getSender().getGoogleId());
+		assertEquals(sender.getGoogleId(), requests.get(0).getSender());
 	}
 
 	@Test
@@ -194,8 +194,8 @@ public class PatchAppApplicationTest {
 		TradeRequest retrievedRequest = tradeRequestService.getTradeRequestById(createdRequest.getTradeId());
 
 		assertEquals(createdRequest.getTradeId(), retrievedRequest.getTradeId());
-		assertEquals(sender.getGoogleId(), retrievedRequest.getSender().getGoogleId());
-		assertEquals(receiver.getGoogleId(), retrievedRequest.getReceiver().getGoogleId());
+		assertEquals(sender.getGoogleId(), retrievedRequest.getSender());
+		assertEquals(receiver.getGoogleId(), retrievedRequest.getReceiver());
 	}
 
 	@Test
@@ -209,9 +209,9 @@ public class PatchAppApplicationTest {
 
 		assertNotNull(giftRequest.getTradeId());
 		assertEquals(TradeStatus.PENDING, giftRequest.getStatus());
-		assertEquals(sender.getGoogleId(), giftRequest.getSender().getGoogleId());
-		assertEquals(receiver.getGoogleId(), giftRequest.getReceiver().getGoogleId());
-		assertEquals(senderPatch.getId(), giftRequest.getPatchOffered().getId());
+		assertEquals(sender.getGoogleId(), giftRequest.getSender());
+		assertEquals(receiver.getGoogleId(), giftRequest.getReceiver());
+		assertEquals(senderPatch.getId(), giftRequest.getPatchOffered());
 		assertNull(giftRequest.getPatchRequested());
 	}
 }
