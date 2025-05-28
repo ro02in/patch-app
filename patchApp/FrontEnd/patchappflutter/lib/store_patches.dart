@@ -2,15 +2,37 @@
 
 //test igen 00:52
 
-  class StorePatches{
-    String imageName;
-    String itemImage;
+  import 'dart:convert';
 
-    StorePatches.items({required this.imageName, required this.itemImage});
+import 'package:http/http.dart' as http;
+import 'package:patchappflutter/patch_model.dart';
 
+class StorePatches{
+
+    //String imageName;
+    //String itemImage;
+    //List<StorePatches> storePatchesList;
+
+
+   // List<Patch> storePatchesList = [StorePatches.items("https://group-4-15.pvt.dsv.su.se/api/patch/user/{googleId}")]
+    //StorePatches.items({required this.imageName, required this.itemImage});
     }
 
-    List<StorePatches> storePatchesList = [
+Future<List<PatchModel>> fetchUserPatches(String googleId) async {
+  final response = await http.get(Uri.parse("https://group-4-15.pvt.dsv.su.se/api/patch/user/$googleId"));
+
+  if (response.statusCode == 200) {
+    List jsonList = jsonDecode(response.body);
+    return jsonList.map((json) => PatchModel.fromJson(json)).toList();
+  } else {
+    throw Exception("Failed to load patches");
+  }
+}
+   /* List<StorePatches> storePatchesList = [
+      StorePatches.items()
+    ]; */
+
+   /*List<StorePatches> storePatchesList = [
       StorePatches.items(
       //entry nr 1
       itemImage: "https://www.agria.se/imagevault/publishedmedia/3yeuof282l7xb635mg4w/hund-som-ater-skonkost-iStock.jpg",
@@ -31,4 +53,4 @@
         //entry nr 1
           itemImage: "https://www.agria.se/imagevault/publishedmedia/b67oc7wqzuob2nddkpfe/ragdoll-and-norweigan-forest-cat.jpg",
           imageName: "patch1"),
-  ];
+  ]; */
