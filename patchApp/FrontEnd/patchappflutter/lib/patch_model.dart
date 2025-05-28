@@ -38,16 +38,16 @@ class PatchModel {
     );
   }
 
-  Map<String, dynamic> toJson() => {
-    'patchId': patchid,
-    'description': description,
-    'ownerGoogleId': ownerGoogleId,
-    'pictureData': pictureData,
-    'isPublic': isPublic,
-    'placement': placement,
-    'klubbmasteri': klubbmasteri,
-    'patchName': patchName,
-    'color': color,
-  };
-
-
+  Map<String, dynamic> toJson() =>
+      {
+        'patchId': patchid,
+        'description': description,
+        'ownerGoogleId': ownerGoogleId,
+        'pictureData': pictureData,
+        'isPublic': isPublic,
+        'placement': placement,
+        'klubbmasteri': klubbmasteri,
+        'patchName': patchName,
+        'color': color,
+      };
+}

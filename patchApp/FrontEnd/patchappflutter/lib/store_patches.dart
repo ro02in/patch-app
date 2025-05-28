@@ -2,21 +2,21 @@
 
 //test igen 00:52
 
-  import 'dart:convert';
+import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:patchappflutter/patch_model.dart';
 
 class StorePatches{
 
-    //String imageName;
-    //String itemImage;
-    //List<StorePatches> storePatchesList;
+  //String imageName;
+  //String itemImage;
+  //List<StorePatches> storePatchesList;
 
 
-   // List<Patch> storePatchesList = [StorePatches.items("https://group-4-15.pvt.dsv.su.se/api/patch/user/{googleId}")]
-    //StorePatches.items({required this.imageName, required this.itemImage});
-    }
+  // List<Patch> storePatchesList = [StorePatches.items("https://group-4-15.pvt.dsv.su.se/api/patch/user/{googleId}")]
+  //StorePatches.items({required this.imageName, required this.itemImage});
+}
 
 Future<List<PatchModel>> fetchUserPatches(String googleId) async {
   final response = await http.get(Uri.parse("https://group-4-15.pvt.dsv.su.se/api/patch/user/$googleId"));
@@ -28,11 +28,11 @@ Future<List<PatchModel>> fetchUserPatches(String googleId) async {
     throw Exception("Failed to load patches");
   }
 }
-   /* List<StorePatches> storePatchesList = [
+/* List<StorePatches> storePatchesList = [
       StorePatches.items()
     ]; */
 
-   /*List<StorePatches> storePatchesList = [
+/*List<StorePatches> storePatchesList = [
       StorePatches.items(
       //entry nr 1
       itemImage: "https://www.agria.se/imagevault/publishedmedia/3yeuof282l7xb635mg4w/hund-som-ater-skonkost-iStock.jpg",

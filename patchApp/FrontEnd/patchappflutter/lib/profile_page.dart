@@ -579,7 +579,7 @@ Widget build(BuildContext context) {
                   shrinkWrap: true, //gör visible
                   padding: EdgeInsets.all(20),
                   primary: true,
-                  itemCount: storePatchesList.length,
+                  itemCount: fetchUserPatches.length,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2),
                   itemBuilder: (BuildContext context, int index) { //context was profilePage
@@ -601,7 +601,7 @@ Widget build(BuildContext context) {
                         child: CircleAvatar(
                           radius: 20,
                           //backgroundColor: Colors.white,
-                          foregroundImage: NetworkImage(storePatchesList[index].itemImage),
+                          foregroundImage: NetworkImage(fetchUserPatches.toString()),
                           //foregroundImage: Image.network(src),
                           // foregroundImage: _patchImage != null ? FileImage(_patchImage!) : null),
                         ),
