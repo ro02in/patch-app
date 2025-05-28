@@ -1,18 +1,14 @@
 package com.pvt154.patchApp.controller;
 
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
-import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.client.json.jackson2.JacksonFactory;
-import com.pvt154.patchApp.model.User;
-import com.pvt154.patchApp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
+import com.pvt154.patchApp.repository.UserRepository;
+import com.pvt154.patchApp.model.User;
+import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.client.http.javanet.NetHttpTransport;
 import java.util.Collections;
 import java.util.Optional;
 
@@ -28,14 +24,8 @@ public class AuthController {
 
     public static class TokenRequest {
         private String idToken;
-
-        public String getIdToken() {
-            return idToken;
-        }
-
-        public void setIdToken(String idToken) {
-            this.idToken = idToken;
-        }
+        public String getIdToken() { return idToken; }
+        public void setIdToken(String idToken) { this.idToken = idToken; }
     }
 
     public static class AuthResponse {
