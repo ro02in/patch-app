@@ -1,5 +1,8 @@
 //27 maj ändringar
 
+
+//test igen 00:52
+
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -8,6 +11,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:patchappflutter/add_patch_page.dart';
 import 'package:patchappflutter/bottomNavigationBar.dart';
 import 'package:patchappflutter/faq_page.dart';
+import 'package:patchappflutter/store_patches.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -53,7 +57,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
  //ej klar
   File ? _selectedImage;
-  List<String> patchImages = ['', '']; //BACKEND lista med användarens alla patches
+  //List<String> patchImages = ['', '']; //BACKEND lista med användarens alla patches
   List<String> overaller = ['assets/beige.PNG', 'assets/blue2.PNG', 'assets/brightpink.PNG', 'assets/brightred.PNG', 'assets/bubblegumpink.PNG', 'assets/darkblue.PNG', 'assets/darkgreen.PNG', 'assets/darkorange.PNG', 'assets/darkpurple.PNG', 'assets/darkred.PNG', 'assets/forestgreen.PNG', 'assets/grey.PNG',
     'assets/greyblue.PNG', 'assets/lavendel.PNG', 'assets/lightblue.PNG', 'assets/lighterpurple.PNG',
     'assets/lightgreen.PNG', 'assets/lightgrey.PNG', 'assets/lightpink.PNG', 'assets/limegreen.PNG', 'assets/orange.PNG', 'assets/purple.PNG', 'assets/rose.PNG', 'assets/royalblue.PNG', 'assets/sunorange.PNG', 'assets/washedpurple.PNG', 'assets/white.PNG', 'assets/yellow.PNG', 'assets/greybox_error_fix.PNG']; //24 Maj error fixade att man kan välja gul overall
@@ -562,22 +566,64 @@ Widget build(BuildContext context) {
                 ],
               ),
 
-              SizedBox(height: 50),
-              SizedBox(height: 320),
+             // SizedBox(height: 50),
+             // SizedBox(height: 320),
 
-              Text("hejhejhejhej", style: TextStyle(color: Colors.white, fontSize: 30, fontFamily: 'InknutAntiqua')),
+             // Text("hejhejhejhej", style: TextStyle(color: Colors.white, fontSize: 30, fontFamily: 'InknutAntiqua')),
+
+              SizedBox(height: 20),
+
+              //Källhänvisning: 'GridView in flutter with network image', //youtu.be/dx3gj5hz6HU?si=wjKTv8aTdT_EFeDV, av Youtube-kanalen 'Lets Code That', publicerad 7 januari 2019, hämtad 27 maj 2025.
+                GridView.builder(
+                  physics: ClampingScrollPhysics(), //löste problemet med att GridView fastnade vid scrolling
+                  shrinkWrap: true, //gör visible
+                  padding: EdgeInsets.all(20),
+                  primary: true,
+                  itemCount: fetchUserPatches.length,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2),
+                  itemBuilder: (BuildContext context, int index) { //context was profilePage
+                    return Padding(
+                      padding: const EdgeInsets.all(15),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100),
+                          border: Border.all(color: Color.fromARGB(255, 40, 40, 40), width: 1),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black,
+                              spreadRadius: 3,
+                              blurRadius: 15,
+                              offset: Offset(0, 2)
+                            )
+                          ]
+                        ),
+                        child: CircleAvatar(
+                          radius: 20,
+                          //backgroundColor: Colors.white,
+                          foregroundImage: NetworkImage(fetchUserPatches.toString()),
+                          //foregroundImage: Image.network(src),
+                          // foregroundImage: _patchImage != null ? FileImage(_patchImage!) : null),
+                        ),
+                      ),
+                    );
+                  },
+                ),
 
 
-          /*   Expanded(
-                 child:
+
+           /*   Expanded(
+                child:
                  GridView.builder(
-                   itemCount: patchImages.length,
+                   itemCount: 10,
                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3),
-                      itemBuilder: (BuildContext ProfilePage, int index) {
+                      crossAxisCount: 2),
+                      itemBuilder: (BuildContext context, int index) { //context was profilePage
                       return CircleAvatar(
-                        backgroundColor: Colors.white,
-                         foregroundImage: Image.network(src),
+                        radius: 40,
+                        //backgroundColor: Colors.white,
+                        foregroundImage: NetworkImage("https://www.agria.se/imagevault/publishedmedia/b67oc7wqzuob2nddkpfe/ragdoll-and-norweigan-forest-cat.jpg"),
+                         //foregroundImage: Image.network(src),
                          // foregroundImage: _patchImage != null ? FileImage(_patchImage!) : null),
                       );
                    },
