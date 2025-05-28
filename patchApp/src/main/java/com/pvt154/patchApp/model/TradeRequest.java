@@ -24,19 +24,20 @@ public class TradeRequest {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-    @ManyToOne
-    @JoinColumn(name = "patch_offered_id")
-    private Patch patchOffered;
 
-    @ManyToOne
-    @JoinColumn(name = "patch_requested_id")
-    private Patch patchRequested;
+    @Column(name = "patch_offered_id")
+    private Long patchOffered;
 
-    @ManyToOne
-    @JoinColumn(name = "sender_id")
-    private User sender;
 
-    @ManyToOne
-    @JoinColumn(name = "receiver_id")
-    private User receiver;
+    @Column(name = "patch_requested_id")
+    private Long patchRequested;
+
+
+    @Column(name = "sender_id")
+    private String sender;
+
+
+    @Column(name = "receiver_id")
+    private String receiver;
+
 }
