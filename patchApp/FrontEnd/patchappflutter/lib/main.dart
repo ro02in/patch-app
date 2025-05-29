@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
 class LogInPage extends StatelessWidget {
   @override
   Future<void> registerUser(String idToken) async {
-      final url = Uri.parse('https://group-4-15.pvt.dsv.su.se/api/auth/register'); // Replace with your backend URL
+      final url = Uri.parse('https://group-4-15.pvt.dsv.su.se/api/auth/register'); 
       final response = await http.post(
         url,
         headers: {'Content-Type': 'application/json'},
@@ -132,7 +132,50 @@ class LogInPage extends StatelessWidget {
                                 overlayColor:
                                 Color.fromARGB(255, 255, 255, 255),
                               ),
-                              onPressed: () {},
+                              onPressed: () async {
+  final GoogleSignIn _googleSignIn = GoogleSignIn(
+    clientId: 'YOUR_CLIENT_ID',
+  );
+
+  try {
+    final GoogleSignInAccount? account = await _googleSignIn.signIn();
+    if (account != null) {
+      final GoogleSignInAuthentication auth = await account.authentication;
+      final idToken = auth.idToken;
+
+      if (idToken != null) {
+        final response = await http.post(
+          Uri.parse('https://group-4-15.pvt.dsv.su.se/api/auth/login'),
+          headers: {'Content-Type': 'application/json'},
+          body: jsonEncode({'idToken': idToken}),
+        );
+
+        final responseData = jsonDecode(response.body);
+        if (responseData['status'] == 'success') {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => TempButtonsPage()), // or your main page
+          );
+        } else if (responseData['status'] == 'not_found') {
+          // Redirect user to register flow
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => ContinueRegisterPage()),
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(responseData['message'] ?? 'Login failed')),
+          );
+        }
+      }
+    }
+  } catch (error) {
+    print('Login error: $error');
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Login failed: $error')),
+    );
+  }
+},
                               label: Text(
                                 "LOG IN",
                                 style: TextStyle(
@@ -172,7 +215,7 @@ class LogInPage extends StatelessWidget {
                               ),
                               onPressed: () async {
                                 final GoogleSignIn _googleSignIn = GoogleSignIn(
-                                  clientId: '627806627643-q8p6dujvu63ertrl3mi143f5j17a7cep.apps.googleusercontent.com', // <- from Google Cloud Console
+                                  clientId: '627806627643-dm5alpgkrqa3jdhml17v06m5p0s35p7v.apps.googleusercontent.com', // <- from Google Cloud Console
                                 );
 
                                 try {
