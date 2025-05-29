@@ -13,6 +13,11 @@ import 'package:patchappflutter/bottomNavigationBar.dart';
 import 'package:patchappflutter/faq_page.dart';
 import 'package:patchappflutter/store_patches.dart';
 
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:patchappflutter/patch_model.dart';
+import 'dart:io';
+
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
 
@@ -34,6 +39,47 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   String biography = '';
+
+  //28 maj KOPPLA FRONTEND OCH BACKEND
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  //Källhänvisning: Handledning med Donald via mail, 28 maj "Is it possible to get some supervision online regarding getting images from a google user to the GridView builder?"
+  Future<void> fetchImageList(String userId) async {
+    //Källhänvisning: //github.com/flutter/flutter/issues/55848
+    /* http.Response response = await http.post(
+      context: StorePatches,
+      url: 'pvt.dsv.su.se/badgelist/$userId',
+      method: 'GET',
+    ),
+  ); */
+    final response = await authHttpRequest(
+      context: StorePatches,
+      url: 'group-4-15.pvt.dsv.su.se/api/patch/user/',
+      method: 'GET',
+    );
+    if (response.statusCode == 200) {
+      final List<dynamic> data = jsonDecode(response.body);
+      setState(() {
+        List<Map>imageGridList =
+        data
+            .map<Map<String, dynamic>>((url) =>
+        {
+          'group-4-15.pvt.dsv.su.se/api/patch/user/': url.toString()
+        })
+            .toList();
+      });
+    } else {
+      print("Some error happened, bad userid maybe");
+    }
+  }
+
+  authHttpRequest(
+      {required Type context, required String url, required String method}) {
+    //Skapad, autogenererad, utifrån röd-lampa knapp i IntelliJ, denna metod ville flutter ha annars rött meddelande vid authHttpRequest
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
   //JSON call to backend,
   //get user profile with all details
@@ -558,6 +604,7 @@ Widget build(BuildContext context) {
 
               SizedBox(height: 35), //padding
 
+
               Row(
                 children: [
                   SizedBox(width: 30),
@@ -571,13 +618,15 @@ Widget build(BuildContext context) {
 
               SizedBox(height: 20),
 
+              /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
               //Källhänvisning: 'GridView in flutter with network image', //youtu.be/dx3gj5hz6HU?si=wjKTv8aTdT_EFeDV, av Youtube-kanalen 'Lets Code That', publicerad 7 januari 2019, hämtad 27 maj 2025.
                 GridView.builder(
                   physics: ClampingScrollPhysics(), //löste problemet med att GridView fastnade vid scrolling
                   shrinkWrap: true, //gör visible
                   padding: EdgeInsets.all(20),
                   primary: true,
-                  itemCount: fetchUserPatches.length,
+                  itemCount: imageGridList.length,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2),
                   itemBuilder: (BuildContext context, int index) { //context was profilePage
@@ -609,25 +658,7 @@ Widget build(BuildContext context) {
                   },
                 ),
 
-
-
-           /*   Expanded(
-                child:
-                 GridView.builder(
-                   itemCount: 10,
-                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2),
-                      itemBuilder: (BuildContext context, int index) { //context was profilePage
-                      return CircleAvatar(
-                        radius: 40,
-                        //backgroundColor: Colors.white,
-                        foregroundImage: NetworkImage("https://www.agria.se/imagevault/publishedmedia/b67oc7wqzuob2nddkpfe/ragdoll-and-norweigan-forest-cat.jpg"),
-                         //foregroundImage: Image.network(src),
-                         // foregroundImage: _patchImage != null ? FileImage(_patchImage!) : null),
-                      );
-                   },
-                 ),
-              ), */
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
               ], //CHILDREN MAIN COLUMN
             ),
           ],
