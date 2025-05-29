@@ -1,5 +1,5 @@
 package com.pvt154.patchApp.controller;
-
+/*
 import com.pvt154.patchApp.model.User;
 import com.pvt154.patchApp.service.UserService;
 import com.pvt154.patchApp.service.JwtService;
@@ -140,4 +140,4 @@ public class AuthController {
                 "token", jwt
         ));
     }
-}
+}*/
