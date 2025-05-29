@@ -15,9 +15,30 @@ class StorePatches{
 
 
   // List<Patch> storePatchesList = [StorePatches.items("https://group-4-15.pvt.dsv.su.se/api/patch/user/{googleId}")]
+  List<Patch> storePatchesList = [StorePatches.items("https://group-4-15.pvt.dsv.su.se/api/patch/user/{googleId}")]
   //StorePatches.items({required this.imageName, required this.itemImage});
 }
 
+//Källhänvisning: Handledning med Donald via mail, 28 maj
+Future<void> fetchImageList(String userId) async {
+  final response = await authHttpRequest(
+    context: context,
+    url: 'pvt.dsv.su.se/badgelist/$userId',
+    method: 'GET',
+  );
+  if (response.statusCode == 200) {
+    final List<dynamic> data = jsonDecode(response.body);
+    setState(() {
+      storePatchesList = data.map<Map<String, dynamic>>((url) => {'url': url.toString()}).toList();
+    });
+  } else {
+    print(“Some error happened, bad userid maybe");
+        );
+      }
+    }
+
+
+/*
 Future<List<PatchModel>> fetchUserPatches(String googleId) async {
   final response = await http.get(Uri.parse("https://group-4-15.pvt.dsv.su.se/api/patch/user/$googleId"));
 
@@ -27,7 +48,8 @@ Future<List<PatchModel>> fetchUserPatches(String googleId) async {
   } else {
     throw Exception("Failed to load patches");
   }
-}
+} */
+
 /* List<StorePatches> storePatchesList = [
       StorePatches.items()
     ]; */

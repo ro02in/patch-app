@@ -569,8 +569,6 @@ Widget build(BuildContext context) {
              // SizedBox(height: 50),
              // SizedBox(height: 320),
 
-             // Text("hejhejhejhej", style: TextStyle(color: Colors.white, fontSize: 30, fontFamily: 'InknutAntiqua')),
-
               SizedBox(height: 20),
 
               //Källhänvisning: 'GridView in flutter with network image', //youtu.be/dx3gj5hz6HU?si=wjKTv8aTdT_EFeDV, av Youtube-kanalen 'Lets Code That', publicerad 7 januari 2019, hämtad 27 maj 2025.
@@ -601,7 +599,8 @@ Widget build(BuildContext context) {
                         child: CircleAvatar(
                           radius: 20,
                           //backgroundColor: Colors.white,
-                          foregroundImage: NetworkImage(fetchUserPatches.toString()),
+                          foregroundImage: NetworkImage(storePatchesList[index.url]), //Handledning med Donald via mail 28 maj
+                          //foregroundImage: NetworkImage(fetchUserPatches.toString()),
                           //foregroundImage: Image.network(src),
                           // foregroundImage: _patchImage != null ? FileImage(_patchImage!) : null),
                         ),
