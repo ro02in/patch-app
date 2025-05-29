@@ -2,7 +2,7 @@
 //24 maj ändringar
 
 import 'package:flutter/material.dart';
-import 'package:patchappflutter/trade_log_page.dart';
+import 'package:patchappflutter/Pages/trade_log_page.dart';
 
 //25 maj
 

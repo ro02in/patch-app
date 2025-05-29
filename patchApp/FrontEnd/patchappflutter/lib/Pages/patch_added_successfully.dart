@@ -12,9 +12,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:patchappflutter/add_patch_page.dart';
-import 'package:patchappflutter/profile_page.dart';
-import 'package:patchappflutter/trade_request_success_page.dart';
+import 'package:patchappflutter/Pages/add_patch_page.dart';
+import 'package:patchappflutter/Pages/profile_page.dart';
+import 'package:patchappflutter/Pages/trade_request_success_page.dart';
 //25 maj
 
 class PatchAddedSuccessfully extends StatefulWidget {

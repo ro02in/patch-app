@@ -8,16 +8,16 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:patchappflutter/add_patch_page.dart';
-import 'package:patchappflutter/bottomNavigationBar.dart';
-import 'package:patchappflutter/faq_page.dart';
+import 'package:patchappflutter/Pages/add_patch_page.dart';
+import 'package:patchappflutter/Pages/bottomNavigationBar.dart';
+import 'package:patchappflutter/Pages/faq_page.dart';
 import 'package:patchappflutter/global_user_info.dart';
-import 'package:patchappflutter/store_patches.dart';
-import 'package:patchappflutter/patch_model.dart';
+import 'package:patchappflutter/Pages/store_patches.dart';
+import 'package:patchappflutter/Model/patch_model.dart';
 
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:patchappflutter/patch_model.dart';
+import 'package:patchappflutter/Model/patch_model.dart';
 import 'dart:io';
 
 class ProfilePage extends StatefulWidget {
@@ -42,7 +42,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   String biography = '';
   String googleId = GlobalUserInfo.googleId;
-  String getUrl = "group-4-15.pvt.dsv.su.se/api/patch/user/" + GlobalUserInfo.googleId; //Källhänvisning: DISK handledning 29 maj kl 15
+  String getUrl = 'https://group-4-15.pvt.dsv.su.se/api/patch/user/' + GlobalUserInfo.googleId; //Källhänvisning: DISK handledning 29 maj kl 15
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

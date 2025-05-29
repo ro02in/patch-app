@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:patchappflutter/bottomNavigationBar.dart';
+import 'package:patchappflutter/Pages/bottomNavigationBar.dart';
 
 // ===== USER MODELL =====
 class User {
@@ -143,7 +143,7 @@ class _SearchPageState extends State<SearchPage> {
                   );
                 },
               ),
-            ),
+            ), //Expanded
           ],
         ),
       ),

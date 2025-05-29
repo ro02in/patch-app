@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:patchappflutter/add_patch_page.dart';
-import 'package:patchappflutter/continue_register_page.dart';
-import 'package:patchappflutter/register_page.dart';
-import 'package:patchappflutter/temp_buttons_page.dart';
+import 'package:patchappflutter/Pages/add_patch_page.dart';
+import 'package:patchappflutter/Pages/continue_register_page.dart';
+import 'package:patchappflutter/Pages/register_page.dart';
+import 'package:patchappflutter/Pages/temp_buttons_page.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
