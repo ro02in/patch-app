@@ -2,10 +2,10 @@ import 'dart:ffi';
 import 'dart:typed_data'; //stackoverflow.com/questions/49016508/what-is-the-dart-equivalent-of-java-byte
 
 class PatchModel {
-  final Long patchid;
+  final Long patchId;
   final String description;
   final String ownerGoogleId;
-  final Uint8List? pictureData;
+  final Uint8List pictureData;
   final bool isPublic;
   final String placement;
   final String klubbmasteri;
@@ -13,7 +13,7 @@ class PatchModel {
   final String color;
 
   PatchModel({
-    required this.patchid,
+    required this.patchId,
     required this.description,
     required this.ownerGoogleId,
     required this.pictureData,
@@ -26,10 +26,10 @@ class PatchModel {
 
   factory PatchModel.fromJson(Map<String, dynamic> json) {
     return PatchModel(
-      patchid: json['patchId'],
+      patchId: json['patchId'],
       ownerGoogleId: json['ownerGoogleId'],
       description: json['description'] ?? '',
-      pictureData: json['pictureData'] ?? '',
+      pictureData: Uint8List.fromList(List<int>.from(json['pictureData'])),
       isPublic: json['isPublic'] ?? '',
       placement: json['placement'] ?? '',
       klubbmasteri: json['klubbmasteri'] ?? '',
@@ -40,7 +40,7 @@ class PatchModel {
 
   Map<String, dynamic> toJson() =>
       {
-        'patchId': patchid,
+        'patchId': patchId,
         'description': description,
         'ownerGoogleId': ownerGoogleId,
         'pictureData': pictureData,

@@ -705,7 +705,8 @@ class _PatchViewPageState extends State<PatchViewPage> {
                   shape: const CircleBorder(),
                   hoverColor: Color.fromARGB(255, 139, 166, 255),
                   child: Icon(Icons.delete_outline_rounded, size: 30, color: Colors.white),
-                  onPressed: () {}
+                  onPressed: () {
+                  }
               ) //Soptunna-knapp action
             ],),
             SizedBox(height: 40),
