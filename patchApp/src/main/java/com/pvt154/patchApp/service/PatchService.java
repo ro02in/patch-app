@@ -27,6 +27,7 @@ public class PatchService {
         return patchRepository.findByOwnerGoogleId(googleId);
     }
 
+
     public byte[] getPatchImage(Long id) {
         Patch patch = getPatchById(id);
         return patch.getPictureData();
