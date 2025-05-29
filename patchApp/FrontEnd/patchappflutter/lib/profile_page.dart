@@ -11,7 +11,9 @@ import 'package:image_picker/image_picker.dart';
 import 'package:patchappflutter/add_patch_page.dart';
 import 'package:patchappflutter/bottomNavigationBar.dart';
 import 'package:patchappflutter/faq_page.dart';
+import 'package:patchappflutter/global_user_info.dart';
 import 'package:patchappflutter/store_patches.dart';
+import 'package:patchappflutter/patch_model.dart';
 
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -29,7 +31,7 @@ class _ProfilePageState extends State<ProfilePage> {
   int currentIndex = 3; //get this info from server
   double _itemExtent = 250;
   final CarouselController _controller = CarouselController();
-
+  List<Uint8List?> patchImageList = [];
   final TextEditingController biographyFieldController = TextEditingController();
 
   @override
@@ -39,34 +41,40 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   String biography = '';
+  String googleId = GlobalUserInfo.googleId;
+  String getUrl = "group-4-15.pvt.dsv.su.se/api/patch/user/" + GlobalUserInfo.googleId; //Källhänvisning: DISK handledning 29 maj kl 15
 
-  //28 maj KOPPLA FRONTEND OCH BACKEND
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   //Källhänvisning: Handledning med Donald via mail, 28 maj "Is it possible to get some supervision online regarding getting images from a google user to the GridView builder?"
+
+  //28 maj KOPPLA FRONTEND OCH BACKEND
+  //JSON call to backend,
+  //get user profile with all details
+  //BACKEND get variable of users overall-color
+
+  void initState() { //Kodrad lösning för att hämta första entry i list: källhänvisning: 'The instance member 'widget' can't be accessed in an initializer. Try replacing the reference to the instance member with a different expression', stackoverflow.com/questions/67501594/the-instance-member-widget-cant-be-accessed-in-an-initializer-try-replacing, av user 'MobIT', publicerad 12 maj 2021, hämtad 21 maj 2025
+    super.initState();
+    _controller.addListener(_updateCurrentIndex); //Källhänvisning _updateCurrentIndex(): Handledning med Donald 22 maj kl 15:00.
+    fetchImageList(GlobalUserInfo.googleId); //Källhänvisning: Hanledning DISK 29 maj kl 15
+  }
+
+  //Källhänvisning: Handledning med Donald via mail 28 maj.
   Future<void> fetchImageList(String userId) async {
-    //Källhänvisning: //github.com/flutter/flutter/issues/55848
-    /* http.Response response = await http.post(
-      context: StorePatches,
-      url: 'pvt.dsv.su.se/badgelist/$userId',
-      method: 'GET',
-    ),
-  ); */
-   /* final response = await authHttpRequest(
-      context: StorePatches,
-      url: 'group-4-15.pvt.dsv.su.se/api/patch/user/',
+    final response = await authHttpRequest(
+      context: ProfilePage,
+      url: getUrl,
       method: 'GET',
     );
     if (response.statusCode == 200) {
-      final List<dynamic> data = jsonDecode(response.body);
+      //final List<Map<String, dynamic>> data = jsonDecode(response.body);
       setState(() {
-        List<Map>imageGridList =
-        data
-            .map<Map<String, dynamic>>((url) =>
-        {
-          'group-4-15.pvt.dsv.su.se/api/patch/user/': url.toString()
-        })
-            .toList();
+      //Källhänvisning: DISK handledning 29 maj kl 15
+      final List<dynamic> json = jsonDecode(response.body);
+      List<Uint8List?> patchImageList = [];
+      for (Map<String, dynamic> jsonPatchObject in json) {
+        patchImageList.add(PatchModel.fromJson(jsonPatchObject).pictureData);
+      }
       });
     } else {
       print("Some error happened, bad userid maybe");
@@ -76,15 +84,10 @@ class _ProfilePageState extends State<ProfilePage> {
   authHttpRequest(
       {required Type context, required String url, required String method}) {
     //Skapad, autogenererad, utifrån röd-lampa knapp i IntelliJ, denna metod ville flutter ha annars rött meddelande vid authHttpRequest
-  }*/
+  }
+
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-  //JSON call to backend,
-  //get user profile with all details
-
-  //BACKEND get variable of users overall-color
 
   //put inside array
 
@@ -100,19 +103,14 @@ class _ProfilePageState extends State<ProfilePage> {
       }
     }
   }
-
- //ej klar
   File ? _selectedImage;
-  //List<String> patchImages = ['', '']; //BACKEND lista med användarens alla patches
   List<String> overaller = ['assets/beige.PNG', 'assets/blue2.PNG', 'assets/brightpink.PNG', 'assets/brightred.PNG', 'assets/bubblegumpink.PNG', 'assets/darkblue.PNG', 'assets/darkgreen.PNG', 'assets/darkorange.PNG', 'assets/darkpurple.PNG', 'assets/darkred.PNG', 'assets/forestgreen.PNG', 'assets/grey.PNG',
     'assets/greyblue.PNG', 'assets/lavendel.PNG', 'assets/lightblue.PNG', 'assets/lighterpurple.PNG',
+
     'assets/lightgreen.PNG', 'assets/lightgrey.PNG', 'assets/lightpink.PNG', 'assets/limegreen.PNG', 'assets/orange.PNG', 'assets/purple.PNG', 'assets/rose.PNG', 'assets/royalblue.PNG', 'assets/sunorange.PNG', 'assets/washedpurple.PNG', 'assets/white.PNG', 'assets/yellow.PNG', 'assets/greybox_error_fix.PNG']; //24 Maj error fixade att man kan välja gul overall
 
 
-  void initState() { //Kodrad lösning för att hämta första entry i list: källhänvisning: 'The instance member 'widget' can't be accessed in an initializer. Try replacing the reference to the instance member with a different expression', stackoverflow.com/questions/67501594/the-instance-member-widget-cant-be-accessed-in-an-initializer-try-replacing, av user 'MobIT', publicerad 12 maj 2021, hämtad 21 maj 2025
-    super.initState();
-    _controller.addListener(_updateCurrentIndex); //Källhänvisning _updateCurrentIndex(): Handledning med Donald 22 maj kl 15:00.
-  }
+  //get imageGridList => fetchImageList.
 
 @override
 Widget build(BuildContext context) {
@@ -308,7 +306,7 @@ Widget build(BuildContext context) {
                     child: FloatingActionButton(
                         shape: const CircleBorder(),
                         onPressed: () {
-                         // _pickImageFromCamera();
+                          _pickImageFromCamera();
                         },
                         child: Icon(Icons.add_a_photo_sharp, color: Colors.black, size: 20)),
                   ),
@@ -372,7 +370,7 @@ Widget build(BuildContext context) {
                       child: FloatingActionButton(
                         shape: const CircleBorder(),
                       onPressed: () {
-                         // _pickImageFromGallery();
+                          _pickImageFromGallery();
                       },
                       child: Icon(Icons.add_photo_alternate_sharp, color: Colors.black, size: 20)),
                     ),
@@ -626,35 +624,41 @@ Widget build(BuildContext context) {
                   shrinkWrap: true, //gör visible
                   padding: EdgeInsets.all(20),
                   primary: true,
-                  //itemCount: imageGridList.length,
+                  itemCount: patchImageList.length,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2),
                   itemBuilder: (BuildContext context, int index) { //context was profilePage
-                    return Padding(
-                      padding: const EdgeInsets.all(15),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(100),
-                          border: Border.all(color: Color.fromARGB(255, 40, 40, 40), width: 1),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black,
-                              spreadRadius: 3,
-                              blurRadius: 15,
-                              offset: Offset(0, 2)
-                            )
-                          ]
+                    if (patchImageList.isNotEmpty){
+                      return Padding(
+                        padding: const EdgeInsets.all(15),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(100),
+                            border: Border.all(color: Color.fromARGB(255, 40, 40, 40), width: 1),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black,
+                                spreadRadius: 3,
+                                blurRadius: 15,
+                                offset: Offset(0, 2)
+                              )
+                            ]
+                          ),
+                          child: CircleAvatar(
+                            radius: 20,
+                            //backgroundColor: Colors.white,
+                            foregroundImage: MemoryImage(patchImageList[index]!), //Handledning med Donald via mail 28 maj, DISK handledning 29 maj kl 15
+                            //foregroundImage: NetworkImage(fetchUserPatches.toString()),
+                            //foregroundImage: Image.network(src),
+                            // foregroundImage: _patchImage != null ? FileImage(_patchImage!) : null),
+                          ),
                         ),
-                        child: CircleAvatar(
-                          radius: 20,
-                          //backgroundColor: Colors.white,
-                          //foregroundImage: NetworkImage(storePatchesList[index.url]), //Handledning med Donald via mail 28 maj
-                          //foregroundImage: NetworkImage(fetchUserPatches.toString()),
-                          //foregroundImage: Image.network(src),
-                          // foregroundImage: _patchImage != null ? FileImage(_patchImage!) : null),
-                        ),
-                      ),
-                    );
+                      );
+                    } else {
+                      return Text(
+                        "Failed!", style: TextStyle(color: Colors.red, fontSize: 30),
+                      );
+                    }
                   },
                 ),
 
@@ -667,31 +671,23 @@ Widget build(BuildContext context) {
     );
   }
 
-//Kamera-galleri eller kamera
-Future _pickImageFromGallery() async {
-  final returnedImage = await ImagePicker().pickImage(source: ImageSource.gallery);
+  //Kamera-galleri eller kamera
+  Future _pickImageFromGallery() async {
+    final returnedImage = await ImagePicker().pickImage(source: ImageSource.gallery);
 
-  if(returnedImage == null) return;
-  setState(() {
-    _selectedImage = File(returnedImage!.path);
-  }
+    if(returnedImage == null) return;
+    setState(() {
+      _selectedImage = File(returnedImage!.path);
+    }
   );
 }
 
-Future _pickImageFromCamera() async {
-  final returnedImage = await ImagePicker().pickImage(source: ImageSource.camera);
+  Future _pickImageFromCamera() async {
+    final returnedImage = await ImagePicker().pickImage(source: ImageSource.camera);
 
-  if(returnedImage == null) return;
-  setState(() {
-    _selectedImage = File(returnedImage!.path);
-  });
-}
-
-}
-
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
+    if(returnedImage == null) return;
+    setState(() {
+      _selectedImage = File(returnedImage!.path);
+    });
   }
-}
+} //Class ProfilePage
