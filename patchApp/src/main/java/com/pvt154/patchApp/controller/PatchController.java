@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Base64;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/patch")
@@ -65,6 +67,16 @@ public class PatchController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/images/belongs/{googleId}")
+    public ResponseEntity<List<String>> getPatchesImagesByOwner(@PathVariable String googleId) {
+        List<Patch> patches = patchService.getPatchesByUser(googleId);  // Metod som returnerar lista av Patch för ägaren
+
+        List<String> base64Images = patches.stream()
+                .map(patch -> Base64.getEncoder().encodeToString(patch.getPictureData()))
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(base64Images);
+    }
 
     @GetMapping("/hello")
     public ResponseEntity<String> hello() {
