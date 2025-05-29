@@ -1,7 +1,9 @@
 package com.pvt154.patchApp.service;
 
 import com.pvt154.patchApp.model.User;
-import io.jsonwebtoken.*;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -24,7 +26,7 @@ public class JwtService {
 
     public String generateToken(User user) {
         return Jwts.builder()
-                .setSubject(user.getId()) // assuming getId() returns googleId
+                .setSubject(user.getGoogleId()) // assuming getId() returns googleId
                 .claim("email", user.getEmailAddress())
                 .claim("firstName", user.getFirstName())
                 .claim("lastName", user.getSurName())
