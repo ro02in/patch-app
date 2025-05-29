@@ -52,7 +52,7 @@ class _ProfilePageState extends State<ProfilePage> {
       method: 'GET',
     ),
   ); */
-    final response = await authHttpRequest(
+   /* final response = await authHttpRequest(
       context: StorePatches,
       url: 'group-4-15.pvt.dsv.su.se/api/patch/user/',
       method: 'GET',
@@ -76,7 +76,7 @@ class _ProfilePageState extends State<ProfilePage> {
   authHttpRequest(
       {required Type context, required String url, required String method}) {
     //Skapad, autogenererad, utifrån röd-lampa knapp i IntelliJ, denna metod ville flutter ha annars rött meddelande vid authHttpRequest
-  }
+  }*/
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -308,7 +308,7 @@ Widget build(BuildContext context) {
                     child: FloatingActionButton(
                         shape: const CircleBorder(),
                         onPressed: () {
-                          _pickImageFromCamera();
+                         // _pickImageFromCamera();
                         },
                         child: Icon(Icons.add_a_photo_sharp, color: Colors.black, size: 20)),
                   ),
@@ -372,7 +372,7 @@ Widget build(BuildContext context) {
                       child: FloatingActionButton(
                         shape: const CircleBorder(),
                       onPressed: () {
-                          _pickImageFromGallery();
+                         // _pickImageFromGallery();
                       },
                       child: Icon(Icons.add_photo_alternate_sharp, color: Colors.black, size: 20)),
                     ),
@@ -626,7 +626,7 @@ Widget build(BuildContext context) {
                   shrinkWrap: true, //gör visible
                   padding: EdgeInsets.all(20),
                   primary: true,
-                  itemCount: imageGridList.length,
+                  //itemCount: imageGridList.length,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2),
                   itemBuilder: (BuildContext context, int index) { //context was profilePage
@@ -648,7 +648,7 @@ Widget build(BuildContext context) {
                         child: CircleAvatar(
                           radius: 20,
                           //backgroundColor: Colors.white,
-                          foregroundImage: NetworkImage(storePatchesList[index.url]), //Handledning med Donald via mail 28 maj
+                          //foregroundImage: NetworkImage(storePatchesList[index.url]), //Handledning med Donald via mail 28 maj
                           //foregroundImage: NetworkImage(fetchUserPatches.toString()),
                           //foregroundImage: Image.network(src),
                           // foregroundImage: _patchImage != null ? FileImage(_patchImage!) : null),
@@ -686,4 +686,12 @@ Future _pickImageFromCamera() async {
     _selectedImage = File(returnedImage!.path);
   });
 }
-} //Class ProfilePage
+
+}
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    throw UnimplementedError();
+  }
+}
