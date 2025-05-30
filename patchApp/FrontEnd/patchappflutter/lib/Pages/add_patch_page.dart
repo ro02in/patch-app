@@ -1,5 +1,6 @@
 //24 maj ändringar
 
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -14,7 +15,6 @@ import 'package:patchappflutter/Provider/user_provider.dart';
 import 'package:provider/provider.dart';
 import '../Provider/patch_provider.dart'; // Adjust path as needed
 import '../Model/patch_model.dart'; // Adjust path as needed
-import 'dart:typed_data';
 
 
 //Variabler till DropDownButtons
@@ -28,6 +28,7 @@ String dropdownPlacement = placement.first;
 //String dropdownStudentClub = studentClubs.first;
 
 class PatchViewPage extends StatefulWidget {
+  const PatchViewPage({super.key});
 
   @override
   State<PatchViewPage> createState() => _PatchViewPageState();
@@ -41,7 +42,8 @@ class _PatchViewPageState extends State<PatchViewPage> {
   String klubbMasteri = '';
   final String baseUrl = 'https://group-4-15.pvt.dsv.su.se/api/patch/add';
   String beskrivning = '';
-
+  int ownerId = 0;
+  //PatchProviderpatchProvider = Provider.of<PatchProvider>(context, listen: false)
   final patchNameController = TextEditingController();
   final beskrivningFieldController = TextEditingController();
   final klubbmasteriFieldController = TextEditingController();
@@ -51,7 +53,30 @@ class _PatchViewPageState extends State<PatchViewPage> {
     patchNameController.dispose();
     beskrivningFieldController.dispose();
     klubbmasteriFieldController.dispose();
+    super.dispose();
   }
+
+
+ /* void initState() { //Kodrad lösning för att hämta första entry i list: källhänvisning: 'The instance member 'widget' can't be accessed in an initializer. Try replacing the reference to the instance member with a different expression', stackoverflow.com/questions/67501594/the-instance-member-widget-cant-be-accessed-in-an-initializer-try-replacing, av user 'MobIT', publicerad 12 maj 2021, hämtad 21 maj 2025
+    super.initState();
+    //Provider.of<PatchProvider>(context, listen: false).changeOwnerId(newOwnerId: context.watch<UserProvider>().id);
+    //ownerId = Provider.of<PatchProvider>(context, listen: false).ownerId;
+    ownerId = Provider.of<PatchProvider>(context, listen: false).ownerId;
+  }
+  @override
+  void initState() {
+    super.initState();
+    //ownerId = Provider.of<PatchProvider>(context, listen: false).;
+    //Vänta tills widgetträdet är färdigbyggt innan vi använder context med Provider
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final userId = context.read<UserProvider>().id;
+      Provider.of<PatchProvider>(context, listen: false)
+        .changeOwnerId(newOwnerId: userId);
+    });
+  }*/
+
+
+
 
   File ? _selectedImage; //lägga till från kamera eller bibliotek variabel
 
@@ -59,7 +84,7 @@ class _PatchViewPageState extends State<PatchViewPage> {
     return await file.readAsBytes();
   }
 
-  Future<void> _createPatchWithProvider() async {
+  void _createPatchWithProvider(BuildContext context) async {
     final patchProvider = Provider.of<PatchProvider>(context, listen: false);
 
     try {
@@ -69,7 +94,7 @@ class _PatchViewPageState extends State<PatchViewPage> {
         imageData = await _fileToUint8List(_selectedImage!);
       }
 
-      void _clearForm() {
+      void clearForm() {
         setState(() {
           patchNameController.clear();
           beskrivningFieldController.clear();
@@ -85,24 +110,42 @@ class _PatchViewPageState extends State<PatchViewPage> {
           klubbMasteri = '';
         });
       }
+      //Uint8List emptyList = new Uint8List();
+
+      final newPatch = PatchModel(patchId: null,
+        patchName: "knappTest",
+        description: "Vi testar knappar",
+        ownerId: 1,
+        pictureData: imageData,
+        isPublic: true,
+        placement: "SKREV",
+        klubbmasteri: "KM",
+        color: "BLÅ",
+      );
+      await Future.delayed(const Duration(seconds: 1));
+
+      //Future<PatchModel?> patchTest = Provider.of<PatchProvider>(context).createPatch(newPatch);
+      if(!context.mounted) return;
+      final result = await patchProvider.createPatch(newPatch);
 
 
       // Create PatchModel object
-      final newPatch = PatchModel(
-        patchId: null, // This will likely be set by the backend when creating
-        patchName: patchName,
-        description: beskrivning,
-        ownerId: 1, // You might want to get this dynamically
-        pictureData: imageData,
-        isPublic: publicPrivate,
-        placement: dropdownPlacement,
-        klubbmasteri: klubbMasteri,
-        color: dropdownColour,
-      );
+//      final newPatch = PatchModel(
+//        patchId: null, // This will likely be set by the backend when creating
+//        patchName: patchName,
+//        description: beskrivning,
+ //       ownerId: , // You might want to get this dynamically
+//        pictureData: imageData,
+ //       isPublic: publicPrivate,
+ //       placement: dropdownPlacement,
+ //       klubbmasteri: klubbMasteri,
+//        color: dropdownColour,
+ //     );
 
-      final result = await patchProvider.createPatch(newPatch);
+     // final result = await patchProvider.createPatch(newPatch);
       if (result != null) {
         // Success - patch created
+        if(!context.mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Märket har lagts till!'),
@@ -110,21 +153,23 @@ class _PatchViewPageState extends State<PatchViewPage> {
           ),
         );
         // Optionally clear the form or navigate back
-        _clearForm();
+        clearForm();
       } else {
         // Error occurred
+        if(!context.mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(patchProvider.error ?? 'Märket kunde inte läggas till.'),
-            backgroundColor: Colors.red,
+            content: Text('Märket kunde inte läggas till.'),
+            backgroundColor: Colors.blue,
           ),
         );
       }
     } catch (e) {
+      rethrow;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Ett fel uppstod: $e'),
-          backgroundColor: Colors.red,
+          backgroundColor: Colors.green,
         ),
       );
     }
@@ -286,7 +331,7 @@ class _PatchViewPageState extends State<PatchViewPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(width: 42), //spacing padding
-                  Text(context.watch<UserProvider>().userName, style: TextStyle(color: Colors.white, fontSize: 18, fontFamily: ('InknutAntiqua'), fontWeight: FontWeight.w400)),
+                  Text("Beskrivning:", style: TextStyle(color: Colors.white, fontSize: 18, fontFamily: ('InknutAntiqua'), fontWeight: FontWeight.w400)),
                   SizedBox(width: 4), //spacing between text and icon
                   //Icon(Icons.border_color_sharp, size: 20),
                 ]),
@@ -762,7 +807,7 @@ class _PatchViewPageState extends State<PatchViewPage> {
                               );
                             });
                           } else {
-                            _createPatchWithProvider(); // Use the new method
+                            _createPatchWithProvider(context); // Use the new method
                           }
                         },
                         style: OutlinedButton.styleFrom(

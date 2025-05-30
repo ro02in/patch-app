@@ -19,6 +19,7 @@ class UserProvider with ChangeNotifier {
   String surName;
   String completeName;
 
+
   UserProvider(
       {
         this.userName = "Users name:",
