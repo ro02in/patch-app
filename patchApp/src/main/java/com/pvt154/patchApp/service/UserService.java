@@ -7,14 +7,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.io.InputStream;
-import java.net.URL;
 import java.util.Optional;
 
 @Service
 @Transactional
 public class UserService {
-
     private final UserRepository userRepository;
 
     @Autowired
@@ -22,17 +19,27 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User getUserById(String googleId) {
-        return userRepository.findById(googleId)
-                .orElseThrow(() -> new RuntimeException("User not found with Google ID: " + googleId));
+    public boolean emailExists(String email) {
+        return userRepository.findByEmailAddress(email).isPresent();
     }
 
-    public User createUser(User user) {
+    public User registerUser(User user) {
+        // Add any validation here if needed
         return userRepository.save(user);
     }
 
-    public User updateUser(String googleId, User updatedUser) {
-        User user = getUserById(googleId);
+    public boolean validateUserCredentials(String email, String password) {
+        Optional<User> userOpt = userRepository.findByEmailAddress(email);
+        return userOpt.isPresent() && userOpt.get().getPassword().equals(password);
+    }
+
+    public User getUserById(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
+    }
+
+    public User updateUser(Long id, User updatedUser) {
+        User user = getUserById(id);
         user.setFirstName(updatedUser.getFirstName());
         user.setSurName(updatedUser.getSurName());
         user.setKmName(updatedUser.getKmName());
@@ -42,46 +49,12 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public void deleteUser(String googleId) {
-        User user = getUserById(googleId);
+    public void deleteUser(Long id) {
+        User user = getUserById(id);
         userRepository.delete(user);
-    }
-
-    public boolean existsByGoogleId(String googleId) {
-        return userRepository.findByGoogleId(googleId).isPresent();
     }
 
     public List<User> searchUsers(String query) {
         return userRepository.searchUsers(query);
-    }
-
-    public User createOrUpdateFromGoogle(String googleId, String firstName, String surName, String email, String pictureUrl) {
-        Optional<User> existing = userRepository.findById(googleId);
-
-        User user = existing.orElseGet(User::new);
-        user.setGoogleId(googleId);
-        user.setFirstName(firstName);
-        user.setSurName(surName);
-        user.setEmailAddress(email);
-
-        // Only set kmName if not set (user hasn't picked nickname yet)
-        if (user.getKmName() == null || user.getKmName().isEmpty()) {
-            user.setKmName(firstName.toLowerCase()); // Or anything else
-        }
-
-        if (user.getBiography() == null) {
-            user.setBiography(""); // Optional default
-        }
-
-        if (pictureUrl != null && (user.getPictureData() == null || user.getPictureData().length == 0)) {
-            try (InputStream in = new URL(pictureUrl).openStream()) {
-                user.setPictureData(in.readAllBytes());
-            } catch (Exception e) {
-                // Ignore download errors
-                System.out.println("Failed to download picture: " + e.getMessage());
-            }
-        }
-
-        return userRepository.save(user);
     }
 }
