@@ -29,101 +29,101 @@ class ProfilePage extends StatefulWidget {
   State<ProfilePage> createState() => _ProfilePageState();
 }
 
+void showDrinkInputDialog(BuildContext context) {
+  final TextEditingController _ingredientController = TextEditingController();
+  List<String> drinkSuggestions = [];
+  bool isLoading = false;
+
+  showDialog(
+    context: context,
+    builder: (context) {
+      return StatefulBuilder(builder: (context, setState) {
+        Future<void> fetchDrinkSuggestions(String name) async {
+          setState(() => isLoading = true);
+
+          try {
+            final response = await http.get(
+              Uri.parse('https://api.api-ninjas.com/v1/cocktail?name=$name'),
+              headers: {
+                'X-Api-Key': 'J4Mhmg9sFFHmuKw7tmzaQg==D9qZtXhRG3nTiOB9',
+                'accept': 'application/json',
+              },
+            );
+
+            if (response.statusCode == 200) {
+              final List<dynamic> data = jsonDecode(response.body);
+              setState(() {
+                if (data.isEmpty) {
+                  drinkSuggestions = ['No drinks found.'];
+                } else {
+                  drinkSuggestions = data
+                      .map<String>((drink) => drink['name'] ?? 'Unnamed Drink')
+                      .toList();
+                }
+              });
+            } else {
+              setState(() {
+                drinkSuggestions = ['No drinks found.'];
+              });
+            }
+          } catch (e) {
+            setState(() {
+              drinkSuggestions = ['Error: $e'];
+            });
+          }
+
+          setState(() => isLoading = false);
+        }
+
+        return AlertDialog(
+          title: Text("Enter an Ingredient"),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: _ingredientController,
+                decoration: InputDecoration(
+                  labelText: 'Ingredient',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              SizedBox(height: 10),
+              ElevatedButton(
+                onPressed: () {
+                  final input = _ingredientController.text.trim();
+                  if (input.isNotEmpty) {
+                    fetchDrinkSuggestions(input);
+                  }
+                },
+                child: Text("Get Suggestions"),
+              ),
+              if (isLoading)
+                Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: CircularProgressIndicator(),
+                ),
+              if (drinkSuggestions.isNotEmpty)
+                ...drinkSuggestions.map((drink) => ListTile(title: Text(drink))),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text("Close"),
+            ),
+          ],
+        );
+      });
+    },
+  );
+}
+
 class _ProfilePageState extends State<ProfilePage> {
   int currentIndex = 3; //get this info from server
   double _itemExtent = 250;
   final CarouselController _controller = CarouselController();
   List<Uint8List?> patchImageList = [];
   final TextEditingController biographyFieldController = TextEditingController();
-
-  void showDrinkInputDialog(BuildContext context) {
-    final TextEditingController _ingredientController = TextEditingController();
-    List<String> drinkSuggestions = [];
-    bool isLoading = false;
-
-    showDialog(
-      context: context,
-      builder: (context) {
-        return StatefulBuilder(builder: (context, setState) {
-          Future<void> fetchDrinkSuggestions(String name) async {
-            setState(() => isLoading = true);
-
-            try {
-              final response = await http.get(
-                Uri.parse('https://api.api-ninjas.com/v1/cocktail?name=$name'),
-                headers: {
-                  'X-Api-Key': 'J4Mhmg9sFFHmuKw7tmzaQg==D9qZtXhRG3nTiOB9',  
-                  'accept': 'application/json',
-                },
-              );
-
-              if (response.statusCode == 200) {
-                final List<dynamic> data = jsonDecode(response.body);
-                setState(() {
-                  if (data.isEmpty) {
-                    drinkSuggestions = ['No drinks found.'];
-                  } else {
-                    drinkSuggestions = data
-                        .map<String>((drink) => drink['name'] ?? 'Unnamed Drink')
-                        .toList();
-                  }
-                });
-              } else {
-                setState(() {
-                  drinkSuggestions = ['No drinks found.'];
-                });
-              }
-            } catch (e) {
-              setState(() {
-                drinkSuggestions = ['Error: $e'];
-              });
-            }
-
-            setState(() => isLoading = false);
-          }
-
-          return AlertDialog(
-            title: Text("Enter an Ingredient"),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                TextField(
-                  controller: _ingredientController,
-                  decoration: InputDecoration(
-                    labelText: 'Ingredient',
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-                SizedBox(height: 10),
-                ElevatedButton(
-                  onPressed: () {
-                    final input = _ingredientController.text.trim();
-                    if (input.isNotEmpty) {
-                      fetchDrinkSuggestions(input);
-                    }
-                  },
-                  child: Text("Get Suggestions"),
-                ),
-                if (isLoading)
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10),
-                    child: CircularProgressIndicator(),
-                  ),
-                if (drinkSuggestions.isNotEmpty)
-                  ...drinkSuggestions.map((drink) => ListTile(title: Text(drink))),
-              ],
-            ),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(),
-                child: Text("Close"),
-              ),
-            ],
-          );
-        });
-      },
-    );
-  }
 
   @override
   void dispose() { //clean up TextEditorController when leaving widget
@@ -232,7 +232,7 @@ Widget build(BuildContext context) {
                     shape: const CircleBorder(side: BorderSide(color: Colors.purpleAccent, width: 3)),
                     backgroundColor: Colors.transparent,
                     onPressed: () {
-                      showDrinkInputDialog(context);  // <-- call the dialog here
+                      showDrinkInputDialog(context);
                     },
                     child: Container(
                       width: 95,
