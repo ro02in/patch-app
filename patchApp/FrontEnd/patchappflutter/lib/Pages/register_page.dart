@@ -97,7 +97,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   child: CircleAvatar( //LÄGG TILL PROFILBILD
                     radius: 80,
-                    backgroundColor: Colors.white,
+                    backgroundColor: Colors.purpleAccent,
                     foregroundImage: _selectedImage != null ? FileImage(_selectedImage!) : AssetImage('assets/sbpinklogo.png'),
                     child: _selectedImage == null
                         ? Icon(Icons.add, color: Colors.black, size: 30) : null,
