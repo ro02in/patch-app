@@ -20,6 +20,8 @@ import 'package:http/http.dart' as http;
 import 'package:patchappflutter/Model/patch_model.dart';
 import 'dart:io';
 
+const String apiKey = 'J4Mhmg9sFFHmuKw7tmzaQg==D9qZtXhRG3nTiOB9';
+
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
 
@@ -33,6 +35,95 @@ class _ProfilePageState extends State<ProfilePage> {
   final CarouselController _controller = CarouselController();
   List<Uint8List?> patchImageList = [];
   final TextEditingController biographyFieldController = TextEditingController();
+
+  void showDrinkInputDialog(BuildContext context) {
+    final TextEditingController _ingredientController = TextEditingController();
+    List<String> drinkSuggestions = [];
+    bool isLoading = false;
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return StatefulBuilder(builder: (context, setState) {
+          Future<void> fetchDrinkSuggestions(String name) async {
+            setState(() => isLoading = true);
+
+            try {
+              final response = await http.get(
+                Uri.parse('https://api.api-ninjas.com/v1/cocktail?name=$name'),
+                headers: {
+                  'X-Api-Key': 'J4Mhmg9sFFHmuKw7tmzaQg==D9qZtXhRG3nTiOB9',  
+                  'accept': 'application/json',
+                },
+              );
+
+              if (response.statusCode == 200) {
+                final List<dynamic> data = jsonDecode(response.body);
+                setState(() {
+                  if (data.isEmpty) {
+                    drinkSuggestions = ['No drinks found.'];
+                  } else {
+                    drinkSuggestions = data
+                        .map<String>((drink) => drink['name'] ?? 'Unnamed Drink')
+                        .toList();
+                  }
+                });
+              } else {
+                setState(() {
+                  drinkSuggestions = ['No drinks found.'];
+                });
+              }
+            } catch (e) {
+              setState(() {
+                drinkSuggestions = ['Error: $e'];
+              });
+            }
+
+            setState(() => isLoading = false);
+          }
+
+          return AlertDialog(
+            title: Text("Enter an Ingredient"),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextField(
+                  controller: _ingredientController,
+                  decoration: InputDecoration(
+                    labelText: 'Ingredient',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                SizedBox(height: 10),
+                ElevatedButton(
+                  onPressed: () {
+                    final input = _ingredientController.text.trim();
+                    if (input.isNotEmpty) {
+                      fetchDrinkSuggestions(input);
+                    }
+                  },
+                  child: Text("Get Suggestions"),
+                ),
+                if (isLoading)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: CircularProgressIndicator(),
+                  ),
+                if (drinkSuggestions.isNotEmpty)
+                  ...drinkSuggestions.map((drink) => ListTile(title: Text(drink))),
+              ],
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: Text("Close"),
+              ),
+            ],
+          );
+        });
+      },
+    );
+  }
 
   @override
   void dispose() { //clean up TextEditorController when leaving widget
@@ -137,21 +228,27 @@ Widget build(BuildContext context) {
                     SizedBox(width: 25),
 
                     //DRINK-KNAPP
-                    FloatingActionButton(
-                        shape: const CircleBorder(side: BorderSide(color: Colors.purpleAccent, width: 3)),
-                        backgroundColor: Colors.transparent,
-                        onPressed: () {},
-                        //child: Image.asset('name') //drinkikon
-                        child: Container(
-                          width: 95,
-                          height: 95,
-                          child: Image.asset('assets/drinkglass1.PNG'),
-                          decoration: BoxDecoration(
-                              gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, stops: [0.2, 0.6, 0.9], colors: [Colors.purpleAccent, Colors.tealAccent, Colors.indigoAccent]),
-                              shape: BoxShape.circle,
-                          ),
-                        )
+                  FloatingActionButton(
+                    shape: const CircleBorder(side: BorderSide(color: Colors.purpleAccent, width: 3)),
+                    backgroundColor: Colors.transparent,
+                    onPressed: () {
+                      showDrinkInputDialog(context);  // <-- call the dialog here
+                    },
+                    child: Container(
+                      width: 95,
+                      height: 95,
+                      child: Image.asset('assets/drinkglass1.PNG'),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          stops: [0.2, 0.6, 0.9],
+                          colors: [Colors.purpleAccent, Colors.tealAccent, Colors.indigoAccent],
+                        ),
+                        shape: BoxShape.circle,
                       ),
+                    ),
+                  ),
 
 
                   SizedBox(width: 185),
