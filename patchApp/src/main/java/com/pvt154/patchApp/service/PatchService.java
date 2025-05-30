@@ -23,7 +23,7 @@ public class PatchService {
     }
 
 
-    public List<Patch> getPatchesByUser(String id) {
+    public List<Patch> getPatchesByUser(Long id) {
         return patchRepository.findByOwnerId(id);
     }
 

@@ -1,6 +1,7 @@
 package com.pvt154.patchApp.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +12,7 @@ import java.util.List;
 @Table(name = "users")
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class User {
 
     @Id
@@ -31,6 +33,9 @@ public class User {
 
     @Column(name = "email_address", unique = true)
     private String emailAddress;
+
+    @Column(name = "username")
+    private String username;
 
     @Column(name = "password")
     private String password;

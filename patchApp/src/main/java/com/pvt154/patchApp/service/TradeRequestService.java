@@ -38,7 +38,7 @@ public class TradeRequestService {
      * @param patchRequestedId ID för patch som avsändaren vill ha (kan vara null vid gåva)
      * @return Sparad TradeRequest
      */
-    public TradeRequest createTradeRequest(String senderId, String receiverId, Long patchOfferedId, Long patchRequestedId) {
+    public TradeRequest createTradeRequest(Long senderId, Long receiverId, Long patchOfferedId, Long patchRequestedId) {
         User sender = userService.getUserById(senderId);
         User receiver = userService.getUserById(receiverId);
         Patch patchOffered = patchService.getPatchById(patchOfferedId);
@@ -100,14 +100,14 @@ public class TradeRequestService {
         return null;
     }
 
-    public List<TradeRequest> getTradeRequestsByReceiver(String id) {
+    public List<TradeRequest> getTradeRequestsByReceiver(Long id) {
         // Eftersom TradeRequest nu har User-objekt, måste vi hämta användaren först
         //User receiver = userService.getUserById(googleId);
 
         return tradeRequestRepository.findByReceiver(id);
     }
 
-    public List<TradeRequest> getTradeRequestsBySender(String id) {
+    public List<TradeRequest> getTradeRequestsBySender(Long id) {
         //User sender = userService.getUserById(googleId);
         return tradeRequestRepository.findBySender(id);
     }

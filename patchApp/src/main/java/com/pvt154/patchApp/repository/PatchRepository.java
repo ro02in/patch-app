@@ -8,7 +8,7 @@ import java.util.List;
 
 @Repository
 public interface PatchRepository extends JpaRepository<Patch, Long> {
-    List<Patch> findByOwnerId(String ownerId);
+    List<Patch> findByOwnerId(Long ownerId);
 
     Patch save(Patch patch);
 

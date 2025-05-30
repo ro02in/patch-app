@@ -43,4 +43,16 @@
       <excludeFolder url="file://$MODULE_DIR$/FrontEnd/patchappflutter/windows/flutter/ephemeral/.plugin_symlinks/path_provider_windows/example/build" />
     </content>
   </component>
+  <component name="FacetManager">
+    <facet type="jpa" name="JPA">
+      <configuration>
+        <setting name="validation-enabled" value="true" />
+        <setting name="provider-name" value="Hibernate" />
+        <datasource-mapping>
+          <factory-entry name="entityManagerFactory" value="e0ccf552-49f2-4404-be1b-fa1e926d5ea5" />
+        </datasource-mapping>
+        <naming-strategy-map />
+      </configuration>
+    </facet>
+  </component>
 </module>
