@@ -130,22 +130,42 @@ Widget build(BuildContext context) {
         children: [
           Column(
             children: [
-              SizedBox(height: 65),
+              SizedBox(height: 45),
 
               Row(
                 children: [
-                  SizedBox(width: 30),
+                    SizedBox(width: 25),
+
+                    //DRINK-KNAPP
+                    FloatingActionButton(
+                        shape: const CircleBorder(side: BorderSide(color: Colors.purpleAccent, width: 3)),
+                        backgroundColor: Colors.transparent,
+                        onPressed: () {},
+                        //child: Image.asset('name') //drinkikon
+                        child: Container(
+                          width: 95,
+                          height: 95,
+                          child: Image.asset('assets/drinkglass1.PNG'),
+                          decoration: BoxDecoration(
+                              gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, stops: [0.2, 0.6, 0.9], colors: [Colors.purpleAccent, Colors.tealAccent, Colors.indigoAccent]),
+                              shape: BoxShape.circle,
+                          ),
+                        )
+                      ),
+
+
+                  SizedBox(width: 185),
 
                   //SPARA-knapp
                   Container(
-                    width: 38,
-                    height: 38,
+                    width: 39,
+                    height: 39,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(100),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.green,
-                          spreadRadius: 3,
+                          spreadRadius: 4,
                           blurRadius: 0,
                           offset: Offset(0, 0)
                         )
@@ -154,7 +174,8 @@ Widget build(BuildContext context) {
                     child: FloatingActionButton( //TODO: kolla om dessa inte längre behövs (pga onChanged() användning i textField).
                       shape: const CircleBorder(),
                       foregroundColor: Colors.white,
-                        backgroundColor: Color.fromARGB(255, 167, 232, 170),
+                        backgroundColor: Colors.white,
+                        tooltip: "Spara ändringar",
                         child: Icon(Icons.save_rounded, size: 26, color: Color.fromARGB(
                             255, 75, 161, 79)),
                         onPressed: () { //input text hantering
@@ -162,7 +183,7 @@ Widget build(BuildContext context) {
                               )
                           ),
 
-                  SizedBox(width: 260),
+                  SizedBox(width: 18),
                   Container(
                     width: 38,
                     height: 38,
@@ -283,6 +304,8 @@ Widget build(BuildContext context) {
                   )
                 ],
               ),
+
+              SizedBox(height: 12),
 
               //RAD PROFILBILD + 2 RUNDA KNAPPAR
               Row(

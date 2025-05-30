@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:patchappflutter/Pages/add_patch_page.dart';
+import 'package:patchappflutter/Pages/post_log_in_page.dart';
 import 'package:patchappflutter/Pages/profile_page.dart';
 
 class RegisterUserConfirmedPage extends StatelessWidget {
@@ -189,7 +190,7 @@ class RegisterUserConfirmedPage extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => ProfilePage(),
+                                builder: (context) => PostLoginPage(), //30 maj ny redirect till bottomNavigationPage som håller i de 3 huvudsakliga sidorna för appen.
                               ),
                             );
                           },

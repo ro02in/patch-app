@@ -299,7 +299,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         onChanged: (value) => kmName = kmNameFieldController.text, //Källhänvisning www.geeksforgeeks.org/retrieve-data-from-textfields-in-flutter/ publicerad 7 mars 2025, hämtad 25 maj 2025
 
                         style: TextStyle(color: Colors.black, fontFamily: 'InknutAntiqua', fontSize: 14),
-                          decoration: InputDecoration(labelText: 'KM namn:', labelStyle: TextStyle(fontFamily: ('InknutAntiqua')), floatingLabelBehavior: FloatingLabelBehavior.never, //OPTIONAL
+                          decoration: InputDecoration(labelText: 'Ditt KM namn:', labelStyle: TextStyle(fontFamily: ('InknutAntiqua')), floatingLabelBehavior: FloatingLabelBehavior.never, //OPTIONAL //30 maj fixad "Ditt KM namn" utifrån testfeedback
                           counterStyle: TextStyle(fontFamily: 'InknutAntiqua', color: Colors.black, fontSize: 13, height: -80),
                           contentPadding: EdgeInsets.only(left: 15, bottom: 16, right: 20),
                           focusedBorder: OutlineInputBorder(
