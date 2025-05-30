@@ -1,8 +1,8 @@
 //NYTT FÖRSÖK NY BRANCH
 
 import 'package:flutter/material.dart';
-import 'package:patchappflutter/add_patch_page.dart';
-import 'package:patchappflutter/profile_page.dart';
+import 'package:patchappflutter/Pages/add_patch_page.dart';
+import 'package:patchappflutter/Pages/profile_page.dart';
 
 class RegisterUserConfirmedPage extends StatelessWidget {
   @override

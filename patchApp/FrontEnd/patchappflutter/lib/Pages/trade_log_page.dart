@@ -1,7 +1,7 @@
 //NYTT FÖRSÖK NY BRANCH
 
 import 'package:flutter/material.dart';
-import 'package:patchappflutter/trade_action_page.dart';
+import 'package:patchappflutter/Pages/trade_action_page.dart';
 
 import 'faq_page.dart';
 

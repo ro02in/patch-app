@@ -57,18 +57,18 @@ class TempButtonsPage extends StatelessWidget {
 
 */
 import 'package:flutter/material.dart';
-import 'package:patchappflutter/add_patch_page.dart';
-import 'package:patchappflutter/continue_register_page.dart';
-import 'package:patchappflutter/patch_inventory_page.dart';
-import 'package:patchappflutter/profile_page.dart';
-import 'package:patchappflutter/register_page.dart';
-import 'package:patchappflutter/register_user_confirmed.dart';
-import 'package:patchappflutter/trade_action_page.dart';
-import 'package:patchappflutter/trade_log_page.dart'; // Import för TradeLogPage
-import 'package:patchappflutter/faq_page.dart';
-import 'package:patchappflutter/trade_request_success_page.dart'; // Import för din nya sida
-import 'package:patchappflutter/patch_added_successfully.dart';
-import 'package:patchappflutter/search_page.dart';
+import 'package:patchappflutter/Pages/add_patch_page.dart';
+import 'package:patchappflutter/Pages/continue_register_page.dart';
+import 'package:patchappflutter/Pages/patch_inventory_page.dart';
+import 'package:patchappflutter/Pages/profile_page.dart';
+import 'package:patchappflutter/Pages/register_page.dart';
+import 'package:patchappflutter/Pages/register_user_confirmed.dart';
+import 'package:patchappflutter/Pages/trade_action_page.dart';
+import 'package:patchappflutter/Pages/trade_log_page.dart'; // Import för TradeLogPage
+import 'package:patchappflutter/Pages/faq_page.dart';
+import 'package:patchappflutter/Pages/trade_request_success_page.dart'; // Import för din nya sida
+import 'package:patchappflutter/Pages/patch_added_successfully.dart';
+import 'package:patchappflutter/Pages/search_page.dart';
 
 //25 maj
 

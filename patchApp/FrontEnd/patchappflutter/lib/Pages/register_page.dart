@@ -5,7 +5,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:patchappflutter/register_user_confirmed.dart'; //sidan RegisterUserConfirmedPage
+import 'package:patchappflutter/Pages/register_user_confirmed.dart'; //sidan RegisterUserConfirmedPage
 import 'package:image_picker/image_picker.dart';
 
 class RegisterPage extends StatefulWidget {

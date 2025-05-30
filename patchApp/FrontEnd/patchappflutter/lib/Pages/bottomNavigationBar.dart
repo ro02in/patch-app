@@ -4,9 +4,9 @@
 /*************************************************************************************************************************************************/
 
 import 'package:flutter/material.dart';
-import 'package:patchappflutter/profile_page.dart';
-import 'package:patchappflutter/search_page.dart';
-import 'package:patchappflutter/trade_log_page.dart';
+import 'package:patchappflutter/Pages/profile_page.dart';
+import 'package:patchappflutter/Pages/search_page.dart';
+import 'package:patchappflutter/Pages/trade_log_page.dart';
 
 class CustomBottomNavigationBar extends StatefulWidget {
 

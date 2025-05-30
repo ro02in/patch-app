@@ -1,4 +1,4 @@
-class User {
+class UserModel {
   final String googleId;
   final String firstName;
   final String surName;
@@ -7,7 +7,7 @@ class User {
   final String emailAddress;
   String biography;
 
-  User({
+  UserModel({
     required this.googleId,
     required this.firstName,
     required this.surName,
@@ -17,8 +17,8 @@ class User {
     required this.biography,
   });
 
-  factory User.fromJson(Map<String, dynamic> json) {
-    return User(
+  factory UserModel.fromJson(Map<String, dynamic> json) {
+    return UserModel(
       googleId: json['googleId'] ?? '',
       firstName: json['firstName'] ?? '',
       surName: json['surName'] ?? '',
