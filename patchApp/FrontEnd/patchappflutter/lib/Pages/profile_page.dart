@@ -110,23 +110,23 @@ void showDrinkInputDialog(BuildContext context) {
                   decoration: InputDecoration(
                   labelText: 'Drink Name',
                   labelStyle: TextStyle(
-                    color: Colors.tealAccent,   // Label text color
+                    color: Colors.black54,   // Label text color
                     fontWeight: FontWeight.w600,
                   ),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                     borderSide: BorderSide(
-                      color: Colors.purpleAccent,  // Border color
+                      color: Colors.deepPurple,  // Border color
                       width: 2,
                     ),
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
-                    borderSide: BorderSide(color: Colors.purpleAccent),
+                    borderSide: BorderSide(color: Colors.deepPurple),
                   ),
                 ),
                   style: TextStyle(
-                    color: Colors.white,            // Input text color
+                    color: Colors.black54,            // Input text color
                     fontSize: 18,
                   ),
                 ),
