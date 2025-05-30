@@ -29,7 +29,7 @@ public class PatchController {
     @PostMapping("/add")
     public ResponseEntity<Patch> createPatch(
             @RequestParam("description") String description,
-            @RequestParam("ownerId") String ownerId,
+            @RequestParam("ownerId") Long ownerId,
             @RequestParam("placement") String placement,
             @RequestParam("isPublic") boolean isPublic,
             @RequestParam("color") String color,
@@ -56,7 +56,7 @@ public class PatchController {
     }
 
     @GetMapping("/user/{id}")
-    public ResponseEntity<List<Patch>> getPatchesByUser(@PathVariable String id) {
+    public ResponseEntity<List<Patch>> getPatchesByUser(@PathVariable Long id) {
         List<Patch> patches = patchService.getPatchesByUser(id);
         return ResponseEntity.ok(patches);
     }
@@ -68,7 +68,7 @@ public class PatchController {
     }
 
     @GetMapping("/images/belongs/{id}")
-    public ResponseEntity<List<String>> getPatchesImagesByOwner(@PathVariable String id) {
+    public ResponseEntity<List<String>> getPatchesImagesByOwner(@PathVariable Long id) {
         List<Patch> patches = patchService.getPatchesByUser(id);  // Metod som returnerar lista av Patch för ägaren
 
         List<String> base64Images = patches.stream()

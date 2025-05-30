@@ -4,8 +4,8 @@ import lombok.Data;
 
 @Data
 public class TradeRequestDTO {
-    private String senderId;
-    private String receiverId;
+    private Long senderId;
+    private Long receiverId;
     private Long badgeOfferedId;
     private Long badgeRequestedId;
 }

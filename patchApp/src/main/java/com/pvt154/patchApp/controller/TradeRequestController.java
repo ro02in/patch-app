@@ -32,12 +32,12 @@ public class TradeRequestController {
     }
 
     @GetMapping("/received/trades")
-    public List<TradeRequest> receivedTrades(@RequestParam("query") String query) {
+    public List<TradeRequest> receivedTrades(@RequestParam("query") Long query) {
         return tradeRequestService.getTradeRequestsByReceiver(query);
     }
 
     @GetMapping("/sent/trades")
-    public List<TradeRequest> sentTrades(@RequestParam("query") String query) {
+    public List<TradeRequest> sentTrades(@RequestParam("query") Long query) {
         return tradeRequestService.getTradeRequestsBySender(query);
     }
 

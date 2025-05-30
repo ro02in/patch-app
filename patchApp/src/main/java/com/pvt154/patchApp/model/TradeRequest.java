@@ -34,10 +34,10 @@ public class TradeRequest {
 
 
     @Column(name = "sender_id")
-    private String sender;
+    private Long sender;
 
 
     @Column(name = "receiver_id")
-    private String receiver;
+    private Long receiver;
 
 }
