@@ -1,6 +1,7 @@
 package com.pvt154.patchApp.controller;
 
 import com.pvt154.patchApp.model.Patch;
+import com.pvt154.patchApp.model.User;
 import com.pvt154.patchApp.service.PatchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -44,6 +45,12 @@ public class PatchController {
         patch.setIsPublic(isPublic);
 
         Patch savedPatch = patchService.createPatch(patch);
+        return ResponseEntity.ok(savedPatch);
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<Patch> registerPatch(@RequestBody Patch patch) {
+        Patch savedPatch = patchService.registerPatch(patch);
         return ResponseEntity.ok(savedPatch);
     }
 

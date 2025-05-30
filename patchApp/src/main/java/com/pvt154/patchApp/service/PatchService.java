@@ -22,6 +22,10 @@ public class PatchService {
         return patchRepository.save(patch);
     }
 
+    public Patch registerPatch(Patch patch) {
+        // Add any validation here if needed
+        return patchRepository.save(patch);
+    }
 
     public List<Patch> getPatchesByUser(Long id) {
         return patchRepository.findByOwnerId(id);
