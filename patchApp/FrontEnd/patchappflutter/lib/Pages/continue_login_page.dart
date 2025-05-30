@@ -48,81 +48,172 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Log In'),
-        backgroundColor: Color.fromARGB(255, 39, 39, 39),
-      ),
       body: Container(
-        padding: EdgeInsets.all(30),
         alignment: Alignment.center,
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage('assets/stitches1.png'),
-            fit: BoxFit.cover,
+            fit: BoxFit.fill,
           ),
         ),
-        child: SingleChildScrollView(
-          child: Container(
-            padding: EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              color: Color.fromARGB(255, 53, 53, 53).withOpacity(0.85),
-              borderRadius: BorderRadius.circular(20),
-              border: Border.all(color: Colors.greenAccent, width: 1.5),
+        child: ListView(
+          padding: EdgeInsets.only(top: 0),
+          children: [
+            AppBar(
+              title: const Text('Logga in', style: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 22)),
+              backgroundColor: Color.fromARGB(170, 38, 42, 27), //Color.fromARGB(255, 243, 92, 255) rosa
+              centerTitle: true,
+              toolbarHeight: 57,
+              leadingWidth: 125,
+              leading: Icon(Icons.arrow_back, color: Colors.white),
+              titleSpacing: -23,
+              elevation: 15,
+              primary: true,
+              shadowColor: Color.fromARGB(255, 40, 40, 40),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.vertical(
+                    bottom: Radius.circular(100),
+                  )
+              ),
             ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
+
+            SizedBox(height: 140),
+
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(
-                  'Enter your credentials',
-                  style: TextStyle(color: Colors.white, fontSize: 22),
-                ),
-                SizedBox(height: 25),
-                TextField(
-                  controller: _emailController,
-                  decoration: InputDecoration(
-                    labelText: 'Email',
-                    labelStyle: TextStyle(color: Colors.white),
-                    filled: true,
-                    fillColor: Colors.white12,
-                    border: OutlineInputBorder(),
+                Container(
+                  padding: EdgeInsets.all(26),
+                  decoration: BoxDecoration(
+                    color: Color.fromARGB(255, 53, 53, 53).withOpacity(0.85),
+                    borderRadius: BorderRadius.circular(40),
+                      border: Border.all(color: Color.fromARGB(255, 70, 70, 70), width: 1.5),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Color.fromARGB(255, 30, 30, 30),
+                        spreadRadius: 4,
+                        blurRadius: 20,
+                        offset: Offset(0, 2)
+                      )
+                    ]
                   ),
-                  style: TextStyle(color: Colors.white),
-                ),
-                SizedBox(height: 20),
-                TextField(
-                  controller: _passwordController,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    labelText: 'Password',
-                    labelStyle: TextStyle(color: Colors.white),
-                    filled: true,
-                    fillColor: Colors.white12,
-                    border: OutlineInputBorder(),
-                  ),
-                  style: TextStyle(color: Colors.white),
-                ),
-                SizedBox(height: 30),
-                SizedBox(
-                  width: double.infinity,
-                  height: 45,
-                  child: ElevatedButton(
-                    onPressed: handleLogin,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green,
-                    ),
-                    child: Text(
-                      'LOG IN',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text('Logga in', style: TextStyle(color: Colors.white, fontSize: 22, fontFamily: 'InknutAntiqua'),
                       ),
-                    ),
+                      SizedBox(height: 25),
+
+                      //EMAIL TEXTFIELD
+                      Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Color.fromARGB(120, 20, 20, 20),
+                                  spreadRadius: 2,
+                                  blurRadius: 5,
+                                  offset: Offset(0, 2)
+                              )
+                            ]
+                        ),
+                        child: SizedBox(
+                          height: 55,
+                          width: 260,
+                          child: TextField(
+                            controller: _emailController,
+                            cursorColor: Colors.purpleAccent,
+                            cursorHeight: 22,
+                            decoration: InputDecoration(
+                              labelText: 'Email',
+                              labelStyle: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 15),
+                              floatingLabelBehavior: FloatingLabelBehavior.never,
+                              filled: true,
+                              fillColor: Colors.white12,
+                              contentPadding: EdgeInsets.only(top: 5, left: 20, bottom: 5, right: 20),
+                              border: OutlineInputBorder(),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.purpleAccent, width: 1.5),
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Color.fromARGB(255, 85, 85, 85), width: 1.5),
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                            ),
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 20),
+
+                      //PASSWORD TEXTFIELD
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Color.fromARGB(120, 20, 20, 20),
+                              spreadRadius: 2,
+                              blurRadius: 5,
+                              offset: Offset(0, 2)
+                            )
+                          ]
+                        ),
+                        child: SizedBox(
+                          height: 55,
+                          width: 260,
+                          child: TextField(
+                            controller: _passwordController,
+                            cursorColor: Colors.purpleAccent,
+                            cursorHeight: 22,
+                            obscureText: true,
+                            decoration: InputDecoration(
+                              labelText: 'Password',
+                              labelStyle: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 15),
+                              floatingLabelBehavior: FloatingLabelBehavior.never,
+                              filled: true,
+                              fillColor: Colors.white12,
+                              contentPadding: EdgeInsets.only(top: 5, left: 20, bottom: 5, right: 20),
+                              border: OutlineInputBorder(),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.purpleAccent, width: 1.5),
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Color.fromARGB(255, 85, 85, 85), width: 1.5),
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                            ),
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 30),
+                      Padding(
+                        padding: const EdgeInsets.all(6.0),
+                        child: SizedBox(
+                          width: 200,
+                          height: 50,
+                          child: OutlinedButton(
+                            style: OutlinedButton.styleFrom(
+                              backgroundColor: Color.fromARGB(255, 32, 32, 32),
+                              side: BorderSide(color: Colors.purpleAccent, width: 1)
+                            ),
+                            onPressed: handleLogin,
+                            child: Text(
+                                'Logga in',
+                                style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold, fontFamily: 'InknutAntiqua')),
+                            ),
+                          ),
+                      ),
+                    ],
                   ),
                 ),
               ],
             ),
-          ),
+          ],
         ),
       ),
     );

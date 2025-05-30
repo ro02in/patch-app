@@ -20,17 +20,160 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:patchappflutter/Model/patch_model.dart';
 import 'dart:io';
-
 import 'package:provider/provider.dart';
-
 import '../Provider/user_provider.dart';
-
+const String apiKey = 'J4Mhmg9sFFHmuKw7tmzaQg==D9qZtXhRG3nTiOB9';
 class ProfilePage extends StatefulWidget {
-
   const ProfilePage({super.key});
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();
+}
+
+void showDrinkInputDialog(BuildContext context) {
+  final TextEditingController _drinkNameController = TextEditingController();
+
+  // State variables inside the dialog
+  List<String> ingredients = [];
+  String instructions = '';
+  String drinkName = '';
+  bool isLoading = false;
+  String errorMessage = '';
+
+  showDialog(
+    context: context,
+    builder: (context) {
+      return StatefulBuilder(builder: (context, setState) {
+
+        Future<void> fetchDrinkDetails(String name) async {
+          setState(() {
+            isLoading = true;
+            ingredients = [];
+            instructions = '';
+            drinkName = '';
+            errorMessage = '';
+          });
+
+          try {
+            final response = await http.get(
+              Uri.parse('https://api.api-ninjas.com/v1/cocktail?name=$name'),
+              headers: {
+                'X-Api-Key': 'J4Mhmg9sFFHmuKw7tmzaQg==D9qZtXhRG3nTiOB9',
+                'accept': 'application/json',
+              },
+            );
+
+            if (response.statusCode == 200) {
+              final List<dynamic> data = jsonDecode(response.body);
+
+              if (data.isEmpty) {
+                setState(() {
+                  errorMessage = 'No drinks found.';
+                });
+              } else {
+                final drink = data[0];
+                setState(() {
+                  drinkName = drink['name'] ?? 'Unnamed Drink';
+                  ingredients = List<String>.from(drink['ingredients'] ?? []);
+                  instructions = drink['instructions'] ?? 'No instructions available.';
+                });
+              }
+            } else {
+              setState(() {
+                errorMessage = 'Failed to load data.';
+              });
+            }
+          } catch (e) {
+            setState(() {
+              errorMessage = 'Error: $e';
+            });
+          } finally {
+            setState(() {
+              isLoading = false;
+            });
+          }
+        }
+
+        return AlertDialog(
+          title: Text("Enter Drink Name", style: TextStyle(
+            color: Colors.purpleAccent,  // Change text color here
+            fontSize: 24,                 // Change font size here
+            fontWeight: FontWeight.bold,  // Change font weight here
+          ),
+          ),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextField(
+                  controller: _drinkNameController,
+                  decoration: InputDecoration(
+                  labelText: 'Drink Name',
+                  labelStyle: TextStyle(
+                    color: Colors.black54,   // Label text color
+                    fontWeight: FontWeight.w600,
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: BorderSide(
+                      color: Colors.deepPurple,  // Border color
+                      width: 2,
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: BorderSide(color: Colors.deepPurple),
+                  ),
+                ),
+                  style: TextStyle(
+                    color: Colors.black54,            // Input text color
+                    fontSize: 18,
+                  ),
+                ),
+                SizedBox(height: 10),
+                ElevatedButton(
+                  onPressed: () {
+                    final input = _drinkNameController.text.trim();
+                    if (input.isNotEmpty) {
+                      fetchDrinkDetails(input);
+                    }
+                  },
+                  child: Text("Get Details"),
+                ),
+                SizedBox(height: 20),
+                if (isLoading) Center(child: CircularProgressIndicator()),
+                if (errorMessage.isNotEmpty)
+                  Text(errorMessage, style: TextStyle(color: Colors.red)),
+
+                if (drinkName.isNotEmpty)
+                  Text('Name: $drinkName',
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+
+                if (ingredients.isNotEmpty) ...[
+                  SizedBox(height: 10),
+                  Text('Ingredients:', style: TextStyle(fontWeight: FontWeight.bold)),
+                  ...ingredients.map((ing) => Text("• $ing")),
+                ],
+
+                if (instructions.isNotEmpty) ...[
+                  SizedBox(height: 10),
+                  Text('Instructions:', style: TextStyle(fontWeight: FontWeight.bold)),
+                  Text(instructions),
+                ],
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text("Close"),
+            ),
+          ],
+        );
+      });
+    },
+  );
 }
 
 
@@ -147,22 +290,28 @@ Widget build(BuildContext context) {
                     SizedBox(width: 25),
 
                     //DRINK-KNAPP
-                    FloatingActionButton(
-                        heroTag: "FAB7",
-                        shape: const CircleBorder(side: BorderSide(color: Colors.purpleAccent, width: 3)),
-                        backgroundColor: Colors.transparent,
-                        onPressed: () {},
-                        //child: Image.asset('name') //drinkikon
-                        child: Container(
-                          width: 95,
-                          height: 95,
-                          child: Image.asset('assets/drinkglass1.PNG'),
-                          decoration: BoxDecoration(
-                              gradient: LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, stops: [0.2, 0.6, 0.9], colors: [Colors.purpleAccent, Colors.tealAccent, Colors.indigoAccent]),
-                              shape: BoxShape.circle,
-                          ),
-                        )
+                  FloatingActionButton(
+                    heroTag: "FAB7",
+                    shape: const CircleBorder(side: BorderSide(color: Colors.purpleAccent, width: 3)),
+                    backgroundColor: Colors.transparent,
+                    onPressed: () {
+                      showDrinkInputDialog(context);
+                    },
+                    child: Container(
+                      width: 95,
+                      height: 95,
+                      child: Image.asset('assets/drinkglass1.PNG'),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          stops: [0.2, 0.6, 0.9],
+                          colors: [Colors.purpleAccent, Colors.tealAccent, Colors.indigoAccent],
+                        ),
+                        shape: BoxShape.circle,
                       ),
+                    ),
+                  ),
 
 
                   SizedBox(width: 185),
