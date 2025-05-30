@@ -94,7 +94,12 @@ void showDrinkInputDialog(BuildContext context) {
         }
 
         return AlertDialog(
-          title: Text("Enter Drink Name"),
+          title: Text("Enter Drink Name", style: TextStyle(
+            color: Colors.purpleAccent,  // Change text color here
+            fontSize: 24,                 // Change font size here
+            fontWeight: FontWeight.bold,  // Change font weight here
+          ),
+          ),
           content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -103,8 +108,26 @@ void showDrinkInputDialog(BuildContext context) {
                 TextField(
                   controller: _drinkNameController,
                   decoration: InputDecoration(
-                    labelText: 'Drink Name',
-                    border: OutlineInputBorder(),
+                  labelText: 'Drink Name',
+                  labelStyle: TextStyle(
+                    color: Colors.tealAccent,   // Label text color
+                    fontWeight: FontWeight.w600,
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: BorderSide(
+                      color: Colors.purpleAccent,  // Border color
+                      width: 2,
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: BorderSide(color: Colors.purpleAccent),
+                  ),
+                ),
+                  style: TextStyle(
+                    color: Colors.white,            // Input text color
+                    fontSize: 18,
                   ),
                 ),
                 SizedBox(height: 10),
