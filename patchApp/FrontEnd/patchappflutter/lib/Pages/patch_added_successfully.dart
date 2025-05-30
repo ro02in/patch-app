@@ -362,6 +362,7 @@ class _PatchAddedSuccessfullyState extends State<PatchAddedSuccessfully> {
                                                                                     width: 36,
                                                                                     height: 36,
                                                                                     child: FloatingActionButton( //Kryss knapp
+                                                                                      heroTag: "FAB5",
                                                                                       backgroundColor: Colors.white,
                                                                                       shape: const CircleBorder(),
                                                                                       child: Icon(Icons.close, color: Colors.black),

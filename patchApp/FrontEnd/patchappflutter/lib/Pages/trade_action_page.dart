@@ -144,6 +144,7 @@ Widget build (BuildContext context) {
                           borderRadius: BorderRadius.circular(100),
                         ),
                         child: FloatingActionButton(
+                            heroTag: "FAB14",
                             backgroundColor: Colors.white,
                             shape: const CircleBorder(),
                             hoverColor: Color.fromARGB(255, 255, 255, 255),
@@ -211,6 +212,7 @@ Widget build (BuildContext context) {
                           borderRadius: BorderRadius.circular(100),
                         ),
                         child: FloatingActionButton(
+                            heroTag: "FAB15",
                             backgroundColor: Colors.white,
                             shape: const CircleBorder(),
                             hoverColor: Color.fromARGB(255, 255, 255, 255),

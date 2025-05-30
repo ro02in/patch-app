@@ -11,6 +11,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:patchappflutter/Pages/add_patch_page.dart';
 import 'package:patchappflutter/Pages/bottomNavigationBar.dart';
 import 'package:patchappflutter/Pages/faq_page.dart';
+import 'package:patchappflutter/Pages/search_page.dart';
 import 'package:patchappflutter/global_user_info.dart';
 import 'package:patchappflutter/Pages/store_patches.dart';
 import 'package:patchappflutter/Model/patch_model.dart';
@@ -20,12 +21,18 @@ import 'package:http/http.dart' as http;
 import 'package:patchappflutter/Model/patch_model.dart';
 import 'dart:io';
 
+import 'package:provider/provider.dart';
+
+import '../Provider/user_provider.dart';
+
 class ProfilePage extends StatefulWidget {
+
   const ProfilePage({super.key});
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();
 }
+
 
 class _ProfilePageState extends State<ProfilePage> {
   int currentIndex = 3; //get this info from server
@@ -55,6 +62,8 @@ class _ProfilePageState extends State<ProfilePage> {
 
   void initState() { //Kodrad lösning för att hämta första entry i list: källhänvisning: 'The instance member 'widget' can't be accessed in an initializer. Try replacing the reference to the instance member with a different expression', stackoverflow.com/questions/67501594/the-instance-member-widget-cant-be-accessed-in-an-initializer-try-replacing, av user 'MobIT', publicerad 12 maj 2021, hämtad 21 maj 2025
     super.initState();
+    Provider.of<UserProvider>(context, listen: false).setCompleteName();
+     currentIndex = Provider.of<UserProvider>(context, listen: false).ovveIndex; //get this info from server
     _controller.addListener(_updateCurrentIndex); //Källhänvisning _updateCurrentIndex(): Handledning med Donald 22 maj kl 15:00.
     fetchImageList(GlobalUserInfo.googleId); //Källhänvisning: Hanledning DISK 29 maj kl 15
   }
@@ -98,7 +107,8 @@ class _ProfilePageState extends State<ProfilePage> {
       if (position.hasPixels) {
         final index = (position.pixels / _itemExtent).round();
         setState(() {
-          currentIndex = index;
+          Provider.of<UserProvider>(context, listen: false).changeOvveIndex(newOvveIndex: index);
+          currentIndex = Provider.of<UserProvider>(context, listen: false).ovveIndex;
         });
       }
     }
@@ -115,7 +125,7 @@ class _ProfilePageState extends State<ProfilePage> {
 @override
 Widget build(BuildContext context) {
   var screenSize = MediaQuery.of(context).size; //screensize
-  String userName = 'UserName here';
+  String userName = context.watch<UserProvider>().completeName;
   bool clicked = false; //for changing overall colour
 
   return Scaffold(
@@ -138,6 +148,7 @@ Widget build(BuildContext context) {
 
                     //DRINK-KNAPP
                     FloatingActionButton(
+                        heroTag: "FAB7",
                         shape: const CircleBorder(side: BorderSide(color: Colors.purpleAccent, width: 3)),
                         backgroundColor: Colors.transparent,
                         onPressed: () {},
@@ -172,6 +183,7 @@ Widget build(BuildContext context) {
                       ]
                     ),
                     child: FloatingActionButton( //TODO: kolla om dessa inte längre behövs (pga onChanged() användning i textField).
+                      heroTag: "FAB8",
                       shape: const CircleBorder(),
                       foregroundColor: Colors.white,
                         backgroundColor: Colors.white,
@@ -198,6 +210,7 @@ Widget build(BuildContext context) {
                       ]
                     ),
                     child: FloatingActionButton(
+                      heroTag: "FAB9",
                       shape: const CircleBorder(),
                       onPressed: () {
                         showDialog(context: context,
@@ -327,6 +340,7 @@ Widget build(BuildContext context) {
                         ]
                     ),
                     child: FloatingActionButton(
+                        heroTag: "FAB10",
                         shape: const CircleBorder(),
                         onPressed: () {
                           _pickImageFromCamera();
@@ -391,6 +405,7 @@ Widget build(BuildContext context) {
                         ]
                       ),
                       child: FloatingActionButton(
+                        heroTag: "FAB11",
                         shape: const CircleBorder(),
                       onPressed: () {
                           _pickImageFromGallery();
@@ -670,7 +685,7 @@ Widget build(BuildContext context) {
                           child: CircleAvatar(
                             radius: 20,
                             //backgroundColor: Colors.white,
-                            foregroundImage: MemoryImage(patchImageList[index]!), //Handledning med Donald via mail 28 maj, DISK handledning 29 maj kl 15
+                            foregroundImage: MemoryImage(patchImageList[currentIndex]!), //Handledning med Donald via mail 28 maj, DISK handledning 29 maj kl 15
                             //foregroundImage: NetworkImage(fetchUserPatches.toString()),
                             //foregroundImage: Image.network(src),
                             // foregroundImage: _patchImage != null ? FileImage(_patchImage!) : null),

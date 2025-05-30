@@ -2,11 +2,11 @@ import 'dart:ffi';
 import 'dart:typed_data';
 
 class TradeRequestModel {
-  final Int tradeId;
-  final String createdId;
-  final String reciverId;
-  final String senderId;
-  final String status;
+  final int tradeId;
+  final int createdId;
+  final int reciverId;
+  final int senderId;
+  final int status;
   final int patchOfferedId;
   final int patchRequestId;
 

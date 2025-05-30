@@ -1,9 +1,10 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:patchappflutter/Provider/user_provider.dart';
 import '../Model/patch_model.dart';
 import '../Service/patch_service.dart';
 
-class PatchProvider extends ChangeNotifier {
+class PatchProvider with ChangeNotifier {
   final PatchService _patchService = PatchService();
 
   List<PatchModel> _userPatches = [];
@@ -15,7 +16,17 @@ class PatchProvider extends ChangeNotifier {
   List<Uint8List> get userPatchImages => _userPatchImages;
   bool get isLoading => _isLoading;
   String? get error => _error;
+  int ownerId = UserProvider().id;
 
+  PatchProvider({
+    this.ownerId = 0,
+});
+  void changeOwnerId({
+    required int newOwnerId,
+  }) async{
+    ownerId = newOwnerId;
+    notifyListeners();
+  }
   // Set loading state and notify listeners
   void _setLoading(bool value) {
     _isLoading = value;

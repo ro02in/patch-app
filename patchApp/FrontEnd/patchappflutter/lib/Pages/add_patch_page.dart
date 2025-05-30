@@ -10,6 +10,7 @@ Denna kod använder detta flutter switch-package för att enklare kunna lägga t
 import 'package:http/http.dart' as http;
 
 import 'package:image_picker/image_picker.dart';
+import 'package:patchappflutter/Provider/user_provider.dart';
 import 'package:provider/provider.dart';
 import '../Provider/patch_provider.dart'; // Adjust path as needed
 import '../Model/patch_model.dart'; // Adjust path as needed
@@ -91,7 +92,7 @@ class _PatchViewPageState extends State<PatchViewPage> {
         patchId: null, // This will likely be set by the backend when creating
         patchName: patchName,
         description: beskrivning,
-        ownerGoogleId: "909034", // You might want to get this dynamically
+        ownerId: 1, // You might want to get this dynamically
         pictureData: imageData,
         isPublic: publicPrivate,
         placement: dropdownPlacement,
@@ -130,9 +131,12 @@ class _PatchViewPageState extends State<PatchViewPage> {
   }
   @override
   Widget build(BuildContext context) {
-    var screenSize = MediaQuery.of(context).size; //screensize
-
-
+    //try {
+     // final patchProvider = Provider.of<PatchProvider>(context);
+    //  print("✅ Provider hittades!");
+   // } catch (e) {
+  //    print("❌ Provider hittades INTE: $e");
+  //  }
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 31, 31, 31), //beige color
       body: Scrollbar(
@@ -189,6 +193,7 @@ class _PatchViewPageState extends State<PatchViewPage> {
                     ]
                   ),
                   child: FloatingActionButton(
+                      heroTag: "FAB1",
                       backgroundColor: Colors.white,
                       shape: const CircleBorder(),
                       hoverColor: Color.fromARGB(255, 255, 255, 255),
@@ -214,6 +219,7 @@ class _PatchViewPageState extends State<PatchViewPage> {
                       ]
                   ),
                   child: FloatingActionButton(
+                      heroTag: "FAB2",
                       backgroundColor: Colors.white,
                       shape: const CircleBorder(),
                       hoverColor: Color.fromARGB(255, 255, 255, 255),
@@ -280,7 +286,7 @@ class _PatchViewPageState extends State<PatchViewPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(width: 42), //spacing padding
-                  Text("Beskrivning", style: TextStyle(color: Colors.white, fontSize: 18, fontFamily: ('InknutAntiqua'), fontWeight: FontWeight.w400)),
+                  Text(context.watch<UserProvider>().userName, style: TextStyle(color: Colors.white, fontSize: 18, fontFamily: ('InknutAntiqua'), fontWeight: FontWeight.w400)),
                   SizedBox(width: 4), //spacing between text and icon
                   //Icon(Icons.border_color_sharp, size: 20),
                 ]),
@@ -727,6 +733,7 @@ class _PatchViewPageState extends State<PatchViewPage> {
                                               width: 38,
                                               height: 38,
                                               child: FloatingActionButton(
+                                                  heroTag: "FAB3",
                                                   shape: const CircleBorder(),
                                                   backgroundColor: Color.fromARGB(255, 35, 35, 35),
                                                   elevation: 2,
@@ -768,6 +775,7 @@ class _PatchViewPageState extends State<PatchViewPage> {
               ),
               SizedBox(width: 140), //spacing
               FloatingActionButton(
+                  heroTag: "FAB4",
                   backgroundColor: Color.fromARGB(255, 243, 68, 255),
                   shape: const CircleBorder(),
                   hoverColor: Color.fromARGB(255, 139, 166, 255),

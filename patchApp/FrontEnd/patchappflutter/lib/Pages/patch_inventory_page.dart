@@ -289,6 +289,7 @@ class PatchInventoryPage extends StatelessWidget {
                                 ]
                               ),
                               child: FloatingActionButton(
+                                heroTag: "FAB6",
                                 onPressed: () {
 
                               }, backgroundColor: Color.fromARGB(255, 234, 111, 255),

@@ -126,6 +126,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             ]
                           ),
                           child: FloatingActionButton(
+                              heroTag: "FAB12",
                               backgroundColor: Colors.white,
                               shape: const CircleBorder(),
                               hoverColor: Color.fromARGB(255, 255, 255, 255),
@@ -155,6 +156,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             ]
                         ),
                         child: FloatingActionButton(
+                            heroTag: "FAB13",
                             backgroundColor: Colors.white,
                             shape: const CircleBorder(),
                             hoverColor: Color.fromARGB(255, 255, 255, 255),

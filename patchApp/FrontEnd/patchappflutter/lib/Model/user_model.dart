@@ -1,41 +1,56 @@
+import 'dart:ffi';
+import 'dart:typed_data';
+
 class UserModel {
-  final String googleId;
+  final int? id;
   final String firstName;
   final String surName;
   final String kmName;
   final String university;
   final String emailAddress;
   String biography;
+  final String username;
+  final String password;
+  final Uint8List pictureData;
 
   UserModel({
-    required this.googleId,
+    required this.id,
     required this.firstName,
     required this.surName,
     required this.kmName,
     required this.university,
     required this.emailAddress,
     required this.biography,
+    required this.pictureData,
+    required this.username,
+    required this.password,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
-      googleId: json['googleId'] ?? '',
+      id: json['id'] ?? '',
       firstName: json['firstName'] ?? '',
       surName: json['surName'] ?? '',
       kmName: json['kmName'] ?? '',
       university: json['university'] ?? '',
       emailAddress: json['emailAddress'] ?? '',
       biography: json['biography'] ?? '',
+      pictureData: json['pictureData'],
+      username: json['username'],
+      password: json['password'],
     );
   }
 
   Map<String, dynamic> toJson() => {
-    'googleId': googleId,
+    'id': id,
     'firstName': firstName,
     'surName': surName,
     'kmName': kmName,
     'university': university,
     'emailAddress': emailAddress,
     'biography': biography,
+    'pictureData' : pictureData,
+    'username' : username,
+    'password' : password,
   };
 }

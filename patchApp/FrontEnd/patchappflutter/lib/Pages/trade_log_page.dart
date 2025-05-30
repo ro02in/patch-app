@@ -89,6 +89,7 @@ class _TradeLogPageState extends State<TradeLogPage> {
                   ],
                 ),
                 child: FloatingActionButton(
+                  heroTag: "FAB16",
                   shape: const CircleBorder(),
                   backgroundColor: Colors.white,
                   onPressed: () {
@@ -196,7 +197,6 @@ class _TradeLogPageState extends State<TradeLogPage> {
                                 child: Icon(Icons.question_mark_rounded,
                                     size: 20, color: Colors.black),
                                 elevation: 4,
-                                heroTag: null,
                               ),
                             ),
             ),
