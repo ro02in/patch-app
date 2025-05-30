@@ -31,6 +31,8 @@ class ProfilePage extends StatefulWidget {
 
 void showDrinkInputDialog(BuildContext context) {
   final TextEditingController _drinkNameController = TextEditingController();
+
+  // State variables inside the dialog
   List<String> ingredients = [];
   String instructions = '';
   String drinkName = '';
@@ -40,116 +42,112 @@ void showDrinkInputDialog(BuildContext context) {
   showDialog(
     context: context,
     builder: (context) {
-      return StatefulBuilder(
-        builder: (context, setState) {
+      return StatefulBuilder(builder: (context, setState) {
 
-          Future<void> fetchDrinkDetails(String name) async {
-            setState(() {
-              isLoading = true;
-              ingredients = [];
-              instructions = '';
-              drinkName = '';
-              errorMessage = '';
-            });
+        Future<void> fetchDrinkDetails(String name) async {
+          setState(() {
+            isLoading = true;
+            ingredients = [];
+            instructions = '';
+            drinkName = '';
+            errorMessage = '';
+          });
 
-            try {
-              final response = await http.get(
-                Uri.parse('https://api.api-ninjas.com/v1/cocktail?name=$name'),
-                headers: {
-                  'X-Api-Key': 'J4Mhmg9sFFHmuKw7tmzaQg==D9qZtXhRG3nTiOB9',
-                  'accept': 'application/json',
-                },
-              );
+          try {
+            final response = await http.get(
+              Uri.parse('https://api.api-ninjas.com/v1/cocktail?name=$name'),
+              headers: {
+                'X-Api-Key': 'J4Mhmg9sFFHmuKw7tmzaQg==D9qZtXhRG3nTiOB9',
+                'accept': 'application/json',
+              },
+            );
 
-              if (response.statusCode == 200) {
-                final List<dynamic> data = jsonDecode(response.body);
+            if (response.statusCode == 200) {
+              final List<dynamic> data = jsonDecode(response.body);
 
-                if (data.isEmpty) {
-                  setState(() {
-                    errorMessage = 'No drinks found.';
-                  });
-                } else {
-                  final drink = data[0];
-                  setState(() {
-                    drinkName = drink['name'] ?? 'Unnamed Drink';
-                    ingredients = List<String>.from(drink['ingredients'] ?? []);
-                    instructions = drink['instructions'] ?? 'No instructions available.';
-                  });
-                }
-              } else {
+              if (data.isEmpty) {
                 setState(() {
-                  errorMessage = 'Failed to load data.';
+                  errorMessage = 'No drinks found.';
+                });
+              } else {
+                final drink = data[0];
+                setState(() {
+                  drinkName = drink['name'] ?? 'Unnamed Drink';
+                  ingredients = List<String>.from(drink['ingredients'] ?? []);
+                  instructions = drink['instructions'] ?? 'No instructions available.';
                 });
               }
-            } catch (e) {
+            } else {
               setState(() {
-                errorMessage = 'Error: $e';
-              });
-            } finally {
-              setState(() {
-                isLoading = false;
+                errorMessage = 'Failed to load data.';
               });
             }
+          } catch (e) {
+            setState(() {
+              errorMessage = 'Error: $e';
+            });
+          } finally {
+            setState(() {
+              isLoading = false;
+            });
           }
+        }
 
-          return AlertDialog(
-            title: Text("Enter Drink Name"),
-            content: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  TextField(
-                    controller: _drinkNameController,
-                    decoration: InputDecoration(
-                      labelText: 'Drink Name',
-                      border: OutlineInputBorder(),
-                    ),
+        return AlertDialog(
+          title: Text("Enter Drink Name"),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextField(
+                  controller: _drinkNameController,
+                  decoration: InputDecoration(
+                    labelText: 'Drink Name',
+                    border: OutlineInputBorder(),
                   ),
+                ),
+                SizedBox(height: 10),
+                ElevatedButton(
+                  onPressed: () {
+                    final input = _drinkNameController.text.trim();
+                    if (input.isNotEmpty) {
+                      fetchDrinkDetails(input);
+                    }
+                  },
+                  child: Text("Get Details"),
+                ),
+                SizedBox(height: 20),
+                if (isLoading) Center(child: CircularProgressIndicator()),
+                if (errorMessage.isNotEmpty)
+                  Text(errorMessage, style: TextStyle(color: Colors.red)),
+
+                if (drinkName.isNotEmpty)
+                  Text('Name: $drinkName',
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+
+                if (ingredients.isNotEmpty) ...[
                   SizedBox(height: 10),
-                  ElevatedButton(
-                    onPressed: () {
-                      final input = _drinkNameController.text.trim();
-                      if (input.isNotEmpty) {
-                        fetchDrinkDetails(input);
-                      }
-                    },
-                    child: Text("Get Details"),
-                  ),
-                  SizedBox(height: 20),
-
-                  if (isLoading)
-                    Center(child: CircularProgressIndicator()),
-
-                  if (errorMessage.isNotEmpty)
-                    Text(errorMessage, style: TextStyle(color: Colors.red)),
-
-                  if (drinkName.isNotEmpty)
-                    Text('Name: $drinkName', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
-
-                  if (ingredients.isNotEmpty) ...[
-                    SizedBox(height: 10),
-                    Text('Ingredients:', style: TextStyle(fontWeight: FontWeight.bold)),
-                    ...ingredients.map((ing) => Text("• $ing")),
-                  ],
-
-                  if (instructions.isNotEmpty) ...[
-                    SizedBox(height: 10),
-                    Text('Instructions:', style: TextStyle(fontWeight: FontWeight.bold)),
-                    Text(instructions),
-                  ],
+                  Text('Ingredients:', style: TextStyle(fontWeight: FontWeight.bold)),
+                  ...ingredients.map((ing) => Text("• $ing")),
                 ],
-              ),
+
+                if (instructions.isNotEmpty) ...[
+                  SizedBox(height: 10),
+                  Text('Instructions:', style: TextStyle(fontWeight: FontWeight.bold)),
+                  Text(instructions),
+                ],
+              ],
             ),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(),
-                child: Text("Close"),
-              ),
-            ],
-          );
-        },
-      );
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text("Close"),
+            ),
+          ],
+        );
+      });
     },
   );
 }
