@@ -9,8 +9,8 @@ import java.util.List;
 
 @Repository
 public interface TradeRequestRepository extends JpaRepository<TradeRequest, Long> {
-    List<TradeRequest> findByReceiver(String receiver);
+    List<TradeRequest> findByReceiver(Long receiver);
 
-    List<TradeRequest> findBySender(String sender);
+    List<TradeRequest> findBySender(Long sender);
 
 }
