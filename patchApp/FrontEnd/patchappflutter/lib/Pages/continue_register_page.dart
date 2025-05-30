@@ -1,4 +1,3 @@
-//24 maj ändringar
 
 import 'package:flutter/material.dart';
 
