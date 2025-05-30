@@ -204,7 +204,7 @@ class _ProfilePageState extends State<ProfilePage> {
   //JSON call to backend,
   //get user profile with all details
   //BACKEND get variable of users overall-color
-
+  @override
   void initState() { //Kodrad lösning för att hämta första entry i list: källhänvisning: 'The instance member 'widget' can't be accessed in an initializer. Try replacing the reference to the instance member with a different expression', stackoverflow.com/questions/67501594/the-instance-member-widget-cant-be-accessed-in-an-initializer-try-replacing, av user 'MobIT', publicerad 12 maj 2021, hämtad 21 maj 2025
     super.initState();
     Provider.of<UserProvider>(context, listen: false).setCompleteName();

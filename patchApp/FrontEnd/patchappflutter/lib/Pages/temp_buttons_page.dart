@@ -73,6 +73,8 @@ import 'package:patchappflutter/Pages/search_page.dart';
 //25 maj
 
 class TempButtonsPage extends StatelessWidget {
+  const TempButtonsPage({super.key});
+
  @override
  Widget build(BuildContext context) {
    return Scaffold(

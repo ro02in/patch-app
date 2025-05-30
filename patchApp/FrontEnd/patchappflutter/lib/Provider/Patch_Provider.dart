@@ -1,26 +1,58 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:patchappflutter/Pages/search_page.dart';
 import 'package:patchappflutter/Provider/user_provider.dart';
 import '../Model/patch_model.dart';
 import '../Service/patch_service.dart';
 
 class PatchProvider with ChangeNotifier {
   final PatchService _patchService = PatchService();
-
+  PatchModel? latestPatch = null;
   List<PatchModel> _userPatches = [];
   List<Uint8List> _userPatchImages = [];
   bool _isLoading = false;
   String? _error;
-
   List<PatchModel> get userPatches => _userPatches;
   List<Uint8List> get userPatchImages => _userPatchImages;
   bool get isLoading => _isLoading;
   String? get error => _error;
   int ownerId = UserProvider().id;
+  String description;
+  Uint8List? pictureData;
+  bool isPublic;
+  String placement;
+  String klubbmasteri;
+  String patchName;
+  String color;
 
   PatchProvider({
     this.ownerId = 0,
+    this.description = "test",
+    this.isPublic = true,
+    this.placement = "SKREV",
+    this.klubbmasteri = "Hej",
+    this.patchName = "MärkesNamn",
+    this.color = "SVART",
 });
+
+
+
+  Future<bool> savePatch({required PatchModel patch}) async{
+    this.latestPatch = patch;
+    if(latestPatch != null){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+
+
+  void setOwnerId() async{
+    ownerId = UserProvider().id;
+  }
+
+
   void changeOwnerId({
     required int newOwnerId,
   }) async{

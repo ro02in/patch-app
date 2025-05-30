@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:patchappflutter/Pages/add_patch_page.dart';
 import 'package:patchappflutter/Pages/continue_login_page.dart';
 import 'package:patchappflutter/Pages/continue_register_page.dart';
 import 'package:patchappflutter/Pages/temp_buttons_page.dart';
@@ -14,6 +15,8 @@ void main() {
 
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
 @override
 Widget build(BuildContext context) {
   return MultiProvider(
@@ -23,14 +26,21 @@ Widget build(BuildContext context) {
       ChangeNotifierProvider(create: (_) => TradeProvider()),
     ],
     child: MaterialApp(
-      debugShowCheckedModeBanner: false,
       home: AuthPage(),
-    ),
+  ),
+    builder: (context, child) {
+      // No longer throws
+      return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: AuthPage(),);
+    }
   );
  }
 }
 
 class AuthPage extends StatelessWidget {
+  const AuthPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -105,7 +115,7 @@ class AuthPage extends StatelessWidget {
                             onPressed: () {
                               //Gå till LogInPage() med epost och lösenord //30 maj
                               Navigator.push(context, MaterialPageRoute(
-                                  builder: (context) => LoginPage())); //gå till continue_login_page.dart
+                                  builder: (context) => PatchViewPage())); //gå till continue_login_page.dart
                             },
                             child: Text("Logga in", style: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 17))),
                       ),
@@ -135,7 +145,7 @@ class AuthPage extends StatelessWidget {
                             onPressed: () {
                               //Gå till ContinueRegisterPage() med epost och lösenord //30 maj
                               Navigator.push(context, MaterialPageRoute(
-                                  builder: (context) => ContinueRegisterPage()));
+                                  builder: (context) => TempButtonsPage()));
                             },
                             child: Text("Registrera konto", style: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 17))),
                       ),
@@ -149,10 +159,16 @@ class AuthPage extends StatelessWidget {
                 ),
               ),
             ],
+
           ),
+
         ),
+
+
       ),
+
     );
+
   }
 
   Widget buildButton(BuildContext context, String text, Widget destination, Color color) {

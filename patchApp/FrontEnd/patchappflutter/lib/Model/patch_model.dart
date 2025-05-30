@@ -30,7 +30,7 @@ class PatchModel {
       ownerId: json['ownerId'],
       description: json['description'] ?? '',
       pictureData: Uint8List.fromList(List<int>.from(json['pictureData'])),
-      isPublic: json['isPublic'] ?? '',
+      isPublic: json['isPublic'] ?? true,
       placement: json['placement'] ?? '',
       klubbmasteri: json['klubbmasteri'] ?? '',
       patchName: json['patchName'] ?? '',
