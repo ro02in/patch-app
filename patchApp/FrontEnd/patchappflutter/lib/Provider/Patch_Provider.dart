@@ -8,6 +8,7 @@ import '../Service/patch_service.dart';
 class PatchProvider with ChangeNotifier {
   final PatchService _patchService = PatchService();
   PatchModel? latestPatch = null;
+  PatchModel? _patch;
   List<PatchModel> _userPatches = [];
   List<Uint8List> _userPatchImages = [];
   bool _isLoading = false;
@@ -16,7 +17,7 @@ class PatchProvider with ChangeNotifier {
   List<Uint8List> get userPatchImages => _userPatchImages;
   bool get isLoading => _isLoading;
   String? get error => _error;
-  int ownerId = UserProvider().id;
+  int? ownerId = UserProvider().id;
   String description;
   Uint8List? pictureData;
   bool isPublic;
@@ -37,7 +38,7 @@ class PatchProvider with ChangeNotifier {
 
 
 
-  Future<bool> savePatch({required PatchModel patch}) async{
+  bool savePatch({required PatchModel patch}) {
     this.latestPatch = patch;
     if(latestPatch != null){
       return true;
@@ -45,6 +46,12 @@ class PatchProvider with ChangeNotifier {
     else{
       return false;
     }
+  }
+
+  Future<PatchModel> createSavedPatch(PatchModel patch) async {
+    Future<PatchModel> patchMade;
+     return patchMade = _patchService.createPatch(patch);
+
   }
 
 
@@ -103,6 +110,14 @@ class PatchProvider with ChangeNotifier {
       _error = e.toString();
       _setLoading(false);
       return null;
+    }
+  }
+  Future<void> registerPatchTester(PatchModel newPatch) async {
+    try {
+      _patch = await _patchService.registerNewPatch(newPatch);
+      notifyListeners();
+    } catch (e) {
+      throw Exception('Could not register patch: $e');
     }
   }
 

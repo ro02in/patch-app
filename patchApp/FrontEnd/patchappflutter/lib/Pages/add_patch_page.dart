@@ -13,7 +13,7 @@ import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:patchappflutter/Provider/user_provider.dart';
 import 'package:provider/provider.dart';
-import '../Provider/patch_provider.dart'; // Adjust path as needed
+import '../Provider/Patch_Provider.dart'; // Adjust path as needed
 import '../Model/patch_model.dart'; // Adjust path as needed
 
 
@@ -85,6 +85,7 @@ class _PatchViewPageState extends State<PatchViewPage> {
   }
 
   void _createPatchWithProvider(BuildContext context) async {
+    //final patchProvider = Provider.of<PatchProvider>(context, listen: false);
     final patchProvider = Provider.of<PatchProvider>(context, listen: false);
 
     try {
@@ -111,39 +112,25 @@ class _PatchViewPageState extends State<PatchViewPage> {
         });
       }
       //Uint8List emptyList = new Uint8List();
-
-      final newPatch = PatchModel(patchId: null,
-        patchName: "knappTest",
-        description: "Vi testar knappar",
-        ownerId: 1,
+      //Provider.of<PatchProvider>(context, listen: false).setOwnerId();
+      patchProvider.setOwnerId();
+      PatchModel newPatch = PatchModel(patchId: null,
+        patchName: patchNameController.text,
+        description: beskrivningFieldController.text,
+        ownerId: Provider.of<PatchProvider>(context, listen: false).ownerId,
         pictureData: imageData,
-        isPublic: true,
-        placement: "SKREV",
-        klubbmasteri: "KM",
-        color: "BLÅ",
+        isPublic: publicPrivate,
+        placement: dropdownPlacement,
+        klubbmasteri: klubbmasteriFieldController.text,
+        color: dropdownColour,
       );
       await Future.delayed(const Duration(seconds: 1));
 
-      //Future<PatchModel?> patchTest = Provider.of<PatchProvider>(context).createPatch(newPatch);
       if(!context.mounted) return;
-      final result = await patchProvider.createPatch(newPatch);
+      await patchProvider.registerPatchTester(newPatch);
 
 
-      // Create PatchModel object
-//      final newPatch = PatchModel(
-//        patchId: null, // This will likely be set by the backend when creating
-//        patchName: patchName,
-//        description: beskrivning,
- //       ownerId: , // You might want to get this dynamically
-//        pictureData: imageData,
- //       isPublic: publicPrivate,
- //       placement: dropdownPlacement,
- //       klubbmasteri: klubbMasteri,
-//        color: dropdownColour,
- //     );
 
-     // final result = await patchProvider.createPatch(newPatch);
-      if (result != null) {
         // Success - patch created
         if(!context.mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
@@ -154,7 +141,7 @@ class _PatchViewPageState extends State<PatchViewPage> {
         );
         // Optionally clear the form or navigate back
         clearForm();
-      } else {
+
         // Error occurred
         if(!context.mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
@@ -163,7 +150,7 @@ class _PatchViewPageState extends State<PatchViewPage> {
             backgroundColor: Colors.blue,
           ),
         );
-      }
+
     } catch (e) {
       rethrow;
       ScaffoldMessenger.of(context).showSnackBar(
@@ -176,12 +163,7 @@ class _PatchViewPageState extends State<PatchViewPage> {
   }
   @override
   Widget build(BuildContext context) {
-    //try {
-     // final patchProvider = Provider.of<PatchProvider>(context);
-    //  print("✅ Provider hittades!");
-   // } catch (e) {
-  //    print("❌ Provider hittades INTE: $e");
-  //  }
+
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 31, 31, 31), //beige color
       body: Scrollbar(

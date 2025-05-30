@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:patchappflutter/Pages/start_page.dart';
 import 'dart:convert';
 import 'package:patchappflutter/Pages/temp_buttons_page.dart';
 
@@ -72,7 +73,7 @@ class _ContinueRegisterPageState extends State<ContinueRegisterPage> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => AuthPage()),
+                        MaterialPageRoute(builder: (context) => StartPage()),
                       );
                     },
                     tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,

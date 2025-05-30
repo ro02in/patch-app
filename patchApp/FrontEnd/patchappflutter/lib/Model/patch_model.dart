@@ -4,8 +4,8 @@ import 'dart:typed_data'; //stackoverflow.com/questions/49016508/what-is-the-dar
 class PatchModel {
   final int? patchId;
   final String description;
-  final int ownerId;
-  final Uint8List pictureData;
+  final int? ownerId;
+  final Uint8List? pictureData;
   final bool isPublic;
   final String placement;
   final String klubbmasteri;
@@ -16,7 +16,7 @@ class PatchModel {
     this.patchId,
     required this.description,
     required this.ownerId,
-    required this.pictureData,
+    this.pictureData,
     required this.isPublic,
     required this.placement,
     required this.klubbmasteri,

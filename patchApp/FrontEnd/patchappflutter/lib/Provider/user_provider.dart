@@ -10,7 +10,7 @@ class UserProvider with ChangeNotifier {
   UserModel? get user => _user;
   List<UserModel> get searchResults => _searchResults;
   String userName;
-  int id;
+  int? id;
   int ovveIndex;
   String biography;
   String kmName;
@@ -23,7 +23,7 @@ class UserProvider with ChangeNotifier {
   UserProvider(
       {
         this.userName = "Users name:",
-        this.id = 0,
+        this.id,
         this.ovveIndex = 0,
         this.biography = "",
         this.kmName = "Pog",

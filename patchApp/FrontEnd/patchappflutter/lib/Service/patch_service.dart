@@ -10,6 +10,21 @@ class PatchService {
 // if you change your spring boot port make sure u change here.
   final String baseUrl = 'https://group-4-15.pvt.dsv.su.se/api/patch';
 
+  // Register new Patch
+  Future<PatchModel> registerNewPatch(PatchModel patch) async {
+    final response = await http.post(
+      Uri.parse('$baseUrl/register'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode(patch.toJson()),
+    );
+
+    if (response.statusCode == 200) {
+      return PatchModel.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to register user');
+    }
+  }
+
   Future<List<PatchModel>> getUserPatches(String googleId) async {
     final response = await http.get(Uri.parse('$baseUrl/user/$googleId'));
     if (response.statusCode == 200) {

@@ -11,7 +11,7 @@ class UserModel {
   String biography;
   final String username;
   final String password;
-  final Uint8List pictureData;
+  final Uint8List? pictureData;
 
   UserModel({
     required this.id,
@@ -21,7 +21,7 @@ class UserModel {
     required this.university,
     required this.emailAddress,
     required this.biography,
-    required this.pictureData,
+    this.pictureData,
     required this.username,
     required this.password,
   });
