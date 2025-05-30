@@ -111,11 +111,15 @@ class AuthPage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(30),
                           border: Border.all(color: Color.fromARGB(255, 226, 93, 246), width: 1),
                         ),
-                        child: OutlinedButton(
+                        child: OutlinedButton( //30 maj 20:46
+                          style: OutlinedButton.styleFrom(
+                            overlayColor: Colors.black54,
+                            splashFactory: NoSplash.splashFactory
+                          ),
                             onPressed: () {
                               //Gå till LogInPage() med epost och lösenord //30 maj
                               Navigator.push(context, MaterialPageRoute(
-                                  builder: (context) => PatchViewPage())); //gå till continue_login_page.dart
+                                  builder: (context) => LoginPage())); //gå till continue_login_page.dart
                             },
                             child: Text("Logga in", style: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 17))),
                       ),
@@ -142,10 +146,14 @@ class AuthPage extends StatelessWidget {
                           border: Border.all(color: Colors.purpleAccent, width: 1),
                         ),
                         child: OutlinedButton(
+                            style: OutlinedButton.styleFrom( //30 maj 20:46
+                                overlayColor: Colors.black54,
+                                splashFactory: NoSplash.splashFactory
+                            ),
                             onPressed: () {
                               //Gå till ContinueRegisterPage() med epost och lösenord //30 maj
                               Navigator.push(context, MaterialPageRoute(
-                                  builder: (context) => TempButtonsPage()));
+                                  builder: (context) => ContinueRegisterPage()));
                             },
                             child: Text("Registrera konto", style: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 17))),
                       ),
