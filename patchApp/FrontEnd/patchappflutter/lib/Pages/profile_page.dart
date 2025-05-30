@@ -30,93 +30,130 @@ class ProfilePage extends StatefulWidget {
 }
 
 void showDrinkInputDialog(BuildContext context) {
-  final TextEditingController _ingredientController = TextEditingController();
-  List<String> drinkSuggestions = [];
+  final TextEditingController _drinkNameController = TextEditingController();
+  List<String> ingredients = [];
+  String instructions = '';
+  String drinkName = '';
   bool isLoading = false;
+  String errorMessage = '';
 
   showDialog(
     context: context,
     builder: (context) {
-      return StatefulBuilder(builder: (context, setState) {
-        Future<void> fetchDrinkSuggestions(String name) async {
-          setState(() => isLoading = true);
+      return StatefulBuilder(
+        builder: (context, setState) {
 
-          try {
-            final response = await http.get(
-              Uri.parse('https://api.api-ninjas.com/v1/cocktail?name=$name'),
-              headers: {
-                'X-Api-Key': 'J4Mhmg9sFFHmuKw7tmzaQg==D9qZtXhRG3nTiOB9',
-                'accept': 'application/json',
-              },
-            );
+          Future<void> fetchDrinkDetails(String name) async {
+            setState(() {
+              isLoading = true;
+              ingredients = [];
+              instructions = '';
+              drinkName = '';
+              errorMessage = '';
+            });
 
-            if (response.statusCode == 200) {
-              final List<dynamic> data = jsonDecode(response.body);
-              setState(() {
+            try {
+              final response = await http.get(
+                Uri.parse('https://api.api-ninjas.com/v1/cocktail?name=$name'),
+                headers: {
+                  'X-Api-Key': 'J4Mhmg9sFFHmuKw7tmzaQg==D9qZtXhRG3nTiOB9',
+                  'accept': 'application/json',
+                },
+              );
+
+              if (response.statusCode == 200) {
+                final List<dynamic> data = jsonDecode(response.body);
+
                 if (data.isEmpty) {
-                  drinkSuggestions = ['No drinks found.'];
+                  setState(() {
+                    errorMessage = 'No drinks found.';
+                  });
                 } else {
-                  drinkSuggestions = data
-                      .map<String>((drink) => drink['name'] ?? 'Unnamed Drink')
-                      .toList();
+                  final drink = data[0];
+                  setState(() {
+                    drinkName = drink['name'] ?? 'Unnamed Drink';
+                    ingredients = List<String>.from(drink['ingredients'] ?? []);
+                    instructions = drink['instructions'] ?? 'No instructions available.';
+                  });
                 }
-              });
-            } else {
+              } else {
+                setState(() {
+                  errorMessage = 'Failed to load data.';
+                });
+              }
+            } catch (e) {
               setState(() {
-                drinkSuggestions = ['No drinks found.'];
+                errorMessage = 'Error: $e';
+              });
+            } finally {
+              setState(() {
+                isLoading = false;
               });
             }
-          } catch (e) {
-            setState(() {
-              drinkSuggestions = ['Error: $e'];
-            });
           }
 
-          setState(() => isLoading = false);
-        }
+          return AlertDialog(
+            title: Text("Enter Drink Name"),
+            content: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TextField(
+                    controller: _drinkNameController,
+                    decoration: InputDecoration(
+                      labelText: 'Drink Name',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  ElevatedButton(
+                    onPressed: () {
+                      final input = _drinkNameController.text.trim();
+                      if (input.isNotEmpty) {
+                        fetchDrinkDetails(input);
+                      }
+                    },
+                    child: Text("Get Details"),
+                  ),
+                  SizedBox(height: 20),
 
-        return AlertDialog(
-          title: Text("Enter an Ingredient"),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(
-                controller: _ingredientController,
-                decoration: InputDecoration(
-                  labelText: 'Ingredient',
-                  border: OutlineInputBorder(),
-                ),
+                  if (isLoading)
+                    Center(child: CircularProgressIndicator()),
+
+                  if (errorMessage.isNotEmpty)
+                    Text(errorMessage, style: TextStyle(color: Colors.red)),
+
+                  if (drinkName.isNotEmpty)
+                    Text('Name: $drinkName', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+
+                  if (ingredients.isNotEmpty) ...[
+                    SizedBox(height: 10),
+                    Text('Ingredients:', style: TextStyle(fontWeight: FontWeight.bold)),
+                    ...ingredients.map((ing) => Text("• $ing")),
+                  ],
+
+                  if (instructions.isNotEmpty) ...[
+                    SizedBox(height: 10),
+                    Text('Instructions:', style: TextStyle(fontWeight: FontWeight.bold)),
+                    Text(instructions),
+                  ],
+                ],
               ),
-              SizedBox(height: 10),
-              ElevatedButton(
-                onPressed: () {
-                  final input = _ingredientController.text.trim();
-                  if (input.isNotEmpty) {
-                    fetchDrinkSuggestions(input);
-                  }
-                },
-                child: Text("Get Suggestions"),
-              ),
-              if (isLoading)
-                Padding(
-                  padding: const EdgeInsets.only(top: 10),
-                  child: CircularProgressIndicator(),
-                ),
-              if (drinkSuggestions.isNotEmpty)
-                ...drinkSuggestions.map((drink) => ListTile(title: Text(drink))),
-            ],
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: Text("Close"),
             ),
-          ],
-        );
-      });
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: Text("Close"),
+              ),
+            ],
+          );
+        },
+      );
     },
   );
 }
+
 
 class _ProfilePageState extends State<ProfilePage> {
   int currentIndex = 3; //get this info from server
