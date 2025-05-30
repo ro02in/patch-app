@@ -15,13 +15,15 @@ import 'package:patchappflutter/Pages/search_page.dart';
 import 'package:patchappflutter/global_user_info.dart';
 import 'package:patchappflutter/Pages/store_patches.dart';
 import 'package:patchappflutter/Model/patch_model.dart';
-
+import 'package:patchappflutter/Provider/user_provider.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:patchappflutter/Model/patch_model.dart';
 import 'dart:io';
 import 'package:provider/provider.dart';
 import '../Provider/user_provider.dart';
+
+
 const String apiKey = 'J4Mhmg9sFFHmuKw7tmzaQg==D9qZtXhRG3nTiOB9';
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -287,29 +289,35 @@ Widget build(BuildContext context) {
 
               Row(
                 children: [
-                    SizedBox(width: 25),
+                    SizedBox(width: 28),
 
                     //DRINK-KNAPP
-                  FloatingActionButton(
-                    heroTag: "FAB7",
-                    shape: const CircleBorder(side: BorderSide(color: Colors.purpleAccent, width: 3)),
-                    backgroundColor: Colors.transparent,
-                    onPressed: () {
-                      showDrinkInputDialog(context);
-                    },
-                    child: Container(
-                      width: 95,
-                      height: 95,
-                      child: Image.asset('assets/drinkglass1.PNG'),
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          stops: [0.2, 0.6, 0.9],
-                          colors: [Colors.purpleAccent, Colors.tealAccent, Colors.indigoAccent],
-                        ),
-                        shape: BoxShape.circle,
+                  Container(
+                    width: 60,
+                    height: 60,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(100),
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        stops: [0.3, 0.7, 0.9],
+                        colors: [Colors.purpleAccent, Color.fromARGB(255, 255,
+                            121, 12), Color.fromARGB(255, 83, 254, 106)],
                       ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.purpleAccent,
+                          blurRadius: 0,
+                          spreadRadius: 4,
+                          offset: Offset(0, 0)
+                        )
+                      ]
+                    ),
+                    child: IconButton(
+                      onPressed: () {
+                        showDrinkInputDialog(context);
+                      },
+                      icon: Image.asset('assets/drinkdrawing2.PNG'),
                     ),
                   ),
 
