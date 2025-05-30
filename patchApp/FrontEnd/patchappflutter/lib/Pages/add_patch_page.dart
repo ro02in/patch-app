@@ -709,54 +709,54 @@ class _PatchViewPageState extends State<PatchViewPage> {
                       width: 120,
                       child: OutlinedButton(
                         onPressed: () {
-                          setState(() {
-                            patchNameController.text.isEmpty || klubbmasteriFieldController.text.isEmpty ? showDialog(context: context, builder: (BuildContext context) {
+                          if (patchNameController.text.isEmpty || klubbmasteriFieldController.text.isEmpty) {
+                            // Show your existing warning dialog
+                            showDialog(context: context, builder: (BuildContext context) {
                               return AlertDialog(
+                                // Your existing dialog code remains the same...
                                   backgroundColor: Colors.white,
-                                  content:
-                                  Container(
+                                  content: Container(
                                     width: 350,
                                     height: 200,
-                                    child:
-                                      ListView(
-                                        children: [
-                                          Row(
-                                            children: [
-                                              SizedBox(width: 226),
-                                              Container(
-                                                width: 38,
-                                                height: 38,
-                                                child: FloatingActionButton(
-                                                shape: const CircleBorder(),
-                                                backgroundColor: Color.fromARGB(255, 35, 35, 35),
-                                                elevation: 2,
-                                                onPressed: () {
-                                                  Navigator.pop(context);
-                                                },
-                                                child: Icon(Icons.close, color: Colors.white, size: 18)),
-                                                ),
-                                              ],
+                                    child: ListView(
+                                      children: [
+                                        Row(
+                                          children: [
+                                            SizedBox(width: 226),
+                                            Container(
+                                              width: 38,
+                                              height: 38,
+                                              child: FloatingActionButton(
+                                                  shape: const CircleBorder(),
+                                                  backgroundColor: Color.fromARGB(255, 35, 35, 35),
+                                                  elevation: 2,
+                                                  onPressed: () {
+                                                    Navigator.pop(context);
+                                                  },
+                                                  child: Icon(Icons.close, color: Colors.white, size: 18)
+                                              ),
                                             ),
-                                              SizedBox(height: 20),
-                                                Row(
-                                                  children: [
-                                                    Text("VARNING!", style: TextStyle(color: Colors.black, fontSize: 20, fontFamily: 'InknutAntiqua', fontWeight: FontWeight.w500)),
-                                                  ],
-                                                ),
-                                                Row(
-                                                  children: [
-                                                    Text("\nMärkesnamn-fältet och\nKlubbmästeri-fältet\nfår inte vara tomma.", style: TextStyle(color: Colors.black, fontSize: 15, fontFamily: 'InknutAntiqua')),
-                                                  ],
-                                                )
-                                            ],
-                                      ),
+                                          ],
+                                        ),
+                                        SizedBox(height: 20),
+                                        Row(
+                                          children: [
+                                            Text("VARNING!", style: TextStyle(color: Colors.black, fontSize: 20, fontFamily: 'InknutAntiqua', fontWeight: FontWeight.w500)),
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            Text("\nMärkesnamn-fältet och\nKlubbmästeri-fältet\nfår inte vara tomma.", style: TextStyle(color: Colors.black, fontSize: 15, fontFamily: 'InknutAntiqua')),
+                                          ],
+                                        )
+                                      ],
+                                    ),
                                   )
                               );
-                            }
-                            )
-                            : _createPatchWithProvider(); //Om Märkesnamn-fält = tomt är falskt, skapa patch
+                            });
+                          } else {
+                            _createPatchWithProvider(); // Use the new method
                           }
-                          ); //TODO FIX THIS PLS
                         },
                         style: OutlinedButton.styleFrom(
                             backgroundColor: Color.fromARGB(255, 42, 42, 42),
