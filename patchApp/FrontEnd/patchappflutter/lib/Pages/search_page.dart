@@ -105,7 +105,7 @@ class _SearchPageState extends State<SearchPage> {
                 style: const TextStyle(color: Colors.black87),
                 decoration: InputDecoration(
                   hintText: 'Sök efter användare...',
-                  hintStyle: const TextStyle(color: Colors.black54),
+                  hintStyle: TextStyle(color: Colors.black54, fontFamily: 'InknutAntiqua'),
                   filled: true,
                   fillColor: Colors.white,
                   contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
@@ -136,7 +136,7 @@ class _SearchPageState extends State<SearchPage> {
                         fontSize: 25,
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
-                        fontFamily: 'DMSans'
+                        fontFamily: 'InknutAntiqua'
                       ),
                     ),
                    // subtitle: Text(user.emailAddress),
