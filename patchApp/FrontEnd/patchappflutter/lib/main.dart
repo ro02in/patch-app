@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:patchappflutter/Pages/continue_login_page.dart';
-import 'package:patchappflutter/Pages/register_page.dart';
+import 'package:patchappflutter/Pages/continue_register_page.dart';
 import 'package:patchappflutter/Pages/temp_buttons_page.dart';
 
 void main() {
@@ -61,7 +61,7 @@ class AuthPage extends StatelessWidget {
                 SizedBox(height: 40),
                 buildButton(context, "LOG IN", LoginPage(), Colors.green),
                 SizedBox(height: 20),
-                buildButton(context, "REGISTER", RegisterPage(), Colors.blue),
+                buildButton(context, "REGISTER", ContinueRegisterPage(), Colors.blue),
                 SizedBox(height: 20),
                 buildButton(context, "DEV MENY", TempButtonsPage(), Colors.orange),
               ],
