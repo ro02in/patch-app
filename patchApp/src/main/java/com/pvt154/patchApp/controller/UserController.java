@@ -21,14 +21,14 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<User> registerUser(@RequestBody User user) {
-        User savedUser = userService.createUser(user);
+        User savedUser = userService.registerUser(user);
         return ResponseEntity.ok(savedUser);
     }
 
-    @PutMapping("/update/{googleId}")
-    public ResponseEntity<User> updateUser(@PathVariable String googleId,
+    @PutMapping("/update/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable Long id,
                                            @RequestBody User updatedUser) {
-        User result = userService.updateUser(googleId, updatedUser);
+        User result = userService.updateUser(id, updatedUser);
         return ResponseEntity.ok(result);
     }
 
@@ -37,15 +37,15 @@ public class UserController {
         return userService.searchUsers(query);
     }
 
-    @DeleteMapping("/delete/{googleId}")
-    public ResponseEntity<User> deleteUser(@PathVariable String googleId) {
-         userService.deleteUser(googleId);
-         return ResponseEntity.noContent().build();
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+        userService.deleteUser(id);
+        return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/{googleId}")
-    public ResponseEntity<User> getUser(@PathVariable String googleId) {
-        User user = userService.getUserById(googleId);
+    @GetMapping("/{id}")
+    public ResponseEntity<User> getUser(@PathVariable Long id) {
+        User user = userService.getUserById(id);
         return ResponseEntity.ok(user);
     }
 

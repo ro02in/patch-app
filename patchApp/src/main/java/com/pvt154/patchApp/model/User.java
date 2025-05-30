@@ -12,9 +12,10 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 public class User {
+
     @Id
-    @Column(name = "google_id", columnDefinition = "VARCHAR(255)", unique = true)
-    private String googleId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;  // ← NEW ID
 
     @Column(name = "first_name")
     private String firstName;
@@ -31,9 +32,13 @@ public class User {
     @Column(name = "email_address", unique = true)
     private String emailAddress;
 
+    @Column(name = "password")
+    private String password;
+
     @Column(name = "biography")
     private String biography;
 
+    @Lob
     @Column(name = "picture")
     private byte[] pictureData;
 
@@ -43,12 +48,14 @@ public class User {
     @OneToMany(mappedBy = "receiver")
     private List<TradeRequest> receivedTrades = new ArrayList<>();
 
-    public User(String firstName, String surName, String kmName, String googleId, String emailAddress, String biography, byte[] pictureData) {
+    public User(String firstName, String surName, String kmName,
+                String emailAddress, String password,
+                String biography, byte[] pictureData) {
         this.firstName = firstName;
         this.surName = surName;
         this.kmName = kmName;
-        this.googleId = googleId;
         this.emailAddress = emailAddress;
+        this.password = password;
         this.biography = biography;
         this.pictureData = pictureData;
     }

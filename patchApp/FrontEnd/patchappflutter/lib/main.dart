@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:patchappflutter/Pages/add_patch_page.dart';
-import 'package:patchappflutter/Pages/continue_register_page.dart';
-import 'package:patchappflutter/Pages/register_page.dart';
-import 'package:patchappflutter/Pages/temp_buttons_page.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+import 'package:patchappflutter/continue_register_page.dart';
+import 'package:patchappflutter/register_page.dart';
+import 'package:patchappflutter/temp_buttons_page.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -14,47 +12,49 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(debugShowCheckedModeBanner: false, home: LogInPage());
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: AuthPage(),
+    );
   }
 }
 
-class LogInPage extends StatelessWidget {
-  final GoogleSignIn _googleSignIn = GoogleSignIn(
-    clientId:
-    '627806627643-dm5alpgkrqa3jdhml17v06m5p0s35p7v.apps.googleusercontent.com',
-  );
+class AuthPage extends StatefulWidget {
+  @override
+  _AuthPageState createState() => _AuthPageState();
+}
 
-  Future<void> handleLogin(BuildContext context) async {
+class _AuthPageState extends State<AuthPage> {
+  // Controllers for the login/register form fields
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  // Call the login endpoint using email and password
+  Future<void> handleLogin() async {
+    final String email = _emailController.text.trim();
+    final String password = _passwordController.text.trim();
+
     try {
-      final GoogleSignInAccount? account = await _googleSignIn.signIn();
-      if (account != null) {
-        final GoogleSignInAuthentication auth = await account.authentication;
-        final idToken = auth.idToken;
+      final response = await http.post(
+        Uri.parse('https://group-4-15.pvt.dsv.su.se/api/auth/login'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'emailAddress': email,
+          'password': password,
+        }),
+      );
 
-        if (idToken != null) {
-          final response = await http.post(
-            Uri.parse('https://group-4-15.pvt.dsv.su.se/api/auth/login'),
-            headers: {'Content-Type': 'application/json'},
-            body: jsonEncode({'idToken': idToken}),
-          );
-
-          final responseData = jsonDecode(response.body);
-          if (responseData['status'] == 'success') {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => TempButtonsPage()),
-            );
-          } else if (responseData['status'] == 'not_found') {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => ContinueRegisterPage()),
-            );
-          } else {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(responseData['message'] ?? 'Login failed')),
-            );
-          }
-        }
+      final responseData = jsonDecode(response.body);
+      // Check status or message in the response to determine success.
+      if (response.statusCode == 200 && responseData['message'] == 'Login successful.') {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => TempButtonsPage()),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(responseData['message'] ?? 'Login failed')),
+        );
       }
     } catch (error) {
       print('Login error: $error');
@@ -64,39 +64,44 @@ class LogInPage extends StatelessWidget {
     }
   }
 
-  Future<void> handleRegister(BuildContext context) async {
+  // Call the register endpoint using email and password
+  // (For fields you don’t ask for, you can either use empty values or add extra form fields as needed.)
+  Future<void> handleRegister() async {
+    final String email = _emailController.text.trim();
+    final String password = _passwordController.text.trim();
+
     try {
-      final GoogleSignInAccount? account = await _googleSignIn.signIn();
-      if (account != null) {
-        final GoogleSignInAuthentication auth = await account.authentication;
-        final idToken = auth.idToken;
+      final response = await http.post(
+        Uri.parse('https://group-4-15.pvt.dsv.su.se/api/auth/register'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'firstName': '',    // Adjust or add fields if needed
+          'surName': '',
+          'kmName': '',
+          'university': '',
+          'emailAddress': email,
+          'password': password,
+          'biography': '',
+          'pictureData': null,
+        }),
+      );
 
-        if (idToken != null) {
-          final response = await http.post(
-            Uri.parse('https://group-4-15.pvt.dsv.su.se/api/auth/register'),
-            headers: {'Content-Type': 'application/json'},
-            body: jsonEncode({'idToken': idToken}),
-          );
-
-          final responseData = jsonDecode(response.body);
-          if (responseData['status'] == 'success') {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => RegisterPage()),
-            );
-          } else {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(responseData['message'] ?? 'Registration failed')),
-            );
-          }
-        }
+      final responseData = jsonDecode(response.body);
+      if (response.statusCode == 200 && responseData['message'] == 'User registered successfully.') {
+        // On registration success, you could navigate to a registration details page
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => RegisterPage()),
+        );
       } else {
-        print('Login aborted by user');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(responseData['message'] ?? 'Registration failed')),
+        );
       }
     } catch (error) {
-      print('Google Sign-In error: $error');
+      print('Registration error: $error');
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Sign-in failed: $error')),
+        SnackBar(content: Text('Registration failed: $error')),
       );
     }
   }
@@ -107,107 +112,104 @@ class LogInPage extends StatelessWidget {
 
     return Scaffold(
       body: Container(
-        alignment: Alignment.bottomCenter,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              width: screenSize.width,
-              height: screenSize.height,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/stitches1.png'),
-                  fit: BoxFit.fill,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/stitches1.png'),
+            fit: BoxFit.fill,
+          ),
+        ),
+        child: SingleChildScrollView(
+          padding: EdgeInsets.symmetric(horizontal: 30),
+          child: Container(
+            padding: EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: Color.fromARGB(255, 53, 53, 53).withOpacity(0.8),
+              borderRadius: BorderRadius.circular(30),
+              border: Border.all(color: Color.fromARGB(255, 226, 93, 246), width: 1),
+              boxShadow: [
+                BoxShadow(
+                  color: Color.fromARGB(255, 39, 39, 39),
+                  blurRadius: 5,
+                  spreadRadius: 2,
+                  offset: Offset(1, 4),
                 ),
-              ),
-              child: Column(
-                children: [
-                  SizedBox(height: 200),
-                  Text(
-                    "WELCOME TO",
-                    style: TextStyle(
-                      color: Color.fromARGB(255, 239, 137, 254),
-                      fontFamily: 'InknutAntiqua',
-                      fontSize: 30,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                  SizedBox(height: 3),
-                  Image.asset('assets/sbpinklogo.png', width: 150, height: 150),
-                  Image.asset('assets/syttbyttljusrosatext.png', height: 20, width: 400),
-                  SizedBox(height: 20),
-                  Container(
-                    width: 310,
-                    height: 310,
-                    decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 53, 53, 53),
-                      borderRadius: BorderRadius.circular(30),
-                      border: Border.all(color: Color.fromARGB(255, 226, 93, 246), width: 1),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Color.fromARGB(255, 39, 39, 39),
-                          blurRadius: 5,
-                          spreadRadius: 2,
-                          offset: Offset(1, 4),
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      children: [
-                        SizedBox(height: 95),
-                        buildButton(context, "LOG IN", handleLogin),
-                        SizedBox(height: 25),
-                        buildButton(context, "REGISTER", handleRegister),
-                        SizedBox(height: 25),
-                        buildButton(context, "DEV MENY", (_) {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => TempButtonsPage()),
-                          );
-                        }, color: Colors.orange),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+              ],
             ),
-          ],
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  "WELCOME TO PATCH APP",
+                  style: TextStyle(
+                    color: Color.fromARGB(255, 239, 137, 254),
+                    fontFamily: 'InknutAntiqua',
+                    fontSize: 30,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+                SizedBox(height: 20),
+                // Email input field
+                TextField(
+                  controller: _emailController,
+                  decoration: InputDecoration(
+                    labelText: "Email",
+                    labelStyle: TextStyle(color: Colors.white),
+                    filled: true,
+                    fillColor: Colors.white12,
+                  ),
+                  style: TextStyle(color: Colors.white),
+                ),
+                SizedBox(height: 20),
+                // Password input field
+                TextField(
+                  controller: _passwordController,
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    labelText: "Password",
+                    labelStyle: TextStyle(color: Colors.white),
+                    filled: true,
+                    fillColor: Colors.white12,
+                  ),
+                  style: TextStyle(color: Colors.white),
+                ),
+                SizedBox(height: 30),
+                buildButton("LOG IN", handleLogin, Colors.green),
+                SizedBox(height: 20),
+                buildButton("REGISTER", handleRegister, Colors.blue),
+                SizedBox(height: 20),
+                buildButton("DEV MENY", () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => TempButtonsPage()),
+                  );
+                }, Colors.orange),
+                SizedBox(height: 20),
+              ],
+            ),
+          ),
         ),
       ),
     );
   }
 
-  Widget buildButton(BuildContext context, String text, Function(BuildContext) onPressed,
-      {Color color = const Color.fromARGB(255, 122, 255, 186)}) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(30)),
-        boxShadow: [
-          BoxShadow(
-            color: Color.fromARGB(255, 39, 39, 39),
-            spreadRadius: 2,
-            blurRadius: 3,
-            offset: Offset.fromDirection(1, 3),
-          ),
-        ],
-      ),
-      child: SizedBox(
-        width: 240,
-        height: 45,
-        child: OutlinedButton(
-          style: OutlinedButton.styleFrom(
-            side: BorderSide(width: 1.2, color: color),
-            backgroundColor: Color.fromARGB(255, 39, 39, 39),
-          ),
-          onPressed: () => onPressed(context),
-          child: Text(
-            text,
-            style: TextStyle(
-              fontFamily: 'InknutAntiqua',
-              fontSize: 18,
-              fontWeight: FontWeight.w500,
-              color: Colors.white,
-            ),
+  Widget buildButton(String text, Function handler, Color color) {
+    return SizedBox(
+      width: 240,
+      height: 45,
+      child: OutlinedButton(
+        style: OutlinedButton.styleFrom(
+          side: BorderSide(width: 1.2, color: color),
+          backgroundColor: Color.fromARGB(255, 39, 39, 39),
+        ),
+        onPressed: () => handler(),
+        child: Text(
+          text,
+          style: TextStyle(
+            fontFamily: 'InknutAntiqua',
+            fontSize: 18,
+            fontWeight: FontWeight.w500,
+            color: Colors.white,
           ),
         ),
       ),
