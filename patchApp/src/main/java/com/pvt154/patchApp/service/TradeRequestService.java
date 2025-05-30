@@ -42,14 +42,14 @@ public class TradeRequestService {
         User sender = userService.getUserById(senderId);
         User receiver = userService.getUserById(receiverId);
         Patch patchOffered = patchService.getPatchById(patchOfferedId);
-        if (!patchOffered.getOwnerGoogleId().equals(sender.getGoogleId())) {
+        if (!patchOffered.getOwnerId().equals(sender.getId())) {
             throw new IllegalArgumentException("Sender doesn't own the offered patch");
         }
 
         Patch patchRequested = null;
         if (patchRequestedId != null) {
             patchRequested = patchService.getPatchById(patchRequestedId);
-            if (!patchRequested.getOwnerGoogleId().equals(receiver.getGoogleId())) {
+            if (!patchRequested.getOwnerId().equals(receiver.getId())) {
                 throw new IllegalArgumentException("Receiver doesn't own the requested patch");
             }
         }
@@ -100,16 +100,16 @@ public class TradeRequestService {
         return null;
     }
 
-    public List<TradeRequest> getTradeRequestsByReceiver(String googleId) {
+    public List<TradeRequest> getTradeRequestsByReceiver(String id) {
         // Eftersom TradeRequest nu har User-objekt, måste vi hämta användaren först
         //User receiver = userService.getUserById(googleId);
 
-        return tradeRequestRepository.findByReceiver(googleId);
+        return tradeRequestRepository.findByReceiver(id);
     }
 
-    public List<TradeRequest> getTradeRequestsBySender(String googleId) {
+    public List<TradeRequest> getTradeRequestsBySender(String id) {
         //User sender = userService.getUserById(googleId);
-        return tradeRequestRepository.findBySender(googleId);
+        return tradeRequestRepository.findBySender(id);
     }
 
     public List<TradeRequest> getAllTradeRequests() {

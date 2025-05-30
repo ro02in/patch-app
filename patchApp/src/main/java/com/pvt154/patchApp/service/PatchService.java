@@ -23,8 +23,8 @@ public class PatchService {
     }
 
 
-    public List<Patch> getPatchesByUser(String googleId) {
-        return patchRepository.findByOwnerGoogleId(googleId);
+    public List<Patch> getPatchesByUser(String id) {
+        return patchRepository.findByOwnerId(id);
     }
 
 
@@ -39,7 +39,7 @@ public class PatchService {
 
 
     public Patch changeOwner(Patch patch, User newOwner) {
-        patch.setOwnerGoogleId(newOwner.getGoogleId());
+        patch.setOwnerId(newOwner.getId());
         return patchRepository.save(patch);
     }
 

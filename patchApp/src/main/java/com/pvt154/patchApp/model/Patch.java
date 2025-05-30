@@ -19,8 +19,8 @@ public class Patch {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "owner_google_id")
-    private String ownerGoogleId;
+    @Column(name = "owner_id")
+    private String ownerId;
 
     @Lob
     @Column(columnDefinition = "LONGBLOB")
@@ -41,15 +41,15 @@ public class Patch {
     @Column(name = "color")
     private String color;
 
-    public Patch(String ownerGoogleId, String placement, String colors) {
-        this.ownerGoogleId = ownerGoogleId;
+    public Patch(String ownerId, String placement, String colors) {
+        this.ownerId = ownerId;
         this.placement = placement;
         this.color = colors;
     }
 
     public Patch(String description, String owner, String placement, String colors, byte[] pictureData) {
         this.description = description;
-        this.ownerGoogleId = owner;
+        this.ownerId = owner;
         this.placement = placement;
         this.color = colors;
         this.pictureData = pictureData;

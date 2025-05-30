@@ -29,7 +29,7 @@ public class PatchController {
     @PostMapping("/add")
     public ResponseEntity<Patch> createPatch(
             @RequestParam("description") String description,
-            @RequestParam("ownerGoogleId") String ownerGoogleId,
+            @RequestParam("ownerId") String ownerId,
             @RequestParam("placement") String placement,
             @RequestParam("isPublic") boolean isPublic,
             @RequestParam("color") String color,
@@ -38,7 +38,7 @@ public class PatchController {
             @RequestParam("klubbmästeri") String klubbmästeri
     ) throws IOException {
         byte[] imageBytes = imageFile.getBytes();
-        Patch patch = new Patch(description, ownerGoogleId, placement, color, imageBytes);
+        Patch patch = new Patch(description, ownerId, placement, color, imageBytes);
         patch.setPatchName(patchName);
         patch.setKlubbmästeri(klubbmästeri);
         patch.setIsPublic(isPublic);
@@ -55,9 +55,9 @@ public class PatchController {
         return new ResponseEntity<>(image, headers, HttpStatus.OK);
     }
 
-    @GetMapping("/user/{googleId}")
-    public ResponseEntity<List<Patch>> getPatchesByUser(@PathVariable String googleId) {
-        List<Patch> patches = patchService.getPatchesByUser(googleId);
+    @GetMapping("/user/{id}")
+    public ResponseEntity<List<Patch>> getPatchesByUser(@PathVariable String id) {
+        List<Patch> patches = patchService.getPatchesByUser(id);
         return ResponseEntity.ok(patches);
     }
 
@@ -67,9 +67,9 @@ public class PatchController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/images/belongs/{googleId}")
-    public ResponseEntity<List<String>> getPatchesImagesByOwner(@PathVariable String googleId) {
-        List<Patch> patches = patchService.getPatchesByUser(googleId);  // Metod som returnerar lista av Patch för ägaren
+    @GetMapping("/images/belongs/{id}")
+    public ResponseEntity<List<String>> getPatchesImagesByOwner(@PathVariable String id) {
+        List<Patch> patches = patchService.getPatchesByUser(id);  // Metod som returnerar lista av Patch för ägaren
 
         List<String> base64Images = patches.stream()
                 .map(patch -> Base64.getEncoder().encodeToString(patch.getPictureData()))
