@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:patchappflutter/Pages/continue_register_page.dart';
 import 'dart:convert';
 import 'package:patchappflutter/Pages/temp_buttons_page.dart';
+
+import '../main.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -63,9 +66,24 @@ class _LoginPageState extends State<LoginPage> {
               title: const Text('Logga in', style: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 22)),
               backgroundColor: Color.fromARGB(170, 38, 42, 27), //Color.fromARGB(255, 243, 92, 255) rosa
               centerTitle: true,
+              leading: Builder( //Källhänvisning: 'leading property', //api.flutter.dev/flutter/material/AppBar/leading.html publicerad u.å, hämtad 30 maj 2025
+                builder: (BuildContext context) {
+                  return IconButton(
+                    icon: const Icon(Icons.arrow_back, color: Colors.white),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => AuthPage()),
+                      );
+                    },
+                    tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+                  );
+                },
+              ),
               toolbarHeight: 57,
-              leadingWidth: 125,
-              leading: Icon(Icons.arrow_back, color: Colors.white),
+              leadingWidth: 135,
+              //leading: Icon(Icons.arrow_back, color: Colors.white),
+              automaticallyImplyLeading: true,
               titleSpacing: -23,
               elevation: 15,
               primary: true,

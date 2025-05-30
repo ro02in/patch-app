@@ -3,6 +3,8 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:patchappflutter/Pages/temp_buttons_page.dart';
 
+import '../main.dart';
+
 class ContinueRegisterPage extends StatefulWidget {
   @override
   _ContinueRegisterPageState createState() => _ContinueRegisterPageState();
@@ -63,7 +65,21 @@ class _ContinueRegisterPageState extends State<ContinueRegisterPage> {
               backgroundColor: Color.fromARGB(170, 34, 42, 22), //Color.fromARGB(255, 243, 92, 255) rosa
               toolbarHeight: 57,
               leadingWidth: 160,
-              leading: Icon(Icons.arrow_back, color: Colors.white),
+              leading: Builder( //Källhänvisning: 'leading property', //api.flutter.dev/flutter/material/AppBar/leading.html publicerad u.å, hämtad 30 maj 2025
+                builder: (BuildContext context) {
+                  return IconButton(
+                    icon: const Icon(Icons.arrow_back, color: Colors.white),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => AuthPage()),
+                      );
+                    },
+                    tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+                  );
+                },
+              ),
+              automaticallyImplyLeading: true,
               titleSpacing: -23,
               elevation: 10,
               primary: true,

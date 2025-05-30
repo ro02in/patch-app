@@ -8,10 +8,13 @@
  // youtu.be/qYCsxvbPDC8?si=1U4WiVS3sKaa-Usd av kanalen Marcus Ng på Youtube publicerad 11 november 2022, hämtad 2025-05-17.
  //Även filen i path ios/Flutter/Info.plist kodrad 48 och 49 är kod hämtad från samma källa, samt dependencies i pubspec.yaml*/
 
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
+import 'package:patchappflutter/Pages/search_page.dart';
 import 'package:patchappflutter/Pages/trade_request_success_page.dart';
 
 //25  maj
@@ -26,6 +29,48 @@ class TradeActionPage extends StatefulWidget {
 
 class _TradeActionPageState extends State<TradeActionPage> {
     File ? _selectedImage;
+
+    final TextEditingController _searchController = TextEditingController();
+    List<User> _searchResults = [];
+    bool _isLoading = false;
+
+    final String baseUrl = 'https://group-4-15.pvt.dsv.su.se/api/user/search';
+
+    Future<List<User>> fetchUsers(String query) async {
+      final response = await http.get(
+        Uri.parse('$baseUrl?query=$query'),
+        headers: {'Content-Type': 'application/json'},
+      );
+
+      if (response.statusCode == 200) {
+        final List<dynamic> jsonData = json.decode(response.body);
+        return jsonData.map((json) => User.fromJson(json)).toList();
+      } else {
+        throw Exception('Misslyckades att hämta användare');
+      }
+    }
+
+    void _onSearchChanged(String query) async {
+      if (query.isEmpty) {
+        setState(() => _searchResults = []);
+        return;
+      }
+
+      setState(() => _isLoading = true);
+
+      try {
+        final users = await fetchUsers(query);
+        setState(() => _searchResults = users);
+      } catch (e) {
+        print('Fel vid sökning: $e');
+      } finally {
+        setState(() => _isLoading = false);
+      }
+    }
+
+
+
+
 
 @override
 Widget build (BuildContext context) {
@@ -77,10 +122,34 @@ Widget build (BuildContext context) {
             ),
             child: Column(
               children: [
-                SizedBox(height: 45), //vertical padding
-                Text("Ge märke till:", style: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 28)),
+                SizedBox(height: 64), //vertical padding
+                Text("Ge märke till:", style: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 22)),
                 SizedBox(height: 10),
-                Container( //Textbox userName //BACKEND
+
+                // Sökruta SEARCHPAGE
+                 Container(
+                   width: 290,
+                   height: 100,
+                   child: TextField(
+                      controller: _searchController,
+                      style: const TextStyle(color: Colors.black87),
+                      decoration: InputDecoration(
+                        hintText: 'Sök efter användare...',
+                        hintStyle: TextStyle(color: Colors.black54, fontFamily: 'InknutAntiqua'),
+                        filled: true,
+                        fillColor: Colors.white,
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30),
+                          borderSide: BorderSide.none,
+                        ),
+                        prefixIcon: const Icon(Icons.search, color: Colors.black),
+                      ),
+                      onChanged: _onSearchChanged,
+                    ),
+                 ),
+
+              /*  Container( //Textbox userName //BACKEND
                   height: 45,
                   width: 220,
                   decoration: BoxDecoration(
@@ -98,8 +167,8 @@ Widget build (BuildContext context) {
                   ),
                   alignment: Alignment.center,
                   child: Text('$userName', style: TextStyle(color: Colors.white, fontSize: 18, fontFamily: 'CalSans')), //BACKEND userName-värde
-                ),
-                SizedBox(height: 18),
+                ), */
+                SizedBox(height: 2),
 
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -164,7 +233,7 @@ Widget build (BuildContext context) {
 
                 SizedBox(height: 25),
 
-                Text("Du vill motta\nföljande märke:", textAlign: TextAlign.center,style: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 28)),
+                Text("Du vill motta följande märke:", textAlign: TextAlign.center,style: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 22)),
                 SizedBox(height: 15),
 
                 Row(
