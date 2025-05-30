@@ -61,7 +61,7 @@ class _ContinueRegisterPageState extends State<ContinueRegisterPage> {
         child: ListView(
           padding: EdgeInsets.only(top: 0),
           children: [
-            AppBar(
+            AppBar( //30 maj fixad
               backgroundColor: Color.fromARGB(170, 34, 42, 22), //Color.fromARGB(255, 243, 92, 255) rosa
               toolbarHeight: 57,
               leadingWidth: 160,

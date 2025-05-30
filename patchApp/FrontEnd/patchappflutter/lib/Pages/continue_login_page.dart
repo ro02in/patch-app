@@ -62,7 +62,7 @@ class _LoginPageState extends State<LoginPage> {
         child: ListView(
           padding: EdgeInsets.only(top: 0),
           children: [
-            AppBar(
+            AppBar( //30 maj fixad
               title: const Text('Logga in', style: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 22)),
               backgroundColor: Color.fromARGB(170, 38, 42, 27), //Color.fromARGB(255, 243, 92, 255) rosa
               centerTitle: true,

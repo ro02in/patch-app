@@ -126,7 +126,7 @@ Widget build (BuildContext context) {
                 Text("Ge märke till:", style: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 22)),
                 SizedBox(height: 10),
 
-                // Sökruta SEARCHPAGE
+                // Sökruta SEARCHPAGE //30 maj fixad
                  Container(
                    width: 290,
                    height: 100,
