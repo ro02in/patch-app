@@ -2,7 +2,7 @@ import 'dart:ffi';
 import 'dart:typed_data'; //stackoverflow.com/questions/49016508/what-is-the-dart-equivalent-of-java-byte
 
 class PatchModel {
-  final Long patchId;
+  final Long? patchId;
   final String description;
   final String ownerGoogleId;
   final Uint8List pictureData;
@@ -13,7 +13,7 @@ class PatchModel {
   final String color;
 
   PatchModel({
-    required this.patchId,
+    this.patchId,
     required this.description,
     required this.ownerGoogleId,
     required this.pictureData,

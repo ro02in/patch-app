@@ -10,6 +10,10 @@ Denna kod använder detta flutter switch-package för att enklare kunna lägga t
 import 'package:http/http.dart' as http;
 
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
+import '../Provider/patch_provider.dart'; // Adjust path as needed
+import '../Model/patch_model.dart'; // Adjust path as needed
+import 'dart:typed_data';
 
 
 //Variabler till DropDownButtons
@@ -50,15 +54,78 @@ class _PatchViewPageState extends State<PatchViewPage> {
 
   File ? _selectedImage; //lägga till från kamera eller bibliotek variabel
 
-  Future<String> addPatch(String description, String ownerGoogleId, String placement, bool isPublic, String color, File imageFile, String patchName, String klubbmasteri
-  ) async {
-  final response = await http.get(Uri.parse('$baseUrl?description=$description?ownerGoogleId=$ownerGoogleId?is_public=$isPublic?colors=$color?image=$imageFile?patchName=$patchName?klubbmasteri=$klubbMasteri?placement=$placement'),
-  headers: {'Content-Type': 'application/json'},);
+  Future<Uint8List> _fileToUint8List(File file) async {
+    return await file.readAsBytes();
+  }
 
-   if (response.statusCode == 201) {
-      return 'Märket har lagts till!';
-    } else {
-      throw Exception('Märket kunde inte läggas till.');
+  Future<void> _createPatchWithProvider() async {
+    final patchProvider = Provider.of<PatchProvider>(context, listen: false);
+
+    try {
+      // Convert selected image to Uint8List
+      Uint8List imageData = Uint8List(0); // Default empty
+      if (_selectedImage != null) {
+        imageData = await _fileToUint8List(_selectedImage!);
+      }
+
+      void _clearForm() {
+        setState(() {
+          patchNameController.clear();
+          beskrivningFieldController.clear();
+          klubbmasteriFieldController.clear();
+          _selectedImage = null;
+          dropdownColour = colours.first;
+          dropdownPlacement = placement.first;
+          amount = 1;
+          publicPrivate = true;
+          trade = true;
+          patchName = '';
+          beskrivning = '';
+          klubbMasteri = '';
+        });
+      }
+
+
+      // Create PatchModel object
+      final newPatch = PatchModel(
+        patchId: null, // This will likely be set by the backend when creating
+        patchName: patchName,
+        description: beskrivning,
+        ownerGoogleId: "909034", // You might want to get this dynamically
+        pictureData: imageData,
+        isPublic: publicPrivate,
+        placement: dropdownPlacement,
+        klubbmasteri: klubbMasteri,
+        color: dropdownColour,
+      );
+
+      final result = await patchProvider.createPatch(newPatch);
+      if (result != null) {
+        // Success - patch created
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Märket har lagts till!'),
+            backgroundColor: Colors.green,
+          ),
+        );
+        // Optionally clear the form or navigate back
+        _clearForm();
+      } else {
+        // Error occurred
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(patchProvider.error ?? 'Märket kunde inte läggas till.'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Ett fel uppstod: $e'),
+          backgroundColor: Colors.red,
+        ),
+      );
     }
   }
   @override
@@ -687,7 +754,7 @@ class _PatchViewPageState extends State<PatchViewPage> {
                               );
                             }
                             )
-                            : addPatch(beskrivning, "909034", "SKREV", publicPrivate, "BLUE", _selectedImage!, patchName, klubbMasteri); //Om Märkesnamn-fält = tomt är falskt, skapa patch
+                            : _createPatchWithProvider(); //Om Märkesnamn-fält = tomt är falskt, skapa patch
                           }
                           ); //TODO FIX THIS PLS
                         },
