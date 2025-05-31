@@ -194,9 +194,9 @@ class _TradeLogPageState extends State<TradeLogPage> {
                                     },
                                   );
                                 },
+                                elevation: 4,
                                 child: Icon(Icons.question_mark_rounded,
                                     size: 20, color: Colors.black),
-                                elevation: 4,
                               ),
                             ),
             ),

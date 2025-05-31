@@ -97,81 +97,132 @@ void showDrinkInputDialog(BuildContext context) {
         }
 
         return AlertDialog(
-          title: Text("Enter Drink Name", style: TextStyle(
-            color: Colors.purpleAccent,  // Change text color here
-            fontSize: 24,                 // Change font size here
-            fontWeight: FontWeight.bold,  // Change font weight here
-          ),
-          ),
-          content: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                TextField(
-                  controller: _drinkNameController,
-                  decoration: InputDecoration(
-                  labelText: 'Drink Name',
-                  labelStyle: TextStyle(
-                    color: Colors.black54,   // Label text color
-                    fontWeight: FontWeight.w600,
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                    borderSide: BorderSide(
-                      color: Colors.deepPurple,  // Border color
-                      width: 2,
+          contentPadding: EdgeInsets.zero,
+          backgroundColor: Colors.transparent,
+          content: Container(
+            height: 530,
+            width: 300,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(30),
+              color: Color.fromARGB(255, 30, 30, 30)
+            ),
+            child: SingleChildScrollView(
+              padding: EdgeInsets.all(25),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("Enter Drink Name", style: TextStyle(color: Colors.white, fontSize: 24, fontFamily: 'InknutAntiqua')),
+                  SizedBox(height: 20),
+
+                  Center(
+                    child: Container(
+                      width: 170,
+                      height: 48,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        gradient: LinearGradient(colors: [Colors.purpleAccent, Color.fromARGB(255, 255,
+                            121, 12), Color.fromARGB(255, 83, 254, 106)],
+                            begin: Alignment.centerLeft, end: Alignment.bottomRight,
+                            stops: [0.009, 0.5, 1.06]
+                        ),
+                      ),
+                      child: SizedBox(
+                        width: 190,
+                        height: 48,
+                        child: TextField(
+                          cursorHeight: 22,
+                          cursorColor: Colors.white,
+                          controller: _drinkNameController,
+                          maxLength: 60,
+                          maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                          decoration: InputDecoration(
+                            labelText: 'Drink Name',
+                            floatingLabelBehavior: FloatingLabelBehavior.never,
+                            counterText: "", //göm counter-texten
+                            contentPadding: EdgeInsets.only(top: 10, left: 15, bottom: 10, right: 15),
+                            labelStyle: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 15),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(30),
+                              borderSide: BorderSide(
+                                  color: Colors.grey, width: 0),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(30),
+                              borderSide: BorderSide(color: Colors.transparent),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(30),
+                              borderSide: BorderSide(color: Colors.purpleAccent, width: 2),
+                            ),
+                          ),
+                          style: TextStyle(color: Colors.white, fontSize: 16, fontFamily: 'InknutAntiqua'),
+                        ),
+                      ),
                     ),
                   ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                    borderSide: BorderSide(color: Colors.deepPurple),
+                  SizedBox(height: 20),
+                  Center(
+                    child: Container(
+                      width: 180,
+                      height: 42,
+                      alignment: Alignment.center,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color.fromARGB(255, 255, 255, 255),
+                          overlayColor: Colors.white
+                        ),
+                        onPressed: () {
+                          final input = _drinkNameController.text.trim();
+                          if (input.isNotEmpty) {
+                            fetchDrinkDetails(input);
+                          }
+                        },
+                        child: Text("Get recipe", style: TextStyle(fontFamily: 'InknutAntiqua', fontSize: 15, color: Colors.black)),
+                      ),
+                    ),
                   ),
-                ),
-                  style: TextStyle(
-                    color: Colors.black54,            // Input text color
-                    fontSize: 18,
+                  SizedBox(height: 20),
+                  if (isLoading) Center(child: CircularProgressIndicator()),
+                  if (errorMessage.isNotEmpty)
+                    Center(child: Text(errorMessage, style: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 14))),
+
+                  if (drinkName.isNotEmpty)
+                    Text('Name: $drinkName',
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, fontFamily: 'InknutAntiqua', color: Colors.white)),
+
+                  if (ingredients.isNotEmpty) ...[
+                    SizedBox(height: 10),
+                    Text('Ingredients:', style: TextStyle(fontWeight: FontWeight.bold, fontFamily: 'InknutAntiqua', fontSize: 14, color: Colors.white)),
+                    ...ingredients.map((ing) => Text("• $ing", style: TextStyle(fontFamily: 'InknutAntiqua', fontSize: 12, color: Colors.white),)),
+                  ],
+
+                  if (instructions.isNotEmpty) ...[
+                    SizedBox(height: 10),
+                    Text('Instructions:', style: TextStyle(fontWeight: FontWeight.bold, fontFamily: 'InknutAntiqua', color: Colors.white)),
+                    Text(instructions, style: TextStyle(fontFamily: 'InknutAntiqua', fontSize: 12, color: Colors.white)),
+                  ],
+
+                  SizedBox(height: 30),
+
+                  Center(
+                    child: Container(
+                      width: 135,
+                      height: 40,
+                      child: OutlinedButton(
+                        style: OutlinedButton.styleFrom(
+                          backgroundColor: Color.fromARGB(255, 30, 30, 30),
+                          side: BorderSide(color: Colors.purpleAccent, width: 1)
+                        ),
+                        onPressed: () => Navigator.of(context).pop(),
+                        child: Text("Close", style: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 12)),
+                      ),
+                    ),
                   ),
-                ),
-                SizedBox(height: 10),
-                ElevatedButton(
-                  onPressed: () {
-                    final input = _drinkNameController.text.trim();
-                    if (input.isNotEmpty) {
-                      fetchDrinkDetails(input);
-                    }
-                  },
-                  child: Text("Get Details"),
-                ),
-                SizedBox(height: 20),
-                if (isLoading) Center(child: CircularProgressIndicator()),
-                if (errorMessage.isNotEmpty)
-                  Text(errorMessage, style: TextStyle(color: Colors.red)),
-
-                if (drinkName.isNotEmpty)
-                  Text('Name: $drinkName',
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
-
-                if (ingredients.isNotEmpty) ...[
-                  SizedBox(height: 10),
-                  Text('Ingredients:', style: TextStyle(fontWeight: FontWeight.bold)),
-                  ...ingredients.map((ing) => Text("• $ing")),
                 ],
-
-                if (instructions.isNotEmpty) ...[
-                  SizedBox(height: 10),
-                  Text('Instructions:', style: TextStyle(fontWeight: FontWeight.bold)),
-                  Text(instructions),
-                ],
-              ],
+              ),
             ),
           ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: Text("Close"),
-            ),
-          ],
         );
       });
     },
