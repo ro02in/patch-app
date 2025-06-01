@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:patchappflutter/Model/User_model.dart';
 import 'package:patchappflutter/Model/patch_model.dart';
 import 'package:patchappflutter/Pages/profile_page.dart';
 //import 'package:patchappflutter/add_patch_page';
@@ -67,7 +68,7 @@ class PatchInventoryPage extends StatelessWidget {
                                 onPressed: () {
                                   Navigator.push(
                                     context,
-                                    MaterialPageRoute(builder: (context) => ProfilePage()),
+                                    MaterialPageRoute(builder: (context) => ProfilePage(user : GlobalUserInfo.currentUser)),
                                   );
                                 },
                                 child: Icon(Icons.arrow_back, color: Color.fromARGB(200, 255, 255, 255), size: 28),

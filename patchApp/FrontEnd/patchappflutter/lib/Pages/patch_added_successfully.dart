@@ -15,6 +15,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:patchappflutter/Pages/add_patch_page.dart';
 import 'package:patchappflutter/Pages/profile_page.dart';
 import 'package:patchappflutter/Pages/trade_request_success_page.dart';
+
+import '../global_user_info.dart';
 //25 maj
 
 class PatchAddedSuccessfully extends StatefulWidget {
@@ -146,7 +148,7 @@ class _PatchAddedSuccessfullyState extends State<PatchAddedSuccessfully> {
                       child: TextButton(
                           onPressed: () {
                             Navigator.push(context, MaterialPageRoute(
-                                builder: (context) => ProfilePage()));
+                                builder: (context) => ProfilePage(user : GlobalUserInfo.currentUser)));
                           },
                           child: Text("Gå till Din profil", style: TextStyle(
                               color: Colors.black,
@@ -367,7 +369,7 @@ class _PatchAddedSuccessfullyState extends State<PatchAddedSuccessfully> {
                                                                                       shape: const CircleBorder(),
                                                                                       child: Icon(Icons.close, color: Colors.black),
                                                                                       onPressed: (){ //Gå tillbaka till profile page
-                                                                                        Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage()));
+                                                                                        Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage(user : GlobalUserInfo.currentUser)));
                                                                                       },
                                                                                     ),
                                                                                   )

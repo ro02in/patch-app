@@ -22,7 +22,6 @@ import 'package:patchappflutter/Provider/Patch_Provider.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:patchappflutter/Model/patch_model.dart';
-import 'package:patchappflutter/Model/user_model.dart';
 import 'dart:io';
 import 'package:provider/provider.dart';
 import '../Provider/Patch_Provider.dart';
@@ -30,11 +29,11 @@ import '../Provider/user_provider.dart';
 
 
 const String apiKey = 'J4Mhmg9sFFHmuKw7tmzaQg==D9qZtXhRG3nTiOB9';
-class ProfilePage extends StatefulWidget {
-  const ProfilePage({super.key, required UserModel? user});
+class OtherProfilePage extends StatefulWidget {
+  const OtherProfilePage({super.key});
 
   @override
-  State<ProfilePage> createState() => _ProfilePageState();
+  State<OtherProfilePage> createState() => _OtherProfilePageState();
 }
 
 void showDrinkInputDialog(BuildContext context) {
@@ -254,44 +253,36 @@ void showDrinkInputDialog(BuildContext context) {
 }
 
 
-class _ProfilePageState extends State<ProfilePage> {
+class _OtherProfilePageState extends State<OtherProfilePage> {
   int currentIndex = 3; //get this info from server
   double _itemExtent = 250;
   final CarouselController _controller = CarouselController();
   final TextEditingController biographyFieldController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
-
+  String biography = '';
+  List<Uint8List> images = [];
+  int id = GlobalUserInfo.otherUser?.id ?? 21;
+  final user = GlobalUserInfo.otherUser;
 
   @override
   void dispose() { //clean up TextEditorController when leaving widget
     biographyFieldController.dispose();
     super.dispose();
   }
-  
-  String biography = '';
-  int? Id = GlobalUserInfo.id;
-  String getUrl = 'https://group-4-15.pvt.dsv.su.se/api/patch/user/' + GlobalUserInfo.id.toString(); //Källhänvisning: DISK handledning 29 maj kl 15
-  List<Uint8List> images = [];
-  List<File> imageFiles = [];
+
   /////////////////////////// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 
   @override
   void initState() {
-
+    super.initState();
     Provider.of<UserProvider>(context, listen: false).setCompleteName();
     currentIndex = Provider.of<UserProvider>(context, listen: false).ovveIndex;
     biography = Provider.of<UserProvider>(context, listen: false).biography;
-    int id = GlobalUserInfo.id ?? 0;
+    _controller.addListener(_updateCurrentIndex);
     Provider.of<PatchProvider>(context, listen: false).fetchUserPatchImages(id);
     images = Provider.of<PatchProvider>(context, listen: false).userPatchImages;
-    imageFiles = uint8ListToFile(images);
-    _controller.addListener(_updateCurrentIndex);
-    int tempId = GlobalUserInfo.id ?? 0;
-    Provider.of<PatchProvider>(context, listen: false).fetchUserPatchImages(tempId);
-    images = Provider.of<PatchProvider>(context, listen: false).userPatchImages;
-
-    super.initState();
-
   }
 
   //Källhänvisning: Handledning med Donald via mail 28 maj.
@@ -342,12 +333,21 @@ class _ProfilePageState extends State<ProfilePage> {
         setState(() {
           Provider.of<UserProvider>(context, listen: false).changeOvveIndex(newOvveIndex: index);
           currentIndex = Provider.of<UserProvider>(context, listen: false).ovveIndex;
-          int id = GlobalUserInfo.id ?? 0;
-          Provider.of<PatchProvider>(context, listen: false).fetchUserPatchImages(id);
-          images = Provider.of<PatchProvider>(context, listen: false).userPatchImages;
+
         });
       }
     }
+  }
+  void _updatePatchList() {
+      if(_scrollController.hasClients){
+        setState(() {
+
+          Provider.of<PatchProvider>(context, listen: false).fetchUserPatches(id);
+          Provider.of<PatchProvider>(context, listen: false).fetchUserPatchImages(id);
+          images = Provider.of<PatchProvider>(context, listen: false).userPatchImages;
+          }
+        );
+      }
   }
   File ? _selectedImage;
   List<String> overaller = ['assets/beige.PNG', 'assets/blue2.PNG', 'assets/brightpink.PNG', 'assets/brightred.PNG', 'assets/bubblegumpink.PNG', 'assets/darkblue.PNG', 'assets/darkgreen.PNG', 'assets/darkorange.PNG', 'assets/darkpurple.PNG', 'assets/darkred.PNG', 'assets/forestgreen.PNG', 'assets/grey.PNG',
@@ -367,7 +367,7 @@ Widget build(BuildContext context) {
   final patchProvider = Provider.of<PatchProvider>(context, listen: false);
 
   //_updatePatchList();
-  String userName = GlobalUserInfo.completeName;
+  String userName = user?.username ?? "TEST";
 
   return Scaffold(
     backgroundColor: const Color.fromARGB(255, 31, 31, 31),
@@ -378,7 +378,6 @@ Widget build(BuildContext context) {
         shrinkWrap: true,
         physics: AlwaysScrollableScrollPhysics(),
         padding: EdgeInsets.all(0),
-
         children: [
           Column(
             children: [
@@ -741,7 +740,7 @@ Widget build(BuildContext context) {
                         //padding: EdgeInsets.symmetric(horizontal: 80),
                         //child: Text("History about your patch... lorem ipsum \nhejhejhej" , textAlign: TextAlign.left, style: TextStyle(color: Colors.black, fontFamily: ('HappyMonkey'), fontSize: 14)),
                         child: TextFormField(
-                          initialValue: GlobalUserInfo.biography,
+                          initialValue: user?.biography ?? "testningpresstning",
                           style: TextStyle(color: Colors.black, fontFamily: 'InknutAntiqua', fontSize: 14),
                           obscureText: false,
                           cursorColor: const Color.fromARGB(255, 88, 166, 255),
@@ -786,7 +785,7 @@ Widget build(BuildContext context) {
                     ]
                 ),
                 alignment: Alignment.center,
-                child: Text(GlobalUserInfo.kmName, style: TextStyle(color: Color.fromARGB(255, 210, 210, 210), fontSize: 16, fontFamily: 'InknutAntiqua')), //BACKEND userName-värde
+                child: Text(user?.kmName ?? "FUNKAR INTE", style: TextStyle(color: Color.fromARGB(255, 210, 210, 210), fontSize: 16, fontFamily: 'InknutAntiqua')), //BACKEND userName-värde
               ),
 
               SizedBox(height: 15),
@@ -808,7 +807,7 @@ Widget build(BuildContext context) {
                     ]
                 ),
                 alignment: Alignment.center,
-                child: Text(GlobalUserInfo.university, style: TextStyle(color: Color.fromARGB(255, 210, 210, 210), fontSize: 16, fontFamily: 'InknutAntiqua')), //BACKEND userName-värde
+                child: Text(user?.university ?? "FUNKAR INTE", style: TextStyle(color: Color.fromARGB(255, 210, 210, 210), fontSize: 16, fontFamily: 'InknutAntiqua')), //BACKEND userName-värde
               ),
 
               SizedBox(height: 30),
@@ -909,6 +908,8 @@ Widget build(BuildContext context) {
              // SizedBox(height: 320),
 
               SizedBox(height: 20),
+
+
               /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
               //Källhänvisning: 'GridView in flutter with network image', //youtu.be/dx3gj5hz6HU?si=wjKTv8aTdT_EFeDV, av Youtube-kanalen 'Lets Code That', publicerad 7 januari 2019, hämtad 27 maj 2025.
@@ -917,7 +918,6 @@ Widget build(BuildContext context) {
                 shrinkWrap: true,
                 padding: EdgeInsets.all(20),
                 primary: true,
-                //itemCount: patchProvider.fetchUserPatchImages(Id),
                 itemCount: images.length, //namnPåLista.length user
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
                 itemBuilder: (BuildContext context, int index) {
@@ -950,14 +950,14 @@ Widget build(BuildContext context) {
                   }
                 },
               ),
-            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-              ], //CHILDREN MAIN COLUMN
-            ),
-          ],
-        )
+              ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            ], //CHILDREN MAIN COLUMN
+          ),
+        ],
       )
-    );
-  }
+    )
+  );
+}
 
   //Kamera-galleri eller kamera
   Future _pickImageFromGallery() async {

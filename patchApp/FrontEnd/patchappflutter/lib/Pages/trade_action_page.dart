@@ -19,6 +19,9 @@ import 'package:patchappflutter/Pages/profile_page.dart';
 import 'package:patchappflutter/Pages/search_page.dart';
 import 'package:patchappflutter/Pages/trade_request_success_page.dart';
 
+import '../Model/user_model.dart';
+import '../global_user_info.dart';
+
 //25  maj
 class TradeActionPage extends StatefulWidget {
   const TradeActionPage({Key? key}) : super(key : key);
@@ -33,12 +36,12 @@ class _TradeActionPageState extends State<TradeActionPage> {
   File ? _selectedImage;
 
   final TextEditingController _searchController = TextEditingController();
-  List<User> _searchResults = [];
+  List<UserModel> _searchResults = [];
   bool _isLoading = false;
 
   final String baseUrl = 'https://group-4-15.pvt.dsv.su.se/api/user/search';
 
-  Future<List<User>> fetchUsers(String query) async {
+  Future<List<UserModel>> fetchUsers(String query) async {
     final response = await http.get(
       Uri.parse('$baseUrl?query=$query'),
       headers: {'Content-Type': 'application/json'},
@@ -46,7 +49,7 @@ class _TradeActionPageState extends State<TradeActionPage> {
 
     if (response.statusCode == 200) {
       final List<dynamic> jsonData = json.decode(response.body);
-      return jsonData.map((json) => User.fromJson(json)).toList();
+      return jsonData.map((json) => UserModel.fromJson(json)).toList();
     } else {
       throw Exception('Misslyckades att hämta användare');
     }
@@ -147,7 +150,7 @@ class _TradeActionPageState extends State<TradeActionPage> {
                         ),
                         prefixIcon: const Icon(Icons.search, color: Colors.black),
                       ),
-                      onChanged: (String? a) { //fixa 31 maj
+                      onSubmitted: (String? a) { //fixa 31 maj
                         _onSearchChanged;
                         showDialog(context: context, builder: (BuildContext context) {
                           return AlertDialog(
@@ -155,8 +158,8 @@ class _TradeActionPageState extends State<TradeActionPage> {
                             content: _isLoading
                               ? const Center(child: CircularProgressIndicator())
                               : _searchResults.isEmpty
-                                  ? const Center(child: Text('Inga användare hittades'))
-                                      : ListView.builder(
+                                  ? const Center(child: Text('Inga användare hittades')) //true
+                                      : ListView.builder( //false
                                   itemCount: _searchResults.length,
                                   itemBuilder: (context, index) {
                                   final user = _searchResults[index];
@@ -177,6 +180,30 @@ class _TradeActionPageState extends State<TradeActionPage> {
                   ),
 
                   // Resultatlista
+                  Expanded(
+                    child: _isLoading
+                        ? const Center(child: CircularProgressIndicator())
+                        : _searchResults.isEmpty
+                        ? const Center(child: Text('Inga användare hittades'))
+                        : ListView.builder(
+                      itemCount: _searchResults.length,
+                      itemBuilder: (context, index) {
+                        final user = _searchResults[index];
+                        return ListTile(
+                          title: Text(
+                            '${user.firstName} ${user.surName}',
+                            style: const TextStyle(
+                                fontSize: 25,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'InknutAntiqua'
+                            ),
+                          ),
+                          // subtitle: Text(user.emailAddress),
+                        );
+                      },
+                    ),
+                  ), //Expanded
 
 
                   SizedBox(height: 2),
@@ -235,80 +262,7 @@ class _TradeActionPageState extends State<TradeActionPage> {
                                 Navigator.push(
                                   context,
                                  // MaterialPageRoute(builder: (context) => ChoosePatchToTrade()), //hänvisa till confirmation page
-                                  MaterialPageRoute(builder: (context) => ProfilePage()), //hänvisa till confirmation page
-                                );
-                              }),
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  SizedBox(height: 15),
-
-                  //KNAPP LÄGGA TILL FOTO
-
-                  SizedBox(height: 25),
-
-                  Text("Du vill motta följande märke:", textAlign: TextAlign.center,style: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 22)),
-                  SizedBox(height: 15),
-
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(width: 69),
-                      Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(100),
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Colors.purpleAccent,
-                                  spreadRadius: 1,
-                                  blurRadius: 0,
-                                  offset: Offset(0, 4)
-                              )
-                            ]
-                        ),
-                        child: CircleAvatar( //klicka på och kunna välja bild
-                            backgroundColor: Colors.white,
-                            radius: 80,
-                            child: Icon(Icons.add)),
-                      ),
-                      SizedBox(width: 18),
-                      //Lägg till märke man vill göra request
-
-                      //Andra + knappen
-                      Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(100),
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Colors.deepPurpleAccent,
-                                  blurRadius: 0,
-                                  spreadRadius: 0.5,
-                                  offset: Offset(0.5, 1)
-                              )
-                            ]
-                        ),
-                        child: Container(
-                          padding: EdgeInsets.all(10),
-                          height: 50,
-                          width: 50,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(100),
-                          ),
-                          child: FloatingActionButton(
-                              heroTag: "FAB15",
-                              backgroundColor: Colors.white,
-                              shape: const CircleBorder(),
-                              hoverColor: Color.fromARGB(255, 255, 255, 255),
-                              focusColor: Colors.white,
-                              child: Icon(Icons.add_circle_outline_sharp, size: 30, color: Colors.deepPurpleAccent),
-                              onPressed: () {
-                                //TODO: BACKEND KOPPLING TILL MÄRKESMENY
-                                Navigator.push(
-                                  context,
-                                  //MaterialPageRoute(builder: (context) => ChoosePatchToTrade()), //hänvisa till confirmation page
-                                  MaterialPageRoute(builder: (context) => ProfilePage()), //hänvisa till confirmation page
+                                  MaterialPageRoute(builder: (context) => ProfilePage(user : GlobalUserInfo.currentUser)), //user index
                                 );
                               }),
                         ),

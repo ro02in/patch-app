@@ -8,6 +8,9 @@ import 'package:patchappflutter/Pages/profile_page.dart';
 import 'package:patchappflutter/Pages/search_page.dart';
 import 'package:patchappflutter/Pages/trade_log_page.dart';
 
+import '../Model/User_model.dart';
+import '../global_user_info.dart';
+
 class CustomBottomNavigationBar extends StatefulWidget {
 
   @override
@@ -15,7 +18,8 @@ class CustomBottomNavigationBar extends StatefulWidget {
 }
 
 class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
-  List<Widget> screens = [SearchPage(), ProfilePage(), TradeLogPage()];
+
+  List<Widget> screens = [SearchPage(), ProfilePage(user: GlobalUserInfo.currentUser), TradeLogPage()];
   int index = 1; //går direkt till 'Din profil' profile page
 
   @override
