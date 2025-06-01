@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:patchappflutter/Pages/profile_page.dart';
 //import 'package:patchappflutter/add_patch_page';
 
 class PatchInventoryPage extends StatelessWidget {
@@ -48,7 +49,44 @@ class PatchInventoryPage extends StatelessWidget {
 
                     child: Column(
                       children: [
-                        SizedBox(height: 71),
+                        SizedBox(height: 30),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(width: 318),
+                            Container(
+                              width: 50,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(100),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Color.fromARGB(255, 60, 60, 60),
+                                    spreadRadius: 4,
+                                    blurRadius: 0,
+                                    offset: Offset(0, 0)
+                                  )
+                                ]
+                              ),
+                              padding: EdgeInsets.zero,
+                              child: FloatingActionButton(
+                                backgroundColor: Color.fromARGB(
+                                    255, 40, 40, 40),
+                                shape: const CircleBorder(),
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => ProfilePage()),
+                                  );
+                                },
+                                child: Icon(Icons.arrow_back, color: Color.fromARGB(200, 255, 255, 255), size: 28),
+                              ),
+                            ),
+                          ],
+                        ),
+
+                        SizedBox(height: 6),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [

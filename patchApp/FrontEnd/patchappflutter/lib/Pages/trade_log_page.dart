@@ -1,6 +1,7 @@
 //NYTT FÖRSÖK NY BRANCH
 
 import 'package:flutter/material.dart';
+import 'package:patchappflutter/Pages/start_page.dart';
 import 'package:patchappflutter/Pages/trade_action_page.dart';
 
 import 'faq_page.dart';
@@ -49,7 +50,6 @@ class _TradeLogPageState extends State<TradeLogPage> {
                       shadowColor: Colors.black,
                       toolbarHeight: 60,
                       leadingWidth: 150,
-                      leading: Icon(Icons.arrow_back, color: Colors.white, size: 20),
                       centerTitle: true,
                       titleSpacing: -22,
                       primary: true,
@@ -59,7 +59,22 @@ class _TradeLogPageState extends State<TradeLogPage> {
                             bottom: Radius.circular(100),
                           )
                       ),
-                      //title: Text("Byteslogg", style: TextStyle(fontFamily: 'InknutAntiqua', fontSize: 19, color: Colors.white, fontWeight: FontWeight.w600)),
+                      leading: Builder( //Källhänvisning: 'leading property', //api.flutter.dev/flutter/material/AppBar/leading.html publicerad u.å, hämtad 30 maj 2025
+                        builder: (BuildContext context) {
+                          return IconButton(
+                            icon: const Icon(Icons.arrow_back, color: Colors.white, size: 20),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => StartPage()),
+                              );
+                            },
+                            tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+                          );
+                        },
+                      ),
+
+
         title: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
