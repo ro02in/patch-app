@@ -5,6 +5,8 @@ import 'package:patchappflutter/Pages/post_log_in_page.dart';
 import 'package:patchappflutter/Pages/start_page.dart';
 import 'dart:convert';
 import 'package:patchappflutter/Pages/temp_buttons_page.dart';
+import 'package:patchappflutter/Model/user_model.dart';
+import 'package:patchappflutter/global_user_info.dart';
 
 import '../main.dart';
 
@@ -16,10 +18,6 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-
-  Future<void> handleLogin() async {
-    final String email = _emailController.text.trim();
-    final String password = _passwordController.text.trim();
 
     Future<void> handleLogin() async {
       final String email = _emailController.text.trim();
@@ -40,7 +38,7 @@ class _LoginPageState extends State<LoginPage> {
         if (response.statusCode == 200 && responseData['message'] == 'Login successful.') {
           // Deserialize user data
           final userJson = responseData['user'];
-          final user = UserModel.fromJson(userJson); // Make sure you have this method
+          final user = UserModel.fromJson(userJson);
 
           // Save globally
           GlobalUserInfo.currentUser = user;
@@ -63,6 +61,7 @@ class _LoginPageState extends State<LoginPage> {
         );
       }
     }
+
 
     @override
   Widget build(BuildContext context) {
