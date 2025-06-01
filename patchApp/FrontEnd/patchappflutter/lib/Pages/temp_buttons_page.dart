@@ -60,6 +60,7 @@ import 'package:flutter/material.dart';
 import 'package:patchappflutter/Model/user_model.dart';
 import 'package:patchappflutter/Pages/add_patch_page.dart';
 import 'package:patchappflutter/Pages/continue_register_page.dart';
+import 'package:patchappflutter/Pages/other_profile_page.dart';
 import 'package:patchappflutter/Pages/patch_inventory_page.dart';
 import 'package:patchappflutter/Pages/profile_page.dart';
 import 'package:patchappflutter/Pages/register_page.dart';
@@ -85,6 +86,7 @@ class TempButtonsPage extends StatelessWidget {
  @override
  Widget build(BuildContext context) {
    //Future<PatchModel> patch = Provider.of<PatchProvider>(context, listen: false).getPatch(23);
+   UserModel? user = GlobalUserInfo.currentUser;
 
    return Scaffold(
      appBar: AppBar(title: Text('TEMP MENY')),
@@ -94,7 +96,7 @@ class TempButtonsPage extends StatelessWidget {
          children: [
            _navButton(context, 'Add Patch Page', PatchViewPage()),
            _navButton(context, 'Continue Register Page', ContinueRegisterPage()),
-           _navButton(context, 'Profile Page', ProfilePage()),
+           _navButton(context, 'Profile Page', ProfilePage(user: user)),
            _navButton(context, 'Register Page', RegisterPage()),
            _navButton(context, 'Trade Action Page', TradeActionPage()),
            _navButton(context, 'Trade Log Page', TradeLogPage()),
@@ -104,7 +106,8 @@ class TempButtonsPage extends StatelessWidget {
            _navButton(context, 'Patch Inventory Page', PatchInventoryPage()),
            _navButton(context, 'Register user confirmed Page', RegisterUserConfirmedPage()),
            _navButton(context,'Trade Request Success Page', TradeRequestSuccessPage(username: 'Oscar')),
-           nav2Button(context, "setGlobalVariables")
+           nav2Button(context, "setGlobalVariables"),
+           _navButton(context, 'otherProfile Page', OtherProfilePage()),
 
 
          ],
@@ -139,6 +142,8 @@ class TempButtonsPage extends StatelessWidget {
       child: ElevatedButton(
         onPressed: () {
           UserModel testingUser = UserModel(firstName: "john", surName: "Testerton", kmName: "Test", university: "Test University", emailAddress: "Test@Email.org", biography: "Testography", username: "Testnameeee", password: "pezword", pictureData: null);
+          UserModel othertestingUser = UserModel(id : 21, firstName: "asdasd", surName: "asdasd", kmName: "asd", university: "Test asd", emailAddress: "Test@Email.org", biography: "Testography", username: "Testnameeee", password: "pezword", pictureData: null);
+          GlobalUserInfo.otherUser = othertestingUser;
           GlobalUserInfo.currentUser = testingUser;
           GlobalUserInfo.settingStuff();
           GlobalUserInfo.id = 23;

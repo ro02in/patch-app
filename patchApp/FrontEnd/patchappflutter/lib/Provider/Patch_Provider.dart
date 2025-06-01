@@ -12,12 +12,9 @@ class PatchProvider with ChangeNotifier {
   PatchModel? _patch;
   List<PatchModel> _userPatches = [];
   List<Uint8List> _userPatchImages = [];
-  bool _isLoading = false;
   String? _error;
   List<PatchModel> get userPatches => _userPatches;
   List<Uint8List> get userPatchImages => _userPatchImages;
-  bool get isLoading => _isLoading;
-  String? get error => _error;
   int? ownerId = UserProvider().id;
   String description;
   Uint8List? pictureData;
@@ -39,7 +36,7 @@ class PatchProvider with ChangeNotifier {
 
 
   bool savePatch({required PatchModel patch}) {
-    this.latestPatch = patch;
+    latestPatch = patch;
     if(latestPatch != null){
       return true;
     }
@@ -73,6 +70,8 @@ class PatchProvider with ChangeNotifier {
   Future<void> fetchUserPatches(int googleId) async {
     try {
       _userPatches = await _patchService.getUserPatches(googleId);
+      GlobalUserInfo.patches = userPatches;
+      fetchUserPatchImages(googleId);
       _error = null;
     } catch (e) {
       _error = e.toString();
@@ -83,6 +82,7 @@ class PatchProvider with ChangeNotifier {
   Future<void> fetchUserPatchImages(int googleId) async {
     try {
       _userPatchImages = await _patchService.getUserPatchImages(googleId);
+      GlobalUserInfo.patchPictures = userPatchImages;
       _error = null;
       //return _userPatchImages;
     } catch (e) {
@@ -90,6 +90,7 @@ class PatchProvider with ChangeNotifier {
     }
 
   }
+
 
   // Create a new patch
   Future<PatchModel?> createPatch(PatchModel patch) async {

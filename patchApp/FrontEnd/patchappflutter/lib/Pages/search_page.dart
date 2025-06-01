@@ -1,37 +1,11 @@
-
 import 'package:flutter/material.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-import 'package:patchappflutter/Pages/bottomNavigationBar.dart';
+import 'package:patchappflutter/Model/user_model.dart';
+import 'package:patchappflutter/Pages/other_profile_page.dart';
+import 'package:provider/provider.dart';
+import '../Provider/user_provider.dart';
+import '../Pages/profile_page.dart';
+import '../global_user_info.dart';
 
-// ===== USER MODELL =====
-class User {
-  final String id;
-  final String firstName;
-  final String surName;
-  final String kmName;
-  final String emailAddress;
-
-  User({
-    required this.id,
-    required this.firstName,
-    required this.surName,
-    required this.kmName,
-    required this.emailAddress,
-  });
-
-  factory User.fromJson(Map<String, dynamic> json) {
-    return User(
-      id: json['id']?.toString() ?? '',
-      firstName: json['firstName'] ?? '',
-      surName: json['surName'] ?? '',
-      kmName: json['kmName'] ?? '',
-      emailAddress: json['emailAddress'] ?? '',
-    );
-  }
-}
-
-// ===== SEARCH PAGE =====
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
 
@@ -41,36 +15,18 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
   final TextEditingController _searchController = TextEditingController();
-  List<User> _searchResults = [];
   bool _isLoading = false;
 
-  final String baseUrl = 'https://group-4-15.pvt.dsv.su.se/api/user/search';
-
-  Future<List<User>> fetchUsers(String query) async {
-    final response = await http.get(
-      Uri.parse('$baseUrl?query=$query'),
-      headers: {'Content-Type': 'application/json'},
-    );
-
-    if (response.statusCode == 200) {
-      final List<dynamic> jsonData = json.decode(response.body);
-      return jsonData.map((json) => User.fromJson(json)).toList();
-    } else {
-      throw Exception('Misslyckades att hämta användare');
-    }
-  }
-
-  void _onSearchChanged(String query) async {
+  void _onSearchChanged(String query, UserProvider userProvider) async {
     if (query.isEmpty) {
-      setState(() => _searchResults = []);
+      userProvider.clearUser(); // valfritt: rensa sökresultat
       return;
     }
 
     setState(() => _isLoading = true);
 
     try {
-      final users = await fetchUsers(query);
-      setState(() => _searchResults = users);
+      await userProvider.searchUsers(query);
     } catch (e) {
       print('Fel vid sökning: $e');
     } finally {
@@ -80,7 +36,8 @@ class _SearchPageState extends State<SearchPage> {
 
   @override
   Widget build(BuildContext context) {
-    var screenSize = MediaQuery.of(context).size;
+    final screenSize = MediaQuery.of(context).size;
+    final userProvider = Provider.of<UserProvider>(context);
 
     return Scaffold(
       body: Container(
@@ -115,7 +72,7 @@ class _SearchPageState extends State<SearchPage> {
                   ),
                   prefixIcon: const Icon(Icons.search, color: Colors.black),
                 ),
-                onChanged: _onSearchChanged,
+                onChanged: (value) => _onSearchChanged(value, userProvider),
               ),
             ),
 
@@ -123,12 +80,12 @@ class _SearchPageState extends State<SearchPage> {
             Expanded(
               child: _isLoading
                   ? const Center(child: CircularProgressIndicator())
-                  : _searchResults.isEmpty
-                  ? const Center(child: Text('Inga användare hittades'))
+                  : userProvider.searchResults.isEmpty
+                  ? const Center(child: Text('Inga användare hittades', style: TextStyle(color: Colors.white)))
                   : ListView.builder(
-                itemCount: _searchResults.length,
+                itemCount: userProvider.searchResults.length,
                 itemBuilder: (context, index) {
-                  final user = _searchResults[index];
+                  final user = userProvider.searchResults[index];
                   return ListTile(
                     title: Text(
                       '${user.firstName} ${user.surName}',
@@ -136,14 +93,22 @@ class _SearchPageState extends State<SearchPage> {
                         fontSize: 25,
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
-                        fontFamily: 'InknutAntiqua'
+                        fontFamily: 'InknutAntiqua',
                       ),
                     ),
-                   // subtitle: Text(user.emailAddress),
+                    onTap: () {
+                      GlobalUserInfo.otherUser = user;
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => OtherProfilePage(),
+                        ),
+                      );
+                    },
                   );
                 },
               ),
-            ), //Expanded
+            ),
           ],
         ),
       ),
