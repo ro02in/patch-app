@@ -25,7 +25,7 @@ class PatchService {
     }
   }
 
-  Future<List<PatchModel>> getUserPatches(String googleId) async {
+  Future<List<PatchModel>> getUserPatches(int googleId) async {
     final response = await http.get(Uri.parse('$baseUrl/user/$googleId'));
     if (response.statusCode == 200) {
       List jsonResponse = json.decode(response.body);
@@ -49,7 +49,7 @@ class PatchService {
     }
   }
 
-  Future<List<Uint8List>> getUserPatchImages(String googleId) async {
+  Future<List<Uint8List>> getUserPatchImages(int googleId) async {
     final response = await http.get(Uri.parse('$baseUrl/images/belongs/$googleId'));
     if (response.statusCode == 200) {
       List<dynamic> base64List = jsonDecode(response.body);

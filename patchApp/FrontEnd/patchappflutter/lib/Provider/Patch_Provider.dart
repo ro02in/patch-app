@@ -36,6 +36,8 @@ class PatchProvider with ChangeNotifier {
     this.color = "SVART",
 });
 
+  get patches => null; //ändra från null
+
 
 
   bool savePatch({required PatchModel patch}) {
@@ -73,7 +75,7 @@ class PatchProvider with ChangeNotifier {
   }
 
   // Fetch patches for a specific user
-  Future<void> fetchUserPatches(String googleId) async {
+  Future<void> fetchUserPatches(int googleId) async {
     _setLoading(true);
     try {
       _userPatches = await _patchService.getUserPatches(googleId);
@@ -85,7 +87,7 @@ class PatchProvider with ChangeNotifier {
   }
 
   // Fetch patch images for a specific user
-  Future<void> fetchUserPatchImages(String googleId) async {
+  Future<void> fetchUserPatchImages(int googleId) async {
     _setLoading(true);
     try {
       _userPatchImages = await _patchService.getUserPatchImages(googleId);

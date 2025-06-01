@@ -789,7 +789,7 @@ class _PatchViewPageState extends State<PatchViewPage> {
                               );
                             });
                           } else {
-                            _createPatchWithProvider(context); // Use the new method
+                            _createPatchWithProvider(context);
                           }
                         },
                         style: OutlinedButton.styleFrom(

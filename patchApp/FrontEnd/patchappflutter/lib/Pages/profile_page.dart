@@ -16,11 +16,13 @@ import 'package:patchappflutter/global_user_info.dart';
 import 'package:patchappflutter/Pages/store_patches.dart';
 import 'package:patchappflutter/Model/patch_model.dart';
 import 'package:patchappflutter/Provider/user_provider.dart';
+import 'package:patchappflutter/Provider/Patch_Provider.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:patchappflutter/Model/patch_model.dart';
 import 'dart:io';
 import 'package:provider/provider.dart';
+import '../Provider/Patch_Provider.dart';
 import '../Provider/user_provider.dart';
 
 
@@ -253,7 +255,7 @@ class _ProfilePageState extends State<ProfilePage> {
   int currentIndex = 3; //get this info from server
   double _itemExtent = 250;
   final CarouselController _controller = CarouselController();
-  List<Uint8List?> patchImageList = [];
+  List<Uint8List?> userPatchesImages = [];
   final TextEditingController biographyFieldController = TextEditingController();
 
 
@@ -275,7 +277,7 @@ class _ProfilePageState extends State<ProfilePage> {
   //JSON call to backend,
   //get user profile with all details
   //BACKEND get variable of users overall-color
-  @override
+  /*@override
   void initState() { //Kodrad lösning för att hämta första entry i list: källhänvisning: 'The instance member 'widget' can't be accessed in an initializer. Try replacing the reference to the instance member with a different expression', stackoverflow.com/questions/67501594/the-instance-member-widget-cant-be-accessed-in-an-initializer-try-replacing, av user 'MobIT', publicerad 12 maj 2021, hämtad 21 maj 2025
     super.initState();
     Provider.of<UserProvider>(context, listen: false).setCompleteName();
@@ -283,7 +285,23 @@ class _ProfilePageState extends State<ProfilePage> {
      biography = Provider.of<UserProvider>(context, listen: false).biography;
     _controller.addListener(_updateCurrentIndex); //Källhänvisning _updateCurrentIndex(): Handledning med Donald 22 maj kl 15:00.
     fetchImageList(GlobalUserInfo.id); //Källhänvisning: Hanledning DISK 29 maj kl 15
+  }*/
 
+  @override
+  void initState() {
+    super.initState();
+
+    Provider.of<UserProvider>(context, listen: false).setCompleteName();
+    currentIndex = Provider.of<UserProvider>(context, listen: false).ovveIndex;
+    biography = Provider.of<UserProvider>(context, listen: false).biography;
+
+    _controller.addListener(_updateCurrentIndex);
+
+    // Lägg patchhämtning i post-frame-callback
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<PatchProvider>(context, listen: false)
+          .fetchUserPatches(GlobalUserInfo.id);
+    });
   }
 
   //Källhänvisning: Handledning med Donald via mail 28 maj.
@@ -293,18 +311,23 @@ class _ProfilePageState extends State<ProfilePage> {
       url: getUrl,
       method: 'GET',
     );
+
     if (response.statusCode == 200) {
-      //final List<Map<String, dynamic>> data = jsonDecode(response.body);
-      setState(() {
-      //Källhänvisning: DISK handledning 29 maj kl 15
       final List<dynamic> json = jsonDecode(response.body);
-      List<Uint8List?> patchImageList = [];
-      for (Map<String, dynamic> jsonPatchObject in json) {
-        patchImageList.add(PatchModel.fromJson(jsonPatchObject).pictureData);
+
+      print("Fetched ${json.length} patches for user $userId");
+
+      if (json.isNotEmpty) {
+        print("Example patch object: ${json[0]}");
       }
+
+      setState(() {
+        userPatchesImages = json.map<Uint8List?>((jsonPatchObject) {
+          return PatchModel.fromJson(jsonPatchObject).pictureData;
+        }).toList();
       });
     } else {
-      print("Some error happened, bad userid maybe");
+      print("Some error happened, bad userid maybe, statusCode=${response.statusCode}");
     }
   }
 
@@ -346,6 +369,8 @@ Widget build(BuildContext context) {
   var screenSize = MediaQuery.of(context).size; //screensize
   bool clicked = false; //for changing overall colour
   final userProvider = Provider.of<UserProvider>(context, listen:false);
+  final patchProvider = Provider.of<PatchProvider>(context);
+
   String userName = GlobalUserInfo.completeName;
   //String userName = context.watch<UserProvider>().completeName;
   //String userName = userProvider.userName;
@@ -891,16 +916,19 @@ Widget build(BuildContext context) {
               /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
               //Källhänvisning: 'GridView in flutter with network image', //youtu.be/dx3gj5hz6HU?si=wjKTv8aTdT_EFeDV, av Youtube-kanalen 'Lets Code That', publicerad 7 januari 2019, hämtad 27 maj 2025.
-                GridView.builder(
+              /*
+
+              GridView.builder(
                   physics: ClampingScrollPhysics(), //löste problemet med att GridView fastnade vid scrolling
                   shrinkWrap: true, //gör visible
                   padding: EdgeInsets.all(20),
                   primary: true,
-                  itemCount: patchImageList.length,
+                  itemCount: patchProvider.patches.length,
+                 //här
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2),
                   itemBuilder: (BuildContext context, int index) { //context was profilePage
-                    if (patchImageList.isNotEmpty){
+                    if (patchProvider.patches.isNotEmpty){
                       return Padding(
                         padding: const EdgeInsets.all(15),
                         child: Container(
@@ -918,7 +946,7 @@ Widget build(BuildContext context) {
                           ),
                           child: CircleAvatar(
                             radius: 20,
-                            foregroundImage: MemoryImage(patchImageList[currentIndex]!), //Handledning med Donald via mail 28 maj, DISK handledning 29 maj kl 15
+                            foregroundImage: MemoryImage(patchProvider.patches[index].pictureData!), //1 juni ändrat till index. Handledning med Donald via mail 28 maj, DISK handledning 29 maj kl 15
 
                           ),
                         ),
@@ -931,7 +959,52 @@ Widget build(BuildContext context) {
                   },
                 ),
 
+
+               */
+
+              /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+              //Källhänvisning: 'GridView in flutter with network image', //youtu.be/dx3gj5hz6HU?si=wjKTv8aTdT_EFeDV, av Youtube-kanalen 'Lets Code That', publicerad 7 januari 2019, hämtad 27 maj 2025.
+              GridView.builder(
+                physics: ClampingScrollPhysics(), //löste problemet med att GridView fastnade vid scrolling
+                shrinkWrap: true,
+                padding: EdgeInsets.all(20),
+                primary: true,
+                //itemCount: patchProvider.fetchUserPatchImages(Id),
+                itemCount: userPatchesImages.length, //namnPåLista.length user
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+                itemBuilder: (BuildContext context, int index) {
+                  if (patchProvider.userPatchImages.isNotEmpty){
+                    return Padding(
+                      padding: const EdgeInsets.all(15),
+                      child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(100),
+                            border: Border.all(color: Color.fromARGB(255, 40, 40, 40), width: 1),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Colors.black,
+                                  spreadRadius: 3,
+                                  blurRadius: 15,
+                                  offset: Offset(0, 2)
+                              )
+                            ]
+                        ),
+                        child: CircleAvatar(
+                          radius: 20,
+                          foregroundImage: MemoryImage(patchProvider.patches[index].pictureData!),  //1 juni ändrat till index. Handledning med Donald via mail 28 maj, DISK handledning 29 maj kl 15
+                        ),
+                      ),
+                    );
+                  } else {
+                    return Text(
+                      "Failed!", style: TextStyle(color: Colors.red, fontSize: 30),
+                    );
+                  }
+                },
+              ),
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
               ], //CHILDREN MAIN COLUMN
             ),
           ],
