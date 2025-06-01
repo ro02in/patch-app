@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:patchappflutter/Pages/continue_register_page.dart';
@@ -6,7 +8,10 @@ import 'package:patchappflutter/Pages/start_page.dart';
 import 'dart:convert';
 import 'package:patchappflutter/Pages/temp_buttons_page.dart';
 import 'package:patchappflutter/Model/user_model.dart';
+import 'package:patchappflutter/Provider/user_provider.dart';
+import 'package:patchappflutter/Service/user_service.dart';
 import 'package:patchappflutter/global_user_info.dart';
+import 'package:provider/provider.dart';
 
 import '../main.dart';
 
@@ -19,52 +24,59 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-    Future<void> handleLogin() async {
-      final String email = _emailController.text.trim();
-      final String password = _passwordController.text.trim();
-
-      try {
-        final response = await http.post(
-          Uri.parse('https://group-4-15.pvt.dsv.su.se/api/auth/login'),
-          headers: {'Content-Type': 'application/json'},
-          body: jsonEncode({
-            'emailAddress': email,
-            'password': password,
-          }),
-        );
-
-        final responseData = jsonDecode(response.body);
-
-        if (response.statusCode == 200 && responseData['message'] == 'Login successful.') {
-          // Deserialize user data
-          final userJson = responseData['user'];
-          final user = UserModel.fromJson(userJson);
-
-          // Save globally
-          GlobalUserInfo.currentUser = user;
-          GlobalUserInfo.settingStuff();
-
-          // Navigate
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => PostLoginPage()),
-          );
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(responseData['message'] ?? 'Login failed')),
-          );
-        }
-      } catch (error) {
-        print('Login error: $error');
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Login failed: $error')),
-        );
-      }
+  Future<void> handleLogin() async {
+    final String email = _emailController.text.trim();
+    final String password = _passwordController.text.trim();
+    UserProvider userProviderLogin = Provider.of<UserProvider>(
+      context,
+      listen: false,
+    );
+    userProviderLogin.loginAttempt(email, password);
+    UserModel? loginUser = userProviderLogin.user;
+    if (loginUser != null) {
+      GlobalUserInfo.currentUser = loginUser;
+      GlobalUserInfo.settingStuff();
     }
+    else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Login failed')),
+      );
+/*
+    final response = await http.post(
+      Uri.parse('https://group-4-15.pvt.dsv.su.se/api/user/login'),
+      body: jsonEncode({'email': email, 'password': password}),
+    );
 
+    final responseData = jsonDecode(response.body);
 
-    @override
+    if (response.statusCode == 200) {
+      // Deserialize user data
+      //final userJson = responseData['user'];
+      //final user = UserModel.fromJson(userJson);
+      final user = jsonDecode(response.body);
+      // Save globally
+      GlobalUserInfo.currentUser = user;
+      GlobalUserInfo.settingStuff();
+
+      // Navigate
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => PostLoginPage()),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(responseData['message'] ?? 'Login failed')),
+      );*/
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    UserProvider userProvider = Provider.of<UserProvider>(
+      context,
+      listen: false,
+    );
+
     return Scaffold(
       body: Container(
         alignment: Alignment.center,
@@ -77,11 +89,21 @@ class _LoginPageState extends State<LoginPage> {
         child: ListView(
           padding: EdgeInsets.only(top: 0),
           children: [
-            AppBar( //30 maj fixad
-              title: const Text('Logga in', style: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 22)),
-              backgroundColor: Color.fromARGB(170, 38, 42, 27), //Color.fromARGB(255, 243, 92, 255) rosa
+            AppBar(
+              //30 maj fixad
+              title: const Text(
+                'Logga in',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'InknutAntiqua',
+                  fontSize: 22,
+                ),
+              ),
+              backgroundColor: Color.fromARGB(170, 38, 42, 27),
+              //Color.fromARGB(255, 243, 92, 255) rosa
               centerTitle: true,
-              leading: Builder( //Källhänvisning: 'leading property', //api.flutter.dev/flutter/material/AppBar/leading.html publicerad u.å, hämtad 30 maj 2025
+              leading: Builder(
+                //Källhänvisning: 'leading property', //api.flutter.dev/flutter/material/AppBar/leading.html publicerad u.å, hämtad 30 maj 2025
                 builder: (BuildContext context) {
                   return IconButton(
                     icon: const Icon(Icons.arrow_back, color: Colors.white),
@@ -91,7 +113,8 @@ class _LoginPageState extends State<LoginPage> {
                         MaterialPageRoute(builder: (context) => StartPage()),
                       );
                     },
-                    tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+                    tooltip:
+                        MaterialLocalizations.of(context).openAppDrawerTooltip,
                   );
                 },
               ),
@@ -104,9 +127,9 @@ class _LoginPageState extends State<LoginPage> {
               primary: true,
               shadowColor: Color.fromARGB(255, 40, 40, 40),
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.vertical(
-                    bottom: Radius.circular(100),
-                  )
+                borderRadius: BorderRadius.vertical(
+                  bottom: Radius.circular(100),
+                ),
               ),
             ),
 
@@ -121,35 +144,44 @@ class _LoginPageState extends State<LoginPage> {
                   decoration: BoxDecoration(
                     color: Color.fromARGB(255, 53, 53, 53).withOpacity(0.85),
                     borderRadius: BorderRadius.circular(40),
-                      border: Border.all(color: Color.fromARGB(255, 70, 70, 70), width: 1.5),
+                    border: Border.all(
+                      color: Color.fromARGB(255, 70, 70, 70),
+                      width: 1.5,
+                    ),
                     boxShadow: [
                       BoxShadow(
                         color: Color.fromARGB(255, 30, 30, 30),
                         spreadRadius: 4,
                         blurRadius: 20,
-                        offset: Offset(0, 2)
-                      )
-                    ]
+                        offset: Offset(0, 2),
+                      ),
+                    ],
                   ),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text('Logga in', style: TextStyle(color: Colors.white, fontSize: 22, fontFamily: 'InknutAntiqua'),
+                      Text(
+                        'Logga in',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 22,
+                          fontFamily: 'InknutAntiqua',
+                        ),
                       ),
                       SizedBox(height: 25),
 
                       //EMAIL TEXTFIELD
                       Container(
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Color.fromARGB(120, 20, 20, 20),
-                                  spreadRadius: 2,
-                                  blurRadius: 5,
-                                  offset: Offset(0, 2)
-                              )
-                            ]
+                          borderRadius: BorderRadius.circular(30),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Color.fromARGB(120, 20, 20, 20),
+                              spreadRadius: 2,
+                              blurRadius: 5,
+                              offset: Offset(0, 2),
+                            ),
+                          ],
                         ),
                         child: SizedBox(
                           height: 55,
@@ -160,18 +192,34 @@ class _LoginPageState extends State<LoginPage> {
                             cursorHeight: 22,
                             decoration: InputDecoration(
                               labelText: 'Email',
-                              labelStyle: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 15),
-                              floatingLabelBehavior: FloatingLabelBehavior.never,
+                              labelStyle: TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'InknutAntiqua',
+                                fontSize: 15,
+                              ),
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.never,
                               filled: true,
                               fillColor: Colors.white12,
-                              contentPadding: EdgeInsets.only(top: 5, left: 20, bottom: 5, right: 20),
+                              contentPadding: EdgeInsets.only(
+                                top: 5,
+                                left: 20,
+                                bottom: 5,
+                                right: 20,
+                              ),
                               border: OutlineInputBorder(),
                               focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.purpleAccent, width: 1.5),
+                                borderSide: BorderSide(
+                                  color: Colors.purpleAccent,
+                                  width: 1.5,
+                                ),
                                 borderRadius: BorderRadius.circular(30),
                               ),
                               enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: Color.fromARGB(255, 85, 85, 85), width: 1.5),
+                                borderSide: BorderSide(
+                                  color: Color.fromARGB(255, 85, 85, 85),
+                                  width: 1.5,
+                                ),
                                 borderRadius: BorderRadius.circular(30),
                               ),
                             ),
@@ -190,9 +238,9 @@ class _LoginPageState extends State<LoginPage> {
                               color: Color.fromARGB(120, 20, 20, 20),
                               spreadRadius: 2,
                               blurRadius: 5,
-                              offset: Offset(0, 2)
-                            )
-                          ]
+                              offset: Offset(0, 2),
+                            ),
+                          ],
                         ),
                         child: SizedBox(
                           height: 55,
@@ -204,18 +252,34 @@ class _LoginPageState extends State<LoginPage> {
                             obscureText: true,
                             decoration: InputDecoration(
                               labelText: 'Password',
-                              labelStyle: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 15),
-                              floatingLabelBehavior: FloatingLabelBehavior.never,
+                              labelStyle: TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'InknutAntiqua',
+                                fontSize: 15,
+                              ),
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.never,
                               filled: true,
                               fillColor: Colors.white12,
-                              contentPadding: EdgeInsets.only(top: 5, left: 20, bottom: 5, right: 20),
+                              contentPadding: EdgeInsets.only(
+                                top: 5,
+                                left: 20,
+                                bottom: 5,
+                                right: 20,
+                              ),
                               border: OutlineInputBorder(),
                               focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.purpleAccent, width: 1.5),
+                                borderSide: BorderSide(
+                                  color: Colors.purpleAccent,
+                                  width: 1.5,
+                                ),
                                 borderRadius: BorderRadius.circular(30),
                               ),
                               enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: Color.fromARGB(255, 85, 85, 85), width: 1.5),
+                                borderSide: BorderSide(
+                                  color: Color.fromARGB(255, 85, 85, 85),
+                                  width: 1.5,
+                                ),
                                 borderRadius: BorderRadius.circular(30),
                               ),
                             ),
@@ -232,14 +296,23 @@ class _LoginPageState extends State<LoginPage> {
                           child: OutlinedButton(
                             style: OutlinedButton.styleFrom(
                               backgroundColor: Color.fromARGB(255, 32, 32, 32),
-                              side: BorderSide(color: Colors.purpleAccent, width: 1)
+                              side: BorderSide(
+                                color: Colors.purpleAccent,
+                                width: 1,
+                              ),
                             ),
                             onPressed: handleLogin,
                             child: Text(
-                                'Logga in',
-                                style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold, fontFamily: 'InknutAntiqua')),
+                              'Logga innnn',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'InknutAntiqua',
+                              ),
                             ),
                           ),
+                        ),
                       ),
                     ],
                   ),

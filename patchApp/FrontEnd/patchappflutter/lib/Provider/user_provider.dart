@@ -75,6 +75,8 @@ class UserProvider with ChangeNotifier {
     }
   }
 
+
+
   // Registrera användare
   Future<void> registerUser(UserModel newUser) async {
     try {
@@ -94,7 +96,14 @@ class UserProvider with ChangeNotifier {
       throw Exception('Could not update user: $e');
     }
   }
-
+  Future<void> loginAttempt(String email, String password) async{
+    try{
+      _user = await _userService.getUserLogin(email, password);
+      notifyListeners();
+    }catch(e){
+      throw Exception('Could not log in: $e');
+    }
+  }
   // Sök användare
   Future<void> searchUsers(String query) async {
     try {
@@ -104,6 +113,7 @@ class UserProvider with ChangeNotifier {
       throw Exception('Could not search users: $e');
     }
   }
+
 
   // Rensa användardata (om man loggar ut till exempel)
   void clearUser() {

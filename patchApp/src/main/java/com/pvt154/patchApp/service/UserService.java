@@ -33,6 +33,12 @@ public class UserService {
         return userOpt.isPresent() && userOpt.get().getPassword().equals(password);
     }
 
+    public User getUserByEmail(String email) {
+        Optional<User> userOpt = userRepository.findByEmailAddress(email);
+        return userOpt
+                .orElseThrow(() -> new RuntimeException("User not found with email: " + email));
+    }
+
     public User getUserById(Long id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + id));

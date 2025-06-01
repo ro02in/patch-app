@@ -3,6 +3,7 @@ package com.pvt154.patchApp.controller;
 import com.pvt154.patchApp.model.User;
 import com.pvt154.patchApp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +24,15 @@ public class UserController {
     public ResponseEntity<User> registerUser(@RequestBody User user) {
         User savedUser = userService.registerUser(user);
         return ResponseEntity.ok(savedUser);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<User> login(@RequestBody String email, String password) {
+        boolean valid = userService.validateUserCredentials(email, password);
+        if (valid) {
+            return ResponseEntity.ok(userService.getUserByEmail(email));
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
     @PutMapping("/update/{id}")

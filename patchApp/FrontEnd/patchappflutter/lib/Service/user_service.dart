@@ -48,6 +48,23 @@ class UserService {
       throw Exception('Failed to search users');
     }
   }
+  Future<UserModel> getUserLogin(String email, String password) async {
+    final response = await http.post(
+      Uri.parse('$baseUrl/login'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'emailAddress': email,
+        'password': password,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      final UserModel data = jsonDecode(response.body);
+      return data;
+    } else {
+      throw Exception('Failed to search users');
+    }
+  }
 
 
   // Get single user by Google ID
