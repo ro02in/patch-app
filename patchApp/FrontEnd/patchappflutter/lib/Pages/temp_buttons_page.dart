@@ -70,8 +70,12 @@ import 'package:patchappflutter/Pages/faq_page.dart';
 import 'package:patchappflutter/Pages/trade_request_success_page.dart'; // Import för din nya sida
 import 'package:patchappflutter/Pages/patch_added_successfully.dart';
 import 'package:patchappflutter/Pages/search_page.dart';
+import 'package:patchappflutter/Provider/Patch_Provider.dart';
 import 'package:patchappflutter/Provider/user_provider.dart';
 import 'package:patchappflutter/global_user_info.dart';
+import 'package:provider/provider.dart';
+
+import '../Model/patch_model.dart';
 
 //25 maj
 
@@ -80,6 +84,8 @@ class TempButtonsPage extends StatelessWidget {
 
  @override
  Widget build(BuildContext context) {
+   //Future<PatchModel> patch = Provider.of<PatchProvider>(context, listen: false).getPatch(23);
+
    return Scaffold(
      appBar: AppBar(title: Text('TEMP MENY')),
      body: Padding(

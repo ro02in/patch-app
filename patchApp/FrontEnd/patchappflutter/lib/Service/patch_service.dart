@@ -82,6 +82,18 @@ class PatchService {
     }
   }
 
+  Future<PatchModel> getPatch(int id) async {
+    final response = await http.get(
+      Uri.parse('$baseUrl/$id'),
+    );
+
+    if (response.statusCode == 200) {
+      return PatchModel.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to get patch');
+    }
+  }
+
   Future<Image> getPatchImage(int id) async {
     final response = await http.get(Uri.parse('$baseUrl/$id/image'));
     if (response.statusCode == 200) {

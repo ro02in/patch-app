@@ -5,6 +5,7 @@
 
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
@@ -255,7 +256,6 @@ class _ProfilePageState extends State<ProfilePage> {
   int currentIndex = 3; //get this info from server
   double _itemExtent = 250;
   final CarouselController _controller = CarouselController();
-  List<Uint8List?> userPatchesImages = [];
   final TextEditingController biographyFieldController = TextEditingController();
 
 
@@ -271,40 +271,19 @@ class _ProfilePageState extends State<ProfilePage> {
   List<Uint8List> images = [];
   /////////////////////////// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  //Källhänvisning: Handledning med Donald via mail, 28 maj "Is it possible to get some supervision online regarding getting images from a google user to the GridView builder?"
 
-  //28 maj KOPPLA FRONTEND OCH BACKEND
-  //JSON call to backend,
-  //get user profile with all details
-  //BACKEND get variable of users overall-color
-  /*@override
-  void initState() { //Kodrad lösning för att hämta första entry i list: källhänvisning: 'The instance member 'widget' can't be accessed in an initializer. Try replacing the reference to the instance member with a different expression', stackoverflow.com/questions/67501594/the-instance-member-widget-cant-be-accessed-in-an-initializer-try-replacing, av user 'MobIT', publicerad 12 maj 2021, hämtad 21 maj 2025
-    super.initState();
-    Provider.of<UserProvider>(context, listen: false).setCompleteName();
-     currentIndex = Provider.of<UserProvider>(context, listen: false).ovveIndex; //get this info from server
-     biography = Provider.of<UserProvider>(context, listen: false).biography;
-    _controller.addListener(_updateCurrentIndex); //Källhänvisning _updateCurrentIndex(): Handledning med Donald 22 maj kl 15:00.
-    fetchImageList(GlobalUserInfo.id); //Källhänvisning: Hanledning DISK 29 maj kl 15
-  }*/
 
   @override
   void initState() {
     super.initState();
-
     Provider.of<UserProvider>(context, listen: false).setCompleteName();
     currentIndex = Provider.of<UserProvider>(context, listen: false).ovveIndex;
     biography = Provider.of<UserProvider>(context, listen: false).biography;
-    int id = GlobalUserInfo.id ?? 0;
-    Provider.of<PatchProvider>(context, listen: false).fetchUserPatchImages(id);
-
-
     _controller.addListener(_updateCurrentIndex);
+    int tempId = GlobalUserInfo.id ?? 0;
+    Provider.of<PatchProvider>(context, listen: false).fetchUserPatchImages(tempId);
+    images = Provider.of<PatchProvider>(context, listen: false).userPatchImages;
 
-    // Lägg patchhämtning i post-frame-callback
-   /* WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<PatchProvider>(context, listen: false)
-          .fetchUserPatches(GlobalUserInfo.id);
-    });*/
   }
 
   //Källhänvisning: Handledning med Donald via mail 28 maj.
@@ -355,9 +334,6 @@ class _ProfilePageState extends State<ProfilePage> {
         setState(() {
           Provider.of<UserProvider>(context, listen: false).changeOvveIndex(newOvveIndex: index);
           currentIndex = Provider.of<UserProvider>(context, listen: false).ovveIndex;
-          int id = GlobalUserInfo.id ?? 0;
-          Provider.of<PatchProvider>(context, listen: false).fetchUserPatchImages(id);
-          images = Provider.of<PatchProvider>(context, listen: false).userPatchImages;
 
         });
       }
@@ -379,7 +355,9 @@ Widget build(BuildContext context) {
   bool clicked = false; //for changing overall colour
   final userProvider = Provider.of<UserProvider>(context, listen:false);
   final patchProvider = Provider.of<PatchProvider>(context, listen: false);
-
+  int tempId = GlobalUserInfo.id ?? 0;
+  Provider.of<PatchProvider>(context, listen: false).fetchUserPatchImages(tempId);
+  images = Provider.of<PatchProvider>(context, listen: false).userPatchImages;
   String userName = GlobalUserInfo.completeName;
   //String userName = context.watch<UserProvider>().completeName;
   //String userName = userProvider.userName;
@@ -980,7 +958,7 @@ Widget build(BuildContext context) {
                 padding: EdgeInsets.all(20),
                 primary: true,
                 //itemCount: patchProvider.fetchUserPatchImages(Id),
-                itemCount: 30, //namnPåLista.length user
+                itemCount: images.length, //namnPåLista.length user
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
                 itemBuilder: (BuildContext context, int index) {
                   if (images.isNotEmpty){
@@ -1041,11 +1019,12 @@ Widget build(BuildContext context) {
       _selectedImage = File(returnedImage!.path);
     });
   }
-  Future<List<File>> _Uint8ListToFile(List<Uint8List> imageData) async {
-      List<File> imageList;
-      for(var e in imageData){
-        File image = 
+  List<File> uint8ListToFile(List<Uint8List> imageData)  {
+      List<File> imageList = [];
+      for(Uint8List e in imageData){
+        File image = File.fromRawPath((e));
+        imageList.add(image);
       }
-  return await ;
+  return imageList;
   }
 } //Class ProfilePage

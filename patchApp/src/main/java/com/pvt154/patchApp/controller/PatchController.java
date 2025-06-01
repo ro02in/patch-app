@@ -68,6 +68,11 @@ public class PatchController {
         return ResponseEntity.ok(patches);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Patch> getPatchById(@PathVariable Long id) {
+        Patch foundPatch = patchService.getPatchById(id);
+        return ResponseEntity.ok(foundPatch);
+    }
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deletePatch(@PathVariable long id) {
         patchService.deletePatch(id);

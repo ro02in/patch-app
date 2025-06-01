@@ -31,9 +31,7 @@ class PatchModel {
       patchId: json['patchId'],
       ownerId: json['ownerId'],
       description: json['description'] ?? '',
-      pictureData: json['pictureBase64'] != null
-          ? base64Decode(json['pictureBase64'])
-          : null,
+      pictureData: json['pictureData'],
       isPublic: json['isPublic'] ?? true,
       placement: json['placement'] ?? '',
       klubbmasteri: json['klubbmästeri'] ?? '',
@@ -41,6 +39,7 @@ class PatchModel {
       color: json['color'] ?? '',
     );
   }
+
 
   Map<String, dynamic> toJson() =>
       {

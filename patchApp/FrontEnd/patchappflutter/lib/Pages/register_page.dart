@@ -5,6 +5,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:patchappflutter/Pages/post_log_in_page.dart';
 import 'package:patchappflutter/Pages/profile_page.dart';
 import 'package:patchappflutter/Pages/register_user_confirmed.dart'; //sidan RegisterUserConfirmedPage
 import 'package:image_picker/image_picker.dart';
@@ -281,6 +282,56 @@ class _RegisterPageState extends State<RegisterPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SizedBox(width: 30),
+                      //DITT FÖRNAMN TEXTFIELD NY VARIANT 1 JUNI 17:13
+                      Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Color.fromARGB(90, 20, 20, 20),
+                                  spreadRadius: 2,
+                                  blurRadius: 5,
+                                  offset: Offset(0, 2)
+                              )
+                            ]
+                        ),
+                        child: SizedBox(
+                          height: 56,
+                          width: 300,
+                          child: TextField(
+                            controller: nameFieldController,
+                            maxLength: 100,
+                            maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                            onChanged:
+                                (value) => name = nameFieldController.text,  //Källhänvisning www.geeksforgeeks.org/retrieve-data-from-textfields-in-flutter/ publicerad 7 mars 2025, hämtad 25 maj 2025
+                            cursorColor: Color.fromARGB(255, 246, 154, 255),
+                            cursorHeight: 22,
+                            obscureText: false,
+                            decoration: InputDecoration(
+                              counterStyle: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 15),
+                              labelText: 'Ditt förnamn:',
+                              labelStyle: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 15),
+                              floatingLabelBehavior: FloatingLabelBehavior.never,
+                              filled: true,
+                              fillColor: Colors.white12,
+                              contentPadding: EdgeInsets.only(top: 5, left: 20, bottom: 5, right: 20),
+                              border: OutlineInputBorder(),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.purpleAccent, width: 1.5),
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Color.fromARGB(255, 85, 85, 85), width: 1.5),
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                            ),
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
+
+
+                    /* UTKOMMENTERAT 1 JUNI 17:12
                       Container(
                         decoration: BoxDecoration(
                           color: Colors.white,
@@ -359,7 +410,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
                           ),
                         ),
-                      ),
+                      ), */
 
                       SizedBox(width: 30),
                     ],
@@ -371,6 +422,58 @@ class _RegisterPageState extends State<RegisterPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SizedBox(width: 30),
+
+                      //SURNAME TEXTFIELD FIXAD 1 JUNI 17:20
+                      Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Color.fromARGB(90, 20, 20, 20),
+                                  spreadRadius: 2,
+                                  blurRadius: 5,
+                                  offset: Offset(0, 2)
+                              )
+                            ]
+                        ),
+                        child: SizedBox(
+                          height: 56,
+                          width: 300,
+                          child: TextField(
+                            controller: surNameFieldController,
+                            maxLength: 100,
+                            maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                            onChanged:
+                                (value) => name = surNameFieldController.text,  //Källhänvisning www.geeksforgeeks.org/retrieve-data-from-textfields-in-flutter/ publicerad 7 mars 2025, hämtad 25 maj 2025
+                            cursorColor: Color.fromARGB(255, 246, 154, 255),
+                            cursorHeight: 22,
+                            obscureText: false,
+                            decoration: InputDecoration(
+                              counterStyle: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 15),
+                              labelText: 'Ditt efternamn:',
+                              labelStyle: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 15),
+                              floatingLabelBehavior: FloatingLabelBehavior.never,
+                              filled: true,
+                              fillColor: Colors.white12,
+                              contentPadding: EdgeInsets.only(top: 5, left: 20, bottom: 5, right: 20),
+                              border: OutlineInputBorder(),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.purpleAccent, width: 1.5),
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Color.fromARGB(255, 85, 85, 85), width: 1.5),
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                            ),
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
+
+
+
+                   /* UTKOMMENTERAT 1 JUNI 17:19
                       Container(
                         decoration: BoxDecoration(
                           color: Colors.white,
@@ -385,7 +488,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           ],
                         ),
                         child: SizedBox(
-                          height: 48,
+                          height: 60,
                           width: 300,
                           child: TextField(
                             inputFormatters: [
@@ -449,7 +552,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
                           ),
                         ),
-                      ),
+                      ), */
 
                       SizedBox(width: 30),
                     ],
@@ -461,6 +564,58 @@ class _RegisterPageState extends State<RegisterPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SizedBox(width: 30),
+
+                      //DITT UNIVERSITET TEXTFIELD NY VARIANT 1 JUNI 16:58
+                      Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Color.fromARGB(90, 20, 20, 20),
+                                  spreadRadius: 2,
+                                  blurRadius: 5,
+                                  offset: Offset(0, 2)
+                              )
+                            ]
+                        ),
+                        child: SizedBox(
+                          height: 56,
+                          width: 300,
+                          child: TextField(
+                            controller: kmNameFieldController,
+                            maxLength: 100,
+                            maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                            onChanged:
+                                (value) => kmName = kmNameFieldController.text,  //Källhänvisning www.geeksforgeeks.org/retrieve-data-from-textfields-in-flutter/ publicerad 7 mars 2025, hämtad 25 maj 2025
+                            cursorColor: Color.fromARGB(255, 246, 154, 255),
+                            cursorHeight: 22,
+                            obscureText: false,
+                            decoration: InputDecoration(
+                              counterStyle: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 15),
+                              labelText: 'Ditt KM namn:',
+                              labelStyle: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 15),
+                              floatingLabelBehavior: FloatingLabelBehavior.never,
+                              filled: true,
+                              fillColor: Colors.white12,
+                              contentPadding: EdgeInsets.only(top: 5, left: 20, bottom: 5, right: 20),
+                              border: OutlineInputBorder(),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.purpleAccent, width: 1.5),
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Color.fromARGB(255, 85, 85, 85), width: 1.5),
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                            ),
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
+
+
+
+                     /* UTKOMMENTERAT 1 JUNI 17:02
                       Container(
                         //KM namn textfield
                         decoration: BoxDecoration(
@@ -538,7 +693,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
                           ),
                         ),
-                      ),
+                      ), */
 
                       SizedBox(width: 30),
                     ],
@@ -551,7 +706,58 @@ class _RegisterPageState extends State<RegisterPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SizedBox(width: 30),
+
+                      //DITT UNIVERSITET TEXTFIELD NY VARIANT 1 JUNI 16:58
                       Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Color.fromARGB(90, 20, 20, 20),
+                                  spreadRadius: 2,
+                                  blurRadius: 5,
+                                  offset: Offset(0, 2)
+                              )
+                            ]
+                        ),
+                        child: SizedBox(
+                          height: 56,
+                          width: 300,
+                          child: TextField(
+                            controller: universityFieldController,
+                            maxLength: 100,
+                            maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                            onChanged:
+                                (value) => university = universityFieldController.text,  //Källhänvisning www.geeksforgeeks.org/retrieve-data-from-textfields-in-flutter/ publicerad 7 mars 2025, hämtad 25 maj 2025
+                            cursorColor: Color.fromARGB(255, 246, 154, 255),
+                            cursorHeight: 22,
+                            obscureText: false,
+                            decoration: InputDecoration(
+                              counterStyle: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 15),
+                              labelText: 'Ditt universitet:',
+                              labelStyle: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 15),
+                              floatingLabelBehavior: FloatingLabelBehavior.never,
+                              filled: true,
+                              fillColor: Colors.white12,
+                              contentPadding: EdgeInsets.only(top: 5, left: 20, bottom: 5, right: 20),
+                              border: OutlineInputBorder(),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.purpleAccent, width: 1.5),
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Color.fromARGB(255, 85, 85, 85), width: 1.5),
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                            ),
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
+
+
+                     /* UTKOMMENTERAT 1 JUNI 17:00
+                     Container(
                         //Ditt universitet textfield
                         decoration: BoxDecoration(
                           color: Colors.white,
@@ -628,7 +834,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
                           ),
                         ),
-                      ),
+                      ), */
 
                       SizedBox(width: 30),
                     ],
@@ -641,6 +847,57 @@ class _RegisterPageState extends State<RegisterPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SizedBox(width: 30),
+
+                      //USERNAME TEXTFIELD NY VARIANT 1 JUNI 16:58
+                      Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Color.fromARGB(90, 20, 20, 20),
+                                  spreadRadius: 2,
+                                  blurRadius: 5,
+                                  offset: Offset(0, 2)
+                              )
+                            ]
+                        ),
+                        child: SizedBox(
+                          height: 56,
+                          width: 300,
+                          child: TextField(
+                            controller: userNameFieldController,
+                            maxLength: 100,
+                            maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                            onChanged:
+                                (value) => userName = userNameFieldController.text,  //Källhänvisning www.geeksforgeeks.org/retrieve-data-from-textfields-in-flutter/ publicerad 7 mars 2025, hämtad 25 maj 2025
+                            cursorColor: Color.fromARGB(255, 246, 154, 255),
+                            cursorHeight: 22,
+                            obscureText: false,
+                            decoration: InputDecoration(
+                              counterStyle: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 15),
+                              labelText: 'Ditt användarnamn:',
+                              labelStyle: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 15),
+                              floatingLabelBehavior: FloatingLabelBehavior.never,
+                              filled: true,
+                              fillColor: Colors.white12,
+                              contentPadding: EdgeInsets.only(top: 5, left: 20, bottom: 5, right: 20),
+                              border: OutlineInputBorder(),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.purpleAccent, width: 1.5),
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Color.fromARGB(255, 85, 85, 85), width: 1.5),
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                            ),
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
+
+
+                     /* UTKOMMENTERAT 1 JUNI 16:56
                       Container(
                         //UserName box
                         decoration: BoxDecoration(
@@ -660,8 +917,6 @@ class _RegisterPageState extends State<RegisterPage> {
                           width: 300,
                           child: TextField(
                             inputFormatters: [
-
-
                             ],
                             controller: userNameFieldController,
                             obscureText: false,
@@ -719,7 +974,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
                           ),
                         ),
-                      ),
+                      ), */
 
                       SizedBox(width: 30),
                     ],
@@ -731,6 +986,56 @@ class _RegisterPageState extends State<RegisterPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SizedBox(width: 30),
+
+                      //EMAIL TEXTFIELD NY VARIANT 1 JUNI 16:56
+                      Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Color.fromARGB(90, 20, 20, 20),
+                                  spreadRadius: 2,
+                                  blurRadius: 5,
+                                  offset: Offset(0, 2)
+                              )
+                            ]
+                        ),
+                        child: SizedBox(
+                          height: 56,
+                          width: 300,
+                          child: TextField(
+                            controller: emailFieldController,
+                            maxLength: 100,
+                            maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                            onChanged: (value) =>
+                                email = emailFieldController.text,  //Källhänvisning www.geeksforgeeks.org/retrieve-data-from-textfields-in-flutter/ publicerad 7 mars 2025, hämtad 25 maj 2025
+                            cursorColor: Color.fromARGB(255, 246, 154, 255),
+                            cursorHeight: 22,
+                            obscureText: false,
+                            decoration: InputDecoration(
+                              counterStyle: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 15),
+                              labelText: 'Email:',
+                              labelStyle: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 15),
+                              floatingLabelBehavior: FloatingLabelBehavior.never,
+                              filled: true,
+                              fillColor: Colors.white12,
+                              contentPadding: EdgeInsets.only(top: 5, left: 20, bottom: 5, right: 20),
+                              border: OutlineInputBorder(),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.purpleAccent, width: 1.5),
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Color.fromARGB(255, 85, 85, 85), width: 1.5),
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                            ),
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
+
+                      /* UTKOMMENTERAT 16:52 1 juni
                       Container(
                         //Email box
                         decoration: BoxDecoration(
@@ -807,19 +1112,69 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
                           ),
                         ),
-                      ),
+                      ), */ //UTKOMMENTERAT 1 juni 16:54
 
                       SizedBox(width: 30),
                     ],
                   ),
 
 
-                  SizedBox(height: 20,),
+                  SizedBox(height: 20),
 
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SizedBox(width: 30),
+
+                      //PASSWORD TEXTFIELD
+                      Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Color.fromARGB(90, 20, 20, 20),
+                                  spreadRadius: 2,
+                                  blurRadius: 5,
+                                  offset: Offset(0, 2)
+                              )
+                            ]
+                        ),
+                        child: SizedBox(
+                          height: 56,
+                          width: 300,
+                          child: TextField(
+                            controller: passwordFieldController,
+                            maxLength: 35,
+                            maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                            onChanged:
+                                (value) => password = passwordFieldController.text,
+                            cursorColor: Color.fromARGB(255, 246, 154, 255),
+                            cursorHeight: 22,
+                            obscureText: true,
+                            decoration: InputDecoration(
+                              counterStyle: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 15),
+                              labelText: 'Password',
+                              labelStyle: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 15),
+                              floatingLabelBehavior: FloatingLabelBehavior.never,
+                              filled: true,
+                              fillColor: Colors.white12,
+                              contentPadding: EdgeInsets.only(top: 5, left: 20, bottom: 5, right: 20),
+                              border: OutlineInputBorder(),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.purpleAccent, width: 1.5),
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Color.fromARGB(255, 85, 85, 85), width: 1.5),
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                            ),
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
+
+                     /* UTKOMMENTERAT 16:52 1 juni
                       Container(
                         //Password box
                         decoration: BoxDecoration(
@@ -896,7 +1251,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
                           ),
                         ),
-                      ),
+                      ),*/
 
                       SizedBox(width: 30),
                     ],
@@ -906,7 +1261,59 @@ class _RegisterPageState extends State<RegisterPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SizedBox(width: 30),
+
+                      //PASSWORD TEXTFIELD
                       Container(
+                        height: 90, //inget height förut
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Color.fromARGB(90, 20, 20, 20),
+                                  spreadRadius: 2,
+                                  blurRadius: 5,
+                                  offset: Offset(0, 2)
+                              )
+                            ]
+                        ),
+                        child: SizedBox(
+                          height: 56,
+                          width: 300,
+                          child: TextField(
+                            controller: biographyFieldController,
+                            maxLength: 35,
+                            maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                            onChanged:
+                                (value) => biography = biographyFieldController.text,
+                            cursorColor: Color.fromARGB(255, 246, 154, 255),
+                            cursorHeight: 22,
+                            obscureText: true,
+                            decoration: InputDecoration(
+                              counterStyle: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 15),
+                              labelText: 'Biografi',
+                              labelStyle: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 15),
+                              floatingLabelBehavior: FloatingLabelBehavior.never,
+                              filled: true,
+                              fillColor: Colors.white12,
+                              contentPadding: EdgeInsets.only(top: 5, left: 20, bottom: 5, right: 20),
+                              border: OutlineInputBorder(),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.purpleAccent, width: 1.5),
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.purpleAccent, width: 1.5),
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                            ),
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
+
+
+                      /* UTKOMMENTERAT 1 JUNI 17:23
+                     Container(
                         //Password box
                         decoration: BoxDecoration(
                           color: Colors.white,
@@ -981,7 +1388,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
                           ),
                         ),
-                      ),
+                      ),  */
 
                       SizedBox(width: 30),
                     ],
@@ -1068,13 +1475,11 @@ class _RegisterPageState extends State<RegisterPage> {
                                             ),
                                           );
                                         },
-
-                                  )
-                                      : Navigator.push(
+                                  ) : Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                       builder:
-                                          (context) => TempButtonsPage(),
+                                          (context) => PostLoginPage(),
                                     ),
                                   ); //hänvisa till confirmation page
                                 });
@@ -1101,7 +1506,6 @@ class _RegisterPageState extends State<RegisterPage> {
           ),
           )
         ],
-
       ),
       )
     );

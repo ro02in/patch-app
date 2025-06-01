@@ -1,6 +1,8 @@
 import 'dart:typed_data';
 import 'package:patchappflutter/Model/user_model.dart';
 
+import 'Model/patch_model.dart';
+
 class GlobalUserInfo {
   static UserModel? currentUser;
   static int? id;
@@ -13,6 +15,8 @@ class GlobalUserInfo {
   static String username = "oosrnaem";
   static Uint8List? pictureData;
   static String completeName = "Compname";
+  static PatchModel patchTester = PatchModel(description: "description", ownerId: 21, isPublic: true, placement: "placement", klubbmasteri: "klubbmasteri", patchName: "patchName", color: "color", pictureData: null);
+
   static void settingStuff(){
     id = currentUser!.id;
     firstName = currentUser!.firstName;

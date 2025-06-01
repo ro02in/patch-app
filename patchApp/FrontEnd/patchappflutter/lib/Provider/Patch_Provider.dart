@@ -37,9 +37,6 @@ class PatchProvider with ChangeNotifier {
     this.color = "SVART",
 });
 
-  get patches => null; //ändra från null
-
-
 
   bool savePatch({required PatchModel patch}) {
     this.latestPatch = patch;
@@ -70,49 +67,40 @@ class PatchProvider with ChangeNotifier {
     notifyListeners();
   }
   // Set loading state and notify listeners
-  void _setLoading(bool value) {
-    _isLoading = value;
-    notifyListeners();
-  }
+
 
   // Fetch patches for a specific user
   Future<void> fetchUserPatches(int googleId) async {
-    _setLoading(true);
     try {
       _userPatches = await _patchService.getUserPatches(googleId);
       _error = null;
     } catch (e) {
       _error = e.toString();
     }
-    _setLoading(false);
   }
 
   // Fetch patch images for a specific user
-  Future<List<Uint8List>> fetchUserPatchImages(int googleId) async {
-    _setLoading(true);
+  Future<void> fetchUserPatchImages(int googleId) async {
     try {
       _userPatchImages = await _patchService.getUserPatchImages(googleId);
       _error = null;
-      return _userPatchImages;
+      //return _userPatchImages;
     } catch (e) {
       rethrow;
     }
-    _setLoading(false);
+
   }
 
   // Create a new patch
   Future<PatchModel?> createPatch(PatchModel patch) async {
-    _setLoading(true);
     try {
       final newPatch = await _patchService.createPatch(patch);
       _userPatches.add(newPatch);
       _error = null;
       notifyListeners();
-      _setLoading(false);
       return newPatch;
     } catch (e) {
       _error = e.toString();
-      _setLoading(false);
       return null;
     }
   }
@@ -125,19 +113,27 @@ class PatchProvider with ChangeNotifier {
     }
   }
 
+  Future<PatchModel> getPatch(int id) async{
+    try{
+      Future<PatchModel> foundPatch = _patchService.getPatch(id);
+      return foundPatch;
+    }
+    catch (e) {
+      throw Exception('Could not register patch: $e');
+    }
+  }
+
+
   // Delete a patch
   Future<bool> deletePatch(int patchId) async {
-    _setLoading(true);
     try {
       await _patchService.deletePatch(patchId);
       _userPatches.removeWhere((patch) => patch.patchId == patchId);
       _error = null;
       notifyListeners();
-      _setLoading(false);
       return true;
     } catch (e) {
       _error = e.toString();
-      _setLoading(false);
       return false;
     }
   }

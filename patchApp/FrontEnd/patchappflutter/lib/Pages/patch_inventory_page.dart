@@ -3,37 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:patchappflutter/Model/patch_model.dart';
 import 'package:patchappflutter/Pages/profile_page.dart';
 //import 'package:patchappflutter/add_patch_page';
-import '../Provider/Patch_Provider.dart';
+
+import 'dart:typed_data';
+
+import 'package:patchappflutter/global_user_info.dart';
+
+
 
 class PatchInventoryPage extends StatelessWidget {
 
-  final PatchModel patch;
-  //late final String patchName; //TODO BACKEND hämta variabel
-  //late final String description; //TODO BACKEND hämta variabel
-  //late final String patchColor; //TODO BACKEND hämta variabel
-  //late final String club; //TODO BACKEND hämta variabel
-  //late final String placement; //TODO BACKEND hämta variabel
-  //late final bool isPublic; //TODO BACKEND hämta variabel
-  //late final bool isTradable; //TODO BACKEND hämta variabel
-  //late final int amount; //TODO BACKEND hämta variabel
-  //late = initialize later
-
-  //tillfälliga testvärden
-  //final int amount = 0; //TODO BACKEND hämta variabel
-  //final String patchName = "PatchName"; //TODO BACKEND hämta variabel
-  //final String description = "Test"; //TODO BACKEND hämta variabel
-  //final String patchColor = "Orange"; //TODO BACKEND hämta variabel
-  //final String club = "Test"; //TODO BACKEND hämta variabel
-  //final String placement = "Vänster arm"; //TODO BACKEND hämta variabel
-  //final bool isPublic = true; //TODO BACKEND hämta variabel
-  //final bool isTradable = true; //TODO BACKEND hämta variabel
+  const PatchInventoryPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     var screenSize = MediaQuery
         .of(context)
         .size; //screensize
-
+    PatchModel patch = GlobalUserInfo.patchTester;
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 31, 31, 31),
       body: ListView(
@@ -110,14 +96,14 @@ class PatchInventoryPage extends StatelessWidget {
                                   )
                                 ]
                               ),
-                              child: Column(
+                              /*child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Text("Amount", style: TextStyle(color: Color.fromARGB(255, 40, 40, 40), fontSize: 14, fontFamily: 'InknutAntiqua')),
                                   Text('$amount', style: TextStyle(color: Color.fromARGB(255, 40, 40, 40), fontSize: 21, fontFamily: 'CalSans')),
                                 ],
-                              )
+                              )*/
                             ),
 
                             SizedBox(width: 25),
@@ -137,7 +123,9 @@ class PatchInventoryPage extends StatelessWidget {
                               child: CircleAvatar(
                                 radius: 70,
                                 backgroundColor: Colors.white,
-                                foregroundImage: AssetImage(""), //TODO: BACKEND IMAGE.NETWORK (Image.network(src) HTTP-LÄNK MÄRKESBILD HÄR
+                                foregroundImage: patch.pictureData != null
+                                    ? MemoryImage(patch.pictureData!)
+                                    : null, //TODO: BACKEND IMAGE.NETWORK (Image.network(src) HTTP-LÄNK MÄRKESBILD HÄR
                               ),
                             ),
                           ],
@@ -145,7 +133,7 @@ class PatchInventoryPage extends StatelessWidget {
 
                         SizedBox(height: 16),
 
-                        Text('$patchName', style: TextStyle(color: Colors.white, fontSize: 25, fontFamily: 'InknutAntiqua')),
+                        Text(patch.patchName, style: TextStyle(color: Colors.white, fontSize: 25, fontFamily: 'InknutAntiqua')),
 
                         SizedBox(height: 15),
 
@@ -178,7 +166,7 @@ class PatchInventoryPage extends StatelessWidget {
                             ),
                             alignment: Alignment.topCenter,
                             child: Padding(padding: EdgeInsets.all(15),
-                              child: Text("hejehjejej", style: TextStyle(color: Colors.black, fontSize: 16, fontFamily: 'InknutAntiqua')), //BACKEND userName-värde
+                              child: Text(patch.description, style: TextStyle(color: Colors.black, fontSize: 16, fontFamily: 'InknutAntiqua')), //BACKEND userName-värde
                             )
                           ),
                         ),
@@ -203,7 +191,7 @@ class PatchInventoryPage extends StatelessWidget {
                             ),
                             alignment: Alignment.center,
                             child: Padding(padding: EdgeInsets.only(top: 10, bottom: 10),
-                              child: Text("Orange", style: TextStyle(color: Color.fromARGB(255, 190, 190, 190), fontSize: 16, fontFamily: 'InknutAntiqua')), //BACKEND userName-värde
+                              child: Text(patch.color, style: TextStyle(color: Color.fromARGB(255, 190, 190, 190), fontSize: 16, fontFamily: 'InknutAntiqua')), //BACKEND userName-värde
                             )
                         ),
 
@@ -227,7 +215,7 @@ class PatchInventoryPage extends StatelessWidget {
                             ),
                             alignment: Alignment.center,
                             child: Padding(padding: EdgeInsets.only(top: 10, bottom: 10),
-                              child: Text("Klubbmästeri", style: TextStyle(color: Color.fromARGB(255, 190, 190, 190), fontSize: 16, fontFamily: 'InknutAntiqua')), //BACKEND userName-värde
+                              child: Text(patch.klubbmasteri, style: TextStyle(color: Color.fromARGB(255, 190, 190, 190), fontSize: 16, fontFamily: 'InknutAntiqua')), //BACKEND userName-värde
                             )
                         ),
 
@@ -251,7 +239,7 @@ class PatchInventoryPage extends StatelessWidget {
                             ),
                             alignment: Alignment.center,
                             child: Padding(padding: EdgeInsets.only(top: 10, bottom: 10),
-                              child: Text("Vänster arm", style: TextStyle(color: Color.fromARGB(255, 190, 190, 190), fontSize: 16, fontFamily: 'InknutAntiqua')), //BACKEND userName-värde
+                              child: Text(patch.placement, style: TextStyle(color: Color.fromARGB(255, 190, 190, 190), fontSize: 16, fontFamily: 'InknutAntiqua')), //BACKEND userName-värde
                             )
                         ),
 
@@ -282,12 +270,12 @@ class PatchInventoryPage extends StatelessWidget {
                                       ]
                                   ),
                                   alignment: Alignment.center,
-                                  child: Text('$isPublic', style: TextStyle(color: Color.fromARGB(255, 200, 200, 200), fontFamily: 'InknutAntiqua', fontSize: 20))
+                                  child: Text(patch.isPublic.toString(), style: TextStyle(color: Color.fromARGB(255, 200, 200, 200), fontFamily: 'InknutAntiqua', fontSize: 20))
                               ),
 
                               SizedBox(width: 25),
 
-                              Container(
+                              /*Container(
                                   width: 140,
                                   height: 52,
                                   decoration: BoxDecoration(
@@ -304,8 +292,8 @@ class PatchInventoryPage extends StatelessWidget {
                                       ]
                                   ),
                                   alignment: Alignment.center,
-                                  child: Text('$isTradable', style: TextStyle(color: Color.fromARGB(255, 200, 200, 200), fontFamily: 'InknutAntiqua', fontSize: 20))
-                              ),
+                                  child: Text(patch., style: TextStyle(color: Color.fromARGB(255, 200, 200, 200), fontFamily: 'InknutAntiqua', fontSize: 20))
+                              ),*/
                             ],
                           ),
                         ),
@@ -352,3 +340,28 @@ class PatchInventoryPage extends StatelessWidget {
   }
 }
 
+
+
+
+
+
+
+//late final String patchName; //TODO BACKEND hämta variabel
+//late final String description; //TODO BACKEND hämta variabel
+//late final String patchColor; //TODO BACKEND hämta variabel
+//late final String club; //TODO BACKEND hämta variabel
+//late final String placement; //TODO BACKEND hämta variabel
+//late final bool isPublic; //TODO BACKEND hämta variabel
+//late final bool isTradable; //TODO BACKEND hämta variabel
+//late final int amount; //TODO BACKEND hämta variabel
+//late = initialize later
+
+//tillfälliga testvärden
+//final int amount = 0; //TODO BACKEND hämta variabel
+//final String patchName = "PatchName"; //TODO BACKEND hämta variabel
+//final String description = "Test"; //TODO BACKEND hämta variabel
+//final String patchColor = "Orange"; //TODO BACKEND hämta variabel
+//final String club = "Test"; //TODO BACKEND hämta variabel
+//final String placement = "Vänster arm"; //TODO BACKEND hämta variabel
+//final bool isPublic = true; //TODO BACKEND hämta variabel
+//final bool isTradable = true; //TODO BACKEND hämta variabel
