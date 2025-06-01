@@ -62,6 +62,7 @@ import 'package:patchappflutter/Pages/add_patch_page.dart';
 import 'package:patchappflutter/Pages/continue_register_page.dart';
 import 'package:patchappflutter/Pages/other_profile_page.dart';
 import 'package:patchappflutter/Pages/patch_inventory_page.dart';
+import 'package:patchappflutter/Pages/post_log_in_page.dart';
 import 'package:patchappflutter/Pages/profile_page.dart';
 import 'package:patchappflutter/Pages/register_page.dart';
 import 'package:patchappflutter/Pages/register_user_confirmed.dart';
@@ -108,6 +109,7 @@ class TempButtonsPage extends StatelessWidget {
            _navButton(context,'Trade Request Success Page', TradeRequestSuccessPage(username: 'Oscar')),
            nav2Button(context, "setGlobalVariables"),
            _navButton(context, 'otherProfile Page', OtherProfilePage()),
+           _navButton(context, "PostLogIn Page", PostLoginPage()),
 
 
          ],
