@@ -152,6 +152,7 @@ flutter:
       - assets/stitches10.png
       - assets/drinkglass1.PNG
       - assets/drinkdrawing2.PNG
+      - assets/drinkglass4_drinkAPI.png
 
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
