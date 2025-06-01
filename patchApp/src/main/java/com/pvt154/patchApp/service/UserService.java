@@ -45,7 +45,7 @@ public class UserService {
         user.setKmName(updatedUser.getKmName());
         user.setEmailAddress(updatedUser.getEmailAddress());
         user.setBiography(updatedUser.getBiography());
-        user.setPictureData(updatedUser.getPictureData());
+        user.setPicture(updatedUser.getPicture());
         return userRepository.save(user);
     }
 

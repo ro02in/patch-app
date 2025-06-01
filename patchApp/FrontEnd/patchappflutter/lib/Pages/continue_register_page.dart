@@ -3,7 +3,10 @@ import 'package:http/http.dart' as http;
 import 'package:patchappflutter/Pages/start_page.dart';
 import 'dart:convert';
 import 'package:patchappflutter/Pages/temp_buttons_page.dart';
+import 'package:provider/provider.dart';
 
+import '../Model/user_model.dart';
+import '../Provider/user_provider.dart';
 import '../main.dart';
 
 class ContinueRegisterPage extends StatefulWidget {
@@ -14,39 +17,35 @@ class ContinueRegisterPage extends StatefulWidget {
 class _ContinueRegisterPageState extends State<ContinueRegisterPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-
-  Future<void> handleLogin() async {
-    final String email = _emailController.text.trim();
-    final String password = _passwordController.text.trim();
+  bool _isLoading = false;
+  String _statusMessage = '';
+  Future<void> _handleUserProviderAction() async {
+    setState(() {
+      _isLoading = true;
+      _statusMessage = 'Processing User Provider action...';
+    });
 
     try {
-      final response = await http.post(
-        Uri.parse('https://group-4-15.pvt.dsv.su.se/api/auth/login'),
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({
-          'emailAddress': email,
-          'password': password,
-        }),
-      );
+      final userProvider = Provider.of<UserProvider>(context, listen:false);
+      UserModel testUser = UserModel(id: null, firstName: "johan", surName: "johansson", kmName: "janne", emailAddress: "Janne@gmail.com", university: 'test', biography: '123', pictureData: null, username: 'asdbdasjb', password: '1234');
+      await userProvider.registerUser(testUser);
 
-      final responseData = jsonDecode(response.body);
-      if (response.statusCode == 200 && responseData['message'] == 'Login successful.') {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => TempButtonsPage()),
-        );
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(responseData['message'] ?? 'Login failed')),
-        );
-      }
-    } catch (error) {
-      print('Login error: $error');
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Login failed: $error')),
-      );
+      await Future.delayed(const Duration(seconds: 2)); // Simulate API call
+
+      setState(() {
+        print( 'User Provider action completed successfully!');
+      });
+    } catch (e) {
+      setState(() {
+        print( 'User Provider error: $e');
+      });
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -242,7 +241,7 @@ class _ContinueRegisterPageState extends State<ContinueRegisterPage> {
                                     backgroundColor: Color.fromARGB(255, 32, 32, 32),
                                     side: BorderSide(color: Color.fromARGB(255, 246, 154, 255), width: 1)
                                 ),
-                                onPressed: handleLogin,
+                                onPressed: _handleUserProviderAction,
                                 child: Text(
                                     'Skapa konto',
                                     style: TextStyle(color: Color.fromARGB(255, 230, 230, 230), fontSize: 17, fontFamily: 'InknutAntiqua')),

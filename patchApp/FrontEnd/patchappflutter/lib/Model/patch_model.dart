@@ -32,7 +32,7 @@ class PatchModel {
       pictureData: Uint8List.fromList(List<int>.from(json['pictureData'])),
       isPublic: json['isPublic'] ?? true,
       placement: json['placement'] ?? '',
-      klubbmasteri: json['klubbmasteri'] ?? '',
+      klubbmasteri: json['klubbmästeri'] ?? '',
       patchName: json['patchName'] ?? '',
       color: json['color'] ?? '',
     );
@@ -46,7 +46,7 @@ class PatchModel {
         'pictureData': pictureData,
         'isPublic': isPublic,
         'placement': placement,
-        'klubbmasteri': klubbmasteri,
+        'klubbmästeri': klubbmasteri,
         'patchName': patchName,
         'color': color,
       };

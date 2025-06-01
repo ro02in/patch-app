@@ -263,8 +263,8 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   String biography = '';
-  String googleId = GlobalUserInfo.googleId;
-  String getUrl = 'https://group-4-15.pvt.dsv.su.se/api/patch/user/' + GlobalUserInfo.googleId; //Källhänvisning: DISK handledning 29 maj kl 15
+  int? Id = GlobalUserInfo.id;
+  String getUrl = 'https://group-4-15.pvt.dsv.su.se/api/patch/user/' + GlobalUserInfo.id.toString(); //Källhänvisning: DISK handledning 29 maj kl 15
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -280,11 +280,11 @@ class _ProfilePageState extends State<ProfilePage> {
     Provider.of<UserProvider>(context, listen: false).setCompleteName();
      currentIndex = Provider.of<UserProvider>(context, listen: false).ovveIndex; //get this info from server
     _controller.addListener(_updateCurrentIndex); //Källhänvisning _updateCurrentIndex(): Handledning med Donald 22 maj kl 15:00.
-    fetchImageList(GlobalUserInfo.googleId); //Källhänvisning: Hanledning DISK 29 maj kl 15
+    fetchImageList(GlobalUserInfo.currentUser!.id); //Källhänvisning: Hanledning DISK 29 maj kl 15
   }
 
   //Källhänvisning: Handledning med Donald via mail 28 maj.
-  Future<void> fetchImageList(String userId) async {
+  Future<void> fetchImageList(int? userId) async {
     final response = await authHttpRequest(
       context: ProfilePage,
       url: getUrl,

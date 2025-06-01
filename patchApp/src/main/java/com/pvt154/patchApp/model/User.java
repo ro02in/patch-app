@@ -45,7 +45,7 @@ public class User {
 
     @Lob
     @Column(name = "picture")
-    private byte[] pictureData;
+    private byte[] picture;
 
     @OneToMany(mappedBy = "sender")
     private List<TradeRequest> sentTrades = new ArrayList<>();
@@ -55,13 +55,15 @@ public class User {
 
     public User(String firstName, String surName, String kmName,
                 String emailAddress, String password,
-                String biography, byte[] pictureData) {
+                String biography, byte[] picture, String username, String university) {
         this.firstName = firstName;
         this.surName = surName;
         this.kmName = kmName;
         this.emailAddress = emailAddress;
         this.password = password;
         this.biography = biography;
-        this.pictureData = pictureData;
+        this.picture = picture;
+        this.username = username;
+        this.university = university;
     }
 }

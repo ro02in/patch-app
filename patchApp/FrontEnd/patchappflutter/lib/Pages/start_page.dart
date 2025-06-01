@@ -1,6 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:patchappflutter/Pages/continue_login_page.dart';
 import 'package:patchappflutter/Pages/provider_test_page.dart';
 import 'package:patchappflutter/Pages/temp_buttons_page.dart';
 
@@ -86,32 +87,8 @@ class StartPage extends StatelessWidget {
                                 splashFactory: NoSplash.splashFactory
                             ),
                             onPressed: () async {
-                              //Gå till LogInPage() med epost och lösenord //30
-
-                              PatchModel newPatch = PatchModel(patchId: null,
-                                patchName: "knappTest",
-                                description: "Vi testar knappar",
-                                ownerId: 1,
-                                pictureData: null,
-                                isPublic: true,
-                                placement: "SKREV",
-                                klubbmasteri: "KM",
-                                color: "BLÅ",
-                              );
-                              bool response = PatchProvider().savePatch(patch: newPatch);
-                              if (response == null){
-                                print("NOT WORK");
-                              }
-                              else{
-                                print("WORK");
-                              }
-                              Future<PatchModel> maybePatch = PatchProvider().createSavedPatch(newPatch);
-                              if(maybePatch != null){
-                                print("WORK WORK");
-                              }
-                              else{
-                                print("NOTNOTNOTWORK");
-                              }
+                              Navigator.push(context, MaterialPageRoute(
+                                  builder: (context) => LoginPage()));
                             },
                             child: Text("Logga in", style: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 17))),
                       ),

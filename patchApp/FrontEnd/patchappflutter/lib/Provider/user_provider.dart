@@ -1,10 +1,14 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
+import 'package:patchappflutter/global_user_info.dart';
 import '../Model/user_model.dart';
 import '../Service/user_service.dart';
+import 'dart:typed_data';
 
 class UserProvider with ChangeNotifier {
   final UserService _userService = UserService();
-
+  UserModel? currentUser;
   UserModel? _user;
   List<UserModel> _searchResults = [];
   UserModel? get user => _user;
@@ -18,6 +22,7 @@ class UserProvider with ChangeNotifier {
   String firstName;
   String surName;
   String completeName;
+  Uint8List? pictureData;
 
 
   UserProvider(
@@ -31,23 +36,28 @@ class UserProvider with ChangeNotifier {
         this.firstName = "Hej",
         this.surName = "Svej",
         this.completeName = "",
+        this.pictureData,
 });
   void setCompleteName() async {
     completeName = firstName + " \"" + kmName + "\" " + surName;
   }
+  void setCurrentUser(UserModel user){
+    currentUser = user;
+  }
+  void setGlobalUser(UserModel user){
+    GlobalUserInfo.currentUser = user;
+  }
+  void setCurrentUserVariables(){
+    userName = currentUser!.username;
+    biography = currentUser!.biography;
+    kmName = currentUser!.kmName;
+    university = currentUser!.university;
+    firstName = currentUser!.firstName;
+    surName = currentUser!.surName;
+    pictureData = currentUser!.pictureData;
+    setCompleteName();
+  }
 
-  void changeUserName({
-    required String newUserName,
-}) async{
-    userName = newUserName;
-    notifyListeners();
-  }
-  void changeId({
-    required int newUserId,
-  }) async{
-    id = newUserId;
-    notifyListeners();
-  }
   void changeOvveIndex({
     required int newOvveIndex,
   }) async{
@@ -55,10 +65,10 @@ class UserProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  // Hämta användare via Google ID
-  Future<void> fetchUser(String googleId) async {
+  // Hämta användare via
+  Future<void> fetchUser(int id) async {
     try {
-      _user = await _userService.getUser(googleId);
+      _user = await _userService.getUser(id);
       notifyListeners();
     } catch (e) {
       throw Exception('Could not fetch user: $e');
@@ -76,9 +86,9 @@ class UserProvider with ChangeNotifier {
   }
 
   // Uppdatera användare
-  Future<void> updateUser(String googleId, UserModel updatedUser) async {
+  Future<void> updateUser(int id, UserModel updatedUser) async {
     try {
-      _user = await _userService.updateUser(googleId, updatedUser);
+      _user = await _userService.updateUser(id, updatedUser);
       notifyListeners();
     } catch (e) {
       throw Exception('Could not update user: $e');

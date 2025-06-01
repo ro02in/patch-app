@@ -14,7 +14,7 @@ class UserModel {
   final Uint8List? pictureData;
 
   UserModel({
-    required this.id,
+    this.id,
     required this.firstName,
     required this.surName,
     required this.kmName,

@@ -21,9 +21,9 @@ class UserService {
   }
 
   // Update user info
-  Future<UserModel> updateUser(String googleId, UserModel user) async {
+  Future<UserModel> updateUser(int id, UserModel user) async {
     final response = await http.put(
-      Uri.parse('$baseUrl/update/$googleId'),
+      Uri.parse('$baseUrl/update/$id'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode(user.toJson()),
     );
@@ -51,9 +51,9 @@ class UserService {
 
 
   // Get single user by Google ID
-  Future<UserModel> getUser(String googleId) async {
+  Future<UserModel> getUser(int id) async {
     final response = await http.get(
-      Uri.parse('$baseUrl/$googleId'),
+      Uri.parse('$baseUrl/$id'),
     );
 
     if (response.statusCode == 200) {
