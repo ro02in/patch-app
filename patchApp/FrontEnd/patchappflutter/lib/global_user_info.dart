@@ -3,7 +3,7 @@ import 'package:patchappflutter/Model/user_model.dart';
 
 class GlobalUserInfo {
   static UserModel? currentUser;
-  static int id = 0;
+  static int? id;
   static String firstName = "I";
   static String surName= "Uninitialized";
   static String kmName = "am";
@@ -14,6 +14,7 @@ class GlobalUserInfo {
   static Uint8List? pictureData;
   static String completeName = "Compname";
   static void settingStuff(){
+    id = currentUser!.id;
     firstName = currentUser!.firstName;
     surName = currentUser!.surName;
     kmName = currentUser!.kmName;

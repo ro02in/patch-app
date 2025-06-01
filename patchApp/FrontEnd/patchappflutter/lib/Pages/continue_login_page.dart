@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:patchappflutter/Pages/continue_register_page.dart';
+import 'package:patchappflutter/Pages/post_log_in_page.dart';
 import 'package:patchappflutter/Pages/start_page.dart';
 import 'dart:convert';
 import 'package:patchappflutter/Pages/temp_buttons_page.dart';
@@ -34,7 +35,7 @@ class _LoginPageState extends State<LoginPage> {
       if (response.statusCode == 200 && responseData['message'] == 'Login successful.') {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => TempButtonsPage()),
+          MaterialPageRoute(builder: (context) => PostLoginPage()),
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(

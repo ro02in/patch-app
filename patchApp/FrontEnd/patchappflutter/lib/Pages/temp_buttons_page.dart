@@ -135,6 +135,7 @@ class TempButtonsPage extends StatelessWidget {
           UserModel testingUser = UserModel(firstName: "john", surName: "Testerton", kmName: "Test", university: "Test University", emailAddress: "Test@Email.org", biography: "Testography", username: "Testnameeee", password: "pezword", pictureData: null);
           GlobalUserInfo.currentUser = testingUser;
           GlobalUserInfo.settingStuff();
+          GlobalUserInfo.id = 23;
           UserProvider().setCurrentUser(testingUser);
           UserProvider().setCurrentUserVariables(testingUser);
           UserProvider().setCompleteName();

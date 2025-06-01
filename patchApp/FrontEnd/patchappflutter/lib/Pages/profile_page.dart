@@ -264,11 +264,11 @@ class _ProfilePageState extends State<ProfilePage> {
     biographyFieldController.dispose();
     super.dispose();
   }
-
+  
   String biography = '';
   int? Id = GlobalUserInfo.id;
   String getUrl = 'https://group-4-15.pvt.dsv.su.se/api/patch/user/' + GlobalUserInfo.id.toString(); //Källhänvisning: DISK handledning 29 maj kl 15
-
+  List<Uint8List> images = [];
   /////////////////////////// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   //Källhänvisning: Handledning med Donald via mail, 28 maj "Is it possible to get some supervision online regarding getting images from a google user to the GridView builder?"
@@ -294,19 +294,22 @@ class _ProfilePageState extends State<ProfilePage> {
     Provider.of<UserProvider>(context, listen: false).setCompleteName();
     currentIndex = Provider.of<UserProvider>(context, listen: false).ovveIndex;
     biography = Provider.of<UserProvider>(context, listen: false).biography;
+    int id = GlobalUserInfo.id ?? 0;
+    Provider.of<PatchProvider>(context, listen: false).fetchUserPatchImages(id);
+
 
     _controller.addListener(_updateCurrentIndex);
 
     // Lägg patchhämtning i post-frame-callback
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+   /* WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<PatchProvider>(context, listen: false)
           .fetchUserPatches(GlobalUserInfo.id);
-    });
+    });*/
   }
 
   //Källhänvisning: Handledning med Donald via mail 28 maj.
   Future<void> fetchImageList(int userId) async {
-    final response = await authHttpRequest(
+    /*final response = await authHttpRequest(
       context: ProfilePage,
       url: getUrl,
       method: 'GET',
@@ -328,7 +331,9 @@ class _ProfilePageState extends State<ProfilePage> {
       });
     } else {
       print("Some error happened, bad userid maybe, statusCode=${response.statusCode}");
-    }
+    }*/
+    
+
   }
 
   authHttpRequest(
@@ -350,6 +355,10 @@ class _ProfilePageState extends State<ProfilePage> {
         setState(() {
           Provider.of<UserProvider>(context, listen: false).changeOvveIndex(newOvveIndex: index);
           currentIndex = Provider.of<UserProvider>(context, listen: false).ovveIndex;
+          int id = GlobalUserInfo.id ?? 0;
+          Provider.of<PatchProvider>(context, listen: false).fetchUserPatchImages(id);
+          images = Provider.of<PatchProvider>(context, listen: false).userPatchImages;
+
         });
       }
     }
@@ -369,7 +378,7 @@ Widget build(BuildContext context) {
   var screenSize = MediaQuery.of(context).size; //screensize
   bool clicked = false; //for changing overall colour
   final userProvider = Provider.of<UserProvider>(context, listen:false);
-  final patchProvider = Provider.of<PatchProvider>(context);
+  final patchProvider = Provider.of<PatchProvider>(context, listen: false);
 
   String userName = GlobalUserInfo.completeName;
   //String userName = context.watch<UserProvider>().completeName;
@@ -971,10 +980,10 @@ Widget build(BuildContext context) {
                 padding: EdgeInsets.all(20),
                 primary: true,
                 //itemCount: patchProvider.fetchUserPatchImages(Id),
-                itemCount: userPatchesImages.length, //namnPåLista.length user
+                itemCount: 30, //namnPåLista.length user
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
                 itemBuilder: (BuildContext context, int index) {
-                  if (patchProvider.userPatchImages.isNotEmpty){
+                  if (images.isNotEmpty){
                     return Padding(
                       padding: const EdgeInsets.all(15),
                       child: Container(
@@ -992,7 +1001,7 @@ Widget build(BuildContext context) {
                         ),
                         child: CircleAvatar(
                           radius: 20,
-                          foregroundImage: MemoryImage(patchProvider.patches[index].pictureData!),  //1 juni ändrat till index. Handledning med Donald via mail 28 maj, DISK handledning 29 maj kl 15
+                          foregroundImage: MemoryImage(images[index]),  //1 juni ändrat till index. Handledning med Donald via mail 28 maj, DISK handledning 29 maj kl 15
                         ),
                       ),
                     );
@@ -1031,5 +1040,12 @@ Widget build(BuildContext context) {
     setState(() {
       _selectedImage = File(returnedImage!.path);
     });
+  }
+  Future<List<File>> _Uint8ListToFile(List<Uint8List> imageData) async {
+      List<File> imageList;
+      for(var e in imageData){
+        File image = 
+      }
+  return await ;
   }
 } //Class ProfilePage

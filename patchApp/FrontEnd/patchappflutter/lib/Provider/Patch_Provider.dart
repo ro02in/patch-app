@@ -4,6 +4,7 @@ import 'package:patchappflutter/Pages/search_page.dart';
 import 'package:patchappflutter/Provider/user_provider.dart';
 import '../Model/patch_model.dart';
 import '../Service/patch_service.dart';
+import '../global_user_info.dart';
 
 class PatchProvider with ChangeNotifier {
   final PatchService _patchService = PatchService();
@@ -58,7 +59,7 @@ class PatchProvider with ChangeNotifier {
 
 
   void setOwnerId() async{
-    ownerId = UserProvider().id;
+    ownerId = GlobalUserInfo.id;
   }
 
 
@@ -87,13 +88,14 @@ class PatchProvider with ChangeNotifier {
   }
 
   // Fetch patch images for a specific user
-  Future<void> fetchUserPatchImages(int googleId) async {
+  Future<List<Uint8List>> fetchUserPatchImages(int googleId) async {
     _setLoading(true);
     try {
       _userPatchImages = await _patchService.getUserPatchImages(googleId);
       _error = null;
+      return _userPatchImages;
     } catch (e) {
-      _error = e.toString();
+      rethrow;
     }
     _setLoading(false);
   }

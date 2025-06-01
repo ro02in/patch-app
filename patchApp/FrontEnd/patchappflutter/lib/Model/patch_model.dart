@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'dart:ffi';
 import 'dart:typed_data'; //stackoverflow.com/questions/49016508/what-is-the-dart-equivalent-of-java-byte
+
 
 class PatchModel {
   final int? patchId;
@@ -29,7 +31,9 @@ class PatchModel {
       patchId: json['patchId'],
       ownerId: json['ownerId'],
       description: json['description'] ?? '',
-      pictureData: Uint8List.fromList(List<int>.from(json['pictureData'])),
+      pictureData: json['pictureBase64'] != null
+          ? base64Decode(json['pictureBase64'])
+          : null,
       isPublic: json['isPublic'] ?? true,
       placement: json['placement'] ?? '',
       klubbmasteri: json['klubbmästeri'] ?? '',

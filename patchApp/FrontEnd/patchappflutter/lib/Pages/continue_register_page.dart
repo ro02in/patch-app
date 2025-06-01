@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:patchappflutter/Pages/post_log_in_page.dart';
 import 'package:patchappflutter/Pages/start_page.dart';
 import 'dart:convert';
 import 'package:patchappflutter/Pages/temp_buttons_page.dart';
@@ -44,6 +45,11 @@ class _ContinueRegisterPageState extends State<ContinueRegisterPage> {
         _isLoading = false;
       });
     }
+    Navigator.push( //1 juni 16:10
+      context,
+      //MaterialPageRoute(builder: (context) => ChoosePatchToTrade()), //hänvisa till confirmation page
+      MaterialPageRoute(builder: (context) => PostLoginPage()), //hänvisa till confirmation page
+    );
   }
 
 

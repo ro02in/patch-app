@@ -1,9 +1,13 @@
 
 import 'package:flutter/material.dart';
+import 'package:patchappflutter/Model/patch_model.dart';
 import 'package:patchappflutter/Pages/profile_page.dart';
 //import 'package:patchappflutter/add_patch_page';
+import '../Provider/Patch_Provider.dart';
 
 class PatchInventoryPage extends StatelessWidget {
+
+  final PatchModel patch;
   //late final String patchName; //TODO BACKEND hämta variabel
   //late final String description; //TODO BACKEND hämta variabel
   //late final String patchColor; //TODO BACKEND hämta variabel
@@ -15,14 +19,14 @@ class PatchInventoryPage extends StatelessWidget {
   //late = initialize later
 
   //tillfälliga testvärden
-  final int amount = 0; //TODO BACKEND hämta variabel
-  final String patchName = "PatchName"; //TODO BACKEND hämta variabel
-  final String description = "Test"; //TODO BACKEND hämta variabel
-  final String patchColor = "Orange"; //TODO BACKEND hämta variabel
-  final String club = "Test"; //TODO BACKEND hämta variabel
-  final String placement = "Vänster arm"; //TODO BACKEND hämta variabel
-  final bool isPublic = true; //TODO BACKEND hämta variabel
-  final bool isTradable = true; //TODO BACKEND hämta variabel
+  //final int amount = 0; //TODO BACKEND hämta variabel
+  //final String patchName = "PatchName"; //TODO BACKEND hämta variabel
+  //final String description = "Test"; //TODO BACKEND hämta variabel
+  //final String patchColor = "Orange"; //TODO BACKEND hämta variabel
+  //final String club = "Test"; //TODO BACKEND hämta variabel
+  //final String placement = "Vänster arm"; //TODO BACKEND hämta variabel
+  //final bool isPublic = true; //TODO BACKEND hämta variabel
+  //final bool isTradable = true; //TODO BACKEND hämta variabel
 
   @override
   Widget build(BuildContext context) {

@@ -45,6 +45,7 @@ class _RegisterPageState extends State<RegisterPage> {
   String email = '';
   String password = '';
   String biography = '';
+  int id = 0;
 
 
   @override
@@ -86,9 +87,13 @@ class _RegisterPageState extends State<RegisterPage> {
       GlobalUserInfo.currentUser = newUser;
       GlobalUserInfo.settingStuff();
       await userProvider.registerUser(newUser);
+      UserModel? registeredUser = userProvider.user;
+      GlobalUserInfo.id = registeredUser!.id;
       userProvider.setCurrentUser(newUser);
       userProvider.setCurrentUserVariables(newUser);
       userProvider.setCompleteName();
+
+
       await Future.delayed(const Duration(seconds: 2)); // Simulate API call
 
       setState(() {
