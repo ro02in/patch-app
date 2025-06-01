@@ -14,6 +14,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
+import 'package:patchappflutter/Pages/choose_patch_to_trade.dart';
 import 'package:patchappflutter/Pages/search_page.dart';
 import 'package:patchappflutter/Pages/trade_request_success_page.dart';
 
@@ -230,6 +231,10 @@ class _TradeActionPageState extends State<TradeActionPage> {
                               child: Icon(Icons.add_circle_outline_sharp, size: 30, color: Colors.purpleAccent),
                               onPressed: () {
                                 //TODO: BACKEND KOPPLING TILL MÄRKESMENY
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => ChoosePatchToTrade()), //hänvisa till confirmation page
+                                );
                               }),
                         ),
                       ),
@@ -298,6 +303,10 @@ class _TradeActionPageState extends State<TradeActionPage> {
                               child: Icon(Icons.add_circle_outline_sharp, size: 30, color: Colors.deepPurpleAccent),
                               onPressed: () {
                                 //TODO: BACKEND KOPPLING TILL MÄRKESMENY
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => ChoosePatchToTrade()), //hänvisa till confirmation page
+                                );
                               }),
                         ),
                       ),
