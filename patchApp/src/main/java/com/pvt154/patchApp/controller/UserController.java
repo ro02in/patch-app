@@ -1,5 +1,6 @@
 package com.pvt154.patchApp.controller;
 
+import com.pvt154.patchApp.model.LoginForm;
 import com.pvt154.patchApp.model.User;
 import com.pvt154.patchApp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +28,9 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<User> login(@RequestBody List<String> credentials) {
-
-        String email = credentials.get(0);
-        String password = credentials.get(1);
+    public ResponseEntity<User> login(@RequestBody LoginForm loginForm) {
+        String email = loginForm.getEmail();
+        String password = loginForm.getPassword();
         boolean valid = userService.validateUserCredentials(email, password);
         if (valid) {
             return ResponseEntity.ok(userService.getUserByEmail(email));

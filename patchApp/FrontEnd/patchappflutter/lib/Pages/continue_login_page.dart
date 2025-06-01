@@ -32,15 +32,23 @@ class _LoginPageState extends State<LoginPage> {
       listen: false,
     );
 
+
+
     userProviderLogin.loginAttempt(email, password);
     UserModel? loginUser = userProviderLogin.searchUser;
-    GlobalUserInfo.currentUser = loginUser;
-    GlobalUserInfo.settingStuff();
+    if(loginUser != null){
+      GlobalUserInfo.currentUser = loginUser;
+      GlobalUserInfo.settingStuff();
 
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => PostLoginPage()),
-    );
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => PostLoginPage()),
+      );
+    }
+    else {
+      throw Exception('You could not log in');
+    }
+
 
 /*
     final response = await http.post(

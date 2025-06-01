@@ -99,10 +99,10 @@ class UserProvider with ChangeNotifier {
     }
   }
   Future<void> loginAttempt(String email, String password) async{
-    try{
-      _user = await _userService.getUserLogin(email, password);
+    try {
+      _searchUser = await _userService.getUserLogin(email, password);
       notifyListeners();
-    }catch(e){
+    } catch (e) {
       throw Exception('Could not log in: $e');
     }
   }

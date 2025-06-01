@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../Model/user_model.dart';
+import '../global_user_info.dart';
 
 class UserService {
   final String baseUrl = 'https://group-4-15.pvt.dsv.su.se/api/user';
@@ -48,21 +49,31 @@ class UserService {
       throw Exception('Failed to search users');
     }
   }
-  Future<UserModel> getUserLogin(String email, String password) async {
 
+
+  Future<UserModel> getUserLogin(String email, String password) async {
     final response = await http.post(Uri.parse('$baseUrl/login'),
         headers: {'Content-Type': 'application/json'},
-        body: {email, password});
+        body: jsonEncode({'email': email, 'password': password}));
 
 
-    if (response.statusCode == 200) {
-      final UserModel data = jsonDecode(response.body);
+    /* if (response.statusCode == 200) {
+      final UserModel data = jsonDecode(UserModel.fromJson(response));
       return data;
     } else {
       throw Exception('Failed to search users');
+    }*/
+    if (response.statusCode == 200) {
+      // Deserialize user data
+      //final userJson = responseData['user'];
+      //final user = UserModel.fromJson(userJson);
+      final user = jsonDecode(response.body);
+
+      return user;
+    }else {
+      throw Exception('Login failed.');
     }
   }
-
 
   // Get single user by Google ID
   Future<UserModel> getUser(int id) async {
