@@ -8,6 +8,9 @@ import 'package:flutter/services.dart';
 import 'package:patchappflutter/Pages/profile_page.dart';
 import 'package:patchappflutter/Pages/register_user_confirmed.dart'; //sidan RegisterUserConfirmedPage
 import 'package:image_picker/image_picker.dart';
+import 'package:patchappflutter/Pages/search_page.dart';
+import 'package:patchappflutter/Pages/temp_buttons_page.dart';
+import 'package:patchappflutter/global_user_info.dart';
 import 'package:provider/provider.dart';
 
 import '../Model/user_model.dart';
@@ -80,11 +83,12 @@ class _RegisterPageState extends State<RegisterPage> {
           pictureData: imageData,
           username: userName,
           password: password);
-
+      GlobalUserInfo.currentUser = newUser;
+      GlobalUserInfo.settingStuff();
       await userProvider.registerUser(newUser);
       userProvider.setCurrentUser(newUser);
-      userProvider.setCurrentUserVariables();
-
+      userProvider.setCurrentUserVariables(newUser);
+      userProvider.setCompleteName();
       await Future.delayed(const Duration(seconds: 2)); // Simulate API call
 
       setState(() {
@@ -1065,7 +1069,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                     context,
                                     MaterialPageRoute(
                                       builder:
-                                          (context) => RegisterUserConfirmedPage()
+                                          (context) => TempButtonsPage(),
                                     ),
                                   ); //hänvisa till confirmation page
                                 });

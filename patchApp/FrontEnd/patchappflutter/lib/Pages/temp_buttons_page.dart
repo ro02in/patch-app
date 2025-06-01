@@ -57,6 +57,7 @@ class TempButtonsPage extends StatelessWidget {
 
 */
 import 'package:flutter/material.dart';
+import 'package:patchappflutter/Model/user_model.dart';
 import 'package:patchappflutter/Pages/add_patch_page.dart';
 import 'package:patchappflutter/Pages/continue_register_page.dart';
 import 'package:patchappflutter/Pages/patch_inventory_page.dart';
@@ -69,6 +70,8 @@ import 'package:patchappflutter/Pages/faq_page.dart';
 import 'package:patchappflutter/Pages/trade_request_success_page.dart'; // Import för din nya sida
 import 'package:patchappflutter/Pages/patch_added_successfully.dart';
 import 'package:patchappflutter/Pages/search_page.dart';
+import 'package:patchappflutter/Provider/user_provider.dart';
+import 'package:patchappflutter/global_user_info.dart';
 
 //25 maj
 
@@ -94,8 +97,10 @@ class TempButtonsPage extends StatelessWidget {
            _navButton(context, 'Search main page', SearchPage()),
            _navButton(context, 'Patch Inventory Page', PatchInventoryPage()),
            _navButton(context, 'Register user confirmed Page', RegisterUserConfirmedPage()),
-           _navButton(context,'Trade Request Success Page', TradeRequestSuccessPage(username: 'Oscar'),
-           ),
+           _navButton(context,'Trade Request Success Page', TradeRequestSuccessPage(username: 'Oscar')),
+           nav2Button(context, "setGlobalVariables")
+
+
          ],
        ),
      ),
@@ -121,5 +126,26 @@ class TempButtonsPage extends StatelessWidget {
      ),
    );
  }
+
+  Widget nav2Button(BuildContext context, String title) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: ElevatedButton(
+        onPressed: () {
+          UserModel testingUser = UserModel(firstName: "john", surName: "Testerton", kmName: "Test", university: "Test University", emailAddress: "Test@Email.org", biography: "Testography", username: "Testnameeee", password: "pezword", pictureData: null);
+          GlobalUserInfo.currentUser = testingUser;
+          GlobalUserInfo.settingStuff();
+          UserProvider().setCurrentUser(testingUser);
+          UserProvider().setCurrentUserVariables(testingUser);
+          UserProvider().setCompleteName();
+        },
+        child: Text(title),
+        style: ElevatedButton.styleFrom(
+          padding: EdgeInsets.symmetric(vertical: 16),
+          textStyle: TextStyle(fontSize: 16),
+        ),
+      ),
+    );
+  }
 }
 

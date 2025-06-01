@@ -3,15 +3,25 @@ import 'package:patchappflutter/Model/user_model.dart';
 
 class GlobalUserInfo {
   static UserModel? currentUser;
-  static int? id;
-  static String? firstName;
-  static String? surName;
-  static String? kmName;
-  static String? university;
-  static String? emailAddress;
-  static String? biography;
-  static String? username;
-  static String? password;
+  static int id = 0;
+  static String firstName = "I";
+  static String surName= "Uninitialized";
+  static String kmName = "am";
+  static String university = "hey";
+  static String emailAddress = "emayl";
+  static String biography = "Biobiobobiobio";
+  static String username = "oosrnaem";
   static Uint8List? pictureData;
+  static String completeName = "Compname";
+  static void settingStuff(){
+    firstName = currentUser!.firstName;
+    surName = currentUser!.surName;
+    kmName = currentUser!.kmName;
+    university = currentUser!.university;
+    emailAddress = currentUser!.emailAddress;
+    biography = currentUser!.biography;
+    username = currentUser!.username;
+    completeName = firstName + " \"" + kmName + "\" " + surName;
+  }
   }
 

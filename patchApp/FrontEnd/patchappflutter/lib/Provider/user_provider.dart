@@ -47,14 +47,14 @@ class UserProvider with ChangeNotifier {
   void setGlobalUser(UserModel user){
     GlobalUserInfo.currentUser = user;
   }
-  void setCurrentUserVariables(){
-    userName = currentUser!.username;
-    biography = currentUser!.biography;
-    kmName = currentUser!.kmName;
-    university = currentUser!.university;
-    firstName = currentUser!.firstName;
-    surName = currentUser!.surName;
-    pictureData = currentUser!.pictureData;
+  void setCurrentUserVariables(UserModel currentUser){
+    userName = currentUser.username;
+    biography = currentUser.biography;
+    kmName = currentUser.kmName;
+    university = currentUser.university;
+    firstName = currentUser.firstName;
+    surName = currentUser.surName;
+    pictureData = currentUser.pictureData;
     setCompleteName();
   }
 

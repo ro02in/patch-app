@@ -256,6 +256,7 @@ class _ProfilePageState extends State<ProfilePage> {
   List<Uint8List?> patchImageList = [];
   final TextEditingController biographyFieldController = TextEditingController();
 
+
   @override
   void dispose() { //clean up TextEditorController when leaving widget
     biographyFieldController.dispose();
@@ -266,7 +267,7 @@ class _ProfilePageState extends State<ProfilePage> {
   int? Id = GlobalUserInfo.id;
   String getUrl = 'https://group-4-15.pvt.dsv.su.se/api/patch/user/' + GlobalUserInfo.id.toString(); //Källhänvisning: DISK handledning 29 maj kl 15
 
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   //Källhänvisning: Handledning med Donald via mail, 28 maj "Is it possible to get some supervision online regarding getting images from a google user to the GridView builder?"
 
@@ -279,12 +280,14 @@ class _ProfilePageState extends State<ProfilePage> {
     super.initState();
     Provider.of<UserProvider>(context, listen: false).setCompleteName();
      currentIndex = Provider.of<UserProvider>(context, listen: false).ovveIndex; //get this info from server
+     biography = Provider.of<UserProvider>(context, listen: false).biography;
     _controller.addListener(_updateCurrentIndex); //Källhänvisning _updateCurrentIndex(): Handledning med Donald 22 maj kl 15:00.
-    fetchImageList(GlobalUserInfo.currentUser!.id); //Källhänvisning: Hanledning DISK 29 maj kl 15
+    fetchImageList(GlobalUserInfo.id); //Källhänvisning: Hanledning DISK 29 maj kl 15
+
   }
 
   //Källhänvisning: Handledning med Donald via mail 28 maj.
-  Future<void> fetchImageList(int? userId) async {
+  Future<void> fetchImageList(int userId) async {
     final response = await authHttpRequest(
       context: ProfilePage,
       url: getUrl,
@@ -339,10 +342,13 @@ class _ProfilePageState extends State<ProfilePage> {
 
 @override
 Widget build(BuildContext context) {
-  var screenSize = MediaQuery.of(context).size; //screensize
-  String userName = context.watch<UserProvider>().completeName;
-  bool clicked = false; //for changing overall colour
 
+  var screenSize = MediaQuery.of(context).size; //screensize
+  bool clicked = false; //for changing overall colour
+  final userProvider = Provider.of<UserProvider>(context, listen:false);
+  String userName = GlobalUserInfo.completeName;
+  //String userName = context.watch<UserProvider>().completeName;
+  //String userName = userProvider.userName;
   return Scaffold(
     backgroundColor: const Color.fromARGB(255, 31, 31, 31),
     //bottomNavigationBar: CustomBottomNavigationBar(),
@@ -714,6 +720,7 @@ Widget build(BuildContext context) {
                         //padding: EdgeInsets.symmetric(horizontal: 80),
                         //child: Text("History about your patch... lorem ipsum \nhejhejhej" , textAlign: TextAlign.left, style: TextStyle(color: Colors.black, fontFamily: ('HappyMonkey'), fontSize: 14)),
                         child: TextFormField(
+                          initialValue: GlobalUserInfo.biography,
                           style: TextStyle(color: Colors.black, fontFamily: 'InknutAntiqua', fontSize: 14),
                           obscureText: false,
                           cursorColor: const Color.fromARGB(255, 88, 166, 255),
@@ -758,7 +765,7 @@ Widget build(BuildContext context) {
                     ]
                 ),
                 alignment: Alignment.center,
-                child: Text('var kmName here', style: TextStyle(color: Color.fromARGB(255, 210, 210, 210), fontSize: 16, fontFamily: 'InknutAntiqua')), //BACKEND userName-värde
+                child: Text(GlobalUserInfo.kmName, style: TextStyle(color: Color.fromARGB(255, 210, 210, 210), fontSize: 16, fontFamily: 'InknutAntiqua')), //BACKEND userName-värde
               ),
 
               SizedBox(height: 15),
@@ -780,7 +787,7 @@ Widget build(BuildContext context) {
                     ]
                 ),
                 alignment: Alignment.center,
-                child: Text('var university here', style: TextStyle(color: Color.fromARGB(255, 210, 210, 210), fontSize: 16, fontFamily: 'InknutAntiqua')), //BACKEND userName-värde
+                child: Text(GlobalUserInfo.university, style: TextStyle(color: Color.fromARGB(255, 210, 210, 210), fontSize: 16, fontFamily: 'InknutAntiqua')), //BACKEND userName-värde
               ),
 
               SizedBox(height: 30),
@@ -911,11 +918,8 @@ Widget build(BuildContext context) {
                           ),
                           child: CircleAvatar(
                             radius: 20,
-                            //backgroundColor: Colors.white,
                             foregroundImage: MemoryImage(patchImageList[currentIndex]!), //Handledning med Donald via mail 28 maj, DISK handledning 29 maj kl 15
-                            //foregroundImage: NetworkImage(fetchUserPatches.toString()),
-                            //foregroundImage: Image.network(src),
-                            // foregroundImage: _patchImage != null ? FileImage(_patchImage!) : null),
+
                           ),
                         ),
                       );
