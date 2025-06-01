@@ -31,16 +31,17 @@ class _LoginPageState extends State<LoginPage> {
       context,
       listen: false,
     );
+
     userProviderLogin.loginAttempt(email, password);
-    UserModel? loginUser = userProviderLogin.user;
-    if (loginUser != null) {
-      GlobalUserInfo.currentUser = loginUser;
-      GlobalUserInfo.settingStuff();
-    }
-    else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Login failed')),
-      );
+    UserModel? loginUser = userProviderLogin.searchUser;
+    GlobalUserInfo.currentUser = loginUser;
+    GlobalUserInfo.settingStuff();
+
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => PostLoginPage()),
+    );
+
 /*
     final response = await http.post(
       Uri.parse('https://group-4-15.pvt.dsv.su.se/api/user/login'),
@@ -59,15 +60,12 @@ class _LoginPageState extends State<LoginPage> {
       GlobalUserInfo.settingStuff();
 
       // Navigate
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => PostLoginPage()),
-      );
+
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(responseData['message'] ?? 'Login failed')),
       );*/
-    }
+
   }
 
   @override

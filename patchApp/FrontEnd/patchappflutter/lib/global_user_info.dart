@@ -22,7 +22,7 @@ class GlobalUserInfo {
   static PatchModel patchTester = PatchModel(description: "description", ownerId: 21, isPublic: true, placement: "placement", klubbmasteri: "klubbmasteri", patchName: "patchName", color: "color", pictureData: null);
 
   static void settingStuff(){
-    id = currentUser!.id;
+    id = currentUser!.id ?? 0;
     firstName = currentUser!.firstName;
     surName = currentUser!.surName;
     kmName = currentUser!.kmName;

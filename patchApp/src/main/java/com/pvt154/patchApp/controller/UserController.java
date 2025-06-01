@@ -27,7 +27,10 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<User> login(@RequestBody String email, String password) {
+    public ResponseEntity<User> login(@RequestBody List<String> credentials) {
+
+        String email = credentials.get(0);
+        String password = credentials.get(1);
         boolean valid = userService.validateUserCredentials(email, password);
         if (valid) {
             return ResponseEntity.ok(userService.getUserByEmail(email));

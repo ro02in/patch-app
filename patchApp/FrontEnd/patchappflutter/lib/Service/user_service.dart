@@ -49,14 +49,11 @@ class UserService {
     }
   }
   Future<UserModel> getUserLogin(String email, String password) async {
-    final response = await http.post(
-      Uri.parse('$baseUrl/login'),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({
-        'emailAddress': email,
-        'password': password,
-      }),
-    );
+
+    final response = await http.post(Uri.parse('$baseUrl/login'),
+        headers: {'Content-Type': 'application/json'},
+        body: {email, password});
+
 
     if (response.statusCode == 200) {
       final UserModel data = jsonDecode(response.body);

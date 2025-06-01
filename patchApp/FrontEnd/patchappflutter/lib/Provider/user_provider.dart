@@ -10,8 +10,10 @@ class UserProvider with ChangeNotifier {
   final UserService _userService = UserService();
   UserModel? currentUser;
   UserModel? _user;
+  UserModel? _searchUser;
   List<UserModel> _searchResults = [];
   UserModel? get user => _user;
+  UserModel? get searchUser => _searchUser;
   List<UserModel> get searchResults => _searchResults;
   String userName;
   int? id;

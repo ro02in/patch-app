@@ -429,7 +429,7 @@ class PatchInventoryPage extends StatelessWidget {
 
                               if (confirm) {
                                 final success = await patchProvider.deletePatch(
-                                  patch.patchId!,
+                                  patchToDelete,
                                 );
                                 if (success) {
                                   Navigator.pop(context);
@@ -441,6 +441,8 @@ class PatchInventoryPage extends StatelessWidget {
                                     ),
                                   );
                                 }
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage(user: GlobalUserInfo.currentUser)) , );
+                                
                               }
                             },
                             backgroundColor: Color.fromARGB(255, 234, 111, 255),
