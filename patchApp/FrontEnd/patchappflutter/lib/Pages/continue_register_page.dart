@@ -239,19 +239,47 @@ class _ContinueRegisterPageState extends State<ContinueRegisterPage> {
                           SizedBox(height: 30),
                           Padding(
                             padding: const EdgeInsets.all(6.0),
-                            child: SizedBox(
-                              width: 200,
-                              height: 50,
-                              child: OutlinedButton(
-                                style: OutlinedButton.styleFrom(
-                                    backgroundColor: Color.fromARGB(255, 32, 32, 32),
-                                    side: BorderSide(color: Color.fromARGB(255, 246, 154, 255), width: 1)
+                            child: Column(
+                              children: [
+                                SizedBox(
+                                  width: 200,
+                                  height: 50,
+                                  child: OutlinedButton(
+                                    style: OutlinedButton.styleFrom(
+                                      backgroundColor: Color.fromARGB(255, 32, 32, 32),
+                                      side: BorderSide(color: Color.fromARGB(255, 246, 154, 255), width: 1),
+                                    ),
+                                    onPressed: _handleUserProviderAction,
+                                    child: _isLoading
+                                        ? CircularProgressIndicator(
+                                      valueColor: AlwaysStoppedAnimation<Color>(Colors.pinkAccent),
+                                    )
+                                        : Text(
+                                      'Skapa konto',
+                                      style: TextStyle(
+                                        color: Color.fromARGB(255, 230, 230, 230),
+                                        fontSize: 17,
+                                        fontFamily: 'InknutAntiqua',
+                                      ),
+                                    ),
+                                  ),
                                 ),
-                                onPressed: _handleUserProviderAction,
-                                child: Text(
-                                    'Skapa konto',
-                                    style: TextStyle(color: Color.fromARGB(255, 230, 230, 230), fontSize: 17, fontFamily: 'InknutAntiqua')),
-                              ),
+                                SizedBox(height: 12),
+
+                                /// STATUS MESSAGE DISPLAY
+                                if (_statusMessage.isNotEmpty)
+                                  Text(
+                                    _statusMessage,
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
+                                      color: _statusMessage.contains('fel') || _statusMessage.contains('error') || _statusMessage.contains('ogiltig')
+                                          ? Colors.redAccent
+                                          : Colors.greenAccent,
+                                    ),
+                                  ),
+                              ],
                             ),
                           ),
                         ],

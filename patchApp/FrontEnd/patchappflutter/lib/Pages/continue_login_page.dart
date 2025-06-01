@@ -5,6 +5,8 @@ import 'package:patchappflutter/Pages/post_log_in_page.dart';
 import 'package:patchappflutter/Pages/start_page.dart';
 import 'dart:convert';
 import 'package:patchappflutter/Pages/temp_buttons_page.dart';
+import 'package:patchappflutter/Model/user_model.dart';
+import 'package:patchappflutter/global_user_info.dart';
 
 import '../main.dart';
 
@@ -17,40 +19,51 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  Future<void> handleLogin() async {
-    final String email = _emailController.text.trim();
-    final String password = _passwordController.text.trim();
+    Future<void> handleLogin() async {
+      final String email = _emailController.text.trim();
+      final String password = _passwordController.text.trim();
 
-    try {
-      final response = await http.post(
-        Uri.parse('https://group-4-15.pvt.dsv.su.se/api/auth/login'),
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({
-          'emailAddress': email,
-          'password': password,
-        }),
-      );
-
-      final responseData = jsonDecode(response.body);
-      if (response.statusCode == 200 && responseData['message'] == 'Login successful.') {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => PostLoginPage()),
+      try {
+        final response = await http.post(
+          Uri.parse('https://group-4-15.pvt.dsv.su.se/api/auth/login'),
+          headers: {'Content-Type': 'application/json'},
+          body: jsonEncode({
+            'emailAddress': email,
+            'password': password,
+          }),
         );
-      } else {
+
+        final responseData = jsonDecode(response.body);
+
+        if (response.statusCode == 200 && responseData['message'] == 'Login successful.') {
+          // Deserialize user data
+          final userJson = responseData['user'];
+          final user = UserModel.fromJson(userJson);
+
+          // Save globally
+          GlobalUserInfo.currentUser = user;
+          GlobalUserInfo.settingStuff();
+
+          // Navigate
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => PostLoginPage()),
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(responseData['message'] ?? 'Login failed')),
+          );
+        }
+      } catch (error) {
+        print('Login error: $error');
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(responseData['message'] ?? 'Login failed')),
+          SnackBar(content: Text('Login failed: $error')),
         );
       }
-    } catch (error) {
-      print('Login error: $error');
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Login failed: $error')),
-      );
     }
-  }
 
-  @override
+
+    @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
