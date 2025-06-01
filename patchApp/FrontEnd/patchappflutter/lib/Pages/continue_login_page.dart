@@ -21,36 +21,50 @@ class _LoginPageState extends State<LoginPage> {
     final String email = _emailController.text.trim();
     final String password = _passwordController.text.trim();
 
-    try {
-      final response = await http.post(
-        Uri.parse('https://group-4-15.pvt.dsv.su.se/api/auth/login'),
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({
-          'emailAddress': email,
-          'password': password,
-        }),
-      );
+    Future<void> handleLogin() async {
+      final String email = _emailController.text.trim();
+      final String password = _passwordController.text.trim();
 
-      final responseData = jsonDecode(response.body);
-      if (response.statusCode == 200 && responseData['message'] == 'Login successful.') {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => PostLoginPage()),
+      try {
+        final response = await http.post(
+          Uri.parse('https://group-4-15.pvt.dsv.su.se/api/auth/login'),
+          headers: {'Content-Type': 'application/json'},
+          body: jsonEncode({
+            'emailAddress': email,
+            'password': password,
+          }),
         );
-      } else {
+
+        final responseData = jsonDecode(response.body);
+
+        if (response.statusCode == 200 && responseData['message'] == 'Login successful.') {
+          // Deserialize user data
+          final userJson = responseData['user'];
+          final user = UserModel.fromJson(userJson); // Make sure you have this method
+
+          // Save globally
+          GlobalUserInfo.currentUser = user;
+          GlobalUserInfo.settingStuff();
+
+          // Navigate
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => PostLoginPage()),
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(responseData['message'] ?? 'Login failed')),
+          );
+        }
+      } catch (error) {
+        print('Login error: $error');
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(responseData['message'] ?? 'Login failed')),
+          SnackBar(content: Text('Login failed: $error')),
         );
       }
-    } catch (error) {
-      print('Login error: $error');
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Login failed: $error')),
-      );
     }
-  }
 
-  @override
+    @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(

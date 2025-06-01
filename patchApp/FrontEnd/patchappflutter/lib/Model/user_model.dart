@@ -1,4 +1,3 @@
-import 'dart:ffi';
 import 'dart:typed_data';
 
 class UserModel {
@@ -10,7 +9,7 @@ class UserModel {
   final String emailAddress;
   String biography;
   final String username;
-  final String password;
+  final String? password;
   final Uint8List? pictureData;
 
   UserModel({
@@ -23,22 +22,22 @@ class UserModel {
     required this.biography,
     this.pictureData,
     required this.username,
-    required this.password,
+    this.password,
   });
-
-
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
-      id: json['id'] ?? '',
+      id: json['id'],
       firstName: json['firstName'] ?? '',
       surName: json['surName'] ?? '',
       kmName: json['kmName'] ?? '',
       university: json['university'] ?? '',
       emailAddress: json['emailAddress'] ?? '',
       biography: json['biography'] ?? '',
-      pictureData: json['pictureData'],
-      username: json['username'],
+      pictureData: json['pictureData'] != null
+          ? Uint8List.fromList(List<int>.from(json['pictureData']))
+          : null,
+      username: json['username'] ?? '',
       password: json['password'],
     );
   }
@@ -51,8 +50,8 @@ class UserModel {
     'university': university,
     'emailAddress': emailAddress,
     'biography': biography,
-    'pictureData' : pictureData,
-    'username' : username,
-    'password' : password,
+    'pictureData': pictureData?.toList(),
+    'username': username,
+    'password': password,
   };
 }
