@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:patchappflutter/Pages/continue_login_page.dart';
 import 'package:patchappflutter/Pages/provider_test_page.dart';
+import 'package:patchappflutter/Pages/register_page.dart';
 import 'package:patchappflutter/Pages/temp_buttons_page.dart';
 
 import '../Model/patch_model.dart';
@@ -122,7 +123,7 @@ class StartPage extends StatelessWidget {
                             onPressed: () {
                               //Gå till ContinueRegisterPage() med epost och lösenord //30 maj
                               Navigator.push(context, MaterialPageRoute(
-                                  builder: (context) => ProviderUIScreen()));
+                                  builder: (context) => RegisterPage()));
                             },
                             child: Text("Registrera konto", style: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 17))),
                       ),
