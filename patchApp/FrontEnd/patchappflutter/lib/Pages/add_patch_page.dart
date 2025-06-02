@@ -611,7 +611,7 @@ class _PatchViewPageState extends State<PatchViewPage> {
                 const SizedBox(height: 30),
                 // Switch-knappar (public och trade)
                 Container(
-                  width: 300,
+                  width: 200,
                   height: 105,
                   decoration: BoxDecoration(
                     color: Color.fromARGB(255, 40, 40, 40),
@@ -670,10 +670,10 @@ class _PatchViewPageState extends State<PatchViewPage> {
                           },
                         ),
                       ),
-                      const SizedBox(width: 27),
+
 
                       //SWITCH 2 BYTBAR/EJ BYTBAR
-                      Container(
+                     /* Container(
                         height: 47,
                         width: 108,
                         decoration: BoxDecoration(
@@ -709,7 +709,7 @@ class _PatchViewPageState extends State<PatchViewPage> {
                             });
                           },
                         ),
-                      ),
+                      ), */
                     ],
                   ),
                 ),

@@ -148,7 +148,7 @@ class FAQPage extends StatelessWidget {
             _buildFAQBox(
               question: 'Kan jag ta bort ett märke?',
               answer:
-              'Ja, för att ta bort ett märke, går du in i märket och klickar på soptunnan!.',
+              'Ja. För att ta bort ett märke, går du in i märket och klickar på knappen med soptunna-ikonen!',
             ),
             _buildFAQBox(
               question: 'Hur lägger jag till ett märke?',

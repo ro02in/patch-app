@@ -84,35 +84,9 @@ class PatchInventoryPage extends StatelessWidget {
 
                     SizedBox(height: 6),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SizedBox(width: 16),
-                        Container(
-                          width: 88,
-                          height: 88,
-                          decoration: BoxDecoration(
-                            color: Color.fromARGB(255, 234, 111, 255),
-                            borderRadius: BorderRadius.circular(100),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Color.fromARGB(255, 234, 111, 255),
-                                spreadRadius: 2,
-                                blurRadius: 7,
-                                offset: Offset(0, 0),
-                              ),
-                            ],
-                          ),
-                          /*child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text("Amount", style: TextStyle(color: Color.fromARGB(255, 40, 40, 40), fontSize: 14, fontFamily: 'InknutAntiqua')),
-                                  Text('$amount', style: TextStyle(color: Color.fromARGB(255, 40, 40, 40), fontSize: 21, fontFamily: 'CalSans')),
-                                ],
-                              )*/
-                        ),
-
-                        SizedBox(width: 25),
+                        SizedBox(width: 8),
 
                         Container(
                           decoration: BoxDecoration(
@@ -336,7 +310,7 @@ class PatchInventoryPage extends StatelessWidget {
                             ),
                             alignment: Alignment.center,
                             child: Text(
-                              patch.isPublic.toString(),
+                              patch.isPublic == true ? "Publik" : "Privat",
                               style: TextStyle(
                                 color: Color.fromARGB(255, 200, 200, 200),
                                 fontFamily: 'InknutAntiqua',
