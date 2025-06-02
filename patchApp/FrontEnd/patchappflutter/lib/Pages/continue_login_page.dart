@@ -316,7 +316,7 @@ catch(e){
                             ),
                             onPressed: handleLogin,
                             child: Text(
-                              'Logga innnn',
+                              'Logga in',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 18,
