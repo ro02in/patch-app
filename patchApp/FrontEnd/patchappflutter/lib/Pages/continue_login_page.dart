@@ -33,7 +33,7 @@ class _LoginPageState extends State<LoginPage> {
     );
 
 
-
+/*
     userProviderLogin.loginAttempt(email, password);
     UserModel? loginUser = userProviderLogin.searchUser;
     if(loginUser != null){
@@ -47,33 +47,40 @@ class _LoginPageState extends State<LoginPage> {
     }
     else {
       throw Exception('You could not log in');
-    }
+    }*/
 
 
-/*
     final response = await http.post(
       Uri.parse('https://group-4-15.pvt.dsv.su.se/api/user/login'),
-      body: jsonEncode({'email': email, 'password': password}),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({'email': email, 'password': password}));
+try {
+  final responseData = jsonDecode(response.body);
+
+  if (response.statusCode == 200) {
+    // Deserialize user data
+    final userJson = responseData['user'];
+    final user = UserModel.fromJson(responseData);
+    //UserModel userTest = jsonDecode(response.body);
+    // Save globally
+    GlobalUserInfo.currentUser = user;
+    GlobalUserInfo.settingStuff();
+
+    // Navigate
+    Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => PostLoginPage()));
+  } else {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(responseData['message'] ?? 'Login failed')),
     );
-
-    final responseData = jsonDecode(response.body);
-
-    if (response.statusCode == 200) {
-      // Deserialize user data
-      //final userJson = responseData['user'];
-      //final user = UserModel.fromJson(userJson);
-      final user = jsonDecode(response.body);
-      // Save globally
-      GlobalUserInfo.currentUser = user;
-      GlobalUserInfo.settingStuff();
-
-      // Navigate
-
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(responseData['message'] ?? 'Login failed')),
-      );*/
-
+  }
+}
+catch(e){
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(content: Text("Login failed, please try again.")),
+  );
+}
   }
 
   @override
