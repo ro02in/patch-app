@@ -16,8 +16,9 @@ class PatchInventoryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size; //screensize
-    PatchModel patch = GlobalUserInfo.patchTester;
-    int patchToDelete = 9;
+    PatchModel patch = GlobalUserInfo.patch;
+    int patchToDelete = 48;
+
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 31, 31, 31),
       body: ListView(
@@ -103,10 +104,10 @@ class PatchInventoryPage extends StatelessWidget {
                           child: CircleAvatar(
                             radius: 70,
                             backgroundColor: Colors.white,
-                            foregroundImage:
-                                patch.pictureData != null
+                            child:Image.asset('assets/JustGirl.png'),
+                            /*patch.pictureData != null
                                     ? MemoryImage(patch.pictureData!)
-                                    : null, //TODO: BACKEND IMAGE.NETWORK (Image.network(src) HTTP-LÄNK MÄRKESBILD HÄR
+                                    : null, */ //TODO: BACKEND IMAGE.NETWORK (Image.network(src) HTTP-LÄNK MÄRKESBILD HÄR
                           ),
                         ),
                       ],

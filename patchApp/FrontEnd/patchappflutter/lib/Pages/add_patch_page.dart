@@ -11,10 +11,13 @@ Denna kod använder detta flutter switch-package för att enklare kunna lägga t
 import 'package:http/http.dart' as http;
 
 import 'package:image_picker/image_picker.dart';
+import 'package:patchappflutter/Pages/post_log_in_page.dart';
+import 'package:patchappflutter/Pages/profile_page.dart';
 import 'package:patchappflutter/Provider/user_provider.dart';
 import 'package:provider/provider.dart';
 import '../Provider/Patch_Provider.dart'; // Adjust path as needed
-import '../Model/patch_model.dart'; // Adjust path as needed
+import '../Model/patch_model.dart';
+import '../global_user_info.dart'; // Adjust path as needed
 
 
 //Variabler till DropDownButtons
@@ -790,6 +793,9 @@ class _PatchViewPageState extends State<PatchViewPage> {
                             });
                           } else {
                             _createPatchWithProvider(context);
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => PostLoginPage()));
                           }
                         },
                         style: OutlinedButton.styleFrom(

@@ -19,7 +19,7 @@ class GlobalUserInfo {
   static String completeName = "Compname";
   static List<PatchModel> patches = [];
   static List<Uint8List> patchPictures = [];
-  static PatchModel patchTester = PatchModel(description: "description", ownerId: 21, isPublic: true, placement: "placement", klubbmasteri: "klubbmasteri", patchName: "patchName", color: "color", pictureData: null);
+  static PatchModel patch = PatchModel(description: 'I\'m just a girl.', ownerId: 32, isPublic: true, placement: "Ej Påsytt", klubbmasteri: "DISK KM", patchName: "Girl Patch", color: "Pink");
 
   static void settingStuff(){
     id = currentUser!.id ?? 0;
