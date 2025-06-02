@@ -46,7 +46,6 @@ class _RegisterPageState extends State<RegisterPage> {
   String email = '';
   String password = '';
   String biography = '';
-  int id = 0;
 
 
   @override
@@ -88,13 +87,9 @@ class _RegisterPageState extends State<RegisterPage> {
       GlobalUserInfo.currentUser = newUser;
       GlobalUserInfo.settingStuff();
       await userProvider.registerUser(newUser);
-      UserModel? registeredUser = userProvider.user;
-      GlobalUserInfo.id = registeredUser!.id;
       userProvider.setCurrentUser(newUser);
       userProvider.setCurrentUserVariables(newUser);
       userProvider.setCompleteName();
-
-
       await Future.delayed(const Duration(seconds: 2)); // Simulate API call
 
       setState(() {
@@ -111,660 +106,1000 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-    var screenSize = MediaQuery.of(context).size; //screensize
+    //var screenSize = MediaQuery.of(context).size; //screensize
 
     return Scaffold(
-      
-      body: Scrollbar(child :
-      ListView(
-        physics: AlwaysScrollableScrollPhysics(),
-        padding: EdgeInsets.only(top: 0),
 
-        //ta bort glapp mellan appbar och bakgrundsbild
+        body: Scrollbar(child :
+        ListView(
+          physics: AlwaysScrollableScrollPhysics(),
+          padding: EdgeInsets.only(top: 0),
 
-        children: [
-          SingleChildScrollView(child:
-          Container(
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/stitches10.png'),
-                fit: BoxFit.cover,
-              ),
-            ),
-            //padding: EdgeInsets.only(top: 20),
-            //color: const Color.fromARGB(255, 241, 241, 241),
+          //ta bort glapp mellan appbar och bakgrundsbild
 
-            //bakgrunden bakom inputfields-Container
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  AppBar(
-                    backgroundColor: Color.fromARGB(170, 38, 42, 27),
-                    //Color.fromARGB(255, 243, 92, 255) rosa
-                    elevation: 15,
-                    shadowColor: Colors.black,
-                    toolbarHeight: 57,
-                    leading: Icon(Icons.arrow_back, color: Colors.white),
-                    leadingWidth: 120,
-                    titleSpacing: -18,
-                    centerTitle: true,
-                    primary: true,
-                    //Källhänvisning: 'Rounded bottom on appbar', stackoverflow.com/questions/50242087/rounded-bottom-on-appbar publicerad 13 september 2020, hämtad 23 maj 2025
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.vertical(
-                        bottom: Radius.circular(100),
-                      ),
-                    ),
-                    title: Text(
-                      "Registera nytt konto",
-                      style: TextStyle(
-                        fontFamily: 'InknutAntiqua',
-                        fontSize: 20,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
+          children: [
+            SingleChildScrollView(child:
+            Container(
+              alignment: Alignment.center,
+              //padding: EdgeInsets.only(top: 20),
+              color: const Color.fromARGB(255, 241, 241, 241),
+
+              //bakgrunden bakom inputfields-Container
+              child: Container(
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('assets/stitches4.png'),
+                    fit: BoxFit.fill,
                   ),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    AppBar(
+                      backgroundColor: Color.fromARGB(170, 38, 42, 27),
+                      //Color.fromARGB(255, 243, 92, 255) rosa
+                      elevation: 15,
+                      shadowColor: Colors.black,
+                      toolbarHeight: 57,
+                      leading: Icon(Icons.arrow_back, color: Colors.white),
+                      leadingWidth: 120,
+                      titleSpacing: -18,
+                      centerTitle: true,
+                      primary: true,
+                      //Källhänvisning: 'Rounded bottom on appbar', stackoverflow.com/questions/50242087/rounded-bottom-on-appbar publicerad 13 september 2020, hämtad 23 maj 2025
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.vertical(
+                          bottom: Radius.circular(100),
+                        ),
+                      ),
+                      title: Text(
+                        "Registera nytt konto",
+                        style: TextStyle(
+                          fontFamily: 'InknutAntiqua',
+                          fontSize: 20,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
 
-                  SizedBox(height: 30),
+                    SizedBox(height: 30),
 
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(100),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.purpleAccent,
-                          spreadRadius: 1,
-                          blurRadius: 0,
-                          offset: Offset(0, 4),
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(100),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.purpleAccent,
+                            spreadRadius: 1,
+                            blurRadius: 0,
+                            offset: Offset(0, 4),
+                          ),
+                        ],
+                      ),
+                      child: CircleAvatar(
+                        //LÄGG TILL PROFILBILD
+                        radius: 80,
+                        backgroundColor: Colors.purpleAccent,
+                        foregroundImage:
+                        _selectedImage != null
+                            ? FileImage(_selectedImage!)
+                            : AssetImage('assets/sbpinklogo.png'),
+                        child:
+                        _selectedImage == null
+                            ? Icon(Icons.add, color: Colors.black, size: 30)
+                            : null,
+                      ),
+                    ),
+
+                    SizedBox(height: 16),
+                    //padding
+
+                    //Add profile picture knapp
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          padding: EdgeInsets.all(5),
+                          height: 75,
+                          width: 75,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(100),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.yellow,
+                                blurRadius: 0,
+                                spreadRadius: 1,
+                                offset: Offset(0.5, 0.5),
+                              ),
+                            ],
+                          ),
+                          child: FloatingActionButton(
+                            heroTag: "FAB12",
+                            backgroundColor: Colors.white,
+                            shape: const CircleBorder(),
+                            hoverColor: Color.fromARGB(255, 255, 255, 255),
+                            focusColor: Colors.white,
+                            child: Icon(
+                              Icons.add_photo_alternate_sharp,
+                              size: 31,
+                              color: Colors.black,
+                            ),
+                            onPressed: () {
+                              _pickImageFromGallery();
+                            },
+                          ),
+                        ),
+
+                        SizedBox(height: 21), //simulated padding
+                        SizedBox(width: 20),
+
+                        Container(
+                          padding: EdgeInsets.all(5),
+                          //styr tjocklek på gul ram
+                          height: 75,
+                          width: 75,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(100),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.yellow,
+                                blurRadius: 0,
+                                spreadRadius: 1,
+                                offset: Offset(0.5, 0.5),
+                              ),
+                            ],
+                          ),
+                          child: FloatingActionButton(
+                            heroTag: "FAB13",
+                            backgroundColor: Colors.white,
+                            shape: const CircleBorder(),
+                            hoverColor: Color.fromARGB(255, 255, 255, 255),
+                            focusColor: Colors.white,
+                            child: Icon(
+                              Icons.add_a_photo_sharp,
+                              size: 31,
+                              color: Colors.black,
+                            ),
+                            onPressed: () {
+                              _pickImageFromCamera();
+                            },
+                          ),
                         ),
                       ],
                     ),
-                    child: CircleAvatar(
-                      //LÄGG TILL PROFILBILD
-                      radius: 80,
-                      backgroundColor: Colors.purpleAccent,
-                      foregroundImage:
-                          _selectedImage != null
-                              ? FileImage(_selectedImage!)
-                              : AssetImage('assets/sbpinklogo.png'),
-                      child:
-                          _selectedImage == null
-                              ? Icon(Icons.add, color: Colors.black, size: 30)
-                              : null,
-                    ),
-                  ),
 
-                  SizedBox(height: 16),
-                  //padding
+                    SizedBox(height: 40),
+                    //padding
 
-                  //Add profile picture knapp
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        padding: EdgeInsets.all(5),
-                        height: 75,
-                        width: 75,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(100),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.yellow,
-                              blurRadius: 0,
-                              spreadRadius: 1,
-                              offset: Offset(0.5, 0.5),
-                            ),
-                          ],
-                        ),
-                        child: FloatingActionButton(
-                          heroTag: "FAB12",
-                          backgroundColor: Colors.white,
-                          shape: const CircleBorder(),
-                          hoverColor: Color.fromARGB(255, 255, 255, 255),
-                          focusColor: Colors.white,
-                          child: Icon(
-                            Icons.add_photo_alternate_sharp,
-                            size: 31,
-                            color: Colors.black,
-                          ),
-                          onPressed: () {
-                            _pickImageFromGallery();
-                          },
-                        ),
-                      ),
-
-                      SizedBox(height: 21), //simulated padding
-                      SizedBox(width: 20),
-
-                      Container(
-                        padding: EdgeInsets.all(5),
-                        //styr tjocklek på gul ram
-                        height: 75,
-                        width: 75,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(100),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.yellow,
-                              blurRadius: 0,
-                              spreadRadius: 1,
-                              offset: Offset(0.5, 0.5),
-                            ),
-                          ],
-                        ),
-                        child: FloatingActionButton(
-                          heroTag: "FAB13",
-                          backgroundColor: Colors.white,
-                          shape: const CircleBorder(),
-                          hoverColor: Color.fromARGB(255, 255, 255, 255),
-                          focusColor: Colors.white,
-                          child: Icon(
-                            Icons.add_a_photo_sharp,
-                            size: 31,
-                            color: Colors.black,
-                          ),
-                          onPressed: () {
-                            _pickImageFromCamera();
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  SizedBox(height: 40),
-                  //padding
-
-                  //KNAPP 1
-
-
-                      SizedBox(width: 23),
-                      Container(
-                        padding: EdgeInsets.only(bottom: 10, top: 30),
-                        height: 735,
-                        width: 373,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(40),
-                          color: Color.fromARGB(110, 40, 40, 40),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Color.fromARGB(140, 20, 20, 20),
-                              spreadRadius: 2,
-                              blurRadius: 10,
-                              offset: Offset(0, 2)
-                            )
-                          ]
-                        ),
-                        child: Column(
-                          children: [
-                            //DITT FÖRNAMN TEXTFIELD NY VARIANT 1 JUNI 17:13
-                            SizedBox(
-                              height: 86,
-                              width: 300,
-                              child: TextField(
-                                controller: nameFieldController,
-                                maxLength: 60,
-                                maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                                onChanged:
-                                    (value) => name = nameFieldController.text,  //Källhänvisning www.geeksforgeeks.org/retrieve-data-from-textfields-in-flutter/ publicerad 7 mars 2025, hämtad 25 maj 2025
-                                cursorColor: Color.fromARGB(255, 246, 154, 255),
-                                cursorHeight: 22,
-                                obscureText: false,
-                                decoration: InputDecoration(
-                                  counterStyle: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 15),
-                                  labelText: 'Ditt förnamn:',
-                                  labelStyle: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 15),
-                                  floatingLabelBehavior: FloatingLabelBehavior.never,
-                                  filled: true,
-                                  fillColor: Color.fromARGB(40, 255, 255, 255),
-                                  contentPadding: EdgeInsets.only(top: 5, left: 20, bottom: 5, right: 20),
-                                  border: OutlineInputBorder(),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.purpleAccent, width: 1.5),
-                                    borderRadius: BorderRadius.circular(30),
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Color.fromARGB(255, 85, 85, 85), width: 1.5),
-                                    borderRadius: BorderRadius.circular(30),
-                                  ),
-                                ),
-                                style: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 15),
-                              ),
-                            ),
-                            SizedBox(width: 20),
-
-                          //SizedBox(height: 20), //padding
-                          SizedBox(height: 2),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SizedBox(width: 30),
-                              //SURNAME TEXTFIELD FIXAD 1 JUNI 17:20
-                              SizedBox(
-                                height: 86,
-                                width: 300,
-                                child: TextField(
-                                  controller: surNameFieldController,
-                                  maxLength: 60,
-                                  maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                                  onChanged:
-                                      (value) => name = surNameFieldController.text,  //Källhänvisning www.geeksforgeeks.org/retrieve-data-from-textfields-in-flutter/ publicerad 7 mars 2025, hämtad 25 maj 2025
-                                  cursorColor: Color.fromARGB(255, 246, 154, 255),
-                                  cursorHeight: 22,
-                                  obscureText: false,
-                                  expands: false,
-                                  decoration: InputDecoration(
-                                    counterStyle: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 15),
-                                    labelText: 'Ditt efternamn:',
-                                    labelStyle: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 15),
-                                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                                    filled: true,
-                                    fillColor: Color.fromARGB(40, 255, 255, 255),
-                                    contentPadding: EdgeInsets.only(top: 5, left: 20, bottom: 5, right: 20),
-                                    border: OutlineInputBorder(),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(color: Colors.purpleAccent, width: 1.5),
-                                      borderRadius: BorderRadius.circular(30),
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(color: Color.fromARGB(255, 85, 85, 85), width: 1.5),
-                                      borderRadius: BorderRadius.circular(30),
-                                    ),
-                                  ),
-                                  style: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 15),
-                                ),
-                              ),
-                              SizedBox(width: 30),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SizedBox(width: 30),
-                              //DITT KM-NAMN TEXTFIELD NY VARIANT 1 JUNI 16:58
-                              SizedBox(
-                                height: 86,
-                                width: 300,
-                                child: TextField(
-                                  controller: kmNameFieldController,
-                                  maxLength: 60,
-                                  maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                                  onChanged:
-                                      (value) => kmName = kmNameFieldController.text,  //Källhänvisning www.geeksforgeeks.org/retrieve-data-from-textfields-in-flutter/ publicerad 7 mars 2025, hämtad 25 maj 2025
-                                  cursorColor: Color.fromARGB(255, 246, 154, 255),
-                                  cursorHeight: 22,
-                                  obscureText: false,
-                                  expands: false,
-                                  decoration: InputDecoration(
-                                    counterStyle: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 15),
-                                    labelText: 'Ditt KM namn:',
-                                    labelStyle: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 15),
-                                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                                    filled: true,
-                                    fillColor: Color.fromARGB(40, 255, 255, 255),
-                                    contentPadding: EdgeInsets.only(top: 5, left: 20, bottom: 5, right: 20),
-                                    border: OutlineInputBorder(),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(color: Colors.purpleAccent, width: 1.5),
-                                      borderRadius: BorderRadius.circular(30),
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(color: Color.fromARGB(255, 85, 85, 85), width: 1.5),
-                                      borderRadius: BorderRadius.circular(30),
-                                    ),
-                                  ),
-                                  style: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 15),
-                                ),
-                              ),
-                              SizedBox(width: 30),
-                            ],
-                          ),
-
-                          SizedBox(height: 2),
-
-                          //padding mellan KM namn textfield och Sektion textfield
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SizedBox(width: 30),
-                              //DITT UNIVERSITET TEXTFIELD NY VARIANT 1 JUNI 16:58
-                              SizedBox(
-                                height: 86,
-                                width: 300,
-                                child: TextField(
-                                  controller: universityFieldController,
-                                  maxLength: 60,
-                                  maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                                  onChanged:
-                                      (value) => university = universityFieldController.text,  //Källhänvisning www.geeksforgeeks.org/retrieve-data-from-textfields-in-flutter/ publicerad 7 mars 2025, hämtad 25 maj 2025
-                                  cursorColor: Color.fromARGB(255, 246, 154, 255),
-                                  cursorHeight: 22,
-                                  obscureText: false,
-                                  expands: false,
-                                  decoration: InputDecoration(
-                                    counterStyle: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 15),
-                                    labelText: 'Ditt universitet:',
-                                    labelStyle: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 15),
-                                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                                    filled: true,
-                                    fillColor: Color.fromARGB(40, 255, 255, 255),
-                                    contentPadding: EdgeInsets.only(top: 5, left: 20, bottom: 5, right: 20),
-                                    border: OutlineInputBorder(),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(color: Colors.purpleAccent, width: 1.5),
-                                      borderRadius: BorderRadius.circular(30),
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(color: Color.fromARGB(255, 85, 85, 85), width: 1.5),
-                                      borderRadius: BorderRadius.circular(30),
-                                    ),
-                                  ),
-                                  style: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 15),
-                                ),
-                              ),
-                              SizedBox(width: 30),
-                            ],
-                          ),
-
-                          SizedBox(height: 2),
-
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SizedBox(width: 30),
-                              //USERNAME TEXTFIELD NY VARIANT 1 JUNI 16:58
-                              SizedBox(
-                                height: 86,
-                                width: 300,
-                                child: TextField(
-                                  controller: userNameFieldController,
-                                  maxLength: 35,
-                                  maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                                  expands: false,
-                                  onChanged:
-                                      (value) => userName = userNameFieldController.text,  //Källhänvisning www.geeksforgeeks.org/retrieve-data-from-textfields-in-flutter/ publicerad 7 mars 2025, hämtad 25 maj 2025
-                                  cursorColor: Color.fromARGB(255, 246, 154, 255),
-                                  cursorHeight: 22,
-                                  obscureText: false,
-                                  decoration: InputDecoration(
-                                    counterStyle: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 15),
-                                    labelText: 'Ditt användarnamn:',
-                                    labelStyle: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 15),
-                                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                                    filled: true,
-                                    fillColor: Color.fromARGB(40, 255, 255, 255),
-                                    contentPadding: EdgeInsets.only(top: 5, left: 20, bottom: 5, right: 20),
-                                    border: OutlineInputBorder(),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(color: Colors.purpleAccent, width: 1.5),
-                                      borderRadius: BorderRadius.circular(30),
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(color: Color.fromARGB(255, 85, 85, 85), width: 1.5),
-                                      borderRadius: BorderRadius.circular(30),
-                                    ),
-                                  ),
-                                  style: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 15),
-                                ),
-                              ),
-                              SizedBox(width: 30),
-                            ],
-                          ),
-
-                          SizedBox(height: 2),
-
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SizedBox(width: 30),
-                              //EMAIL TEXTFIELD NY VARIANT 1 JUNI 16:56
-                              SizedBox(
-                                height: 86,
-                                width: 300,
-                                child: TextField(
-                                  controller: emailFieldController,
-                                  expands: false,
-                                  maxLength: 100,
-                                  maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                                  onChanged: (value) =>
-                                  email = emailFieldController.text,  //Källhänvisning www.geeksforgeeks.org/retrieve-data-from-textfields-in-flutter/ publicerad 7 mars 2025, hämtad 25 maj 2025
-                                  cursorColor: Color.fromARGB(255, 246, 154, 255),
-                                  cursorHeight: 22,
-                                  obscureText: false,
-                                  decoration: InputDecoration(
-                                    counterStyle: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 15),
-                                    labelText: 'Email:',
-                                    labelStyle: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 15),
-                                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                                    filled: true,
-                                    fillColor: Color.fromARGB(40, 255, 255, 255),
-                                    contentPadding: EdgeInsets.only(top: 5, left: 20, bottom: 5, right: 20),
-                                    border: OutlineInputBorder(),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(color: Colors.purpleAccent, width: 1.5),
-                                      borderRadius: BorderRadius.circular(30),
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(color: Color.fromARGB(255, 85, 85, 85), width: 1.5),
-                                      borderRadius: BorderRadius.circular(30),
-                                    ),
-                                  ),
-                                  style: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 15),
-                                ),
-                              ),
-                              SizedBox(width: 30),
-                            ],
-                          ),
-
-                          SizedBox(height: 2),
-
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SizedBox(width: 30),
-                              //PASSWORD TEXTFIELD
-                              SizedBox(
-                                height: 86,
-                                width: 300,
-                                child: TextField(
-                                  controller: passwordFieldController,
-                                  maxLength: 60,
-                                  maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                                  onChanged:
-                                      (value) => password = passwordFieldController.text,
-                                  cursorColor: Color.fromARGB(255, 246, 154, 255),
-                                  cursorHeight: 22,
-                                  obscureText: true,
-                                  decoration: InputDecoration(
-                                    counterStyle: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 15),
-                                    labelText: 'Password',
-                                    labelStyle: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 15),
-                                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                                    filled: true,
-                                    fillColor: Color.fromARGB(40, 255, 255, 255),
-                                    contentPadding: EdgeInsets.only(top: 5, left: 20, bottom: 5, right: 20),
-                                    border: OutlineInputBorder(),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(color: Colors.purpleAccent, width: 1.5),
-                                      borderRadius: BorderRadius.circular(30),
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(color: Color.fromARGB(255, 85, 85, 85), width: 1.5),
-                                      borderRadius: BorderRadius.circular(30),
-                                    ),
-                                  ),
-                                  style: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 15),
-                                ),
-                              ),
-
-                              SizedBox(width: 30),
-                            ],
-                          ),
-                          SizedBox(height: 2),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SizedBox(width: 30),
-
-                              //BIOGRAFI NYTT TEXTFIELD
-                              SizedBox(
-                                height: 70,
-                                width: 300,
-                                child: TextField(
-                                  expands: true,
-                                  maxLines: null,
-                                  controller: biographyFieldController,
-                                  maxLength: 150,
-                                  maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                                  onChanged:
-                                      (value) => biography = biographyFieldController.text,
-                                  cursorColor: Color.fromARGB(255, 246, 154, 255),
-                                  cursorHeight: 22,
-                                  obscureText: false,
-                                  decoration: InputDecoration(
-                                    counterStyle: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 15),
-                                    labelText: 'Biografi',
-                                    labelStyle: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 15),
-                                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                                    filled: true,
-                                    fillColor: Color.fromARGB(40, 255, 255, 255),
-                                    contentPadding: EdgeInsets.only(top: 5, left: 20, bottom: 5, right: 20),
-                                    border: OutlineInputBorder(),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(color: Colors.purpleAccent, width: 1.5),
-                                      borderRadius: BorderRadius.circular(30),
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(color: Colors.purpleAccent, width: 1.5),
-                                      borderRadius: BorderRadius.circular(30),
-                                    ),
-                                  ),
-                                  style: TextStyle(color: Colors.white, fontFamily: 'InknutAntiqua', fontSize: 15),
-                                ),
-                              ),
-                          ],
-                        )
-                          ],
-                      ),
-
-                      ),
-
-
-                  //KNAPP 2
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      SizedBox(height: 150),
-                      Container(
-                        alignment: Alignment.center,
-                        padding: EdgeInsets.only(top: 10),
-                        width: 406,
-                        height: MediaQuery.of(context).size.height * 0.110,
-                        decoration: BoxDecoration(
-                          color: Color.fromARGB(255, 43, 43, 43),
-                          borderRadius: new BorderRadius.vertical(
-                            //rundad kant container källhänvisning: 'Rounded Bottom on appbar', stackoverflow.com/questions/50242087/rounded-bottom-on-appbar av user "Rémi Rousselet" publicerad 8 maj 2018, hämtad 25 maj 2025
-                            top: new Radius.elliptical(
-                              MediaQuery.of(context).size.width,
-                              100,
-                            ),
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Color.fromARGB(255, 20, 20, 20),
-                              spreadRadius: 3,
-                              blurRadius: 35,
-                              offset: Offset(0.5, 1),
-                            ),
-                          ],
-                        ),
-                        child: Container(
+                    //KNAPP 1
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(width: 30),
+                        Container(
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(40)),
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(30),
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.purpleAccent, //
-                                spreadRadius: 1.5,
-                                blurRadius: 7,
-                                offset: Offset.fromDirection(0, 0),
+                                color: Color.fromARGB(255, 246, 153, 255),
+                                blurRadius: 0,
+                                spreadRadius: 1,
+                                offset: Offset(0, 3),
                               ),
                             ],
                           ),
-
                           child: SizedBox(
-                            // alignment: Alignment.center,
-                            height: 58,
-                            width: 295,
-                            child: TextButton(
-                              style: TextButton.styleFrom(
-                                //side: BorderSide(width: 0.8, color: const Color.fromARGB(255, 0, 0, 0)),
-                                backgroundColor: Color.fromARGB(
-                                  255,
-                                  244,
-                                  115,
-                                  255,
-                                ),
-                                //lila Color.fromARGB(255, 195, 76, 255)
-                                //shadowColor: const Color.fromARGB(255, 255, 198, 43),
-                                overlayColor: Colors.white,
+                            height: 48,
+                            width: 300,
+                            child: TextField(
+                              inputFormatters: [
+
+                                //space not allowed
+                              ],
+                              controller: nameFieldController,
+                              obscureText: false,
+                              cursorColor: const Color.fromARGB(
+                                255,
+                                214,
+                                18,
+                                185,
                               ),
-                              onPressed: () {
-                                //vad som sker när man trycker på knappen
-                                setState(() {
-                                  nameFieldController.text.isEmpty
-                                      ? showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return AlertDialog(
-                                            backgroundColor: Colors.white,
-                                            content: Container(
-                                              alignment: Alignment.center,
-                                              width: 350,
-                                              height: 50,
-                                              child: Text(
-                                                "Namn-fältet får inte vara tomt.",
-                                                style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 15,
-                                                  fontFamily: 'InknutAntiqua',
-                                                ),
-                                              ),
-                                            ),
-                                          );
-                                        },
-                                  ) : Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder:
-                                          (context) => PostLoginPage(),
-                                    ),
-                                  ); //hänvisa till confirmation page
-                                });
-                                _handleRegisterButton();
-                              },
-                              child: Text(
-                                "Registrera konto",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
+                              cursorHeight: 24,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: 'InknutAntiqua',
+                                fontSize: 15,
+                              ),
+                              maxLength: 35,
+                              maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                              onChanged:
+                                  (value) => name = nameFieldController.text,
+
+                              //Källhänvisning www.geeksforgeeks.org/retrieve-data-from-textfields-in-flutter/ publicerad 7 mars 2025, hämtad 25 maj 2025
+                              decoration: InputDecoration(
+                                //hintStyle: TextStyle(color: Colors.black),
+                                hoverColor: Colors.black,
+                                labelText: 'Förnamn:',
+                                labelStyle: TextStyle(
+                                  fontFamily: ('InknutAntiqua'),
+                                ),
+                                floatingLabelBehavior:
+                                FloatingLabelBehavior.never,
+                                counterStyle: TextStyle(
                                   fontFamily: 'InknutAntiqua',
                                   color: Colors.black,
-                                  fontSize: 20,
+                                  fontSize: 13,
+                                  height: -80,
+                                ),
+                                contentPadding: EdgeInsets.only(
+                                  left: 15,
+                                  bottom: 16,
+                                  right: 20,
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                    width: 1.1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                    width: 1.1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30),
                                 ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+
+                        SizedBox(width: 30),
+                      ],
+                    ),
+
+                    //SizedBox(height: 20), //padding
+                    SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(width: 30),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(30),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Color.fromARGB(255, 246, 153, 255),
+                                blurRadius: 0,
+                                spreadRadius: 1,
+                                offset: Offset(0, 3),
+                              ),
+                            ],
+                          ),
+                          child: SizedBox(
+                            height: 48,
+                            width: 300,
+                            child: TextField(
+                              inputFormatters: [
+
+                                //space not allowed
+                              ],
+                              controller: surNameFieldController,
+                              obscureText: false,
+                              cursorColor: const Color.fromARGB(
+                                255,
+                                214,
+                                18,
+                                185,
+                              ),
+                              cursorHeight: 24,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: 'InknutAntiqua',
+                                fontSize: 15,
+                              ),
+                              maxLength: 35,
+                              maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                              onChanged:
+                                  (value) => surName = surNameFieldController.text,
+
+                              //Källhänvisning www.geeksforgeeks.org/retrieve-data-from-textfields-in-flutter/ publicerad 7 mars 2025, hämtad 25 maj 2025
+                              decoration: InputDecoration(
+                                //hintStyle: TextStyle(color: Colors.black),
+                                hoverColor: Colors.black,
+                                labelText: 'Efternamn:',
+                                labelStyle: TextStyle(
+                                  fontFamily: ('InknutAntiqua'),
+                                ),
+                                floatingLabelBehavior:
+                                FloatingLabelBehavior.never,
+                                counterStyle: TextStyle(
+                                  fontFamily: 'InknutAntiqua',
+                                  color: Colors.black,
+                                  fontSize: 13,
+                                  height: -80,
+                                ),
+                                contentPadding: EdgeInsets.only(
+                                  left: 15,
+                                  bottom: 16,
+                                  right: 20,
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                    width: 1.1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                    width: 1.1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+
+                        SizedBox(width: 30),
+                      ],
+                    ),
+                    //padding mellan Namn-textfield (input) och KM namn-input field
+                    SizedBox(height: 20,),
+                    //SizedBox(height: 20), //padding
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(width: 30),
+                        Container(
+                          //KM namn textfield
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(30),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Color.fromARGB(255, 246, 153, 255),
+                                blurRadius: 0,
+                                spreadRadius: 1,
+                                offset: Offset(0, 3),
+                              ),
+                            ],
+                          ),
+                          child: SizedBox(
+                            height: 48,
+                            width: 300,
+                            child: TextField(
+                              inputFormatters: [
+
+                              ],
+                              controller: kmNameFieldController,
+                              obscureText: false,
+                              cursorColor: const Color.fromARGB(
+                                255,
+                                214,
+                                18,
+                                185,
+                              ),
+                              cursorHeight: 24,
+                              maxLength: 35,
+                              maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                              onChanged:
+                                  (value) => kmName = kmNameFieldController.text,
+
+                              //Källhänvisning www.geeksforgeeks.org/retrieve-data-from-textfields-in-flutter/ publicerad 7 mars 2025, hämtad 25 maj 2025
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: 'InknutAntiqua',
+                                fontSize: 14,
+                              ),
+                              decoration: InputDecoration(
+                                labelText: 'Ditt KM namn:',
+                                labelStyle: TextStyle(
+                                  fontFamily: ('InknutAntiqua'),
+                                ),
+                                floatingLabelBehavior:
+                                FloatingLabelBehavior.never,
+                                //OPTIONAL //30 maj fixad "Ditt KM namn" utifrån testfeedback
+                                counterStyle: TextStyle(
+                                  fontFamily: 'InknutAntiqua',
+                                  color: Colors.black,
+                                  fontSize: 13,
+                                  height: -80,
+                                ),
+                                contentPadding: EdgeInsets.only(
+                                  left: 15,
+                                  bottom: 16,
+                                  right: 20,
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                    width: 1.1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                    width: 1.1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+
+                        SizedBox(width: 30),
+                      ],
+                    ),
+
+                    SizedBox(height: 20),
+
+                    //padding mellan KM namn textfield och Sektion textfield
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(width: 30),
+                        Container(
+                          //Ditt universitet textfield
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(30),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Color.fromARGB(255, 246, 153, 255),
+                                blurRadius: 0,
+                                spreadRadius: 1,
+                                offset: Offset(0, 3),
+                              ),
+                            ],
+                          ),
+                          child: SizedBox(
+                            height: 48,
+                            width: 300,
+                            child: TextField(
+                              inputFormatters: [
+
+                              ],
+                              controller: universityFieldController,
+                              obscureText: false,
+                              cursorColor: const Color.fromARGB(
+                                255,
+                                214,
+                                18,
+                                185,
+                              ),
+                              cursorHeight: 24,
+                              maxLength: 35,
+                              maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                              onChanged:
+                                  (value) =>
+                              university = universityFieldController.text,
+
+                              //Källhänvisning www.geeksforgeeks.org/retrieve-data-from-textfields-in-flutter/ publicerad 7 mars 2025, hämtad 25 maj 2025
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: 'InknutAntiqua',
+                                fontSize: 14,
+                              ),
+                              decoration: InputDecoration(
+                                labelText: 'Ditt universitet:',
+                                labelStyle: TextStyle(
+                                  fontFamily: ('InknutAntiqua'),
+                                ),
+                                floatingLabelBehavior:
+                                FloatingLabelBehavior.never,
+                                counterStyle: TextStyle(
+                                  fontFamily: 'InknutAntiqua',
+                                  color: Colors.black,
+                                  fontSize: 13,
+                                  height: -80,
+                                ),
+                                contentPadding: EdgeInsets.only(
+                                  left: 15,
+                                  bottom: 16,
+                                  right: 20,
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                    width: 1.1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                    width: 1.1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+
+                        SizedBox(width: 30),
+                      ],
+                    ),
+
+                    //SizedBox(height: 201), //padding mellan input-fields och de 2 knapparna
+                    SizedBox(height: 20,),
+
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(width: 30),
+                        Container(
+                          //UserName box
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(30),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Color.fromARGB(255, 246, 153, 255),
+                                blurRadius: 0,
+                                spreadRadius: 1,
+                                offset: Offset(0, 3),
+                              ),
+                            ],
+                          ),
+                          child: SizedBox(
+                            height: 48,
+                            width: 300,
+                            child: TextField(
+                              inputFormatters: [
+
+
+                              ],
+                              controller: userNameFieldController,
+                              obscureText: false,
+                              cursorColor: const Color.fromARGB(
+                                255,
+                                214,
+                                18,
+                                185,
+                              ),
+                              cursorHeight: 24,
+                              maxLength: 35,
+                              maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                              onChanged:
+                                  (value) =>
+                              userName = userNameFieldController.text,
+
+                              //Källhänvisning www.geeksforgeeks.org/retrieve-data-from-textfields-in-flutter/ publicerad 7 mars 2025, hämtad 25 maj 2025
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: 'InknutAntiqua',
+                                fontSize: 14,
+                              ),
+                              decoration: InputDecoration(
+                                labelText: 'Ditt användarnamn:',
+                                labelStyle: TextStyle(
+                                  fontFamily: ('InknutAntiqua'),
+                                ),
+                                floatingLabelBehavior:
+                                FloatingLabelBehavior.never,
+                                counterStyle: TextStyle(
+                                  fontFamily: 'InknutAntiqua',
+                                  color: Colors.black,
+                                  fontSize: 13,
+                                  height: -80,
+                                ),
+                                contentPadding: EdgeInsets.only(
+                                  left: 15,
+                                  bottom: 16,
+                                  right: 20,
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                    width: 1.1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                    width: 1.1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+
+                        SizedBox(width: 30),
+                      ],
+                    ),
+
+                    SizedBox(height: 20,),
+
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(width: 30),
+                        Container(
+                          //Email box
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(30),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Color.fromARGB(255, 246, 153, 255),
+                                blurRadius: 0,
+                                spreadRadius: 1,
+                                offset: Offset(0, 3),
+                              ),
+                            ],
+                          ),
+                          child: SizedBox(
+                            height: 48,
+                            width: 300,
+                            child: TextField(
+                              inputFormatters: [
+                              ],
+                              controller: emailFieldController,
+                              obscureText: false,
+                              cursorColor: const Color.fromARGB(
+                                255,
+                                214,
+                                18,
+                                185,
+                              ),
+                              cursorHeight: 24,
+                              maxLength: 35,
+                              maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                              onChanged:
+                                  (value) =>
+                              email = emailFieldController.text,
+
+                              //Källhänvisning www.geeksforgeeks.org/retrieve-data-from-textfields-in-flutter/ publicerad 7 mars 2025, hämtad 25 maj 2025
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: 'InknutAntiqua',
+                                fontSize: 14,
+                              ),
+                              decoration: InputDecoration(
+                                labelText: 'Email:',
+                                labelStyle: TextStyle(
+                                  fontFamily: ('InknutAntiqua'),
+                                ),
+                                floatingLabelBehavior:
+                                FloatingLabelBehavior.never,
+                                counterStyle: TextStyle(
+                                  fontFamily: 'InknutAntiqua',
+                                  color: Colors.black,
+                                  fontSize: 13,
+                                  height: -80,
+                                ),
+                                contentPadding: EdgeInsets.only(
+                                  left: 15,
+                                  bottom: 16,
+                                  right: 20,
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                    width: 1.1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                    width: 1.1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+
+                        SizedBox(width: 30),
+                      ],
+                    ),
+
+
+                    SizedBox(height: 20,),
+
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(width: 30),
+                        Container(
+                          //Password box
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(30),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Color.fromARGB(255, 246, 153, 255),
+                                blurRadius: 0,
+                                spreadRadius: 1,
+                                offset: Offset(0, 3),
+                              ),
+                            ],
+                          ),
+                          child: SizedBox(
+                            height: 48,
+                            width: 300,
+                            child: TextField(
+                              inputFormatters: [
+
+                              ],
+                              controller: passwordFieldController,
+                              obscureText: false,
+                              cursorColor: const Color.fromARGB(
+                                255,
+                                214,
+                                18,
+                                185,
+                              ),
+                              cursorHeight: 24,
+                              maxLength: 35,
+                              maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                              onChanged:
+                                  (value) => password = passwordFieldController.text,
+
+                              //Källhänvisning www.geeksforgeeks.org/retrieve-data-from-textfields-in-flutter/ publicerad 7 mars 2025, hämtad 25 maj 2025
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: 'InknutAntiqua',
+                                fontSize: 14,
+                              ),
+                              decoration: InputDecoration(
+                                labelText: 'Ditt lösenord:',
+                                labelStyle: TextStyle(
+                                  fontFamily: ('InknutAntiqua'),
+                                ),
+                                floatingLabelBehavior:
+                                FloatingLabelBehavior.never,
+                                counterStyle: TextStyle(
+                                  fontFamily: 'InknutAntiqua',
+                                  color: Colors.black,
+                                  fontSize: 13,
+                                  height: -80,
+                                ),
+                                contentPadding: EdgeInsets.only(
+                                  left: 15,
+                                  bottom: 16,
+                                  right: 20,
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                    width: 1.1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                    width: 1.1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+
+                        SizedBox(width: 30),
+                      ],
+                    ),
+                    SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(width: 30),
+                        Container(
+                          //Password box
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(30),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Color.fromARGB(255, 246, 153, 255),
+                                blurRadius: 0,
+                                spreadRadius: 1,
+                                offset: Offset(0, 3),
+                              ),
+                            ],
+                          ),
+                          child: SizedBox(
+                            height: 90,
+                            width: 300,
+                            child: TextField(
+                              inputFormatters: [
+                              ],
+                              controller: biographyFieldController,
+                              obscureText: false,
+                              cursorColor: const Color.fromARGB(
+                                255,
+                                214,
+                                18,
+                                185,
+                              ),
+                              cursorHeight: 24,
+                              maxLength: 35,
+                              maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                              onChanged:
+                                  (value) => biography = biographyFieldController.text,
+
+                              //Källhänvisning www.geeksforgeeks.org/retrieve-data-from-textfields-in-flutter/ publicerad 7 mars 2025, hämtad 25 maj 2025
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: 'InknutAntiqua',
+                                fontSize: 14,
+                              ),
+                              decoration: InputDecoration(
+                                labelText: 'Biografi:',
+                                labelStyle: TextStyle(
+                                  fontFamily: ('InknutAntiqua'),
+                                ),
+                                floatingLabelBehavior:
+                                FloatingLabelBehavior.never,
+                                counterStyle: TextStyle(
+                                  fontFamily: 'InknutAntiqua',
+                                  color: Colors.black,
+                                  fontSize: 13,
+                                  height: -80,
+                                ),
+                                contentPadding: EdgeInsets.only(
+                                  left: 15,
+                                  bottom: 16,
+                                  right: 20,
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                    width: 1.1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                    width: 1.1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+
+                        SizedBox(width: 30),
+                      ],
+                    ),
+                    //KNAPP 2
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        SizedBox(height: 150),
+                        Container(
+                          alignment: Alignment.center,
+                          padding: EdgeInsets.only(top: 10),
+                          width: 406,
+                          height: MediaQuery.of(context).size.height * 0.110,
+                          decoration: BoxDecoration(
+                            color: Color.fromARGB(255, 43, 43, 43),
+                            borderRadius: new BorderRadius.vertical(
+                              //rundad kant container källhänvisning: 'Rounded Bottom on appbar', stackoverflow.com/questions/50242087/rounded-bottom-on-appbar av user "Rémi Rousselet" publicerad 8 maj 2018, hämtad 25 maj 2025
+                              top: new Radius.elliptical(
+                                MediaQuery.of(context).size.width,
+                                100,
+                              ),
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Color.fromARGB(255, 20, 20, 20),
+                                spreadRadius: 3,
+                                blurRadius: 35,
+                                offset: Offset(0.5, 1),
+                              ),
+                            ],
+                          ),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.all(Radius.circular(40)),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.purpleAccent, //
+                                  spreadRadius: 1.5,
+                                  blurRadius: 7,
+                                  offset: Offset.fromDirection(0, 0),
+                                ),
+                              ],
+                            ),
+
+                            child: SizedBox(
+                              // alignment: Alignment.center,
+                              height: 58,
+                              width: 295,
+                              child: TextButton(
+                                style: TextButton.styleFrom(
+                                  //side: BorderSide(width: 0.8, color: const Color.fromARGB(255, 0, 0, 0)),
+                                  backgroundColor: Color.fromARGB(
+                                    255,
+                                    244,
+                                    115,
+                                    255,
+                                  ),
+                                  //lila Color.fromARGB(255, 195, 76, 255)
+                                  //shadowColor: const Color.fromARGB(255, 255, 198, 43),
+                                  overlayColor: Colors.white,
+                                ),
+                                onPressed: () {
+                                  //vad som sker när man trycker på knappen
+                                  setState(() {
+                                    nameFieldController.text.isEmpty
+                                        ? showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          backgroundColor: Colors.white,
+                                          content: Container(
+                                            alignment: Alignment.center,
+                                            width: 350,
+                                            height: 50,
+                                            child: Text(
+                                              "Namn-fältet får inte vara tomt.",
+                                              style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 15,
+                                                fontFamily: 'InknutAntiqua',
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      },
+
+                                    )
+                                        : Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder:
+                                            (context) => PostLoginPage(),
+                                      ),
+                                    ); //hänvisa till confirmation page
+                                  });
+                                  _handleRegisterButton();
+                                },
+                                child: Text(
+                                  "Registrera konto",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontFamily: 'InknutAntiqua',
+                                    color: Colors.black,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-          ),
-          )
-        ],
-      ),
-      )
+            ),
+            )
+          ],
+
+        ),
+        )
     );
   }
 

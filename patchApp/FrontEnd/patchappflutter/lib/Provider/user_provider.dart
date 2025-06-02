@@ -83,6 +83,7 @@ class UserProvider with ChangeNotifier {
   Future<void> registerUser(UserModel newUser) async {
     try {
       _user = await _userService.registerUser(newUser);
+      GlobalUserInfo.currentUser = _user;
       notifyListeners();
     } catch (e) {
       throw Exception('Could not register user: $e');

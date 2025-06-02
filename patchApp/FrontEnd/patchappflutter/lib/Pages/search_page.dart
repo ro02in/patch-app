@@ -62,10 +62,16 @@ class _SearchPageState extends State<SearchPage> {
                 style: const TextStyle(color: Colors.black87),
                 decoration: InputDecoration(
                   hintText: 'Sök efter användare...',
-                  hintStyle: TextStyle(color: Colors.black54, fontFamily: 'InknutAntiqua'),
+                  hintStyle: TextStyle(
+                    color: Colors.black54,
+                    fontFamily: 'InknutAntiqua',
+                  ),
                   filled: true,
                   fillColor: Colors.white,
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 16,
+                  ),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30),
                     borderSide: BorderSide.none,
@@ -78,36 +84,42 @@ class _SearchPageState extends State<SearchPage> {
 
             // Resultatlista
             Expanded(
-              child: _isLoading
-                  ? const Center(child: CircularProgressIndicator())
-                  : userProvider.searchResults.isEmpty
-                  ? const Center(child: Text('Inga användare hittades', style: TextStyle(color: Colors.white)))
-                  : ListView.builder(
-                itemCount: userProvider.searchResults.length,
-                itemBuilder: (context, index) {
-                  final user = userProvider.searchResults[index];
-                  return ListTile(
-                    title: Text(
-                      '${user.firstName} ${user.surName}',
-                      style: const TextStyle(
-                        fontSize: 25,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'InknutAntiqua',
-                      ),
-                    ),
-                    onTap: () {
-                      GlobalUserInfo.otherUser = user;
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => OtherProfilePage(),
+              child:
+                  _isLoading
+                      ? const Center(child: CircularProgressIndicator())
+                      : userProvider.searchResults.isEmpty
+                      ? const Center(
+                        child: Text(
+                          'Inga användare hittades',
+                          style: TextStyle(color: Colors.white),
                         ),
-                      );
-                    },
-                  );
-                },
-              ),
+                      )
+                      : ListView.builder(
+                        itemCount: userProvider.searchResults.length,
+                        itemBuilder: (context, index) {
+                          final user = userProvider.searchResults[index];
+                          return ListTile(
+                            title: Text(
+                              '${user.firstName} ${user.surName}',
+                              style: const TextStyle(
+                                fontSize: 25,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'InknutAntiqua',
+                              ),
+                            ),
+                            onTap: () {
+                              GlobalUserInfo.otherUser = user;
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => OtherProfilePage(),
+                                ),
+                              );
+                            },
+                          );
+                        },
+                      ),
             ),
           ],
         ),

@@ -9,7 +9,7 @@ class UserModel {
   final String emailAddress;
   String biography;
   final String username;
-  final String? password;
+  final String password;
   final Uint8List? pictureData;
 
   UserModel({
@@ -20,9 +20,9 @@ class UserModel {
     required this.university,
     required this.emailAddress,
     required this.biography,
-    this.pictureData,
+    required this.pictureData,
     required this.username,
-    this.password,
+    required this.password,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
@@ -34,9 +34,7 @@ class UserModel {
       university: json['university'] ?? '',
       emailAddress: json['emailAddress'] ?? '',
       biography: json['biography'] ?? '',
-      pictureData: json['pictureData'] != null
-          ? Uint8List.fromList(List<int>.from(json['pictureData']))
-          : null,
+      pictureData: json['pictureData'],
       username: json['username'] ?? '',
       password: json['password'],
     );
@@ -50,7 +48,7 @@ class UserModel {
     'university': university,
     'emailAddress': emailAddress,
     'biography': biography,
-    'pictureData': pictureData?.toList(),
+    'pictureData': pictureData,
     'username': username,
     'password': password,
   };
