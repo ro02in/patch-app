@@ -4,6 +4,7 @@
 /*************************************************************************************************************************************************/
 
 import 'package:flutter/material.dart';
+import 'package:patchappflutter/Pages/add_patch_page.dart';
 import 'package:patchappflutter/Pages/profile_page.dart';
 import 'package:patchappflutter/Pages/search_page.dart';
 import 'package:patchappflutter/Pages/trade_log_page.dart';
@@ -19,7 +20,7 @@ class CustomBottomNavigationBar extends StatefulWidget {
 
 class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
 
-  List<Widget> screens = [SearchPage(), ProfilePage(user: GlobalUserInfo.currentUser), TradeLogPage()];
+  List<Widget> screens = [SearchPage(), ProfilePage(user: GlobalUserInfo.currentUser), PatchViewPage()];
   int index = 1; //går direkt till 'Din profil' profile page
 
   @override
@@ -69,9 +70,9 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
               ),
             ),
             NavigationDestination( //BYT MÄRKE-SIDA
-              icon: Icon(Icons.compare_arrows_sharp, color: Colors.white, size: 38),
-              label: "Byt märken",
-              selectedIcon: Icon(Icons.compare_arrows_sharp, color: Colors.black, size: 43),
+              icon: Icon(Icons.add_rounded, color: Colors.white, size: 38),
+              label: "Lägg till märke",
+              selectedIcon: Icon(Icons.add_rounded, color: Colors.black, size: 43),
             ),
             ]
          ),
