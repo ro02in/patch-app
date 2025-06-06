@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:patchappflutter/Model/user_model.dart';
 import 'package:patchappflutter/Pages/other_profile_page.dart';
 import 'package:provider/provider.dart';
 import '../Provider/user_provider.dart';
-import '../Pages/profile_page.dart';
 import '../global_user_info.dart';
 
 class SearchPage extends StatefulWidget {

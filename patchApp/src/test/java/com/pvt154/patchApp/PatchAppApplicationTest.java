@@ -15,9 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -50,21 +48,20 @@ public class PatchAppApplicationTest {
 
     @BeforeEach
     public void setup() throws IOException {
-        // Rensa trade requests först
+
+
         tradeRequestService.getAllTradeRequests().forEach(tr -> {
             if (!tr.getStatus().equals(TradeStatus.PENDING)) {
-                tradeRequestService.respondToTrade(tr.getTradeId(), TradeStatus.REJECTED); // om du vill avvisa dem först
+                tradeRequestService.respondToTrade(tr.getTradeId(), TradeStatus.REJECTED);
                 tradeRequestService.deleteTradeRequest(tr.getTradeId());
             }
         });
 
-        // Sedan patcher och users
         patchRepository.deleteAll();
         userRepository.deleteAll();
         String test = "hej";
         byte[] imageBytes = test.getBytes();
 
-        // Skapa användare och patcher som innan
         sender = new User("John", "Doe","jodoe", "7012323", "su", "test1@email.com", imageBytes ,"bio", "hej");
         receiver = new User("Jane", "Smith", "jasmith", "7012223", "su", "test2email.vom", imageBytes, "bio2 electric boogaloo", "hej");
 
@@ -96,7 +93,6 @@ public class PatchAppApplicationTest {
         assertNotNull(tradeRequest.getTradeId());
         assertEquals(TradeStatus.PENDING, tradeRequest.getStatus());
 
-        // Här jämför vi med User-objekt, så jämför googleId på User-objekten
         assertEquals(sender.getId(), tradeRequest.getSender());
         assertEquals(receiver.getId(), tradeRequest.getReceiver());
         assertEquals(senderPatch.getId(), tradeRequest.getPatchOffered());
@@ -145,7 +141,6 @@ public class PatchAppApplicationTest {
         Patch updatedSenderPatch = patchRepository.findById(senderPatch.getId()).get();
         Patch updatedReceiverPatch = patchRepository.findById(receiverPatch.getId()).get();
 
-        // Ägarskap ska vara oförändrat vid avslag
         assertEquals(sender.getId(), updatedSenderPatch.getOwnerId());
         assertEquals(receiver.getId(), updatedReceiverPatch.getOwnerId());
     }
@@ -162,7 +157,6 @@ public class PatchAppApplicationTest {
         var requests = tradeRequestService.getTradeRequestsByReceiver(receiver.getId());
 
         assertFalse(requests.isEmpty());
-        // Jämför googleId på User-objektet i TradeRequest
         assertEquals(receiver.getId(), requests.get(0).getReceiver());
     }
 

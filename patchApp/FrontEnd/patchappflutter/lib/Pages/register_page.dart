@@ -6,11 +6,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:patchappflutter/Pages/post_log_in_page.dart';
-import 'package:patchappflutter/Pages/profile_page.dart';
-import 'package:patchappflutter/Pages/register_user_confirmed.dart'; //sidan RegisterUserConfirmedPage
 import 'package:image_picker/image_picker.dart';
-import 'package:patchappflutter/Pages/search_page.dart';
-import 'package:patchappflutter/Pages/temp_buttons_page.dart';
 import 'package:patchappflutter/global_user_info.dart';
 import 'package:provider/provider.dart';
 

@@ -10,22 +10,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:patchappflutter/Pages/add_patch_page.dart';
-import 'package:patchappflutter/Pages/bottomNavigationBar.dart';
 import 'package:patchappflutter/Pages/faq_page.dart';
-import 'package:patchappflutter/Pages/patch_inventory_page.dart';
-import 'package:patchappflutter/Pages/search_page.dart';
 import 'package:patchappflutter/global_user_info.dart';
-import 'package:patchappflutter/Pages/store_patches.dart';
-import 'package:patchappflutter/Model/patch_model.dart';
 import 'package:patchappflutter/Provider/user_provider.dart';
 import 'package:patchappflutter/Provider/Patch_Provider.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:patchappflutter/Model/patch_model.dart';
-import 'dart:io';
 import 'package:provider/provider.dart';
-import '../Provider/Patch_Provider.dart';
-import '../Provider/user_provider.dart';
 
 
 const String apiKey = 'J4Mhmg9sFFHmuKw7tmzaQg==D9qZtXhRG3nTiOB9';
